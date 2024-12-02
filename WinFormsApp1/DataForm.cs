@@ -19,7 +19,7 @@ public partial class DataForm : Form
 
     public void FillUnitsComboBox()
     {
-        //unitComboBox.Items.Clear();
+        unitComboBox.Items.Clear();
         unitComboBox.Items.Add(db.GetUnitDescription(Units.Micrometer));
         unitComboBox.Items.Add(db.GetUnitDescription(Units.Angel));
         unitComboBox.SelectedIndex = db.GetUnitOrder(db.currUnit);

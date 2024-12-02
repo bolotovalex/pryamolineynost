@@ -26,7 +26,7 @@ public class DB
     private DPoint[] CurvePoints { get; set; }
     private DPoint[] StraightPoints { get; set; }
 
-    private AreaDeviation[] maxLocalAreaDeviations { get; set; }
+    private AreaDeviation[]? maxLocalAreaDeviations { get; set; }
     public Units currUnit = Units.Micrometer;
 
  
@@ -40,7 +40,7 @@ public class DB
 
     public DPoint[] GetCurvePoints() => CurvePoints;
     public DPoint[] GetStraightPoint() => StraightPoints;
-    public AreaDeviation[] GetAreaDeviations() => maxLocalAreaDeviations;
+    public AreaDeviation[] GetAreaDeviations() => maxLocalAreaDeviations ?? new AreaDeviation[0];
     public void SetAreaDeviation(AreaDeviation[] area)
     {
         maxLocalAreaDeviations = area;

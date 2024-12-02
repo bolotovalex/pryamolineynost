@@ -22,17 +22,11 @@ public partial class MainForm : Form
         Pdf
     }
 
-    enum MeasureUnit
-    {
-        Micrometer,
-        Degrees
-    }
-
     public MainForm()
     {
         InitializeComponent();
         _dB = new DB() { Description = "", Name = "", Fio = "" };
-        _dataForm = new DataForm(_dB, this, _graphicsForm);
+        //_dataForm = new DataForm(_dB, this, _graphicsForm);
         stepTextBox.Text = _dB.Step.ToString();
         _graphic = new GraphicModel(_dB.GetCurvePoints(), _dB.GetStraightPoint(), _dB.Step);
         CheckAllRequiredElements();
@@ -110,7 +104,11 @@ public partial class MainForm : Form
         _dB.Step = CheckTextBoxIntValue(stepTextBox);
         _dB.UpdateStepsPerMeter(_dB.Step);
         _dB.UpdateAllRows();
-        _dataForm.DataForm_Load(sender, e);
+        if (_dataForm != null && !_dataForm.Disposing)
+        {
+            _dataForm.DataForm_Load(sender, e);
+        }
+        
         UpdateAllFields();
         if (_graphic != null)
         {
@@ -146,7 +144,7 @@ public partial class MainForm : Form
     {
         if (CheckAllRequiredElements())
         {
-            _dataForm.Dispose();
+            //_dataForm.Dispose();
             _dataForm = new DataForm(_dB, this, _graphicsForm);
             _dataForm.Show();
         }
@@ -231,7 +229,11 @@ public partial class MainForm : Form
         openFileDialog.ShowDialog();
         if (openFileDialog.FileName != "")
         {
-            _dataForm.Close();
+            if (_dataForm != null && !_dataForm.Disposing)
+            {
+                _dataForm.Dispose();
+            }
+            
             if (_graphicsForm != null)
             {
                 _graphicsForm.Dispose();
@@ -244,7 +246,10 @@ public partial class MainForm : Form
             _dB = newDb;
             _dB.UpdateAllRows();
             UpdateAllFields();
-            _dataForm.UpdateForm(null, null);
+            if (_dataForm != null && !_dataForm.Disposing)
+            {
+                _dataForm.UpdateForm(null, null);
+            }
             UpdateGraphic();
             reader.Close();
         }
@@ -337,7 +342,5 @@ public partial class MainForm : Form
         {
             lineDeviationTextBox.Text = _dB.GetAreaDeviations()[0].deviation.ToString();
         }
-
-
     }
 }
