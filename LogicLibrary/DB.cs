@@ -34,7 +34,7 @@ public class DB
     {
         foreach(var row in dataList)
         {
-            this.AddRow(row.FStroke, row.RevStroke);
+            this.AddRow(row.FStroke.Value, row.RevStroke.Value);
         }
     }
 
@@ -175,7 +175,7 @@ public class DB
             var selRow = DataList[i];
             var prevRow = DataList[i - 1];
 
-            selRow.UpdateRow(selRow.FStroke, selRow.RevStroke, Step, prevRow, RevStrokeEnbled);
+            selRow.UpdateRow(selRow.FStroke.Value, selRow.RevStroke.Value, Step, prevRow, RevStrokeEnbled);
         }
     }
 
@@ -391,7 +391,7 @@ public class DB
     {
         if (index > 0)
         {
-            DataList[index].UpdateRow(value, DataList[index].RevStroke, Step, DataList[index - 1], RevStrokeEnbled);
+            DataList[index].UpdateRow(value, DataList[index].RevStroke.Value, Step, DataList[index - 1], RevStrokeEnbled);
             UpdateAllRows();
         }
     }
@@ -400,7 +400,7 @@ public class DB
     {
         if (index > 0)
         {
-            DataList[index].UpdateRow(DataList[index].FStroke, value, Step, DataList[index - 1], RevStrokeEnbled);
+            DataList[index].UpdateRow(DataList[index].FStroke.Value, value, Step, DataList[index - 1], RevStrokeEnbled);
             UpdateAllRows();
         }
     }

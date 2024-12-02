@@ -11,8 +11,8 @@ public class DataRow
     private decimal Deviation { get; set; } //Отклонение, мкм
     private decimal DevationPerMeter { get; set; } //Отклонение на метре, мкм
     private decimal MidValue { get; set; } //Среднее значение, мкм
-    public int FStroke { get; set; } //Прямой ход, мкм
-    public int RevStroke { get; set; } //Обратный ход, мкм
+    public Micrometer FStroke { get; set; } //Прямой ход, мкм
+    public Micrometer RevStroke { get; set; } //Обратный ход, мкм
 
     
     
@@ -33,10 +33,10 @@ public class DataRow
         ///<summary>
         ///Обновлнение полей при изменении значений
         ///</summary>
-        this.FStroke = FStroke;
-        this.RevStroke = RevStroke;
+        this.FStroke.Value = FStroke;
+        this.RevStroke.Value = RevStroke;
         Position = prevDataRow != null ? prevDataRow.Position + step : 0;
-        MidValue = this.RevStroke != int.MinValue && revStrokeEnabled ? (this.RevStroke + this.FStroke) / 2 : this.FStroke;
+        MidValue = this.RevStroke.Value != int.MinValue && revStrokeEnabled ? (this.RevStroke.Value + this.FStroke.Value) / 2 : this.FStroke.Value;
         FactProfile = prevDataRow != null ? MidValue * step / 1000 + prevDataRow.FactProfile : MidValue * step / 1000 ;
     }
 
@@ -68,8 +68,8 @@ public class DataRow
                 Math.Round(Deviation,2).ToString(),
                 //Math.Round(DevationPerMeter,2).ToString(),
                 //Math.Round(MidValue,2).ToString(),
-                FStroke == int.MinValue ? "0": FStroke.ToString(),
-                RevStroke == int.MinValue ? "0" : RevStroke.ToString()];
+                FStroke.Value == int.MinValue ? "0": FStroke.ToString(),
+                RevStroke.Value == int.MinValue ? "0" : RevStroke.ToString()];
     }
 
     public int GetPosition() => Position;

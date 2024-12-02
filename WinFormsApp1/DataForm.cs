@@ -76,8 +76,8 @@ public partial class DataForm : Form
             dataGrid.Rows[i].Cells[4].Value = Math.Round(row.GetDeviation(), 2);
             dataGrid.Rows[i].Cells[5].Value = Math.Round(row.GetDevationPerMeter(), 2);
             dataGrid.Rows[i].Cells[6].Value = Math.Round(row.GetMidValue(), 2);
-            dataGrid.Rows[i].Cells[7].Value = row.FStroke == int.MinValue ? "" : row.FStroke;
-            dataGrid.Rows[i].Cells[8].Value = row.RevStroke == int.MinValue ? "" : row.RevStroke;
+            dataGrid.Rows[i].Cells[7].Value = row.FStroke.Value == int.MinValue ? "" : row.FStroke;
+            dataGrid.Rows[i].Cells[8].Value = row.RevStroke.Value == int.MinValue ? "" : row.RevStroke;
 
             if (Math.Round(row.GetDevationPerMeter(), 2) > this.db.MeterTolerance)
                 dataGrid.Rows[i].Cells[5].Style.BackColor = Color.LightCoral;
@@ -138,7 +138,7 @@ public partial class DataForm : Form
             switch (e.ColumnIndex)
             {
                 case 7:
-                    if (this.db.DataList[e.RowIndex].RevStroke == int.MinValue)
+                    if (this.db.DataList[e.RowIndex].RevStroke.Value == int.MinValue)
                     {
                         this.db.DataList.RemoveAt(e.RowIndex);
                         dataGrid.Rows.RemoveAt(e.RowIndex);
@@ -150,7 +150,7 @@ public partial class DataForm : Form
                     }
                     break;
                 case 8:
-                    if (this.db.DataList[e.RowIndex].FStroke == int.MinValue)
+                    if (this.db.DataList[e.RowIndex].FStroke.Value == int.MinValue)
                     {
                         this.db.DataList.RemoveAt(e.RowIndex);
                     }
