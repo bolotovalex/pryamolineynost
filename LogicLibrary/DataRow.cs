@@ -14,27 +14,24 @@ public class DataRow
     public Micrometer FStroke { get; set; } //Прямой ход, мкм
     public Micrometer RevStroke { get; set; } //Обратный ход, мкм
 
-    
-    
-    
-    
     public DataRow(int FStroke, int RevStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
     {
         UpdateRow(FStroke, RevStroke, step, prevDataRow, revStrokeEnabled);
     }
+
     public DataRow()
     {
 
     }
-
 
     public void UpdateRow(int FStroke, int RevStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
     {
         ///<summary>
         ///Обновлнение полей при изменении значений
         ///</summary>
-        this.FStroke.Value = FStroke;
-        this.RevStroke.Value = RevStroke;
+        ///
+        this.FStroke = new Micrometer(FStroke);
+        this.RevStroke = new Micrometer(RevStroke);
         Position = prevDataRow != null ? prevDataRow.Position + step : 0;
         MidValue = this.RevStroke.Value != int.MinValue && revStrokeEnabled ? (this.RevStroke.Value + this.FStroke.Value) / 2 : this.FStroke.Value;
         FactProfile = prevDataRow != null ? MidValue * step / 1000 + prevDataRow.FactProfile : MidValue * step / 1000 ;

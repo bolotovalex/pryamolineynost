@@ -76,8 +76,8 @@ public partial class DataForm : Form
             dataGrid.Rows[i].Cells[4].Value = Math.Round(row.GetDeviation(), 2);
             dataGrid.Rows[i].Cells[5].Value = Math.Round(row.GetDevationPerMeter(), 2);
             dataGrid.Rows[i].Cells[6].Value = Math.Round(row.GetMidValue(), 2);
-            dataGrid.Rows[i].Cells[7].Value = row.FStroke.Value == int.MinValue ? "" : row.FStroke;
-            dataGrid.Rows[i].Cells[8].Value = row.RevStroke.Value == int.MinValue ? "" : row.RevStroke;
+            dataGrid.Rows[i].Cells[7].Value = row.FStroke.Value == int.MinValue ? "" : row.FStroke.Value.ToString();
+            dataGrid.Rows[i].Cells[8].Value = row.RevStroke.Value == int.MinValue ? "" : row.RevStroke.Value.ToString();
 
             if (Math.Round(row.GetDevationPerMeter(), 2) > this.db.MeterTolerance)
                 dataGrid.Rows[i].Cells[5].Style.BackColor = Color.LightCoral;
