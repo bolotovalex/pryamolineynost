@@ -3,7 +3,7 @@ namespace LogicLibrary;
 
 public class DB
 {
-    private string _backendVersion = "1.2.1.6";
+    private string _backendVersion = "1.3.0.0";
     public DateTime Date { get; set; } //Дата
     public required string Name { get; set; } //Наименование
     public required string Description { get; set; } //Обозначение
