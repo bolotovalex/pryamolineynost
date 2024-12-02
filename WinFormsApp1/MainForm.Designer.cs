@@ -492,7 +492,7 @@ namespace Pryamolineynost
             fillDataFormButton.TabIndex = 38;
             fillDataFormButton.Text = "Заполнить данные";
             fillDataFormButton.UseVisualStyleBackColor = true;
-            fillDataFormButton.Click += FillDataFormButton_Click;
+            fillDataFormButton.Click += DataForm_Click;
             // 
             // graphicButton
             // 

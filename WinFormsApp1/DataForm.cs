@@ -7,14 +7,25 @@ public partial class DataForm : Form
     private MainForm mainForm;
     private readonly GraphicsForm _graphicsForm;
 
+
+
+
     public DataForm(DB db, MainForm parrentForm, GraphicsForm graphicsForm)
     {
         this.db = db;
         mainForm = parrentForm;
         this._graphicsForm = graphicsForm;
         InitializeComponent();
+        FillUnitsComboBox();
     }
 
+    public void FillUnitsComboBox()
+    {
+        //unitComboBox.Items.Clear();
+        unitComboBox.Items.Add(db.GetUnitDescription(Units.Micrometer));
+        unitComboBox.Items.Add(db.GetUnitDescription(Units.Angel));
+        unitComboBox.SelectedIndex = db.GetUnitOrder(db.currUnit);
+    }
     public void ReloadDataForm(DB db, MainForm parrentForm)
     {
         this.db = db;
@@ -198,8 +209,9 @@ public partial class DataForm : Form
         mainForm.UpdateAllFields();
     }
 
-    private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+    private void unitComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-
+        var unit = db.GetUnitFromIndex(unitComboBox.SelectedIndex);
+        db.currUnit = unit;
     }
 }

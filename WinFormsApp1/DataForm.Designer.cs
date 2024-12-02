@@ -41,7 +41,7 @@
             closeButton = new Button();
             clearDBButton = new Button();
             revStrokeCheckBox = new CheckBox();
-            comboBox1 = new ComboBox();
+            unitComboBox = new ComboBox();
             label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGrid).BeginInit();
             SuspendLayout();
@@ -153,15 +153,14 @@
             revStrokeCheckBox.UseVisualStyleBackColor = true;
             revStrokeCheckBox.CheckedChanged += revStrokeCheckBox_CheckedChanged;
             // 
-            // comboBox1
+            // unitComboBox
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Микрометр", "Градус/Минута/Секунды" });
-            comboBox1.Location = new Point(534, 588);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(180, 23);
-            comboBox1.TabIndex = 7;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            unitComboBox.FormattingEnabled = true;
+            unitComboBox.Location = new Point(534, 588);
+            unitComboBox.Name = "unitComboBox";
+            unitComboBox.Size = new Size(180, 23);
+            unitComboBox.TabIndex = 7;
+            unitComboBox.SelectedIndexChanged += unitComboBox_SelectedIndexChanged;
             // 
             // label1
             // 
@@ -178,7 +177,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(921, 616);
             Controls.Add(label1);
-            Controls.Add(comboBox1);
+            Controls.Add(unitComboBox);
             Controls.Add(revStrokeCheckBox);
             Controls.Add(clearDBButton);
             Controls.Add(closeButton);
@@ -207,7 +206,7 @@
         private DataGridViewTextBoxColumn fStroke;
         private DataGridViewTextBoxColumn rStroke;
         private CheckBox revStrokeCheckBox;
-        private ComboBox comboBox1;
+        private ComboBox unitComboBox;
         private Label label1;
     }
 }

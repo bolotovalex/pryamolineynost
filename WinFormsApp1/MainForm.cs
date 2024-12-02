@@ -142,7 +142,7 @@ public partial class MainForm : Form
         Close();
     }
 
-    private void FillDataFormButton_Click(object sender, EventArgs e)
+    private void DataForm_Click(object sender, EventArgs e)
     {
         if (CheckAllRequiredElements())
         {
