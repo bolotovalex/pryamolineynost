@@ -11,13 +11,14 @@ public class DataRow
     private decimal Deviation { get; set; } //Отклонение, мкм
     private decimal DevationPerMeter { get; set; } //Отклонение на метре, мкм
     private decimal MidValue { get; set; } //Среднее значение, мкм
-    public decimal FStroke { get; set; } //Прямой ход, мкм
-    public decimal RevStroke { get; set; } //Обратный ход, мкм
+    public int FStroke { get; set; } //Прямой ход, мкм
+    public int RevStroke { get; set; } //Обратный ход, мкм
 
     
     
     
-    public DataRow(decimal FStroke, decimal RevStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
+    
+    public DataRow(int FStroke, int RevStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
     {
         UpdateRow(FStroke, RevStroke, step, prevDataRow, revStrokeEnabled);
     }
@@ -27,7 +28,7 @@ public class DataRow
     }
 
 
-    public void UpdateRow(decimal FStroke, decimal RevStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
+    public void UpdateRow(int FStroke, int RevStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
     {
         ///<summary>
         ///Обновлнение полей при изменении значений
