@@ -9,7 +9,7 @@ namespace Pryamolineynost;
 public partial class MainForm : Form
 {
     
-    private string Version = "1.2.5.6f";
+    private string Version = "1.2.6.0";
     private DB _dB;
     private DataForm _dataForm;
     private GraphicsForm _graphicsForm;
