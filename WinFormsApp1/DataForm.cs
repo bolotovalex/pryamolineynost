@@ -1,4 +1,5 @@
 ﻿using LogicLibrary;
+using System.Windows.Forms.Design;
 namespace Pryamolineynost;
 
 public partial class DataForm : Form
@@ -6,9 +7,6 @@ public partial class DataForm : Form
     private DB db;
     private MainForm mainForm;
     private readonly GraphicsForm _graphicsForm;
-
-
-
 
     public DataForm(DB db, MainForm parrentForm, GraphicsForm graphicsForm)
     {
@@ -87,6 +85,11 @@ public partial class DataForm : Form
                 dataGrid.Rows[i].Cells[5].Style.BackColor = SystemColors.Control;
         }
 
+        
+    }
+
+    private void FetchFieldsWithCriteria()
+    {
         if (db.RevStrokeEnbled)
         {
             dataGrid.Columns[6].Visible = true;
@@ -189,29 +192,41 @@ public partial class DataForm : Form
         _graphicsForm.UpdatePlot();
     }
 
+    
     private void revStrokeCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        if (revStrokeCheckBox.Checked)
-        {
-            db.RevStrokeEnbled = true;
-            dataGrid.Columns[6].Visible = true;
-            dataGrid.Columns[8].Visible = true;
-        }
-        else
-        {
-            db.RevStrokeEnbled = false;
-            dataGrid.Columns[6].Visible = false;
-            dataGrid.Columns[8].Visible = false;
-        }
-
+        db.RevStrokeEnbled = revStrokeCheckBox.Checked;
         db.UpdateAllRows();
         UpdateForm(sender, e);
+        FetchFieldsWithCriteria();
         mainForm.UpdateAllFields();
+        
     }
 
     private void unitComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-        var unit = db.GetUnitFromIndex(unitComboBox.SelectedIndex);
-        db.currUnit = unit;
+        //var unit = db.GetUnitFromIndex(unitComboBox.SelectedIndex);
+        //db.currUnit = unit;
+        
+        //var angelColumns = new int[] { 9, 10, 11, 12, 13, 14 };
+        //var micrometersColumns = new int[] { 7, 8 };
+
+        //var isMicrometer = unit == Units.Micrometer;
+
+        //for (int i = micrometersColumns[0]; i <= micrometersColumns[^1]; i++)
+        //    dataGrid.Columns[i].Visible = isMicrometer;
+
+        //for (int i = angelColumns[0]; i <= angelColumns[^1]; i++)
+        //    dataGrid.Columns[i].Visible = !isMicrometer;
     }
+     
+    private (int degree, int minutes, int seconds) GetAngelFromMicroMeters(int micrometers)
+    {
+        var degree = Decimal.ToInt32(micrometers / 17455);
+        var minutes = Decimal.ToInt32(micrometers / 290.916666666667M);
+        var seconds = Decimal.ToInt32(micrometers / 4.84861111111111M);
+        return (degree, minutes, seconds);
+
+    }
+        
 }

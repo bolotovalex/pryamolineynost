@@ -24,6 +24,10 @@ namespace LogicLibrary
         private (int IntPart, int FractPart) GetNumParts(int number,int devider) => 
             (number / devider, number % devider);
 
-        public double ConvertToMicrometers() => Math.Tan(Degree) + Math.Tan(Minutes / 60) + Math.Tan(Seconds / 3600);
+        public Micrometer ConvertToMicrometers()
+        {
+            return new Micrometer(Convert.ToInt32(Math.Tan(Degree) + Math.Tan(Minutes / 60) + Math.Tan(Seconds / 3600)));
+        }
+        
     }
 }

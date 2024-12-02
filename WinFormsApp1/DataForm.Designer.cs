@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             dataGrid = new DataGridView();
+            closeButton = new Button();
+            clearDBButton = new Button();
+            revStrokeCheckBox = new CheckBox();
+            unitComboBox = new ComboBox();
+            label1 = new Label();
             id = new DataGridViewTextBoxColumn();
             length = new DataGridViewTextBoxColumn();
             factProfile = new DataGridViewTextBoxColumn();
@@ -38,11 +43,12 @@
             advValue = new DataGridViewTextBoxColumn();
             fStroke = new DataGridViewTextBoxColumn();
             rStroke = new DataGridViewTextBoxColumn();
-            closeButton = new Button();
-            clearDBButton = new Button();
-            revStrokeCheckBox = new CheckBox();
-            unitComboBox = new ComboBox();
-            label1 = new Label();
+            fAngel = new DataGridViewTextBoxColumn();
+            fMinutes = new DataGridViewTextBoxColumn();
+            fSec = new DataGridViewTextBoxColumn();
+            revAngel = new DataGridViewTextBoxColumn();
+            revMinutes = new DataGridViewTextBoxColumn();
+            revSeconds = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -50,13 +56,62 @@
             // 
             dataGrid.AllowUserToDeleteRows = false;
             dataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGrid.Columns.AddRange(new DataGridViewColumn[] { id, length, factProfile, straight, deviation, deviationPerMeter, advValue, fStroke, rStroke });
+            dataGrid.Columns.AddRange(new DataGridViewColumn[] { id, length, factProfile, straight, deviation, deviationPerMeter, advValue, fStroke, rStroke, fAngel, fMinutes, fSec, revAngel, revMinutes, revSeconds });
             dataGrid.Location = new Point(3, 2);
             dataGrid.Name = "dataGrid";
             dataGrid.Size = new Size(915, 580);
             dataGrid.TabIndex = 3;
             dataGrid.CellEndEdit += DataGrid_CellEndEdit;
             dataGrid.DataContextChanged += DataForm_SizeChanged;
+            // 
+            // closeButton
+            // 
+            closeButton.Location = new Point(843, 588);
+            closeButton.Name = "closeButton";
+            closeButton.Size = new Size(75, 23);
+            closeButton.TabIndex = 4;
+            closeButton.Text = "Закрыть";
+            closeButton.UseVisualStyleBackColor = true;
+            closeButton.Click += CloseButton_Click;
+            // 
+            // clearDBButton
+            // 
+            clearDBButton.Location = new Point(3, 588);
+            clearDBButton.Name = "clearDBButton";
+            clearDBButton.Size = new Size(75, 23);
+            clearDBButton.TabIndex = 5;
+            clearDBButton.Text = "Очистить";
+            clearDBButton.UseVisualStyleBackColor = true;
+            clearDBButton.Click += ClearDBButton_Click;
+            // 
+            // revStrokeCheckBox
+            // 
+            revStrokeCheckBox.AutoSize = true;
+            revStrokeCheckBox.Location = new Point(733, 591);
+            revStrokeCheckBox.Name = "revStrokeCheckBox";
+            revStrokeCheckBox.Size = new Size(105, 19);
+            revStrokeCheckBox.TabIndex = 6;
+            revStrokeCheckBox.Text = "Обратный ход";
+            revStrokeCheckBox.UseVisualStyleBackColor = true;
+            revStrokeCheckBox.CheckedChanged += revStrokeCheckBox_CheckedChanged;
+            // 
+            // unitComboBox
+            // 
+            unitComboBox.FormattingEnabled = true;
+            unitComboBox.Location = new Point(534, 588);
+            unitComboBox.Name = "unitComboBox";
+            unitComboBox.Size = new Size(180, 23);
+            unitComboBox.TabIndex = 7;
+            unitComboBox.SelectedIndexChanged += unitComboBox_SelectedIndexChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(410, 592);
+            label1.Name = "label1";
+            label1.Size = new Size(122, 15);
+            label1.TabIndex = 8;
+            label1.Text = "Единицы измерения:";
             // 
             // id
             // 
@@ -122,54 +177,47 @@
             rStroke.Name = "rStroke";
             rStroke.Visible = false;
             // 
-            // closeButton
+            // fAngel
             // 
-            closeButton.Location = new Point(843, 588);
-            closeButton.Name = "closeButton";
-            closeButton.Size = new Size(75, 23);
-            closeButton.TabIndex = 4;
-            closeButton.Text = "Закрыть";
-            closeButton.UseVisualStyleBackColor = true;
-            closeButton.Click += CloseButton_Click;
+            fAngel.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            fAngel.FillWeight = 33F;
+            fAngel.HeaderText = "Градусы";
+            fAngel.Name = "fAngel";
             // 
-            // clearDBButton
+            // fMinutes
             // 
-            clearDBButton.Location = new Point(3, 588);
-            clearDBButton.Name = "clearDBButton";
-            clearDBButton.Size = new Size(75, 23);
-            clearDBButton.TabIndex = 5;
-            clearDBButton.Text = "Очистить";
-            clearDBButton.UseVisualStyleBackColor = true;
-            clearDBButton.Click += ClearDBButton_Click;
+            fMinutes.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            fMinutes.FillWeight = 33F;
+            fMinutes.HeaderText = "Минуты";
+            fMinutes.Name = "fMinutes";
             // 
-            // revStrokeCheckBox
+            // fSec
             // 
-            revStrokeCheckBox.AutoSize = true;
-            revStrokeCheckBox.Location = new Point(733, 591);
-            revStrokeCheckBox.Name = "revStrokeCheckBox";
-            revStrokeCheckBox.Size = new Size(105, 19);
-            revStrokeCheckBox.TabIndex = 6;
-            revStrokeCheckBox.Text = "Обратный ход";
-            revStrokeCheckBox.UseVisualStyleBackColor = true;
-            revStrokeCheckBox.CheckedChanged += revStrokeCheckBox_CheckedChanged;
+            fSec.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            fSec.FillWeight = 33F;
+            fSec.HeaderText = "Секунды";
+            fSec.Name = "fSec";
             // 
-            // unitComboBox
+            // revAngel
             // 
-            unitComboBox.FormattingEnabled = true;
-            unitComboBox.Location = new Point(534, 588);
-            unitComboBox.Name = "unitComboBox";
-            unitComboBox.Size = new Size(180, 23);
-            unitComboBox.TabIndex = 7;
-            unitComboBox.SelectedIndexChanged += unitComboBox_SelectedIndexChanged;
+            revAngel.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            revAngel.FillWeight = 33F;
+            revAngel.HeaderText = "Градусы";
+            revAngel.Name = "revAngel";
             // 
-            // label1
+            // revMinutes
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(410, 592);
-            label1.Name = "label1";
-            label1.Size = new Size(122, 15);
-            label1.TabIndex = 8;
-            label1.Text = "Единицы измерения:";
+            revMinutes.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            revMinutes.FillWeight = 33F;
+            revMinutes.HeaderText = "Минуты";
+            revMinutes.Name = "revMinutes";
+            // 
+            // revSeconds
+            // 
+            revSeconds.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            revSeconds.FillWeight = 33F;
+            revSeconds.HeaderText = "Секунды";
+            revSeconds.Name = "revSeconds";
             // 
             // DataForm
             // 
@@ -196,6 +244,9 @@
         private DataGridView dataGrid;
         private Button closeButton;
         private Button clearDBButton;
+        private CheckBox revStrokeCheckBox;
+        private ComboBox unitComboBox;
+        private Label label1;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn length;
         private DataGridViewTextBoxColumn factProfile;
@@ -205,8 +256,11 @@
         private DataGridViewTextBoxColumn advValue;
         private DataGridViewTextBoxColumn fStroke;
         private DataGridViewTextBoxColumn rStroke;
-        private CheckBox revStrokeCheckBox;
-        private ComboBox unitComboBox;
-        private Label label1;
+        private DataGridViewTextBoxColumn fAngel;
+        private DataGridViewTextBoxColumn fMinutes;
+        private DataGridViewTextBoxColumn fSec;
+        private DataGridViewTextBoxColumn revAngel;
+        private DataGridViewTextBoxColumn revMinutes;
+        private DataGridViewTextBoxColumn revSeconds;
     }
 }
