@@ -27,7 +27,9 @@ public class DB
     private DPoint[] StraightPoints { get; set; }
 
     private AreaDeviation[] maxLocalAreaDeviations { get; set; }
+    public Units currUnit = Units.Micrometer;
 
+ 
     public DB(List<DataRow> dataList, int step)
     {
         foreach(var row in dataList)
@@ -88,7 +90,7 @@ public class DB
         }
     }
 
-    public void AddRow(decimal fStroke, decimal revStroke)
+    public void AddRow(int fStroke, int revStroke)
     {
         var prevRow = DataList[^1];
         var row = new DataRow(fStroke, revStroke, Step, prevRow, RevStrokeEnbled);
@@ -520,4 +522,43 @@ public class DB
     }
 
     public decimal GetAreaDeflection() => _localAreaDeflection;
+
+    public string GetUnitDescription(Units unit)
+    {
+        switch (unit)
+        {
+            case Units.Micrometer:
+                return "мкм";
+            case Units.Angel:
+                return "Градусы,Минуты,Секунды";
+            default:
+                throw new Exception("Не изветный тип измерения.");
+        }
+    }
+
+    public int GetUnitOrder(Units unit)
+    {
+        switch (unit)
+        {
+            case Units.Micrometer:
+                return 0;
+            case Units.Angel:
+                return 1;
+            default:
+                throw new Exception("Не изветный тип измерения.");
+        }
+    }
+
+    public Units GetUnitFromIndex(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                return Units.Micrometer;
+            case 1:
+                return Units.Angel;
+            default:
+                throw new Exception("Не изветный тип измерения.");
+        }
+    }
 }
