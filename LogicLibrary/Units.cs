@@ -3,5 +3,5 @@
 public enum Units
 {
     Micrometer,
-    Angel
+    Angle
 }

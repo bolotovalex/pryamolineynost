@@ -529,7 +529,7 @@ public class DB
         {
             case Units.Micrometer:
                 return "мкм";
-            case Units.Angel:
+            case Units.Angle:
                 return "Градусы,Минуты,Секунды";
             default:
                 throw new Exception("Не изветный тип измерения.");
@@ -542,7 +542,7 @@ public class DB
         {
             case Units.Micrometer:
                 return 0;
-            case Units.Angel:
+            case Units.Angle:
                 return 1;
             default:
                 throw new Exception("Не изветный тип измерения.");
@@ -556,7 +556,7 @@ public class DB
             case 0:
                 return Units.Micrometer;
             case 1:
-                return Units.Angel;
+                return Units.Angle;
             default:
                 throw new Exception("Не изветный тип измерения.");
         }
