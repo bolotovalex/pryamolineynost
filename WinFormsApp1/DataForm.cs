@@ -47,6 +47,9 @@ public partial class DataForm : Form
         closeButton.Location = new Point(ClientSize.Width - 79, ClientSize.Height - 28);
         revStrokeCheckBox.Location = new Point(ClientSize.Width - 188, ClientSize.Height - 25);
         clearDBButton.Location = new Point(clearDBButton.Location.X, ClientSize.Height - 28);
+        UnitLabel.Location = new Point(ClientSize.Width - 511, ClientSize.Height - 24);
+        unitComboBox.Location = new Point(ClientSize.Width - 387, ClientSize.Height - 28);
+
     }
 
     public void DataForm_Load(object sender, EventArgs e)
