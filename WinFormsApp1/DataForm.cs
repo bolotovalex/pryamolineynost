@@ -1,4 +1,5 @@
 ﻿using LogicLibrary;
+using System.Drawing.Text;
 using System.Windows.Forms.Design;
 namespace Pryamolineynost;
 
@@ -7,14 +8,17 @@ public partial class DataForm : Form
     private DB db;
     private MainForm mainForm;
     private readonly GraphicsForm _graphicsForm;
+    private bool initFlag;
 
     public DataForm(DB db, MainForm parrentForm, GraphicsForm graphicsForm)
     {
+        initFlag = true;
         this.db = db;
         mainForm = parrentForm;
         this._graphicsForm = graphicsForm;
         InitializeComponent();
         FillUnitsComboBox();
+        initFlag = false;
     }
 
     public void FillUnitsComboBox()
@@ -78,6 +82,12 @@ public partial class DataForm : Form
             dataGrid.Rows[i].Cells[6].Value = Math.Round(row.GetMidValue(), 2);
             dataGrid.Rows[i].Cells[7].Value = row.FStroke.Value == int.MinValue ? "" : row.FStroke.Value.ToString();
             dataGrid.Rows[i].Cells[8].Value = row.RevStroke.Value == int.MinValue ? "" : row.RevStroke.Value.ToString();
+            dataGrid.Rows[i].Cells[9].Value = row.FAngle.Degree == int.MinValue ? "" : row.FAngle.Degree.ToString();
+            dataGrid.Rows[i].Cells[10].Value = row.FAngle.Degree == int.MinValue ? "" : row.FAngle.Minutes.ToString();
+            dataGrid.Rows[i].Cells[11].Value = row.FAngle.Degree == int.MinValue ? "" : row.FAngle.Seconds.ToString();
+            //dataGrid.Rows[i].Cells[12].Value = row.FAngle.Degree == int.MinValue ? "" : row.RevAngle.Degree.ToString();
+            //dataGrid.Rows[i].Cells[13].Value = row.FAngle.Degree == int.MinValue ? "" : row.RevAngle.Minutes.ToString();
+            //dataGrid.Rows[i].Cells[14].Value = row.FAngle.Degree == int.MinValue ? "" : row.RevAngle.Seconds.ToString();
 
             if (Math.Round(row.GetDevationPerMeter(), 2) > this.db.MeterTolerance)
                 dataGrid.Rows[i].Cells[5].Style.BackColor = Color.LightCoral;
@@ -205,9 +215,27 @@ public partial class DataForm : Form
 
     private void unitComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
+        
+
+        if (!initFlag && db.GetUnitFromIndex(unitComboBox.SelectedIndex) != db.currUnit)
+        {
+            DialogResult = MessageBox.Show(
+                "Произойдет смена и пересчет единиц измерения. Продолжить?",
+                "Внимание",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
+            if (DialogResult == DialogResult.Yes) 
+            {
+
+            }
+        }
+
+        
         //var unit = db.GetUnitFromIndex(unitComboBox.SelectedIndex);
         //db.currUnit = unit;
-        
+
         //var angelColumns = new int[] { 9, 10, 11, 12, 13, 14 };
         //var micrometersColumns = new int[] { 7, 8 };
 
