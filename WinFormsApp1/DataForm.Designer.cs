@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             dataGrid = new DataGridView();
+            closeButton = new Button();
+            clearDBButton = new Button();
+            revStrokeCheckBox = new CheckBox();
+            unitComboBox = new ComboBox();
+            UnitLabel = new Label();
             id = new DataGridViewTextBoxColumn();
             length = new DataGridViewTextBoxColumn();
             factProfile = new DataGridViewTextBoxColumn();
@@ -44,11 +49,6 @@
             revAngel = new DataGridViewTextBoxColumn();
             revMinutes = new DataGridViewTextBoxColumn();
             revSeconds = new DataGridViewTextBoxColumn();
-            closeButton = new Button();
-            clearDBButton = new Button();
-            revStrokeCheckBox = new CheckBox();
-            unitComboBox = new ComboBox();
-            UnitLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -63,112 +63,6 @@
             dataGrid.TabIndex = 3;
             dataGrid.CellEndEdit += DataGrid_CellEndEdit;
             dataGrid.DataContextChanged += DataForm_SizeChanged;
-            // 
-            // id
-            // 
-            id.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            id.HeaderText = "№ изм(точка)";
-            id.Name = "id";
-            id.ReadOnly = true;
-            id.Resizable = DataGridViewTriState.False;
-            // 
-            // length
-            // 
-            length.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            length.HeaderText = "Длина измерения, мм";
-            length.Name = "length";
-            length.ReadOnly = true;
-            // 
-            // factProfile
-            // 
-            factProfile.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            factProfile.HeaderText = "Фактический профиль проверяемой поверхности, мкм";
-            factProfile.Name = "factProfile";
-            factProfile.ReadOnly = true;
-            // 
-            // straight
-            // 
-            straight.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            straight.HeaderText = "Прилегающая прямая, мкм";
-            straight.Name = "straight";
-            straight.ReadOnly = true;
-            // 
-            // deviation
-            // 
-            deviation.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            deviation.HeaderText = "Отклонение, мкм";
-            deviation.Name = "deviation";
-            deviation.ReadOnly = true;
-            // 
-            // deviationPerMeter
-            // 
-            deviationPerMeter.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            deviationPerMeter.HeaderText = "Отклонение на метре, мкм";
-            deviationPerMeter.Name = "deviationPerMeter";
-            deviationPerMeter.ReadOnly = true;
-            // 
-            // advValue
-            // 
-            advValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            advValue.HeaderText = "Среднее значение, мкм";
-            advValue.Name = "advValue";
-            advValue.ReadOnly = true;
-            advValue.Visible = false;
-            // 
-            // fStroke
-            // 
-            fStroke.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fStroke.HeaderText = "Прямой ход, мкм";
-            fStroke.Name = "fStroke";
-            // 
-            // rStroke
-            // 
-            rStroke.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            rStroke.HeaderText = "Обратный ход, мкм";
-            rStroke.Name = "rStroke";
-            rStroke.Visible = false;
-            // 
-            // fAngel
-            // 
-            fAngel.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fAngel.FillWeight = 33F;
-            fAngel.HeaderText = "Градусы";
-            fAngel.Name = "fAngel";
-            // 
-            // fMinutes
-            // 
-            fMinutes.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fMinutes.FillWeight = 33F;
-            fMinutes.HeaderText = "Минуты";
-            fMinutes.Name = "fMinutes";
-            // 
-            // fSec
-            // 
-            fSec.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            fSec.FillWeight = 33F;
-            fSec.HeaderText = "Секунды";
-            fSec.Name = "fSec";
-            // 
-            // revAngel
-            // 
-            revAngel.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            revAngel.FillWeight = 33F;
-            revAngel.HeaderText = "Градусы";
-            revAngel.Name = "revAngel";
-            // 
-            // revMinutes
-            // 
-            revMinutes.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            revMinutes.FillWeight = 33F;
-            revMinutes.HeaderText = "Минуты";
-            revMinutes.Name = "revMinutes";
-            // 
-            // revSeconds
-            // 
-            revSeconds.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            revSeconds.FillWeight = 33F;
-            revSeconds.HeaderText = "Секунды";
-            revSeconds.Name = "revSeconds";
             // 
             // closeButton
             // 
@@ -218,6 +112,127 @@
             UnitLabel.Size = new Size(122, 15);
             UnitLabel.TabIndex = 8;
             UnitLabel.Text = "Единицы измерения:";
+            // 
+            // id
+            // 
+            id.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            id.FillWeight = 87.49394F;
+            id.HeaderText = "№ изм (точка)";
+            id.MinimumWidth = 50;
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Resizable = DataGridViewTriState.False;
+            id.Width = 50;
+            // 
+            // length
+            // 
+            length.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            length.FillWeight = 87.49394F;
+            length.HeaderText = "Длина измерения, мм";
+            length.Name = "length";
+            length.ReadOnly = true;
+            // 
+            // factProfile
+            // 
+            factProfile.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            factProfile.FillWeight = 87.49394F;
+            factProfile.HeaderText = "Фактический профиль поверхности, мкм";
+            factProfile.Name = "factProfile";
+            factProfile.ReadOnly = true;
+            // 
+            // straight
+            // 
+            straight.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            straight.FillWeight = 87.49394F;
+            straight.HeaderText = "Прилегающая прямая, мкм";
+            straight.Name = "straight";
+            straight.ReadOnly = true;
+            // 
+            // deviation
+            // 
+            deviation.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            deviation.FillWeight = 87.49394F;
+            deviation.HeaderText = "Отклонение, мкм";
+            deviation.Name = "deviation";
+            deviation.ReadOnly = true;
+            // 
+            // deviationPerMeter
+            // 
+            deviationPerMeter.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            deviationPerMeter.FillWeight = 87.49394F;
+            deviationPerMeter.HeaderText = "Отклонение на метре, мкм";
+            deviationPerMeter.Name = "deviationPerMeter";
+            deviationPerMeter.ReadOnly = true;
+            // 
+            // advValue
+            // 
+            advValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            advValue.HeaderText = "Среднее значение, мкм";
+            advValue.Name = "advValue";
+            advValue.ReadOnly = true;
+            advValue.Visible = false;
+            // 
+            // fStroke
+            // 
+            fStroke.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            fStroke.FillWeight = 87.49394F;
+            fStroke.HeaderText = "Прямой ход, мкм";
+            fStroke.Name = "fStroke";
+            // 
+            // rStroke
+            // 
+            rStroke.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            rStroke.HeaderText = "Обратный ход, мкм";
+            rStroke.Name = "rStroke";
+            rStroke.Visible = false;
+            // 
+            // fAngel
+            // 
+            fAngel.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            fAngel.FillWeight = 45.5837631F;
+            fAngel.HeaderText = "°, ПрХод";
+            fAngel.MinimumWidth = 9;
+            fAngel.Name = "fAngel";
+            // 
+            // fMinutes
+            // 
+            fMinutes.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            fMinutes.FillWeight = 44.73549F;
+            fMinutes.HeaderText = "' ПрХод";
+            fMinutes.MinimumWidth = 12;
+            fMinutes.Name = "fMinutes";
+            // 
+            // fSec
+            // 
+            fSec.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            fSec.FillWeight = 43.9302979F;
+            fSec.HeaderText = "\" ПрХод";
+            fSec.MinimumWidth = 15;
+            fSec.Name = "fSec";
+            // 
+            // revAngel
+            // 
+            revAngel.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            revAngel.FillWeight = 51.7991562F;
+            revAngel.HeaderText = "° ОбрХод";
+            revAngel.MinimumWidth = 14;
+            revAngel.Name = "revAngel";
+            // 
+            // revMinutes
+            // 
+            revMinutes.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            revMinutes.FillWeight = 50.4026375F;
+            revMinutes.HeaderText = "', ОбрХод";
+            revMinutes.MinimumWidth = 14;
+            revMinutes.Name = "revMinutes";
+            // 
+            // revSeconds
+            // 
+            revSeconds.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            revSeconds.FillWeight = 49.0911865F;
+            revSeconds.HeaderText = "\", ОбрХод";
+            revSeconds.MinimumWidth = 14;
+            revSeconds.Name = "revSeconds";
             // 
             // DataForm
             // 

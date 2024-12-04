@@ -76,7 +76,7 @@ public partial class DataForm : Form
         for (var i = 0; i < db.DataList.Count; i++)
         {
             var row = db.DataList[i];
-            for (var cellNumber = 0; cellNumber < dataGrid.ColumnCount - 2; cellNumber++)
+            for (var cellNumber = 0; cellNumber < dataGrid.ColumnCount; cellNumber++)
             {
                 dataGrid.Rows[i].Cells[cellNumber].Style.BackColor = Color.WhiteSmoke;
             }
