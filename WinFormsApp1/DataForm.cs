@@ -89,7 +89,7 @@ public partial class DataForm : Form
             dataGrid.Rows[i].Cells[6].Value = Math.Round(row.GetMidValue(), 2);
             dataGrid.Rows[i].Cells[7].Value = row.FStroke.Value == int.MinValue ? "" : row.FStroke.Value.ToString();
             dataGrid.Rows[i].Cells[8].Value = row.RevStroke.Value == int.MinValue ? "" : row.RevStroke.Value.ToString();
-            
+
 
             if (Math.Round(row.GetDevationPerMeter(), 2) > this.db.MeterTolerance)
                 dataGrid.Rows[i].Cells[5].Style.BackColor = Color.LightCoral;
@@ -97,7 +97,7 @@ public partial class DataForm : Form
                 dataGrid.Rows[i].Cells[5].Style.BackColor = SystemColors.Control;
         }
 
-        
+
     }
 
     private void ToogleUnitsColumns()
@@ -133,6 +133,7 @@ public partial class DataForm : Form
             dataGrid.Columns[AngleColumnsIndex[i]].Visible = db.RevStrokeEnbled && db.currUnit == Units.Angle;
     }
 
+    
     private void DataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
     {
         object? cellValue = dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value ?? "";
@@ -141,6 +142,8 @@ public partial class DataForm : Form
         if (cellValue != "")
         {
             int.TryParse(cellValue.ToString(), out value);
+            
+            
             if (e.RowIndex == db.DataList.Count)
                 switch (e.ColumnIndex)
                 {
@@ -162,6 +165,7 @@ public partial class DataForm : Form
                         break;
                 }
         }
+        
         else
         {
             switch (e.ColumnIndex)
@@ -221,7 +225,7 @@ public partial class DataForm : Form
         _graphicsForm.UpdatePlot();
     }
 
-    
+
     private void revStrokeCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         db.RevStrokeEnbled = revStrokeCheckBox.Checked;
@@ -242,7 +246,7 @@ public partial class DataForm : Form
                 MessageBoxIcon.Information,
                 MessageBoxDefaultButton.Button1,
                 MessageBoxOptions.DefaultDesktopOnly);
-            if (DialogResult == DialogResult.Yes) 
+            if (DialogResult == DialogResult.Yes)
             {
                 db.currUnit = db.GetUnitFromIndex(unitComboBox.SelectedIndex);
                 ToogleUnitsColumns();
@@ -254,7 +258,7 @@ public partial class DataForm : Form
             ToogleUnitsColumns();
         }
 
-        
+
         //var unit = db.GetUnitFromIndex(unitComboBox.SelectedIndex);
         //db.currUnit = unit;
 
@@ -269,7 +273,7 @@ public partial class DataForm : Form
         //for (int i = angelColumns[0]; i <= angelColumns[^1]; i++)
         //    dataGrid.Columns[i].Visible = !isMicrometer;
     }
-     
+
     private (int degree, int minutes, int seconds) GetAngelFromMicroMeters(int micrometers)
     {
         var degree = Decimal.ToInt32(micrometers / 17455);
@@ -278,5 +282,5 @@ public partial class DataForm : Form
         return (degree, minutes, seconds);
 
     }
-        
+
 }

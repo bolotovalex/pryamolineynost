@@ -11,8 +11,8 @@ public class DataRow
     private decimal Deviation { get; set; } //Отклонение, мкм
     private decimal DevationPerMeter { get; set; } //Отклонение на метре, мкм
     private decimal MidValue { get; set; } //Среднее значение, мкм
-    public Micrometer FStroke { get; set; } //Прямой ход, мкм
-    public Micrometer RevStroke { get; set; } //Обратный ход, мкм
+    public IUnit FStroke { get; set; } //Прямой ход, мкм
+    public IUnit RevStroke { get; set; } //Обратный ход, мкм
 
     public DataRow(int FStroke, int RevStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
     {
