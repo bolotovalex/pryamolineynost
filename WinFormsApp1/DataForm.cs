@@ -81,17 +81,17 @@ public partial class DataForm : Form
                 dataGrid.Rows[i].Cells[cellNumber].Style.BackColor = Color.WhiteSmoke;
             }
             dataGrid.Rows[i].Cells[0].Value = i;
-            dataGrid.Rows[i].Cells[1].Value = row.GetPosition();
-            dataGrid.Rows[i].Cells[2].Value = Math.Round(row.GetFactProfile(), 2);
-            dataGrid.Rows[i].Cells[3].Value = Math.Round(row.GetAdjStraight(), 2);
-            dataGrid.Rows[i].Cells[4].Value = Math.Round(row.GetDeviation(), 2);
-            dataGrid.Rows[i].Cells[5].Value = Math.Round(row.GetDevationPerMeter(), 2);
-            dataGrid.Rows[i].Cells[6].Value = Math.Round(row.GetMidValue(), 2);
-            dataGrid.Rows[i].Cells[7].Value = row.FStroke.Value == int.MinValue ? "" : row.FStroke.Value.ToString();
-            dataGrid.Rows[i].Cells[8].Value = row.RevStroke.Value == int.MinValue ? "" : row.RevStroke.Value.ToString();
+            dataGrid.Rows[i].Cells[1].Value = row.Position;
+            dataGrid.Rows[i].Cells[2].Value = Math.Round(row.FactProfile, 2);
+            dataGrid.Rows[i].Cells[3].Value = Math.Round(row.AdjStraight, 2);
+            dataGrid.Rows[i].Cells[4].Value = Math.Round(row.Deviation, 2);
+            dataGrid.Rows[i].Cells[5].Value = Math.Round(row.DeviationPerMeter, 2);
+            dataGrid.Rows[i].Cells[6].Value = Math.Round(row.MidValue, 2);
+            dataGrid.Rows[i].Cells[7].Value = row.FStroke == int.MinValue ? "" : row.FStroke.ToString();
+            dataGrid.Rows[i].Cells[8].Value = row.RevStroke == int.MinValue ? "" : row.RevStroke.ToString();
             
 
-            if (Math.Round(row.GetDevationPerMeter(), 2) > this.db.MeterTolerance)
+            if (Math.Round(row.DeviationPerMeter, 2) > this.db.MeterTolerance)
                 dataGrid.Rows[i].Cells[5].Style.BackColor = Color.LightCoral;
             else
                 dataGrid.Rows[i].Cells[5].Style.BackColor = SystemColors.Control;
@@ -121,16 +121,16 @@ public partial class DataForm : Form
         var mStartIndex = MicrometersColumnsIndex.Length / 2;
         var aStartIndex = AngleColumnsIndex.Length / 2;
 
-        if (db.RevStrokeEnbled)
+        if (db.RevStrokeEnable)
             dataGrid.Columns[6].Visible = true;
         else
             dataGrid.Columns[6].Visible = false;
 
         for (var i = mStartIndex; i < MicrometersColumnsIndex.Length; i++)
-            dataGrid.Columns[MicrometersColumnsIndex[i]].Visible = db.RevStrokeEnbled && db.currUnit == Units.Micrometer;
+            dataGrid.Columns[MicrometersColumnsIndex[i]].Visible = db.RevStrokeEnable && db.currUnit == Units.Micrometer;
 
         for (var i = aStartIndex; i < AngleColumnsIndex.Length; i++)
-            dataGrid.Columns[AngleColumnsIndex[i]].Visible = db.RevStrokeEnbled && db.currUnit == Units.Angle;
+            dataGrid.Columns[AngleColumnsIndex[i]].Visible = db.RevStrokeEnable && db.currUnit == Units.Angle;
     }
 
     private void DataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -167,7 +167,7 @@ public partial class DataForm : Form
             switch (e.ColumnIndex)
             {
                 case 7:
-                    if (this.db.DataList[e.RowIndex].RevStroke.Value == int.MinValue)
+                    if (this.db.DataList[e.RowIndex].RevStroke == int.MinValue)
                     {
                         this.db.DataList.RemoveAt(e.RowIndex);
                         dataGrid.Rows.RemoveAt(e.RowIndex);
@@ -179,7 +179,7 @@ public partial class DataForm : Form
                     }
                     break;
                 case 8:
-                    if (this.db.DataList[e.RowIndex].FStroke.Value == int.MinValue)
+                    if (this.db.DataList[e.RowIndex].FStroke == int.MinValue)
                     {
                         this.db.DataList.RemoveAt(e.RowIndex);
                     }
@@ -224,7 +224,7 @@ public partial class DataForm : Form
     
     private void revStrokeCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        db.RevStrokeEnbled = revStrokeCheckBox.Checked;
+        db.RevStrokeEnable = revStrokeCheckBox.Checked;
         db.UpdateAllRows();
         UpdateForm(sender, e);
         ToogleRevStrokeColumns();
