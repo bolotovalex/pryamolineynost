@@ -148,13 +148,24 @@ public class DataRow
 
     public DataRow(int fStroke, int revStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
     {
-        _fStroke = fStroke;
-        _revStroke = revStroke;
-        RevStrokeEnable = revStrokeEnabled;
-        Step = step;
-        PrevDataRow = prevDataRow;
-        
+        _step = step;
+        _prevDataRow = prevDataRow;
+        _revStrokeEnable = revStrokeEnabled;
+        Position = prevDataRow != null ? _prevDataRow.Position + _step : 0;
+        FStroke = fStroke;
+        RevStroke = revStroke;
     }
+
+    public void RecalcRow(int fStroke, int revStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
+    {
+        _step = step;
+        _prevDataRow = prevDataRow;
+        _revStrokeEnable = revStrokeEnabled;
+        Position = prevDataRow != null ? _prevDataRow.Position + _step : 0;
+        FStroke = fStroke;
+        RevStroke = revStroke;
+    }
+
     public string[] GetAllCellsStringArray()
     {
         ///<summary>

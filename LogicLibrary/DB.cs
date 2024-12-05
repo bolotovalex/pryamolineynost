@@ -34,6 +34,7 @@ public class DB
         get => _revStrokeEnbled;
         set
         {
+            _revStrokeEnbled = value;
             foreach (var row in DataList)
                 row.RevStrokeEnable = _revStrokeEnbled;
         }
@@ -86,7 +87,8 @@ public class DB
         if (stepsLength != 0)
         {
             _stepsPerMeter = 1000 % stepsLength >= 5 ? 1000 / stepsLength + 1 : 1000 / stepsLength;
-            //LocalAreaLength = 1000 / stepsLength * stepsLength;
+            foreach (var row in DataList)
+                row.Step = _stepsPerMeter;
         }
     }
 
@@ -107,7 +109,6 @@ public class DB
         var row = new DataRow(fStroke, revStroke, Step, prevRow, _revStrokeEnbled);
         DataList.Add(row);
         UpdateProgramFactors();
-        row.AdjStraight = _programFactor1;
         UpdateAllRows();
     }
 
@@ -178,25 +179,25 @@ public class DB
         }
     }
 
-    // public void UpdateAllStroksDataList()
-    // {
-    //     for (var i = 1; i < DataList.Count; i++)
-    //     {
-    //         var selRow = DataList[i];
-    //         var prevRow = DataList[i - 1];
-    //
-    //         selRow.UpdateRow(selRow.FStroke.Value, selRow.RevStroke.Value, Step, prevRow, RevStrokeEnbled);
-    //     }
-    // }
-    //
-    // public void UpdateAllDeviationsDataList()
-    // {
-    //     for (var i = 1; i < DataList.Count; i++)
-    //     {
-    //         var selRow = DataList[i];
-    //         selRow.CalculateDeviation();
-    //     }
-    // }
+    public void UpdateAllStroksDataList()
+    {
+        for (var i = 1; i < DataList.Count; i++)
+        {
+            var selRow = DataList[i];
+            var prevRow = DataList[i - 1];
+
+            selRow.RecalcRow(selRow.FStroke, selRow.RevStroke, Step, prevRow, _revStrokeEnbled);
+        }
+    }
+
+    //public void UpdateAllDeviationsDataList()
+    //{
+    //    for (var i = 1; i < DataList.Count; i++)
+    //    {
+    //        var selRow = DataList[i];
+    //        selRow.CalculateDeviation();
+    //    }
+    //}
 
     public void UpdateMinMaxDeviations()
     {
@@ -358,9 +359,8 @@ public class DB
     public void UpdateAllRows()
     {
         //TODO Не оптимально. Множественные проходы. Нужно оптимизировать, но набор данных не большой. Пока сделано, чтобы считалось так-же как в excel
-        // UpdateAllStroksDataList();
+        UpdateAllStroksDataList();
         UpdateAllAdjStrokeDataList();
-        // UpdateAllDeviationsDataList();
         UpdateMinMaxDeviations();
         UpdateMeterDeflectionAllDataList();
         UpdateMeterDeflection();
@@ -374,7 +374,6 @@ public class DB
         if (index > 0)
         {
             DataList[index].FStroke = value;
-            // DataList[index].UpdateRow(value, DataList[index].RevStroke.Value, Step, DataList[index - 1], RevStrokeEnbled);
             UpdateAllRows();
         }
     }
@@ -384,7 +383,6 @@ public class DB
         if (index > 0)
         {
             DataList[index].RevStroke = value;
-            // DataList[index].UpdateRow(DataList[index].FStroke.Value, value, Step, DataList[index - 1], RevStrokeEnbled);
             UpdateAllRows();
         }
     }
