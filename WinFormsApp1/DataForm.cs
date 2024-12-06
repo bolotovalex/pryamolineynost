@@ -141,21 +141,20 @@ public partial class DataForm : Form
 
     private void DataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
     {
-        object? cellValue = dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value ?? "";
+        object? cellValue = dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
         int value;
-
-        if ((string)cellValue != "")
+        
+        if (cellValue != null)
         {
             int.TryParse(cellValue.ToString(), out value);
             if (e.RowIndex == _db.DataList.Count)
                 switch (e.ColumnIndex)
                 {
                     case 7:
-                        _db.AddRow(value, int.MinValue);
+                        _db.AddRow(value, Direction.Forward);
                         break;
                     case 8:
-                        _db.AddRow(0, value);
-                        //db.AddRow(int.MinValue, value);
+                        _db.AddRow(value, Direction.Reverse);
                         break;
                 }
             else
@@ -174,9 +173,9 @@ public partial class DataForm : Form
             switch (e.ColumnIndex)
             {
                 case 7:
-                    if (this._db.DataList[e.RowIndex].RevStroke == int.MinValue)
+                    if (_db.DataList[e.RowIndex].RevStroke == int.MinValue)
                     {
-                        this._db.DataList.RemoveAt(e.RowIndex);
+                        _db.DataList.RemoveAt(e.RowIndex);
                         dataGrid.Rows.RemoveAt(e.RowIndex);
                     }
                     else
@@ -186,9 +185,9 @@ public partial class DataForm : Form
                     }
                     break;
                 case 8:
-                    if (this._db.DataList[e.RowIndex].FStroke == int.MinValue)
+                    if (_db.DataList[e.RowIndex].FStroke == int.MinValue)
                     {
-                        this._db.DataList.RemoveAt(e.RowIndex);
+                        _db.DataList.RemoveAt(e.RowIndex);
                     }
                     else
                     {
@@ -209,8 +208,6 @@ public partial class DataForm : Form
         {
             _graphicsForm.UpdateDeviationList();
         }
-
-        //_graphicsForm.UpdatePlot();
     }
 
 

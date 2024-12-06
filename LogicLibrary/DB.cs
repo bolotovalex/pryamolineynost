@@ -42,13 +42,13 @@ public class DB
     }
 
  
-    public DB(List<DataRow> dataList, int step)
-    {
-        foreach(var row in dataList)
-        {
-            AddRow(row.FStroke, row.RevStroke);
-        }
-    }
+    //public DB(List<DataRow> dataList, int step)
+    //{
+    //    foreach(var row in dataList)
+    //    {
+    //        AddRow(row.FStroke, row.RevStroke);
+    //    }
+    //}
 
     public DPoint[] GetCurvePoints() => CurvePoints;
     public DPoint[] GetStraightPoint() => StraightPoints;
@@ -67,7 +67,7 @@ public class DB
         Date = DateTime.Now.Date;
         Step = 200;
         UpdateStepsPerMeter(Step);
-        DataList.Add(new DataRow(0,0,0,null,_revStrokeEnbled));
+        DataList.Add(new DataRow(0,0,null, RevStrokeEnable, Direction.Forward));
         LocalAreaLength = 1000;
     }
 
@@ -104,10 +104,10 @@ public class DB
         }
     }
 
-    public void AddRow(int fStroke, int revStroke)
+    public void AddRow(int value, Direction direction)
     {
         var prevRow = DataList[^1];
-        var row = new DataRow(fStroke, revStroke, Step, prevRow, _revStrokeEnbled);
+        var row = new DataRow(value, Step, prevRow, _revStrokeEnbled, direction);
         DataList.Add(row);
         UpdateProgramFactors();
         UpdateAllRows();
@@ -375,8 +375,9 @@ public class DB
         if (index > 0)
         {
             DataList[index].FStroke = value;
-            UpdateAllRows();
+            
         }
+        UpdateAllRows();
     }
 
     public void UpdateRevStrokeRow(int index, int value)
@@ -384,8 +385,9 @@ public class DB
         if (index > 0)
         {
             DataList[index].RevStroke = value;
-            UpdateAllRows();
+            
         }
+        UpdateAllRows();
     }
     public void CleanDb()
     {
@@ -395,7 +397,7 @@ public class DB
         _programFactor2 = 0;
         _verticalDeflection = 0;
         UpdateStepsPerMeter(Step);
-        DataList.Add(new DataRow(0, 0, 0, null, _revStrokeEnbled));
+        DataList.Add(new DataRow(0, 0, null, _revStrokeEnbled, Direction.Forward));
         UpdateAllRows();
     }
 

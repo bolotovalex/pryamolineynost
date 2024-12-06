@@ -152,14 +152,29 @@ public class DataRow
         }
     }
 
-    public DataRow(int fStroke, int revStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
+    public DataRow(int value, int step=0, DataRow? prevDataRow=null, bool revStrokeEnabled=false, Direction direction=Direction.Forward)
     {
         _step = step;
         _prevDataRow = prevDataRow;
         _revStrokeEnable = revStrokeEnabled;
         Position = prevDataRow != null ? _prevDataRow.Position + _step : 0;
-        FStroke = fStroke;
-        RevStroke = revStroke;
+        FStroke = direction == Direction.Forward ? value : 0;
+        RevStroke = direction == Direction.Reverse ? value : int.MinValue;
+    }
+
+    public DataRow(int degree = 0, int minutes = 0, int seconds = 0, int step = 0, DataRow? prevDataRow = null,
+        bool revStrokeEnabled = false, bool revPath = false)
+    {
+        _step = step;
+        _prevDataRow = prevDataRow;
+        _revStrokeEnable = revStrokeEnabled;
+        Position = prevDataRow != null ? _prevDataRow.Position + _step : 0;
+        FDegree = revPath ? 0 : degree;
+        RevDegree = revPath ? degree : 0;
+        FMinutes = revPath ? 0 : minutes;
+        RevMinutes = revPath ? minutes : 0;
+        FSeconds = revPath ? 0 : seconds;
+        RevSeconds = revPath ? seconds : 0;
     }
 
     // пересчет свойств
