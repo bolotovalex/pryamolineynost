@@ -35,6 +35,7 @@ public class DB
         set
         {
             _revStrokeEnbled = value;
+            _revStrokeEnbled = value;
             foreach (var row in DataList)
                 row.RevStrokeEnable = _revStrokeEnbled;
         }

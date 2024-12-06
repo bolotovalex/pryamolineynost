@@ -6,36 +6,36 @@ namespace Pryamolineynost;
 
 public partial class DataForm : Form
 {
-    private DB db;
-    private MainForm mainForm;
+    private DB _db;
+    private MainForm _mainForm;
     private readonly GraphicsForm _graphicsForm;
-    private bool initFlag;
-    private int[] MicrometersColumnsIndex = new int[] { 7, 8 };
-    private int[] AngleColumnsIndex = new int[] { 9, 10, 11, 12, 13, 14 };
+    private bool _initFlag;
+    private int[] _micrometersColumnsIndex = new int[] { 7, 8 };
+    private int[] _angleColumnsIndex = new int[] { 9, 10, 11, 12, 13, 14 };
 
     public DataForm(DB db, MainForm parrentForm, GraphicsForm graphicsForm)
     {
-        initFlag = true;
-        this.db = db;
-        mainForm = parrentForm;
+        _initFlag = true;
+        this._db = db;
+        _mainForm = parrentForm;
         this._graphicsForm = graphicsForm;
         InitializeComponent();
         FillUnitsComboBox();
         ToogleUnitsColumns();
-        initFlag = false;
+        _initFlag = false;
     }
 
     public void FillUnitsComboBox()
     {
         unitComboBox.Items.Clear();
-        unitComboBox.Items.Add(db.GetUnitDescription(Units.Micrometer));
-        unitComboBox.Items.Add(db.GetUnitDescription(Units.Angle));
-        unitComboBox.SelectedIndex = db.GetUnitOrder(db.currUnit);
+        unitComboBox.Items.Add(_db.GetUnitDescription(Units.Micrometer));
+        unitComboBox.Items.Add(_db.GetUnitDescription(Units.Angle));
+        unitComboBox.SelectedIndex = _db.GetUnitOrder(_db.currUnit);
     }
     public void ReloadDataForm(DB db, MainForm parrentForm)
     {
-        this.db = db;
-        mainForm = parrentForm;
+        this._db = db;
+        _mainForm = parrentForm;
         dataGrid.Rows.Clear();
         UpdateForm(null, null);
     }
@@ -64,18 +64,18 @@ public partial class DataForm : Form
 
     public void UpdateForm(object? sender, EventArgs? e)
     {
-        if (dataGrid.Rows.Count < db.DataList.Count)
+        if (dataGrid.Rows.Count < _db.DataList.Count)
         {
             if (dataGrid.Columns.Count == 0)
                 InitializeComponent();
-            for (var i = dataGrid.Rows.Count; i <= db.DataList.Count; i++)
+            for (var i = dataGrid.Rows.Count; i <= _db.DataList.Count; i++)
                 dataGrid.Rows.Add();
         }
 
 
-        for (var i = 0; i < db.DataList.Count; i++)
+        for (var i = 0; i < _db.DataList.Count; i++)
         {
-            var row = db.DataList[i];
+            var row = _db.DataList[i];
             for (var cellNumber = 0; cellNumber < dataGrid.ColumnCount; cellNumber++)
             {
                 dataGrid.Rows[i].Cells[cellNumber].Style.BackColor = Color.WhiteSmoke;
@@ -89,9 +89,15 @@ public partial class DataForm : Form
             dataGrid.Rows[i].Cells[6].Value = Math.Round(row.MidValue, 2);
             dataGrid.Rows[i].Cells[7].Value = row.FStroke == int.MinValue ? "" : row.FStroke.ToString();
             dataGrid.Rows[i].Cells[8].Value = row.RevStroke == int.MinValue ? "" : row.RevStroke.ToString();
-            
+            dataGrid.Rows[i].Cells[9].Value = row.FDegree == int.MinValue ? "" : row.FDegree.ToString();
+            dataGrid.Rows[i].Cells[10].Value = row.FMinutes == int.MinValue ? "" : row.FMinutes.ToString();
+            dataGrid.Rows[i].Cells[11].Value = row.FSeconds == int.MinValue ? "" : row.FSeconds.ToString();
+            dataGrid.Rows[i].Cells[12].Value = row.RevDegree == int.MinValue ? "" : row.RevDegree.ToString();
+            dataGrid.Rows[i].Cells[13].Value = row.RevMinutes == int.MinValue ? "" : row.RevMinutes.ToString();
+            dataGrid.Rows[i].Cells[14].Value = row.RevSeconds == int.MinValue ? "" : row.RevSeconds.ToString();
 
-            if (Math.Round(row.DeviationPerMeter, 2) > this.db.MeterTolerance)
+
+            if (Math.Round(row.DeviationPerMeter, 2) > this._db.MeterTolerance)
                 dataGrid.Rows[i].Cells[5].Style.BackColor = Color.LightCoral;
             else
                 dataGrid.Rows[i].Cells[5].Style.BackColor = SystemColors.Control;
@@ -102,35 +108,35 @@ public partial class DataForm : Form
 
     private void ToogleUnitsColumns()
     {
-        var isMicrometer = db.currUnit == Units.Micrometer;
-        foreach (var index in MicrometersColumnsIndex)
+        var isMicrometer = _db.currUnit == Units.Micrometer;
+        foreach (var index in _micrometersColumnsIndex)
         {
-            dataGrid.Columns[index].Visible = isMicrometer;
+            dataGrid.Columns[index].Visible = true;//isMicrometer;
         }
 
-        var isAngle = db.currUnit == Units.Angle;
-        foreach (var index in AngleColumnsIndex)
+        var isAngle = _db.currUnit == Units.Angle;
+        foreach (var index in _angleColumnsIndex)
         {
-            dataGrid.Columns[index].Visible = isAngle;
+            dataGrid.Columns[index].Visible = true;//isAngle;
         }
         ToogleRevStrokeColumns();
     }
 
     private void ToogleRevStrokeColumns()
     {
-        var mStartIndex = MicrometersColumnsIndex.Length / 2;
-        var aStartIndex = AngleColumnsIndex.Length / 2;
+        var mStartIndex = _micrometersColumnsIndex.Length / 2;
+        var aStartIndex = _angleColumnsIndex.Length / 2;
 
-        if (db.RevStrokeEnable)
+        if (_db.RevStrokeEnable)
             dataGrid.Columns[6].Visible = true;
         else
-            dataGrid.Columns[6].Visible = false;
+            dataGrid.Columns[6].Visible = true; //TODO: false
 
-        for (var i = mStartIndex; i < MicrometersColumnsIndex.Length; i++)
-            dataGrid.Columns[MicrometersColumnsIndex[i]].Visible = db.RevStrokeEnable && db.currUnit == Units.Micrometer;
+        for (var i = mStartIndex; i < _micrometersColumnsIndex.Length; i++) //TODO
+            dataGrid.Columns[_micrometersColumnsIndex[i]].Visible = true;//db.RevStrokeEnable && db.currUnit == Units.Micrometer;
 
-        for (var i = aStartIndex; i < AngleColumnsIndex.Length; i++)
-            dataGrid.Columns[AngleColumnsIndex[i]].Visible = db.RevStrokeEnable && db.currUnit == Units.Angle;
+        for (var i = aStartIndex; i < _angleColumnsIndex.Length; i++) //TODO
+            dataGrid.Columns[_angleColumnsIndex[i]].Visible = true; //db.RevStrokeEnable && db.currUnit == Units.Angle;
     }
 
     private void DataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -138,27 +144,28 @@ public partial class DataForm : Form
         object? cellValue = dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value ?? "";
         int value;
 
-        if (cellValue != "")
+        if ((string)cellValue != "")
         {
             int.TryParse(cellValue.ToString(), out value);
-            if (e.RowIndex == db.DataList.Count)
+            if (e.RowIndex == _db.DataList.Count)
                 switch (e.ColumnIndex)
                 {
                     case 7:
-                        db.AddRow(value, int.MinValue);
+                        _db.AddRow(value, int.MinValue);
                         break;
                     case 8:
-                        db.AddRow(int.MinValue, value);
+                        _db.AddRow(0, value);
+                        //db.AddRow(int.MinValue, value);
                         break;
                 }
             else
                 switch (e.ColumnIndex)
                 {
                     case 7:
-                        db.UpdateFStrokeRow(e.RowIndex, value);
+                        _db.UpdateFStrokeRow(e.RowIndex, value);
                         break;
                     case 8:
-                        db.UpdateRevStrokeRow(e.RowIndex, value);
+                        _db.UpdateRevStrokeRow(e.RowIndex, value);
                         break;
                 }
         }
@@ -167,37 +174,37 @@ public partial class DataForm : Form
             switch (e.ColumnIndex)
             {
                 case 7:
-                    if (this.db.DataList[e.RowIndex].RevStroke == int.MinValue)
+                    if (this._db.DataList[e.RowIndex].RevStroke == int.MinValue)
                     {
-                        this.db.DataList.RemoveAt(e.RowIndex);
+                        this._db.DataList.RemoveAt(e.RowIndex);
                         dataGrid.Rows.RemoveAt(e.RowIndex);
                     }
                     else
                     {
-                        db.UpdateFStrokeRow(e.RowIndex, int.MinValue);
+                        _db.UpdateFStrokeRow(e.RowIndex, int.MinValue);
                         dataGrid.Rows.RemoveAt(e.RowIndex);
                     }
                     break;
                 case 8:
-                    if (this.db.DataList[e.RowIndex].FStroke == int.MinValue)
+                    if (this._db.DataList[e.RowIndex].FStroke == int.MinValue)
                     {
-                        this.db.DataList.RemoveAt(e.RowIndex);
+                        this._db.DataList.RemoveAt(e.RowIndex);
                     }
                     else
                     {
-                        db.UpdateRevStrokeRow(e.RowIndex, int.MinValue);
+                        _db.UpdateRevStrokeRow(e.RowIndex, int.MinValue);
                     }
                     break;
             }
-            this.db.UpdateAllRows();
+            this._db.UpdateAllRows();
 
 
 
         }
 
         UpdateForm(sender, e);
-        mainForm.UpdateAllFields();
-        mainForm.UpdateGraphic();
+        _mainForm.UpdateAllFields();
+        _mainForm.UpdateGraphic();
         if (_graphicsForm != null)
         {
             _graphicsForm.UpdateDeviationList();
@@ -215,8 +222,8 @@ public partial class DataForm : Form
     private void ClearDBButton_Click(object sender, EventArgs e)
     {
         while (dataGrid.RowCount > 2) dataGrid.Rows.RemoveAt(1);
-        db.CleanDb();
-        mainForm.UpdateAllFields();
+        _db.CleanDb();
+        _mainForm.UpdateAllFields();
         UpdateForm(sender, e);
         _graphicsForm.UpdatePlot();
     }
@@ -224,16 +231,16 @@ public partial class DataForm : Form
     
     private void revStrokeCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        db.RevStrokeEnable = revStrokeCheckBox.Checked;
-        db.UpdateAllRows();
+        _db.RevStrokeEnable = revStrokeCheckBox.Checked;
+        _db.UpdateAllRows();
         UpdateForm(sender, e);
         ToogleRevStrokeColumns();
-        mainForm.UpdateAllFields();
+        _mainForm.UpdateAllFields();
     }
 
     private void unitComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (!initFlag && db.GetUnitFromIndex(unitComboBox.SelectedIndex) != db.currUnit && db.DataList.Count > 1)
+        if (!_initFlag && _db.GetUnitFromIndex(unitComboBox.SelectedIndex) != _db.currUnit && _db.DataList.Count > 1)
         {
             DialogResult = MessageBox.Show(
                 "Произойдет смена и пересчет единиц измерения. Продолжить?",
@@ -244,13 +251,13 @@ public partial class DataForm : Form
                 MessageBoxOptions.DefaultDesktopOnly);
             if (DialogResult == DialogResult.Yes) 
             {
-                db.currUnit = db.GetUnitFromIndex(unitComboBox.SelectedIndex);
+                _db.currUnit = _db.GetUnitFromIndex(unitComboBox.SelectedIndex);
                 ToogleUnitsColumns();
             }
         }
         else
         {
-            db.currUnit = db.GetUnitFromIndex(unitComboBox.SelectedIndex);
+            _db.currUnit = _db.GetUnitFromIndex(unitComboBox.SelectedIndex);
             ToogleUnitsColumns();
         }
 
