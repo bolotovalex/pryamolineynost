@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
             dataGrid = new DataGridView();
-            closeButton = new Button();
-            clearDBButton = new Button();
-            revStrokeCheckBox = new CheckBox();
-            unitComboBox = new ComboBox();
-            UnitLabel = new Label();
             id = new DataGridViewTextBoxColumn();
             length = new DataGridViewTextBoxColumn();
             factProfile = new DataGridViewTextBoxColumn();
@@ -49,6 +44,11 @@
             revAngel = new DataGridViewTextBoxColumn();
             revMinutes = new DataGridViewTextBoxColumn();
             revSeconds = new DataGridViewTextBoxColumn();
+            closeButton = new Button();
+            clearDBButton = new Button();
+            revStrokeCheckBox = new CheckBox();
+            unitComboBox = new ComboBox();
+            UnitLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -63,55 +63,6 @@
             dataGrid.TabIndex = 3;
             dataGrid.CellEndEdit += DataGrid_CellEndEdit;
             dataGrid.DataContextChanged += DataForm_SizeChanged;
-            // 
-            // closeButton
-            // 
-            closeButton.Location = new Point(843, 588);
-            closeButton.Name = "closeButton";
-            closeButton.Size = new Size(75, 23);
-            closeButton.TabIndex = 4;
-            closeButton.Text = "Закрыть";
-            closeButton.UseVisualStyleBackColor = true;
-            closeButton.Click += CloseButton_Click;
-            // 
-            // clearDBButton
-            // 
-            clearDBButton.Location = new Point(3, 588);
-            clearDBButton.Name = "clearDBButton";
-            clearDBButton.Size = new Size(75, 23);
-            clearDBButton.TabIndex = 5;
-            clearDBButton.Text = "Очистить";
-            clearDBButton.UseVisualStyleBackColor = true;
-            clearDBButton.Click += ClearDBButton_Click;
-            // 
-            // revStrokeCheckBox
-            // 
-            revStrokeCheckBox.AutoSize = true;
-            revStrokeCheckBox.Location = new Point(733, 591);
-            revStrokeCheckBox.Name = "revStrokeCheckBox";
-            revStrokeCheckBox.Size = new Size(105, 19);
-            revStrokeCheckBox.TabIndex = 6;
-            revStrokeCheckBox.Text = "Обратный ход";
-            revStrokeCheckBox.UseVisualStyleBackColor = true;
-            revStrokeCheckBox.CheckedChanged += revStrokeCheckBox_CheckedChanged;
-            // 
-            // unitComboBox
-            // 
-            unitComboBox.FormattingEnabled = true;
-            unitComboBox.Location = new Point(534, 588);
-            unitComboBox.Name = "unitComboBox";
-            unitComboBox.Size = new Size(180, 23);
-            unitComboBox.TabIndex = 7;
-            unitComboBox.SelectedIndexChanged += unitComboBox_SelectedIndexChanged;
-            // 
-            // UnitLabel
-            // 
-            UnitLabel.AutoSize = true;
-            UnitLabel.Location = new Point(410, 592);
-            UnitLabel.Name = "UnitLabel";
-            UnitLabel.Size = new Size(122, 15);
-            UnitLabel.TabIndex = 8;
-            UnitLabel.Text = "Единицы измерения:";
             // 
             // id
             // 
@@ -233,6 +184,55 @@
             revSeconds.HeaderText = "\", ОбрХод";
             revSeconds.MinimumWidth = 14;
             revSeconds.Name = "revSeconds";
+            // 
+            // closeButton
+            // 
+            closeButton.Location = new Point(843, 588);
+            closeButton.Name = "closeButton";
+            closeButton.Size = new Size(75, 23);
+            closeButton.TabIndex = 4;
+            closeButton.Text = "Закрыть";
+            closeButton.UseVisualStyleBackColor = true;
+            closeButton.Click += CloseButton_Click;
+            // 
+            // clearDBButton
+            // 
+            clearDBButton.Location = new Point(3, 588);
+            clearDBButton.Name = "clearDBButton";
+            clearDBButton.Size = new Size(75, 23);
+            clearDBButton.TabIndex = 5;
+            clearDBButton.Text = "Очистить";
+            clearDBButton.UseVisualStyleBackColor = true;
+            clearDBButton.Click += ClearDBButton_Click;
+            // 
+            // revStrokeCheckBox
+            // 
+            revStrokeCheckBox.AutoSize = true;
+            revStrokeCheckBox.Location = new Point(733, 591);
+            revStrokeCheckBox.Name = "revStrokeCheckBox";
+            revStrokeCheckBox.Size = new Size(105, 19);
+            revStrokeCheckBox.TabIndex = 6;
+            revStrokeCheckBox.Text = "Обратный ход";
+            revStrokeCheckBox.UseVisualStyleBackColor = true;
+            revStrokeCheckBox.CheckedChanged += revStrokeCheckBox_CheckedChanged;
+            // 
+            // unitComboBox
+            // 
+            unitComboBox.FormattingEnabled = true;
+            unitComboBox.Location = new Point(534, 588);
+            unitComboBox.Name = "unitComboBox";
+            unitComboBox.Size = new Size(180, 23);
+            unitComboBox.TabIndex = 7;
+            unitComboBox.SelectedIndexChanged += unitComboBox_SelectedIndexChanged;
+            // 
+            // UnitLabel
+            // 
+            UnitLabel.AutoSize = true;
+            UnitLabel.Location = new Point(410, 592);
+            UnitLabel.Name = "UnitLabel";
+            UnitLabel.Size = new Size(122, 15);
+            UnitLabel.TabIndex = 8;
+            UnitLabel.Text = "Единицы измерения:";
             // 
             // DataForm
             // 

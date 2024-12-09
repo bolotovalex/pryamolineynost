@@ -103,7 +103,7 @@ public partial class MainForm : Form
     {
         _dB.Step = CheckTextBoxIntValue(stepTextBox);
         _dB.UpdateStepsPerMeter(_dB.Step);
-        _dB.UpdateAllRows();
+        _dB.UpdateAllRows(_dB.currUnit);
         if (_dataForm != null && !_dataForm.Disposing)
         {
             _dataForm.DataForm_Load(sender, e);
@@ -244,7 +244,7 @@ public partial class MainForm : Form
             var data = await reader.ReadToEndAsync();
             DB? newDb = JsonSerializer.Deserialize<DB>(data) ?? new DB() { Description = "", Name = "", Fio = "" };
             _dB = newDb;
-            _dB.UpdateAllRows();
+            _dB.UpdateAllRows(_dB.currUnit);
             UpdateAllFields();
             if (_dataForm != null && !_dataForm.Disposing)
             {

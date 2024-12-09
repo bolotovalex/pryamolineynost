@@ -1,6 +1,7 @@
 ﻿using LogicLibrary;
 using System;
 using System.Drawing.Text;
+using System.Windows.Forms;
 using System.Windows.Forms.Design;
 namespace Pryamolineynost;
 
@@ -12,6 +13,7 @@ public partial class DataForm : Form
     private bool _initFlag;
     private int[] _micrometersColumnsIndex = new int[] { 7, 8 };
     private int[] _angleColumnsIndex = new int[] { 9, 10, 11, 12, 13, 14 };
+    private ContextMenuStrip contextMenu;
 
     public DataForm(DB db, MainForm parrentForm, GraphicsForm graphicsForm)
     {
@@ -23,6 +25,52 @@ public partial class DataForm : Form
         FillUnitsComboBox();
         ToogleUnitsColumns();
         _initFlag = false;
+        dataGrid.AllowUserToAddRows = true;
+        dataGrid.AllowUserToDeleteRows = true;
+        InitializeContextMenu();
+        dataGrid.CellMouseDown += DataGridView_CellMouseDown;
+        Controls.Add(dataGrid);
+    }
+
+    private void InitializeContextMenu()
+    {
+        contextMenu = new ContextMenuStrip();
+        var deleteRowMenuItem = new ToolStripMenuItem("Удалить строку");
+        deleteRowMenuItem.Click += DeleteRowMenuItem_Click;
+        contextMenu.Items.Add(deleteRowMenuItem);
+    }
+
+    private void DataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Right && e.RowIndex > 0)
+        {
+            var dataGridView = sender as DataGridView;
+            if (dataGridView != null)
+            {
+                dataGridView.ClearSelection();
+                dataGridView.Rows[e.RowIndex].Selected = true; // Выделить строку
+                contextMenu.Show(Cursor.Position); // Показать контекстное меню
+            }
+        }
+    }
+
+    private void DeleteRowMenuItem_Click(object sender, EventArgs e)
+    {
+        var dataGridView = Controls[5] as DataGridView;
+        if (dataGridView != null && dataGridView.SelectedRows.Count > 0)
+        {
+            foreach (DataGridViewRow selectedRow in dataGridView.SelectedRows)
+            {
+                if (!selectedRow.IsNewRow)
+                {
+                    _db.DataList.RemoveAt(selectedRow.Index);
+                    _db.UpdateAllRows(_db.currUnit);
+                    UpdateForm(null, null);
+                    dataGridView.Rows.Remove(selectedRow); // Удаление строки
+                    
+                }
+            }
+        }
     }
 
     public void FillUnitsComboBox()
@@ -103,22 +151,16 @@ public partial class DataForm : Form
                 dataGrid.Rows[i].Cells[5].Style.BackColor = SystemColors.Control;
         }
 
-        
+
     }
 
     private void ToogleUnitsColumns()
     {
-        var isMicrometer = _db.currUnit == Units.Micrometer;
         foreach (var index in _micrometersColumnsIndex)
-        {
-            dataGrid.Columns[index].Visible = true;//isMicrometer;
-        }
+            dataGrid.Columns[index].Visible = _db.currUnit == Units.Micrometer;
 
-        var isAngle = _db.currUnit == Units.Angle;
         foreach (var index in _angleColumnsIndex)
-        {
-            dataGrid.Columns[index].Visible = true;//isAngle;
-        }
+            dataGrid.Columns[index].Visible = _db.currUnit == Units.Angle;
         ToogleRevStrokeColumns();
     }
 
@@ -130,20 +172,20 @@ public partial class DataForm : Form
         if (_db.RevStrokeEnable)
             dataGrid.Columns[6].Visible = true;
         else
-            dataGrid.Columns[6].Visible = true; //TODO: false
+            dataGrid.Columns[6].Visible = false;
 
-        for (var i = mStartIndex; i < _micrometersColumnsIndex.Length; i++) //TODO
-            dataGrid.Columns[_micrometersColumnsIndex[i]].Visible = true;//db.RevStrokeEnable && db.currUnit == Units.Micrometer;
+        for (var i = mStartIndex; i < _micrometersColumnsIndex.Length; i++)
+            dataGrid.Columns[_micrometersColumnsIndex[i]].Visible = _db is { RevStrokeEnable: true, currUnit: Units.Micrometer };
 
-        for (var i = aStartIndex; i < _angleColumnsIndex.Length; i++) //TODO
-            dataGrid.Columns[_angleColumnsIndex[i]].Visible = true; //db.RevStrokeEnable && db.currUnit == Units.Angle;
+        for (var i = aStartIndex; i < _angleColumnsIndex.Length; i++)
+            dataGrid.Columns[_angleColumnsIndex[i]].Visible = _db is { RevStrokeEnable: true, currUnit: Units.Angle };
     }
 
     private void DataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
     {
         object? cellValue = dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
         int value;
-        
+
         if (cellValue != null)
         {
             int.TryParse(cellValue.ToString(), out value);
@@ -151,20 +193,56 @@ public partial class DataForm : Form
                 switch (e.ColumnIndex)
                 {
                     case 7:
-                        _db.AddRow(value, Direction.Forward);
+                        _db.AddRow(value, Direction.Forward, Units.Micrometer);
                         break;
                     case 8:
-                        _db.AddRow(value, Direction.Reverse);
+                        _db.AddRow(value, Direction.Reverse, Units.Micrometer);
+                        break;
+                    case 9:
+                        _db.AddRow(value, Direction.Forward, Units.Angle, AngleUnits.Degree);
+                        break;
+                    case 10:
+                        _db.AddRow(value, Direction.Forward, Units.Angle, AngleUnits.Minute);
+                        break;
+                    case 11:
+                        _db.AddRow(value, Direction.Forward, Units.Angle);
+                        break;
+                    case 12:
+                        _db.AddRow(value, Direction.Reverse, Units.Angle, AngleUnits.Degree);
+                        break;
+                    case 13:
+                        _db.AddRow(value, Direction.Reverse, Units.Angle, AngleUnits.Minute);
+                        break;
+                    case 14:
+                        _db.AddRow(value, Direction.Reverse, Units.Angle);
                         break;
                 }
             else
                 switch (e.ColumnIndex)
                 {
                     case 7:
-                        _db.UpdateFStrokeRow(e.RowIndex, value);
+                        _db.UpdateRow(e.RowIndex, value, Direction.Forward, Units.Micrometer);
                         break;
                     case 8:
-                        _db.UpdateRevStrokeRow(e.RowIndex, value);
+                        _db.UpdateRow(e.RowIndex, value, Direction.Reverse, Units.Micrometer);
+                        break;
+                    case 9:
+                        _db.UpdateRow(e.RowIndex, value, Direction.Forward, Units.Angle, AngleUnits.Degree);
+                        break;
+                    case 10:
+                        _db.UpdateRow(e.RowIndex, value, Direction.Forward, Units.Angle, AngleUnits.Minute);
+                        break;
+                    case 11:
+                        _db.UpdateRow(e.RowIndex, value, Direction.Forward, Units.Angle);
+                        break;
+                    case 12:
+                        _db.UpdateRow(e.RowIndex, value, Direction.Reverse, Units.Angle, AngleUnits.Degree);
+                        break;
+                    case 13:
+                        _db.UpdateRow(e.RowIndex, value, Direction.Reverse, Units.Angle, AngleUnits.Minute);
+                        break;
+                    case 14:
+                        _db.UpdateRow(e.RowIndex, value, Direction.Reverse, Units.Angle);
                         break;
                 }
         }
@@ -180,10 +258,11 @@ public partial class DataForm : Form
                     }
                     else
                     {
-                        _db.UpdateFStrokeRow(e.RowIndex, int.MinValue);
-                        dataGrid.Rows.RemoveAt(e.RowIndex);
+                        _db.UpdateRow(e.RowIndex, 0, Direction.Forward, Units.Micrometer);
+                        //dataGrid.Rows.RemoveAt(e.RowIndex);
                     }
                     break;
+
                 case 8:
                     if (_db.DataList[e.RowIndex].FStroke == int.MinValue)
                     {
@@ -191,14 +270,12 @@ public partial class DataForm : Form
                     }
                     else
                     {
-                        _db.UpdateRevStrokeRow(e.RowIndex, int.MinValue);
+                        _db.UpdateRow(e.RowIndex, int.MinValue, Direction.Reverse, Units.Micrometer);
                     }
                     break;
             }
-            this._db.UpdateAllRows();
 
-
-
+            _db.UpdateAllRows(_db.currUnit);
         }
 
         UpdateForm(sender, e);
@@ -225,11 +302,11 @@ public partial class DataForm : Form
         _graphicsForm.UpdatePlot();
     }
 
-    
+
     private void revStrokeCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         _db.RevStrokeEnable = revStrokeCheckBox.Checked;
-        _db.UpdateAllRows();
+        _db.UpdateAllRows(_db.currUnit);
         UpdateForm(sender, e);
         ToogleRevStrokeColumns();
         _mainForm.UpdateAllFields();
@@ -246,7 +323,7 @@ public partial class DataForm : Form
                 MessageBoxIcon.Information,
                 MessageBoxDefaultButton.Button1,
                 MessageBoxOptions.DefaultDesktopOnly);
-            if (DialogResult == DialogResult.Yes) 
+            if (DialogResult == DialogResult.Yes)
             {
                 _db.currUnit = _db.GetUnitFromIndex(unitComboBox.SelectedIndex);
                 ToogleUnitsColumns();
@@ -258,7 +335,7 @@ public partial class DataForm : Form
             ToogleUnitsColumns();
         }
 
-        
+
         //var unit = db.GetUnitFromIndex(unitComboBox.SelectedIndex);
         //db.currUnit = unit;
 
@@ -273,7 +350,7 @@ public partial class DataForm : Form
         //for (int i = angelColumns[0]; i <= angelColumns[^1]; i++)
         //    dataGrid.Columns[i].Visible = !isMicrometer;
     }
-     
+
     private (int degree, int minutes, int seconds) GetAngelFromMicroMeters(int micrometers)
     {
         var degree = Decimal.ToInt32(micrometers / 17455);
@@ -282,5 +359,6 @@ public partial class DataForm : Form
         return (degree, minutes, seconds);
 
     }
-        
+
+    
 }

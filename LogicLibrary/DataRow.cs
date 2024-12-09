@@ -1,4 +1,6 @@
-﻿namespace LogicLibrary;
+﻿using System.Dynamic;
+
+namespace LogicLibrary;
 
 public class DataRow
 {
@@ -42,9 +44,7 @@ public class DataRow
         set
         {
             _revStrokeEnable = value;
-            MidValue = _revStroke != int.MinValue && _revStrokeEnable
-                ? (_revStroke + _fStroke) / 2
-                : _fStroke;
+            UpdateMidValue();
         }
     }
 
@@ -54,9 +54,7 @@ public class DataRow
         set
         {
             _fStroke = value;
-            MidValue = _revStroke != int.MinValue && _revStrokeEnable
-                ? (_revStroke + _fStroke) / 2
-                : _fStroke;
+            UpdateMidValue();
             var a = IntToSeconds(value);
             (_fDegree, _fMinutes, _fSeconds) = OptimizeDegrees(0,0,IntToSeconds(value));
         }
@@ -68,9 +66,7 @@ public class DataRow
         set
         {
             _revStroke = value;
-            MidValue = _revStroke != int.MinValue && _revStrokeEnable
-                ? (_revStroke + _fStroke) / 2
-                : this._fStroke;
+            UpdateMidValue();
             (_rDegree, _rMinutes, _rSeconds) = OptimizeDegrees(0, 0, IntToSeconds(value == int.MinValue ? 0 : value));
         }
     }
@@ -152,7 +148,7 @@ public class DataRow
         }
     }
 
-    public DataRow(int value, int step=0, DataRow? prevDataRow=null, bool revStrokeEnabled=false, Direction direction=Direction.Forward)
+    public DataRow(int value, int step, DataRow? prevDataRow, bool revStrokeEnabled, Direction direction)
     {
         _step = step;
         _prevDataRow = prevDataRow;
@@ -162,46 +158,72 @@ public class DataRow
         RevStroke = direction == Direction.Reverse ? value : int.MinValue;
     }
 
-    public DataRow(int degree = 0, int minutes = 0, int seconds = 0, int step = 0, DataRow? prevDataRow = null,
-        bool revStrokeEnabled = false, bool revPath = false)
+    public DataRow(int value, int step, DataRow? prevDataRow,
+        bool revStrokeEnabled, Direction direction, AngleUnits unit)
     {
         _step = step;
         _prevDataRow = prevDataRow;
         _revStrokeEnable = revStrokeEnabled;
         Position = prevDataRow != null ? _prevDataRow.Position + _step : 0;
-        FDegree = revPath ? 0 : degree;
-        RevDegree = revPath ? degree : 0;
-        FMinutes = revPath ? 0 : minutes;
-        RevMinutes = revPath ? minutes : 0;
-        FSeconds = revPath ? 0 : seconds;
-        RevSeconds = revPath ? seconds : 0;
+        switch (unit)
+        {
+            case AngleUnits.Degree:
+                FDegree = direction == Direction.Forward ? value : 0;
+                RevDegree = direction == Direction.Reverse ? value : 0;
+                break;
+            case AngleUnits.Minute:
+                FMinutes = direction == Direction.Forward ?  value : 0;
+                RevMinutes = direction == Direction.Reverse ? value : 0;
+                break;
+            case AngleUnits.Second:
+                FSeconds = direction == Direction.Forward ? value : 0;
+                RevSeconds = direction == Direction.Reverse ? value : 0;
+                break;
+        }
     }
 
     // пересчет свойств
-    public void RecalcRow(int fStroke, int revStroke, int step, DataRow? prevDataRow, bool revStrokeEnabled)
+    public void RecalcRow(int step, DataRow? prevDataRow, bool revStrokeEnabled, Units unit)
     {
         _step = step;
         _prevDataRow = prevDataRow;
         _revStrokeEnable = revStrokeEnabled;
         Position = prevDataRow != null ? _prevDataRow.Position + _step : 0;
-        FStroke = fStroke;
-        RevStroke = revStroke;
+        if (unit == Units.Micrometer)
+        {
+            FStroke = _fStroke;
+            RevStroke = _revStroke;            
+        }
+        else if (unit == Units.Angle)
+        {
+            FDegree = _fDegree;
+            FMinutes = _fMinutes;
+            FSeconds = _fSeconds;
+            RevDegree = _rDegree;
+            RevMinutes = _rMinutes;
+            RevSeconds = _rSeconds;
+        }
     }
 
     //получение сток для печати
 
+
+
     public int FDegree { get => _fDegree; set 
         { 
             _fDegree = value % 360;
-            // FStroke = Convert.ToInt32((_fDegree * 3600 + _fMinutes * 60 + _fSeconds) * coef) * (_step / 1000); //TODO
+            _fStroke = DegreeToMicrometers(degree: value, minutes: _fMinutes, seconds: _fSeconds);
+            UpdateMidValue();
         } }
     public int FMinutes { get => _fMinutes; set {
             (_fDegree, _fMinutes, _fSeconds) = OptimizeDegrees(_fDegree, value, _fSeconds);
-            // FStroke = Convert.ToInt32((_fDegree * 3600 + _fMinutes * 60 + _fSeconds) * coef) * (_step / 1000); //TODO
+            _fStroke = DegreeToMicrometers(degree: _fDegree, minutes: value, seconds: _fSeconds);
+            UpdateMidValue();
         } }
     public int FSeconds { get => _fSeconds; set {
             (_fDegree, _fMinutes, _fSeconds) = OptimizeDegrees(_fDegree, _fMinutes, value);
-            // FStroke = Convert.ToInt32((_fDegree * 3600 + _fMinutes * 60 + _fSeconds) * coef) * (_step / 1000); //TODO
+            _fStroke = DegreeToMicrometers(degree: _fDegree, minutes: _fMinutes, seconds: value);
+            UpdateMidValue();
         } }
 
     public int RevDegree
@@ -209,7 +231,8 @@ public class DataRow
         get => _rDegree; set
         {
             _rDegree = value % 360;
-            // RevStroke = Convert.ToInt32((_rDegree * 3600 + _rMinutes * 60 + _rSeconds) * coef) * (_step / 1000); //TODO
+            _revStroke = DegreeToMicrometers(degree: value, minutes: _rMinutes, seconds: _rSeconds);
+            UpdateMidValue();
         }
     }
     public int RevMinutes
@@ -217,7 +240,8 @@ public class DataRow
         get => _rMinutes; set
         {
             (_rDegree, _rMinutes, _rSeconds) = OptimizeDegrees(_rDegree, value, _rSeconds);
-            // RevStroke = Convert.ToInt32((_rDegree * 3600 + _rMinutes * 60 + _rSeconds) * coef) * (_step / 1000); //TODO
+            _revStroke = DegreeToMicrometers(degree: _rDegree, minutes: value, seconds: _rSeconds);
+            UpdateMidValue();
         }
     }
     public int RevSeconds
@@ -225,7 +249,8 @@ public class DataRow
         get => _rSeconds; set
         {
             (_rDegree, _rMinutes, _rSeconds) = OptimizeDegrees(_rDegree, _rMinutes, value);
-            // RevStroke = Convert.ToInt32((_rDegree * 3600 + _rMinutes * 60 + _rSeconds) * coef) * (_step / 1000); //TODO
+            _revStroke = DegreeToMicrometers(degree: _rDegree, minutes: _rMinutes, seconds: value);
+            UpdateMidValue();
         }
     }
 
@@ -249,7 +274,8 @@ public class DataRow
     
     public int DegreeToMicrometers(int degree = 0, int minutes = 0, int seconds = 0)
     {
-        return Convert.ToInt32((_step / 1000) * (Math.Round(Math.Tan(degree) + Math.Tan(minutes / 60) + Math.Tan(seconds / 3600))));
+        var deg = (double)degree + (double)minutes / 60D + (double)seconds / 3600D;
+        return Convert.ToInt32(Math.Tan(deg * Math.PI / 180) * 1000000);
     }
 
     public string[] GetAllCellsStringArray()
@@ -267,5 +293,11 @@ public class DataRow
                 RevDegree.ToString(),
                 RevMinutes.ToString(),
                 RevSeconds.ToString()];
+    }
+    public void UpdateMidValue()
+    {
+        MidValue = _revStroke != int.MinValue && _revStrokeEnable
+                ? (_revStroke + _fStroke) / 2
+                : this._fStroke;
     }
 }

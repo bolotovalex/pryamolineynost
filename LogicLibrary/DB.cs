@@ -3,7 +3,7 @@ namespace LogicLibrary;
 
 public class DB
 {
-    private string _backendVersion = "1.3.0.0";
+    private string _backendVersion = "1.5.0.0";
     public DateTime Date { get; set; } //Дата
     public required string Name { get; set; } //Наименование
     public required string Description { get; set; } //Обозначение
@@ -42,14 +42,6 @@ public class DB
     }
 
  
-    //public DB(List<DataRow> dataList, int step)
-    //{
-    //    foreach(var row in dataList)
-    //    {
-    //        AddRow(row.FStroke, row.RevStroke);
-    //    }
-    //}
-
     public DPoint[] GetCurvePoints() => CurvePoints;
     public DPoint[] GetStraightPoint() => StraightPoints;
     public AreaDeviation[] GetAreaDeviations() => maxLocalAreaDeviations ?? new AreaDeviation[0];
@@ -104,13 +96,36 @@ public class DB
         }
     }
 
-    public void AddRow(int value, Direction direction)
+    public void AddRow(int value, Direction direction, Units unit, AngleUnits angleUnits = AngleUnits.Second)
     {
         var prevRow = DataList[^1];
-        var row = new DataRow(value, Step, prevRow, _revStrokeEnbled, direction);
+        DataRow row = null;
+        switch (unit)
+        {
+            case Units.Micrometer:
+                row = new DataRow(value, Step, prevRow, _revStrokeEnbled, direction);
+                break;
+            case Units.Angle:
+                switch (angleUnits)
+                {
+                    case AngleUnits.Degree:
+                        row = new DataRow(value, Step, prevRow, _revStrokeEnbled, direction, AngleUnits.Degree);
+                        break;
+                    case AngleUnits.Minute:
+                        row = new DataRow(value, Step, prevRow, _revStrokeEnbled, direction, AngleUnits.Minute);
+                        break;
+                    case AngleUnits.Second:
+                        row = new DataRow(value, Step, prevRow, _revStrokeEnbled, direction, AngleUnits.Second);
+                        break;
+                }
+                // row = new DataRow(value, Step, prevRow, _revStrokeEnbled, direction, angleUnits);
+                break;
+        }
+        
+        
         DataList.Add(row);
         UpdateProgramFactors();
-        UpdateAllRows();
+        UpdateAllRows(currUnit);
     }
 
     private decimal GetMaxDeviationPerMeterForStep(int maxIndex)
@@ -180,14 +195,14 @@ public class DB
         }
     }
 
-    public void UpdateAllStroksDataList()
+    public void UpdateAllStroksDataList(Units unit)
     {
         for (var i = 1; i < DataList.Count; i++)
         {
             var selRow = DataList[i];
             var prevRow = DataList[i - 1];
 
-            selRow.RecalcRow(selRow.FStroke, selRow.RevStroke, Step, prevRow, _revStrokeEnbled);
+            selRow.RecalcRow(Step, prevRow, _revStrokeEnbled, unit);
         }
     }
 
@@ -357,10 +372,10 @@ public class DB
         return (startIndex, endIndex);
     }
 
-    public void UpdateAllRows()
+    public void UpdateAllRows(Units unit)
     {
         //TODO Не оптимально. Множественные проходы. Нужно оптимизировать, но набор данных не большой. Пока сделано, чтобы считалось так-же как в excel
-        UpdateAllStroksDataList();
+        UpdateAllStroksDataList(unit);
         UpdateAllAdjStrokeDataList();
         UpdateMinMaxDeviations();
         UpdateMeterDeflectionAllDataList();
@@ -370,25 +385,47 @@ public class DB
         UpdatePoints(); 
     }
 
-    public void UpdateFStrokeRow(int index, int value)
+    public void UpdateRow(int index, int value, Direction direction, Units unit, AngleUnits angleUnits = AngleUnits.Second) //int index, int value)
     {
         if (index > 0)
-        {
-            DataList[index].FStroke = value;
-            
-        }
-        UpdateAllRows();
+            switch (unit)
+            {
+                case Units.Micrometer:
+                    if (direction == Direction.Forward)
+                        DataList[index].FStroke = value;
+                    
+                    else if (direction == Direction.Reverse)
+                        DataList[index].RevStroke = value;
+                    
+                    break;
+                
+                case Units.Angle:
+                    switch (angleUnits)
+                    {
+                        case AngleUnits.Degree:
+                            if (direction == Direction.Forward)
+                                DataList[index].FDegree = value;
+                            else if (direction == Direction.Reverse)
+                                DataList[index].RevDegree = value;
+                            break;
+                        case AngleUnits.Minute:
+                            if (direction == Direction.Forward)
+                                DataList[index].FMinutes = value;
+                            else if (direction == Direction.Reverse)
+                                DataList[index].RevMinutes = value;
+                            break;
+                        case AngleUnits.Second:
+                            if (direction == Direction.Forward)
+                                DataList[index].FSeconds = value;
+                            else if (direction == Direction.Reverse)
+                                DataList[index].RevSeconds = value;
+                            break;
+                    }
+                    break;
+            }
+        UpdateAllRows(currUnit);
     }
 
-    public void UpdateRevStrokeRow(int index, int value)
-    {
-        if (index > 0)
-        {
-            DataList[index].RevStroke = value;
-            
-        }
-        UpdateAllRows();
-    }
     public void CleanDb()
     {
         Date = DateTime.Now.Date;
@@ -398,7 +435,7 @@ public class DB
         _verticalDeflection = 0;
         UpdateStepsPerMeter(Step);
         DataList.Add(new DataRow(0, 0, null, _revStrokeEnbled, Direction.Forward));
-        UpdateAllRows();
+        UpdateAllRows(currUnit);
     }
 
     //public (string Name, object Value)[] GetDBFields()
@@ -517,7 +554,7 @@ public class DB
             case Units.Angle:
                 return "Градусы,Минуты,Секунды";
             default:
-                throw new Exception("Не изветный тип измерения.");
+                throw new Exception("Не известный тип измерения.");
         }
     }
 
@@ -530,7 +567,7 @@ public class DB
             case Units.Angle:
                 return 1;
             default:
-                throw new Exception("Не изветный тип измерения.");
+                throw new Exception("Не известный тип измерения.");
         }
     }
 
@@ -543,7 +580,7 @@ public class DB
             case 1:
                 return Units.Angle;
             default:
-                throw new Exception("Не изветный тип измерения.");
+                throw new Exception("Не известный тип измерения.");
         }
     }
 }
