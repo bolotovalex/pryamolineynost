@@ -67,7 +67,6 @@ public partial class DataForm : Form
                     _db.UpdateAllRows(_db.currUnit);
                     UpdateForm(null, null);
                     dataGridView.Rows.Remove(selectedRow); // Удаление строки
-                    
                 }
             }
         }
@@ -105,7 +104,6 @@ public partial class DataForm : Form
         dataGrid.Rows.Clear();
         if (dataGrid.Columns.Count == 0)
             InitializeComponent();
-
         dataGrid.Rows.Add();
         UpdateForm(sender, e);
     }
@@ -144,14 +142,11 @@ public partial class DataForm : Form
             dataGrid.Rows[i].Cells[13].Value = row.RevMinutes == int.MinValue ? "" : row.RevMinutes.ToString();
             dataGrid.Rows[i].Cells[14].Value = row.RevSeconds == int.MinValue ? "" : row.RevSeconds.ToString();
 
-
             if (Math.Round(row.DeviationPerMeter, 2) > this._db.MeterTolerance)
                 dataGrid.Rows[i].Cells[5].Style.BackColor = Color.LightCoral;
             else
                 dataGrid.Rows[i].Cells[5].Style.BackColor = SystemColors.Control;
         }
-
-
     }
 
     private void ToogleUnitsColumns()
@@ -299,7 +294,8 @@ public partial class DataForm : Form
         _db.CleanDb();
         _mainForm.UpdateAllFields();
         UpdateForm(sender, e);
-        _graphicsForm.UpdatePlot();
+        if (_graphicsForm != null)
+            _graphicsForm.UpdatePlot();
     }
 
 
