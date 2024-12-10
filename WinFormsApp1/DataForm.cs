@@ -182,6 +182,7 @@ public partial class DataForm : Form
             dataGrid.Columns[_angleColumnsIndex[i]].Visible = _db is { RevStrokeEnable: true, currUnit: Units.Angle };
     }
 
+    
     private void DataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
     {
         object? cellValue = dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
@@ -247,6 +248,7 @@ public partial class DataForm : Form
                         break;
                 }
         }
+        
         else
         {
             switch (e.ColumnIndex)

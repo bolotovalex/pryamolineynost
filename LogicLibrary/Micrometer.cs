@@ -1,17 +1,32 @@
 ﻿namespace LogicLibrary
 {
-    public class Micrometer
+    public class Micrometer : IUnit
     {
-        public int Value { get; set; }
+        public int Value { get; private set; }
 
-        public Micrometer(int value) 
+        public IUnit? LinkedUnit { get; set; }
+        
+        public Micrometer(int value, IUnit? linkedObject = null) 
         {
-            Value = value; 
+            Value = value;
+            LinkedUnit = linkedObject ?? new Angle(Value, this);
         }
 
-        public Angle ConvertToAngel()
+        public void SetValue(int value)
         {
-            return new Angle(0, 0, 0);
+            Value = value;
+            LinkedUnit.UpdateValue(value);
+        }
+
+        public void UpdateValue(int value)
+        {
+            Value = value;
+        }
+
+        public void UpdateFieldValue(string field, int value)
+        {
+            
+            throw new NotImplementedException();
         }
     }
 }
