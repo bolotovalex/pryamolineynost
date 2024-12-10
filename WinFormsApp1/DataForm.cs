@@ -64,9 +64,15 @@ public partial class DataForm : Form
                 if (!selectedRow.IsNewRow)
                 {
                     _db.DataList.RemoveAt(selectedRow.Index);
+                    dataGrid.Rows.RemoveAt(selectedRow.Index);
                     _db.UpdateAllRows(_db.currUnit);
-                    UpdateForm(null, null);
-                    dataGridView.Rows.Remove(selectedRow); // Удаление строки
+                    UpdateForm(sender, e);
+                    _mainForm.UpdateAllFields();
+                    _mainForm.UpdateGraphic();
+                    if (_graphicsForm != null)
+                    {
+                        _graphicsForm.UpdateDeviationList();
+                    }
                 }
             }
         }

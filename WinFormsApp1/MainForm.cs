@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Reflection;
 using System.Text.Json;
 using LogicLibrary;
 using PryamolineynostWF;
@@ -9,7 +10,7 @@ namespace Pryamolineynost;
 public partial class MainForm : Form
 {
     
-    private string Version = "1.2.6.0";
+    private string Version = "1.2.7.2";
     private DB _dB;
     private DataForm _dataForm;
     private GraphicsForm _graphicsForm;
