@@ -1,13 +1,14 @@
 ﻿using System.Drawing;
+using PryamolineynostWF.Interfaces;
 namespace LogicLibrary;
 
 public class DB : IModel
 {
     private string _backendVersion = "1.5.0.0";
     public DateTime Date { get; set; } //Дата
-    public required string Name { get; set; } //Наименование
-    public required string Description { get; set; } //Обозначение
-    public required string Fio { get; set; } //Измерения произвел
+    public string Name { get; set; } //Наименование
+    public string Description { get; set; } //Обозначение
+    public string Fio { get; set; } //Измерения произвел
     private decimal _minDeviation { get; set; } //Наибольшее отклонение, мкм
     private decimal _maxDeviation { get; set; } //Наименьшее отклонение, мкм
     private decimal _verticalDeflection { get; set; } //Отклонение от прямолинейности в вертикальной плоскости, мкм - 

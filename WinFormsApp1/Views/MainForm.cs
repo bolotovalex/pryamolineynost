@@ -1,16 +1,15 @@
 using System.Globalization;
-using System.Reflection;
 using System.Text.Json;
 using LogicLibrary;
 using PryamolineynostWF;
-
+using PryamolineynostWF.Interfaces;
 
 namespace Pryamolineynost;
 
-public partial class MainForm : Form
+public partial class MainForm : Form, IView
 {
     
-    private string Version = "1.2.7.2";
+    private string _version = "1.2.7.2";
     private DB _dB;
     private DataForm _dataForm;
     private GraphicsForm _graphicsForm;
@@ -30,9 +29,9 @@ public partial class MainForm : Form
         //_dataForm = new DataForm(_dB, this, _graphicsForm);
         stepTextBox.Text = _dB.Step.ToString();
         _graphic = new GraphicModel(_dB.GetCurvePoints(), _dB.GetStraightPoint(), _dB.Step);
-        CheckAllRequiredElements();
+        ChangeComboBoxColor();
         //_graphicsForm = new GraphicsForm(_dB, this, _graphic);
-        Text = $"Прямолинейность. ver. {Version}";
+        Text = $"Прямолинейность. ver. {_version}";
     }
 
     public bool CheckComboBox(ComboBox comboBox)
@@ -42,7 +41,7 @@ public partial class MainForm : Form
         return true;
     }
 
-    private bool CheckAllRequiredElements()
+    private bool ChangeComboBoxColor()
     {
         var state = true;
         foreach (var cb in new ComboBox[] { nameComboBox, descriptionComboBox, fioComboBox })
@@ -143,7 +142,7 @@ public partial class MainForm : Form
 
     private void DataForm_Click(object sender, EventArgs e)
     {
-        if (CheckAllRequiredElements())
+        if (ChangeComboBoxColor())
         {
             //_dataForm.Dispose();
             _dataForm = new DataForm(_dB, this, _graphicsForm);
@@ -181,7 +180,7 @@ public partial class MainForm : Form
 
     private async void SaveButton_Click(object sender, EventArgs e)
     {
-        if (CheckAllRequiredElements())
+        if (ChangeComboBoxColor())
         {
             var filename = GetSaveFileName(FileFormat.Json);
 
@@ -259,7 +258,7 @@ public partial class MainForm : Form
             //_errorForm = new ErrorForm();
             //_errorForm.ShowDialog();
         }
-        CheckAllRequiredElements();
+        ChangeComboBoxColor();
     }
 
     public void UpdateGraphic()
@@ -271,7 +270,7 @@ public partial class MainForm : Form
     }
     private void GraphicButton_Click(object sender, EventArgs e)
     {
-        if (CheckAllRequiredElements())
+        if (ChangeComboBoxColor())
         {
             if (_graphicsForm != null)
                 _graphicsForm.Dispose();
@@ -290,7 +289,7 @@ public partial class MainForm : Form
 
     private void SavePdfButton_Click(object sender, EventArgs e)
     {
-        if (CheckAllRequiredElements())
+        if (ChangeComboBoxColor())
         {
             var fileName = GetSaveFileName(FileFormat.Pdf);
             var pl = new GraphicModel(_dB.GetCurvePoints(), _dB.GetStraightPoint(), _dB.DataList.Count < 12 ? _dB.Step : _dB.DataList.Count / 12 * _dB.Step);

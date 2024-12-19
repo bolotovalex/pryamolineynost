@@ -639,7 +639,6 @@ namespace Pryamolineynost
         private TextBox stepTextBox;
         private Button loadFileButton;
         private Button saveButton;
-        private DateTime dateTime;
         private Button fillDataFormButton;
         private Panel descriptionPanel;
         private ComboBox descriptionComboBox;

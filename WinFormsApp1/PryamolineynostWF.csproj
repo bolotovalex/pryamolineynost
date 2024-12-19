@@ -42,14 +42,25 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LogicLibrary\LogicLibrary.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Update="Properties\Resources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Views\MainForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Views\GraphicsForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Views\ErrorForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Views\DataForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Views\DeviceChooseForm.cs">
+        <SubType>Form</SubType>
       </Compile>
     </ItemGroup>
 
