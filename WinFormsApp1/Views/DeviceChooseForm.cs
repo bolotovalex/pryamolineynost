@@ -9,6 +9,7 @@ public partial class DeviceChooseForm : Form
 {
     public event EventHandler OkClicked;
     public event EventHandler CancelClicked;
+    private Thread secondThread;
 
     public DeviceChooseForm()
     {
@@ -20,29 +21,29 @@ public partial class DeviceChooseForm : Form
 
     private void FillDeviceTypeComboBox()
     {
-        deviceComboBox.DataSource = Enum.GetValues(typeof(MeasurementDevices))
-            .Cast<MeasurementDevices>()
-            .Select(d => new { Value = d, Display = DeviceTypeTranslation.GetTranslation[d] })
-            .ToList();
-        deviceComboBox.DisplayMember = "Display";
-        deviceComboBox.ValueMember = "Value";
+        deviceComboBox.DataSource = Enum.GetValues(typeof(MeasurementDevices));
+        //    .Cast<MeasurementDevices>()
+        //    .Select(d => new { Value = d, Display = DeviceTypeTranslation.GetTranslation[d] })
+        //    .ToList();
+        //deviceComboBox.DisplayMember = "Display";
+        //deviceComboBox.ValueMember = "Value";
     }
 
     private void FillCollimatorTypeComboBox()
     {
-        collimatorModelComboBox.DataSource = Enum.GetValues(typeof(CollimatorType))
-            .Cast<CollimatorType>()
-            .Select(d => new { Value = d, Display = CollimatorTypeTranslation.GetTranslation[d] })
-            .ToList();
-        collimatorModelComboBox.DisplayMember = "Display";
-        collimatorModelComboBox.ValueMember = "Value";
+        collimatorModelComboBox.DataSource = Enum.GetValues(typeof(CollimatorType));
+        //    .Cast<CollimatorType>()
+        //    .Select(d => new { Value = d, Display = CollimatorTypeTranslation.GetTranslation[d] })
+        //    .ToList();
+        //collimatorModelComboBox.DisplayMember = "Display";
+        //collimatorModelComboBox.ValueMember = "Value";
     }
 
     private void ToogleCollimatorTypeElements()
     {
         if ((MeasurementDevices)deviceComboBox.SelectedValue == MeasurementDevices.Collimator)
         {
-            collimatorModelComboBox.Enabled = true;
+            collimatorModelComboBox.Enabled = true; 
             collimatorModelText.Enabled = true;
         }
         else
@@ -50,6 +51,11 @@ public partial class DeviceChooseForm : Form
             collimatorModelComboBox.Enabled = false;
             collimatorModelText.Enabled = false;
         }
+    }
+
+    private void startLevelForm()
+    {
+        Application.Run(new MainForm());
     }
 
     private void cancelButton_Click(object sender, EventArgs e)
@@ -61,14 +67,12 @@ public partial class DeviceChooseForm : Form
     {
         if ((MeasurementDevices)deviceComboBox.SelectedValue == MeasurementDevices.Level)
         {
-            
-            var view = new MainForm();
-            var model = new DB();
-            var controller = new LevelController(view, model);
-            Hide();
-            view.Show();
-
+            this.Close();
+            secondThread = new Thread(startLevelForm);
+            secondThread.SetApartmentState(ApartmentState.STA);
+            secondThread.Start();
         }
+        
     }
 
     private void deviceComboBox_SelectedIndexChanged(object sender, EventArgs e)
