@@ -26,10 +26,4 @@
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Views\ParamsPageView.axaml.cs">
-      <DependentUpon>ParamsPageView.axaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
 </Project>

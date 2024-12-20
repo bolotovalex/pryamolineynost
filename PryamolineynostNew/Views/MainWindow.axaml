@@ -51,7 +51,7 @@
                             ToolTip.Tip="Главный экран"
                             Classes="ControlPanelButton"
                             Content=""
-                            Command="{Binding SetomePage}">
+                            Command="{Binding SetHomePage}">
                     </Button>
                     
                     <!-- Кнопка меню параметров-->

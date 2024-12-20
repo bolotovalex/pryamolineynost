@@ -1,5 +1,4 @@
-﻿using ReactiveUI;
-namespace PryamolineynostNew.ViewModels;
+﻿namespace PryamolineynostNew.ViewModels;
 
 public class HomePageViewModel : PageViewModelBase
 {

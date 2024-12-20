@@ -1,8 +1,9 @@
-﻿using ReactiveUI;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ReactiveUI;
 
 namespace PryamolineynostNew.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public partial class MainWindowViewModel : ViewModelBase
     {
         public MainWindowViewModel()
         {
@@ -17,20 +18,14 @@ namespace PryamolineynostNew.ViewModels
             new GraphicPageViewModel(),
             new SettingsPageViewModel()
         };
-        
-        private PageViewModelBase _currentPage;
-        public PageViewModelBase CurrentPage
-        {
-            get { return _currentPage; }
-            private set { this.RaiseAndSetIfChanged(ref _currentPage, value); }
-        }
 
-        public void SetomePage() => CurrentPage = _pages[0];
+        [ObservableProperty]
+        private PageViewModelBase _currentPage;
+        
+        public void SetHomePage() => CurrentPage = _pages[0];
         public void SetParamsPage() => CurrentPage = _pages[1];
         public void SetDataPage() => CurrentPage = _pages[2];
         public void SetGraphicPage() => CurrentPage = _pages[3];
         public void SetSettingsPage() => CurrentPage = _pages[4];
-        
-        
     }
 }
