@@ -6,7 +6,8 @@
         </Border>
     </Design.PreviewWith>
 
-    <Style Selector="Button.ControlPanelButton">
+	
+	<Style Selector="Button.ControlPanelButton">
         <Setter Property="CornerRadius" Value="3"></Setter>
         <Setter Property="Margin" Value="0,2,0,2"></Setter>
         <Setter Property="Padding" Value="0"></Setter>

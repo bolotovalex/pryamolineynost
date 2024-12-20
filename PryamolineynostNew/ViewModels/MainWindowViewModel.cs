@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.Input;
 
 namespace PryamolineynostNew.ViewModels
 {
@@ -9,7 +9,7 @@ namespace PryamolineynostNew.ViewModels
         {
             _currentPage = _pages[0];
         }
-        
+
         private readonly PageViewModelBase[] _pages =
         {
             new HomePageViewModel(),
@@ -21,11 +21,27 @@ namespace PryamolineynostNew.ViewModels
 
         [ObservableProperty]
         private PageViewModelBase _currentPage;
-        
-        public void SetHomePage() => CurrentPage = _pages[0];
+        [ObservableProperty]
+        private bool isHomePageActive;
+
+        [RelayCommand]
+        public void SetHomePage()
+        {
+            CurrentPage = _pages[0];
+            ActivatePage("Home");
+        }
         public void SetParamsPage() => CurrentPage = _pages[1];
         public void SetDataPage() => CurrentPage = _pages[2];
         public void SetGraphicPage() => CurrentPage = _pages[3];
         public void SetSettingsPage() => CurrentPage = _pages[4];
+
+        private void ActivatePage(string page)
+        {
+            IsHomePageActive = page == "Home";
+            //IsParamsPageActive = page == "Params";
+            //IsDataPageActive = page == "Data";
+            //IsGraphicPageActive = page == "Graphic";
+            //IsSettingsPageActive = page == "Settings";
+        }
     }
 }
