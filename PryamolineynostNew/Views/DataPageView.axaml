@@ -9,6 +9,8 @@
 	<Design.DataContext>
 		<vm:DataPageViewModel />
 	</Design.DataContext>
+	
+	
 
 	<Grid RowDefinitions="*" ColumnDefinitions="*" Background="LightCoral">
 	<StackPanel VerticalAlignment="Center" Spacing="5">

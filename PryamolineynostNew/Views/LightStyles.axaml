@@ -42,7 +42,7 @@
 		<Setter Property="FontWeight" Value="Bold"></Setter>
 	</Style>
     
-    <Style Selector="TextBox.InputCol">
+    <Style Selector="TextBox">
         <Setter Property="Background" Value="rgb(247,247,247)"></Setter>
         <Setter Property="Foreground" Value="Black"></Setter>
         <Setter Property="Padding" Value="7"></Setter>

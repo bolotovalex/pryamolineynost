@@ -1,10 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LogicLibrary;
+using PryamolineynostNew.Interfaces;
 
 namespace PryamolineynostNew.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
+        public static IModel Model = new Level();
+
         public MainWindowViewModel()
         {
             _currentPage = _pages[0];
@@ -13,7 +17,7 @@ namespace PryamolineynostNew.ViewModels
         private readonly PageViewModelBase[] _pages =
         {
             new HomePageViewModel(),
-            new ParamsPageViewModel(),
+            new LevelParamsPageViewModel(),
             new DataPageViewModel(),
             new GraphicPageViewModel(),
             new SettingsPageViewModel()

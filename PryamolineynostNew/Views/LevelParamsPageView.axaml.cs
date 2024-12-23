@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace PryamolineynostNew.Views;
 
-public partial class ParamsPageView : UserControl
+public partial class LevelParamsPageView : UserControl
 {
-    public ParamsPageView()
+    public LevelParamsPageView()
     {
         InitializeComponent();
     }
