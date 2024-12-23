@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicLibrary
+namespace PryamolineynostNew.Models.LevelTool
 {
     public class SortedQueueDeviation
     {        

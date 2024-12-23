@@ -1,7 +1,7 @@
 ﻿using System;
 using PryamolineynostNew.Interfaces;
 
-namespace PryamolineynostNew.Models.Level
+namespace PryamolineynostNew.Models.LevelTool
 {
     public class Micrometer : IUnit
     {

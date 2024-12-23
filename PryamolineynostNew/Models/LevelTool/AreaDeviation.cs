@@ -1,4 +1,4 @@
-﻿namespace LogicLibrary
+﻿namespace PryamolineynostNew.Models.LevelTool
 {
     public class AreaDeviation
     {

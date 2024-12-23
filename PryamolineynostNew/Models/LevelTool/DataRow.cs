@@ -1,7 +1,7 @@
 ﻿using System;
 using PryamolineynostNew.Models.Enums;
 
-namespace PryamolineynostNew.Models.Level;
+namespace PryamolineynostNew.Models.LevelTool;
 
 public class DataRow
 {

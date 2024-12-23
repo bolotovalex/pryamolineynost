@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using PryamolineynostNew.Models.Enums;
-using PryamolineynostNew.Models.Level;
+using PryamolineynostNew.Models.LevelTool;
 using PryamolineynostNew.Interfaces;
 
-namespace LogicLibrary;
+namespace PryamolineynostNew.Models.LevelTool;
 
 public class Level : IModel
 {

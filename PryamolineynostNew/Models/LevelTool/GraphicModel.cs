@@ -2,7 +2,7 @@
 using OxyPlot.Axes;
 using OxyPlot.Legends;
 using OxyPlot.Series;
-namespace PryamolineynostNew.Models.Level
+namespace PryamolineynostNew.Models.LevelTool
 {
     public class GraphicModel
     {

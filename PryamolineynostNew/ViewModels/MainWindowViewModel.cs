@@ -1,17 +1,26 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Dynamic;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LogicLibrary;
+using PryamolineynostNew.Models.LevelTool;
 using PryamolineynostNew.Interfaces;
 
 namespace PryamolineynostNew.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
-        public static IModel Model = new Level();
+        private static Level _model;
+
+        public Level Model
+        {
+            get => _model;
+            set => _model = value;
+        }
 
         public MainWindowViewModel()
         {
+            Model = new Level();
             _currentPage = _pages[0];
+            
         }
 
         private readonly PageViewModelBase[] _pages =

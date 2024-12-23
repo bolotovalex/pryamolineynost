@@ -3,7 +3,7 @@ using System.Windows.Input;
 using PryamolineynostNew.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LogicLibrary;
+using PryamolineynostNew.Models.LevelTool;
 
 namespace PryamolineynostNew.ViewModels
 {
@@ -35,8 +35,24 @@ namespace PryamolineynostNew.ViewModels
         private int _allLengthTolerance;
         [ObservableProperty]
         private int _step;
-        private IModel _model;
+        
 
+        public LevelParamsPageViewModel()
+        {
+            Date = DateTimeOffset.Now;
+            // ProjectName = _model.ProjectName;
+            // Description = _model.Description;
+            // Author = _model.Author;
+            // MaxDeviation = _model.MaxDeviation;
+            // MinDeviation = _model.MinDeviation;
+            // VerticalDeviation = _model.VerticalDeviation;
+            // LocalAreaDeviation = _model.LocalAreaDeviation;
+            // BedLength = _model.BedLength;
+            // LocalAreaLength = _model.LocalAreaLength;
+            // LocalAreaTolerance = _model.LocalAreaTolerance;
+            // Step = _model.Step;
+        }
+        
         [RelayCommand]
         private void ApplyButtonClicked()
         {
@@ -50,7 +66,6 @@ namespace PryamolineynostNew.ViewModels
         }
         partial void OnProjectNameChanged(string value)
         {
-            // Логика при изменении ProjectName
             ProjectName = value;
         }
 

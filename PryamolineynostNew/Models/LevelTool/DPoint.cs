@@ -1,5 +1,5 @@
 ﻿using System;
-namespace PryamolineynostNew.Models.Level
+namespace PryamolineynostNew.Models.LevelTool
 {
     public class DPoint
     {
