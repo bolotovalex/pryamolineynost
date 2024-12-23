@@ -320,7 +320,7 @@ public class Level : IModel
         return (LocalAreaStraight[0].x, LocalAreaStraight[^1].x, maxDeviation - minDeviation);
     }
 
-    public AreaDeviation[]? GetMaxLocalAreaDeviation(int count = 10, decimal tolerance = 0)
+    public AreaDeviation[]? GetMaxLocalAreaDeviationList(int count = 10, decimal tolerance = 0)
     {
         var deviationList = new SortedQueueDeviation();
         int localStep;
@@ -387,7 +387,7 @@ public class Level : IModel
         UpdateMeterDeflectionAllDataList();
         UpdateMeterDeflection();
         _bedAreaLength = DataList[^1].Position;
-        maxLocalAreaDeviations = GetMaxLocalAreaDeviation(30);
+        maxLocalAreaDeviations = GetMaxLocalAreaDeviationList(30);
         UpdatePoints(); 
     }
 

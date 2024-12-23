@@ -35,22 +35,15 @@ namespace PryamolineynostNew.ViewModels
         private int _allLengthTolerance;
         [ObservableProperty]
         private int _step;
+
+        private Level _model;
         
 
         public LevelParamsPageViewModel()
         {
+            _model = MainWindowViewModel.Model;
             Date = DateTimeOffset.Now;
-            // ProjectName = _model.ProjectName;
-            // Description = _model.Description;
-            // Author = _model.Author;
-            // MaxDeviation = _model.MaxDeviation;
-            // MinDeviation = _model.MinDeviation;
-            // VerticalDeviation = _model.VerticalDeviation;
-            // LocalAreaDeviation = _model.LocalAreaDeviation;
-            // BedLength = _model.BedLength;
-            // LocalAreaLength = _model.LocalAreaLength;
-            // LocalAreaTolerance = _model.LocalAreaTolerance;
-            // Step = _model.Step;
+            
         }
         
         [RelayCommand]
@@ -64,64 +57,69 @@ namespace PryamolineynostNew.ViewModels
         {
             
         }
+
+        partial void OnDateChanged(DateTimeOffset date)
+        {
+            Date = date;
+        }
         partial void OnProjectNameChanged(string value)
         {
-            ProjectName = value;
+            // ProjectName = value;
         }
 
         partial void OnDescriptionChanged(string value)
         {
-            Description = value;
+            // Description = value;
         }
 
         partial void OnAuthorChanged(string value)
         {
-            Author = value;
+            // Author = value;
         }
 
         partial void OnBedLengthChanged(int value)
         {
-            BedLength = value;
+            // BedLength = value;
         }
 
         partial void OnLocalAreaLengthChanged(int value)
         {
-            LocalAreaLength = value;
+            // LocalAreaLength = value;
         }
 
         partial void OnLocalAreaToleranceChanged(int value)
         {
-            LocalAreaTolerance = value;
+            // LocalAreaTolerance = value;
         }
 
         partial void OnAllLengthToleranceChanged(int value)
         {
-            AllLengthTolerance = value;
+            // AllLengthTolerance = value;
         }
 
         partial void OnStepChanged(int value)
         {
-            Step = value;
+            // Step = value;
         }
 
         partial void OnMaxDeviationChanged(decimal value)
         {
-            MaxDeviation = value;
+            // MaxDeviation = value;
         }
 
         partial void OnMinDeviationChanged(decimal value)
         {
-            MinDeviation = value;
+            // MinDeviation = value;
         }
 
         partial void OnVerticalDeviationChanged(decimal value)
         {
-            VerticalDeviation = value;
+            // VerticalDeviation = value;
         }
 
         partial void OnLocalAreaDeviationChanged(decimal value)
         {
-            LocalAreaDeviation = value;
+            // LocalAreaDeviation = value;
         }
         
         

@@ -35,7 +35,7 @@
     </Style>
     
     <Style Selector="TextBlock">
-		<Setter Property="Background" Value="rgb(247,247,247)"></Setter>
+		<!-- <Setter Property="Background" Value="rgb(247,247,247)"></Setter> -->
 		<Setter Property="Foreground" Value="Black"></Setter>
 		<Setter Property="Padding" Value="0"></Setter>
 		<Setter Property="Margin" Value="0"></Setter>
@@ -43,7 +43,7 @@
 	</Style>
     
     <Style Selector="TextBox">
-        <Setter Property="Background" Value="rgb(247,247,247)"></Setter>
+        <!-- <Setter Property="Background" Value="rgb(247,247,247)"></Setter> -->
         <Setter Property="Foreground" Value="Black"></Setter>
         <Setter Property="Padding" Value="7"></Setter>
         <Setter Property="Margin" Value="2"></Setter>
@@ -53,7 +53,7 @@
     </Style>
     
     <Style Selector="TextBox.InputCol:pointerover /template/ ContentPresenter">
-        <Setter Property="Background" Value="rgb(247,247,247)"></Setter>
+        <!-- <Setter Property="Background" Value="rgb(247,247,247)"></Setter> -->
         <Setter Property="Foreground" Value="Black"></Setter>
         <Setter Property="Padding" Value="7"></Setter>
         <Setter Property="Margin" Value="2"></Setter>
@@ -63,7 +63,7 @@
     </Style>
     
     <Style Selector="TextBox.InputCol:pressed /template/ ContentPresenter">
-        <Setter Property="Background" Value="rgb(247,247,247)"></Setter>
+        <!-- <Setter Property="Background" Value="rgb(247,247,247)"></Setter> -->
         <Setter Property="Foreground" Value="Black"></Setter>
         <Setter Property="Padding" Value="7"></Setter>
         <Setter Property="Margin" Value="2"></Setter>

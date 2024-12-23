@@ -65,7 +65,8 @@
             
             <DatePicker Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" 
                         HorizontalAlignment="Right" 
-                        Margin="3,3,3,3" >
+                        Margin="3,3,3,3" 
+                        SelectedDate="{Binding Date}">
             </DatePicker>
             
             <TextBlock Grid.Row="1" 

@@ -10,7 +10,7 @@ namespace PryamolineynostNew.ViewModels
     {
         private static Level _model;
 
-        public Level Model
+        public static Level Model
         {
             get => _model;
             set => _model = value;
