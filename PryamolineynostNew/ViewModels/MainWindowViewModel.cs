@@ -29,7 +29,8 @@ namespace PryamolineynostNew.ViewModels
             new LevelParamsPageViewModel(),
             new DataPageViewModel(),
             new GraphicPageViewModel(),
-            new SettingsPageViewModel()
+            new SettingsPageViewModel(),
+            new ExitPageViewModel()
         };
 
         [ObservableProperty]
@@ -43,10 +44,17 @@ namespace PryamolineynostNew.ViewModels
             CurrentPage = _pages[0];
             ActivatePage("Home");
         }
+
+        [RelayCommand]
+        private void ExitButton_Click()
+        {
+            
+        }
         public void SetParamsPage() => CurrentPage = _pages[1];
         public void SetDataPage() => CurrentPage = _pages[2];
         public void SetGraphicPage() => CurrentPage = _pages[3];
         public void SetSettingsPage() => CurrentPage = _pages[4];
+        public void SetExitPage() => CurrentPage = _pages[5];
 
         private void ActivatePage(string page)
         {

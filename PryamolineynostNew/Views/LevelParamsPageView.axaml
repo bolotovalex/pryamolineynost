@@ -197,35 +197,49 @@
                      Grid.ColumnSpan="0"
                      Text="{Binding Step}"/>
             
-            <Button Grid.Row="13" 
-                    Grid.Column="4" 
-                    IsEnabled="False"
-                    Command="{Binding ApplyButtonClickedCommand}"
-                    >
+            <StackPanel
+                Grid.Row="13" 
+                Grid.Column="4"
+                Grid.ColumnSpan="2" 
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+                
+                <Button IsEnabled="False"
+                        Width="120"
+                        Height="36"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Margin="1,1,1,1"
+                        Command="{Binding ApplyButtonClickedCommand}">
                     Применить
                 </Button>
             
-            <Button Grid.Row="13" 
-                    Grid.Column="5" 
-                    IsEnabled="False"
-                    Command="{Binding CancelButtonClickedCommand}">
-                Отмена
-            </Button>
+                <Button IsEnabled="False"
+                        Width="120"
+                        Height="36"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Margin="1,1,1,1"
+                        Command="{Binding CancelButtonClickedCommand}">
+                    Отмена
+                </Button>    
+            </StackPanel>
             
-            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
-            <Border Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1"></Border>
+            
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
+            <Border Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="LightGray" BorderThickness="1" />
     </Grid>
     </Grid>
 </UserControl>
