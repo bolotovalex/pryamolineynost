@@ -36,14 +36,27 @@ namespace PryamolineynostNew.ViewModels
         [ObservableProperty]
         private int _step;
 
-        private Level _model;
+        private Level _model = new Level();
         
 
         public LevelParamsPageViewModel()
         {
-            _model = MainWindowViewModel.Model;
-            Date = DateTimeOffset.Now;
-            
+            if (_model != null)
+            {
+                Date = DateTimeOffset.Now;
+                ProjectName = _model.Name;
+                Description = _model.Description;
+                Author = _model.Fio;
+                MaxDeviation = _model.GetMaxDeviation();
+                MinDeviation = _model.GetMinDeviation();
+                VerticalDeviation = _model.GetVerticalDeflection();
+                //LocalAreaDeviation = _model.GetLocalAreaDeviation();
+                BedLength = _model.GetBedAreaLength();
+                //LocalAreaLength = _model.GetLocalAreaLength();
+                //LocalAreaTolerance = _model.GetLocalAreaTolerance();
+                //AllLengthTolerance = _model.GetAllLengthTolerance();
+                Step = _model.Step;
+            }
         }
         
         [RelayCommand]

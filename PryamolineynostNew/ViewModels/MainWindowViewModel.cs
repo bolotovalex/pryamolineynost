@@ -6,21 +6,33 @@ using PryamolineynostNew.Interfaces;
 
 namespace PryamolineynostNew.ViewModels
 {
+    
     public partial class MainWindowViewModel : ViewModelBase
     {
-        private static Level _model;
+        [ObservableProperty]
+        private static Models.Enums.Tools _tool;
+        
+        private PageViewModelBase _prevPanel;
 
-        public static Level Model
+        public PageViewModelBase PrevPanel
         {
-            get => _model;
-            set => _model = value;
+            get => _prevPanel;
+            set => SetProperty(ref _prevPanel, value);
+        }
+        public static Models.Enums.Tools ModelTools
+        {
+            get => _tool;
+            set
+            {
+                _tool = value;
+                
+            }
+            
         }
 
         public MainWindowViewModel()
         {
-            Model = new Level();
             _currentPage = _pages[0];
-            
         }
 
         private readonly PageViewModelBase[] _pages =
@@ -50,11 +62,28 @@ namespace PryamolineynostNew.ViewModels
         {
             
         }
-        public void SetParamsPage() => CurrentPage = _pages[1];
-        public void SetDataPage() => CurrentPage = _pages[2];
+        public void SetParamsPage() 
+        {
+            if (Tool == Models.Enums.Tools.Level)
+            {
+                CurrentPage = _pages[1];
+            }
+            else if (Tool == Models.Enums.Tools.Autocollimator)
+            {
+                CurrentPage = _pages[2];
+            }
+        }
+        //public void SetDataPage()
+        //{
+                          
+        //} 
         public void SetGraphicPage() => CurrentPage = _pages[3];
         public void SetSettingsPage() => CurrentPage = _pages[4];
-        public void SetExitPage() => CurrentPage = _pages[5];
+        public void SetExitPage()
+        {
+            PrevPanel = CurrentPage;
+            CurrentPage = _pages[5];
+        }
 
         private void ActivatePage(string page)
         {

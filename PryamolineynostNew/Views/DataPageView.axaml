@@ -13,18 +13,28 @@
 	
 
 	<Grid RowDefinitions="*" ColumnDefinitions="*" Background="LightCoral">
-	<StackPanel VerticalAlignment="Center" Spacing="5">
-		<TextBlock VerticalAlignment="Center"
-			   TextAlignment="Center"
-			   FontSize="16"
-			   FontWeight="SemiBold"
-               Text="{Binding Title}"
-               TextWrapping="Wrap" />
-		<TextBlock VerticalAlignment="Center"
-			   TextAlignment="Center"
-			   FontSize="16"
-               Text="{Binding Message}"
-               TextWrapping="Wrap" />
-	</StackPanel>
-		</Grid>
+		<DataGrid Margin="20" ItemsSource="{}" 
+		          AutoGenerateColumns="True" IsReadOnly="True" 
+		          GridLinesVisibility="All"
+		          BorderThickness="1" BorderBrush="Gray">
+			<DataGrid.Columns>
+				
+				
+			</DataGrid.Columns>
+			
+		</DataGrid>
+		<!-- <StackPanel VerticalAlignment="Center" Spacing="5"> -->
+		<!-- 	<TextBlock VerticalAlignment="Center" -->
+		<!-- 		   TextAlignment="Center" -->
+		<!-- 		   FontSize="16" -->
+		<!-- 		   FontWeight="SemiBold" -->
+	 <!--               Text="{Binding Title}" -->
+	 <!--               TextWrapping="Wrap" /> -->
+		<!-- 	<TextBlock VerticalAlignment="Center" -->
+		<!-- 		   TextAlignment="Center" -->
+		<!-- 		   FontSize="16" -->
+	 <!--               Text="{Binding Message}" -->
+	 <!--               TextWrapping="Wrap" /> -->
+		<!-- </StackPanel> -->
+	</Grid>
 </UserControl>

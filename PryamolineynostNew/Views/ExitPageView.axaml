@@ -4,8 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Class="PryamolineynostNew.Views.ExitPageView"
              x:CompileBindings="True"
-             x:DataType="vm:ExitPageViewModel"
              xmlns:vm="using:PryamolineynostNew.ViewModels"
+             x:DataType="vm:ExitPageViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
-    Welcome to Avalonia!
+    
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Margin="10,10,10,10" HorizontalAlignment="Center">Подтвердите выход</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <Button 
+                    Margin="10,10,10,10"
+                    Command="{Binding ExitButton_ClickCommand}">Выход</Button>
+                <Button 
+                    Margin="10,10,10,10"
+                    Command="{Binding CancelButton_ClickCommand}">Отмена</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
 </UserControl>

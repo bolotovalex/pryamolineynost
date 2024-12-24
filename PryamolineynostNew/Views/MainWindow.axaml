@@ -66,13 +66,12 @@
                     </Button>
 
                     <!--Кнопка экрана с измерениями-->
-                    <Button Name="DataButton"
+					<!--<Button Name="DataButton"
                             ToolTip.Tip="Измерения"
                             Classes="ControlPanelButton"
                             Content=""
                             Command="{Binding SetDataPage}">
-                    </Button>
-                    <!---->
+                    </Button>-->
                     <!-- Кнопка Меню графика -->
                     <Button
                         Name="GraphicButton"

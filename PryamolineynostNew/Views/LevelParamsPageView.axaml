@@ -6,10 +6,11 @@
              x:Class="PryamolineynostNew.Views.LevelParamsPageView"
              xmlns:local="clr-namespace:PryamolineynostNew.ViewModels"
              x:DataType="local:LevelParamsPageViewModel">
-    
-    <UserControl.DataContext>
+
+	<!--
+	<UserControl.DataContext>
         <local:LevelParamsPageViewModel />
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
     
     <UserControl.Styles>
         <Style Selector="TextBlock">
