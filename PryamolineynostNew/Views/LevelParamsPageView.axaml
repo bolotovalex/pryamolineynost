@@ -153,7 +153,7 @@
                        Grid.ColumnSpan="2" 
                        Text="Длина станины, мм"/>
             
-            <TextBox Grid.Row="8" 
+            <TextBlock Grid.Row="8" 
                      Grid.Column="5" 
                      Grid.ColumnSpan="0"
                      Text="{Binding BedLength}" />
@@ -205,7 +205,7 @@
                 Orientation="Horizontal"
                 HorizontalAlignment="Right">
                 
-                <Button IsEnabled="False"
+                <Button IsEnabled="True"
                         Width="120"
                         Height="36"
                         HorizontalContentAlignment="Center"
@@ -215,7 +215,7 @@
                     Применить
                 </Button>
             
-                <Button IsEnabled="False"
+                <Button IsEnabled="True"
                         Width="120"
                         Height="36"
                         HorizontalContentAlignment="Center"

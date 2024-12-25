@@ -35,45 +35,70 @@ namespace PryamolineynostNew.ViewModels
         private int _allLengthTolerance;
         [ObservableProperty]
         private int _step;
-
-        private Level _model = new Level();
+        [ObservableProperty]
+        private Level _model;
         
 
-        public LevelParamsPageViewModel()
+        public LevelParamsPageViewModel(Level model)
         {
-            if (_model != null)
-            {
-                Date = DateTimeOffset.Now;
-                ProjectName = _model.Name;
-                Description = _model.Description;
-                Author = _model.Fio;
-                MaxDeviation = _model.GetMaxDeviation();
-                MinDeviation = _model.GetMinDeviation();
-                VerticalDeviation = _model.GetVerticalDeflection();
-                //LocalAreaDeviation = _model.GetLocalAreaDeviation();
-                BedLength = _model.GetBedAreaLength();
-                //LocalAreaLength = _model.GetLocalAreaLength();
-                //LocalAreaTolerance = _model.GetLocalAreaTolerance();
-                //AllLengthTolerance = _model.GetAllLengthTolerance();
-                Step = _model.Step;
-            }
+            Model = model;
+            // UpdateFields();
+            Date = DateTimeOffset.Now;
+            ProjectName = Model.Name;
+            Description = Model.Description;
+            Author = Model.Fio;
+            MaxDeviation = Model.GetMaxDeviation();
+            MinDeviation = Model.GetMinDeviation();
+            VerticalDeviation = Model.GetVerticalDeflection();
+            LocalAreaDeviation = Model.GetAreaDeflection();
+            BedLength = Model.GetBedAreaLength();
+            LocalAreaLength = Model.LocalAreaLength;
+            //LocalAreaTolerance = _model.GetLocalAreaTolerance();
+            //AllLengthTolerance = _model.GetAllLengthTolerance();
+            Step = Model.Step;
         }
         
         [RelayCommand]
         private void ApplyButtonClicked()
         {
+            Model.Name = ProjectName;
+            Model.Description = Description;
+            Model.Fio = Author;
+            Model.LocalAreaLength = LocalAreaLength;
+            Model.MeterTolerance = LocalAreaTolerance;
+            Model.FullTolerance = AllLengthTolerance;
+            Model.Step = Step;
+            Model.UpdateAllRows(Model.currUnit);
+            BedLength = Model.GetBedAreaLength();
+            MinDeviation = Model.GetMinDeviation();
+            MaxDeviation = Model.GetMaxDeviation();
+            VerticalDeviation = Model.GetVerticalDeflection();
+            LocalAreaLength = Model.LocalAreaLength;
+            // LocalAreaDeviation = Model.GetLocalAreaDeviation();
             
         }
 
         [RelayCommand]
         private void CancelButtonClicked()
         {
-            
+            ProjectName = Model.Name;
+            Description = Model.Description;
+            Author = Model.Fio;
+            LocalAreaLength = Model.LocalAreaLength;
+            LocalAreaTolerance = Model.MeterTolerance;
+            AllLengthTolerance = Model.FullTolerance;
+            Step = Model.Step;
+            BedLength = Model.GetBedAreaLength();
+            MinDeviation = Model.GetMinDeviation();
+            MaxDeviation = Model.GetMaxDeviation();
+            VerticalDeviation = Model.GetVerticalDeflection();
+            // LocalAreaDeviation = Model.GetLocalAreaDeviation();
         }
 
         partial void OnDateChanged(DateTimeOffset date)
         {
-            Date = date;
+            // Date = date;
+            
         }
         partial void OnProjectNameChanged(string value)
         {
@@ -82,7 +107,7 @@ namespace PryamolineynostNew.ViewModels
 
         partial void OnDescriptionChanged(string value)
         {
-            // Description = value;
+            Description = value;
         }
 
         partial void OnAuthorChanged(string value)

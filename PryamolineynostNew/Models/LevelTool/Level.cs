@@ -381,6 +381,7 @@ public class Level : IModel
     public void UpdateAllRows(Units unit)
     {
         //TODO Не оптимально. Множественные проходы. Нужно оптимизировать, но набор данных не большой. Пока сделано, чтобы считалось так-же как в excel
+        UpdateProgramFactors();
         UpdateAllStroksDataList(unit);
         UpdateAllAdjStrokeDataList();
         UpdateMinMaxDeviations();

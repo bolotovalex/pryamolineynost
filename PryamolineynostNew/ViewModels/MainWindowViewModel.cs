@@ -1,25 +1,28 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using PryamolineynostNew.Models.LevelTool;
 
 namespace PryamolineynostNew.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
         private readonly PageViewModelBase homePageViewModel;
+        private readonly Level levelModel;
         
 
         [ObservableProperty]
-        private Models.Enums.Tools _selectedTool;
+        private Models.Enums.Tools? _selectedTool = null;
 
         private readonly PageViewModelBase[] _pages;
 
         public MainWindowViewModel()
         {
             homePageViewModel = new HomePageViewModel(this);
+            levelModel = new Level();
             _pages = new PageViewModelBase[]
             {
                 homePageViewModel,
-                new LevelParamsPageViewModel(),
+                new LevelParamsPageViewModel(levelModel),
                 new DataPageViewModel(),
                 new GraphicPageViewModel(),
                 new SettingsPageViewModel(),
@@ -50,7 +53,11 @@ namespace PryamolineynostNew.ViewModels
 
         public void SetParamsPage()
         {
-            if (SelectedTool == Models.Enums.Tools.Level)
+            if (SelectedTool == null)
+            {
+                CurrentPage = _pages[0];
+            }
+            else if (SelectedTool == Models.Enums.Tools.Level)
             {
                 CurrentPage = _pages[1];
             }
@@ -60,6 +67,7 @@ namespace PryamolineynostNew.ViewModels
             }
         }
 
+        public void SetDataPage() => CurrentPage = _pages[2];
         public void SetGraphicPage() => CurrentPage = _pages[3];
         public void SetSettingsPage() => CurrentPage = _pages[4];
         public void SetExitPage() => CurrentPage = _pages[5];
