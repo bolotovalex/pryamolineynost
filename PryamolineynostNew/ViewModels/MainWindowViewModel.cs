@@ -6,6 +6,7 @@ namespace PryamolineynostNew.ViewModels
     public partial class MainWindowViewModel : ViewModelBase
     {
         private readonly PageViewModelBase homePageViewModel;
+        
 
         [ObservableProperty]
         private Models.Enums.Tools _selectedTool;
@@ -22,7 +23,9 @@ namespace PryamolineynostNew.ViewModels
                 new DataPageViewModel(),
                 new GraphicPageViewModel(),
                 new SettingsPageViewModel(),
-                new ExitPageViewModel()
+                new ExitPageViewModel(),
+                new CollimatorParamsPageViewModel()
+                
             };
             _currentPage = _pages[0];
         }
@@ -53,7 +56,7 @@ namespace PryamolineynostNew.ViewModels
             }
             else if (SelectedTool == Models.Enums.Tools.Autocollimator)
             {
-                CurrentPage = _pages[2];
+                CurrentPage = _pages[6];
             }
         }
 

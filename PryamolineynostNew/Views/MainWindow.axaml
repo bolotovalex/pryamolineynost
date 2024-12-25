@@ -10,9 +10,9 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="PryamolineynostNew"
-		Width="860"
-        Height="600"
-        MinWidth="750"
+		Width="975"
+        Height="685"
+        MinWidth="800"
         MinHeight="600">
 
 	<Window.Styles>
