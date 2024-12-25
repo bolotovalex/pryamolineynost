@@ -25,13 +25,13 @@
     </Style>
         
     <Style Selector="Button.ControlPanelButton:pointerover /template/ ContentPresenter">
-        <!-- <Setter Property="Foreground" Value="Black"></Setter> -->
-		<!-- <Setter Property="Background" Value="LightSkyBlue"></Setter> -->
+        <Setter Property="Foreground" Value="Black"></Setter>
+		<Setter Property="Background" Value="LightSkyBlue"></Setter>
     </Style>
     
     <Style Selector="Button.ControlPanelButton:pressed /template/ ContentPresenter">
-        <!-- <Setter Property="Foreground" Value="Black"></Setter> -->
-        <!-- <Setter Property="Background" Value="SteelBlue"></Setter> -->
+        <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="Background" Value="SteelBlue"></Setter>
     </Style>
     
     <Style Selector="TextBlock">

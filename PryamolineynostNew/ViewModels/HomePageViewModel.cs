@@ -7,21 +7,29 @@ namespace PryamolineynostNew.ViewModels;
 
 public partial class HomePageViewModel : PageViewModelBase
 {
+    private readonly MainWindowViewModel _mainWindowViewModel;
+    public HomePageViewModel(MainWindowViewModel mainWindowViewModel)
+    {
+        _mainWindowViewModel = mainWindowViewModel;
+    }
+    
     [ObservableProperty]
     private string _title = "Выберите инструмент";
 
+    
+    
     [RelayCommand]
     private void SetLevelTool()
     {
         Title = "Уровень";
-        MainWindowViewModel.ModelTools = Models.Enums.Tools.Level;
+        _mainWindowViewModel.SelectedTool = Models.Enums.Tools.Level;
     }
 
     [RelayCommand]
     private void SetAutocollimatorTool()
     {
         Title = "Автоколлиматор";
-        MainWindowViewModel.ModelTools = Models.Enums.Tools.Autocollimator;
+        _mainWindowViewModel.SelectedTool = Models.Enums.Tools.Autocollimator;
     }
     
     
