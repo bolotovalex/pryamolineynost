@@ -16,7 +16,7 @@
         MinHeight="600">
 
 	<Window.Styles>
-		<StyleInclude Source="/Views/LightStyles.axaml"/>
+		<StyleInclude Source="/Views/Global/LightStyles.axaml"/>
 	</Window.Styles>
 	
 	
@@ -126,15 +126,13 @@
                 </StackPanel>
             </Grid>
 
-            <!-- Главная панель -->
+        <!-- Главная панель -->
         </Border>
         <!--Background="rgb(247,247,247)"-->
         <Border  BorderBrush="rgb(223,223,223)" BorderThickness="0">
 			<Grid RowDefinitions="*">
 				<TransitioningContentControl Content="{Binding CurrentPage}" />
 			</Grid>
-			
-            
         </Border>
     </DockPanel>
 </Window>

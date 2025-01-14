@@ -66,6 +66,8 @@ public class Level : IModel
         Step = 200;
         UpdateStepsPerMeter(Step);
         DataList.Add(new DataRow(0,0,null, RevStrokeEnable, Directions.Forward));
+        DataList.Add(new DataRow(0,0,null, RevStrokeEnable, Directions.Forward));
+        
         LocalAreaLength = 1000;
     }
 
