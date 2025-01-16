@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
-using PryamolineynostNew.Models.LevelTool;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 namespace PryamolineynostNew.ViewModels
 {
@@ -9,6 +8,7 @@ namespace PryamolineynostNew.ViewModels
     {
         
         public ObservableCollection<CollimatorDataItem> CollimatorData { get; set; }
+        public ICommand AddRowCommand { get; }
 
         public CollimatorDataPageViewModel()
         {
@@ -19,6 +19,15 @@ namespace PryamolineynostNew.ViewModels
                 new CollimatorDataItem { Id = 2, Name = "Item 2", Value = 200 },
                 new CollimatorDataItem { Id = 3, Name = "Item 3", Value = 300 }
             };
+            
+            AddRowCommand = new RelayCommand(AddRow);
+        }
+        
+        private void AddRow()
+        {
+            // Создаем новую строку с уникальным ID
+            var newId = CollimatorData.Count + 1;
+            CollimatorData.Add(new CollimatorDataItem { Id = newId, Name = "New Item", Value = 0 });
         }
     }
 

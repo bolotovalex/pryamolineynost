@@ -12,10 +12,26 @@
 	<StackPanel Orientation="Vertical" Margin="10">
 		<TextBlock Text="Данные коллиматора" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
         
+		<!-- Кнопка для добавления строки -->
+		<Button Content="Добавить строку" Command="{Binding AddRowCommand}" Margin="0,0,0,10" />
+		
 		<DataGrid ItemsSource="{Binding CollimatorData}"
-		          AutoGenerateColumns="True"
-		          IsReadOnly="True"
+		          AutoGenerateColumns="False"
+		          IsReadOnly="False"
 		          GridLinesVisibility="All"
-		          Margin="0,0,0,10" />
+		          Margin="0,0,0,10">
+		
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" />
+	                
+				<!-- Редактируемый столбец для Name -->
+				<DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+	                
+				<!-- Редактируемый столбец для Value -->
+				<DataGridTextColumn Header="Value" Binding="{Binding Value, Mode=TwoWay}" />
+			</DataGrid.Columns>
+			</DataGrid>
+		
+
 	</StackPanel>
 </UserControl>

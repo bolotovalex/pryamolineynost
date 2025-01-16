@@ -37,7 +37,35 @@ namespace PryamolineynostNew.ViewModels
         private int _step;
         [ObservableProperty]
         private Level _model;
+        [ObservableProperty]
+        private bool _canApplyChanges;
+        [ObservableProperty]
+        private bool _canCancelChanges;
         
+        
+
+
+        private void InitializeProperties()
+        {
+            CanApplyChanges = false;
+            CanCancelChanges = false;
+        }
+
+        private void EvaluateChanges()
+        {
+            // Сравниваем текущие значения с оригинальными из модели
+            CanApplyChanges = !(
+                Model.Name == ProjectName &&
+                Model.Description == Description &&
+                Model.Fio == Author &&
+                Model.LocalAreaLength == LocalAreaLength &&
+                Model.MeterTolerance == LocalAreaTolerance &&
+                Model.FullTolerance == AllLengthTolerance &&
+                Model.Step == Step
+            );
+
+            CanCancelChanges = CanApplyChanges; // Если есть изменения, активна и кнопка отмены
+        }
 
         public LevelParamsPageViewModel(Level model)
         {
@@ -53,9 +81,8 @@ namespace PryamolineynostNew.ViewModels
             LocalAreaDeviation = Model.GetAreaDeflection();
             BedLength = Model.GetBedAreaLength();
             LocalAreaLength = Model.LocalAreaLength;
-            //LocalAreaTolerance = _model.GetLocalAreaTolerance();
-            //AllLengthTolerance = _model.GetAllLengthTolerance();
             Step = Model.Step;
+            InitializeProperties();
         }
         
         [RelayCommand]
@@ -68,14 +95,14 @@ namespace PryamolineynostNew.ViewModels
             Model.MeterTolerance = LocalAreaTolerance;
             Model.FullTolerance = AllLengthTolerance;
             Model.Step = Step;
+
             Model.UpdateAllRows(Model.currUnit);
+
             BedLength = Model.GetBedAreaLength();
             MinDeviation = Model.GetMinDeviation();
             MaxDeviation = Model.GetMaxDeviation();
             VerticalDeviation = Model.GetVerticalDeflection();
             LocalAreaLength = Model.LocalAreaLength;
-            // LocalAreaDeviation = Model.GetLocalAreaDeviation();
-            
         }
 
         [RelayCommand]
@@ -92,52 +119,53 @@ namespace PryamolineynostNew.ViewModels
             MinDeviation = Model.GetMinDeviation();
             MaxDeviation = Model.GetMaxDeviation();
             VerticalDeviation = Model.GetVerticalDeflection();
-            // LocalAreaDeviation = Model.GetLocalAreaDeviation();
         }
 
+        
+        
         partial void OnDateChanged(DateTimeOffset date)
         {
-            // Date = date;
-            
+            EvaluateChanges();
+
         }
         partial void OnProjectNameChanged(string value)
         {
-            // ProjectName = value;
+            EvaluateChanges();
         }
 
         partial void OnDescriptionChanged(string value)
         {
-            Description = value;
+            EvaluateChanges();
         }
 
         partial void OnAuthorChanged(string value)
         {
-            // Author = value;
+            EvaluateChanges();
         }
 
         partial void OnBedLengthChanged(int value)
         {
-            // BedLength = value;
+
         }
 
         partial void OnLocalAreaLengthChanged(int value)
         {
-            // LocalAreaLength = value;
+            EvaluateChanges();
         }
 
         partial void OnLocalAreaToleranceChanged(int value)
         {
-            // LocalAreaTolerance = value;
+            EvaluateChanges();
         }
 
         partial void OnAllLengthToleranceChanged(int value)
         {
-            // AllLengthTolerance = value;
+            EvaluateChanges();
         }
 
         partial void OnStepChanged(int value)
         {
-            // Step = value;
+            EvaluateChanges();
         }
 
         partial void OnMaxDeviationChanged(decimal value)
@@ -158,12 +186,6 @@ namespace PryamolineynostNew.ViewModels
         partial void OnLocalAreaDeviationChanged(decimal value)
         {
             // LocalAreaDeviation = value;
-        }
-        
-        
-        
-        private void UpdateProjectName()
-        {
         }
     }
 }
