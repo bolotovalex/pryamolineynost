@@ -37,6 +37,7 @@ namespace PryamolineynostNew.ViewModels
         private int _step;
         [ObservableProperty]
         private Level _model;
+        
         [ObservableProperty]
         private bool _canApplyChanges;
         [ObservableProperty]
@@ -70,7 +71,6 @@ namespace PryamolineynostNew.ViewModels
         public LevelParamsPageViewModel(Level model)
         {
             Model = model;
-            // UpdateFields();
             Date = DateTimeOffset.Now;
             ProjectName = Model.Name;
             Description = Model.Description;
@@ -82,6 +82,8 @@ namespace PryamolineynostNew.ViewModels
             BedLength = Model.GetBedAreaLength();
             LocalAreaLength = Model.LocalAreaLength;
             Step = Model.Step;
+            LocalAreaLength = Model.LocalAreaLength;
+            AllLengthTolerance = Model.FullTolerance;
             InitializeProperties();
         }
         
@@ -95,14 +97,13 @@ namespace PryamolineynostNew.ViewModels
             Model.MeterTolerance = LocalAreaTolerance;
             Model.FullTolerance = AllLengthTolerance;
             Model.Step = Step;
-
             Model.UpdateAllRows(Model.currUnit);
-
             BedLength = Model.GetBedAreaLength();
             MinDeviation = Model.GetMinDeviation();
             MaxDeviation = Model.GetMaxDeviation();
             VerticalDeviation = Model.GetVerticalDeflection();
             LocalAreaLength = Model.LocalAreaLength;
+            AllLengthTolerance = Model.FullTolerance;
         }
 
         [RelayCommand]
