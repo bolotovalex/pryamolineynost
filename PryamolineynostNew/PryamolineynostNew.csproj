@@ -13,7 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Collimator\" />
+    <AvaloniaXaml Remove="Models\Collimator\**" />
+    <Compile Remove="Models\Collimator\**" />
+    <EmbeddedResource Remove="Models\Collimator\**" />
+    <None Remove="Models\Collimator\**" />
   </ItemGroup>
 
   <ItemGroup>

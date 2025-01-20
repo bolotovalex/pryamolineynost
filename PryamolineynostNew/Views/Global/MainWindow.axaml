@@ -3,26 +3,25 @@
         xmlns:vm="using:PryamolineynostNew.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PryamolineynostNew.ViewModels"
         mc:Ignorable="d"
         x:Class="PryamolineynostNew.Views.MainWindow"
         RequestedThemeVariant="Light"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="PryamolineynostNew"
-		Width="975"
+        Width="975"
         Height="685"
         MinWidth="800"
         MinHeight="600">
 
-	<Window.Styles>
-		<StyleInclude Source="/Views/Global/LightStyles.axaml"/>
-	</Window.Styles>
-	
-	
+    <Window.Styles>
+        <StyleInclude Source="/Views/Global/LightStyles.axaml" />
+    </Window.Styles>
+
+
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
-        
+        <vm:MainWindowViewModel />
+
     </Design.DataContext>
 
     <DockPanel LastChildFill="True">
@@ -31,55 +30,51 @@
                 DockPanel.Dock="Top">
             <TextBlock Foreground="Black">Dock = "Top"</TextBlock>
         </Border>
-    <!--Background="rgb(230,230,230)"-->
-    <Border Margin="0"  BorderBrush="rgb(212,212,212)" BorderThickness="0"
-            DockPanel.Dock="Left">
+        <!--Background="rgb(230,230,230)"-->
+        <Border Margin="0" BorderBrush="rgb(212,212,212)" BorderThickness="0"
+                DockPanel.Dock="Left">
             <Grid Margin="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="1"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="1"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <!-- <Rectangle Width="47" Height="2" Grid.Row="1" Grid.Column="0" Margin="5,3,5,3" Fill="rgb(180,180,180)"></Rectangle> -->
-                <Rectangle Width="47" Height="2" Grid.Row="3" Grid.Column="0" Margin="5,3,5,3" Fill="rgb(180,180,180)"></Rectangle>
+                <Rectangle Width="47" Height="2" Grid.Row="3" Grid.Column="0" Margin="5,3,5,3" Fill="rgb(180,180,180)" />
 
                 <!--Первая секция кнопок -->
                 <StackPanel Grid.Row="0" Grid.Column="0">
-                    
+
                     <!-- Кнопка Домой -->
                     <Button Name="HomeButton"
                             ToolTip.Tip="Главный экран"
                             Classes="ControlPanelButton"
                             Content=""
-                            Command="{Binding SetHomePage}">
-                    </Button>
-                    
+                            Command="{Binding SetHomePage}" />
+
                     <!-- Кнопка меню параметров-->
                     <Button Name="ParamsButton"
                             ToolTip.Tip="Главный экран"
                             Classes="ControlPanelButton"
                             Content=""
-                            Command="{Binding SetParamsPage}">
-                    </Button>
+                            Command="{Binding SetParamsPage}" />
 
                     <!--Кнопка экрана с измерениями-->
-					<Button Name="DataButton"
+                    <Button Name="DataButton"
                             ToolTip.Tip="Измерения"
                             Classes="ControlPanelButton"
                             Content=""
-                            Command="{Binding SetDataPage}">
-                    </Button>
+                            Command="{Binding SetDataPage}" />
                     <!-- Кнопка Меню графика -->
                     <Button
                         Name="GraphicButton"
                         ToolTip.Tip="График"
                         Classes="ControlPanelButton"
                         Content=""
-                        Command="{Binding SetGraphicPage}">
-                    </Button>
+                        Command="{Binding SetGraphicPage}" />
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Grid.Column="0">
@@ -87,21 +82,17 @@
                     <Button Name="PdfButton"
                             ToolTip.Tip="Выгрузить в PDF"
                             Classes="ControlPanelButton"
-                            Content=""
-                            >
-                    </Button>
+                            Content="" />
 
                     <Button Name="LoadButton"
                             ToolTip.Tip="Загрузить изменения"
                             Classes="ControlPanelButton"
-                            Content="">
-                    </Button>
+                            Content="" />
 
                     <Button Name="SaveButton"
                             ToolTip.Tip="Сохранить измерения"
                             Classes="ControlPanelButton"
-                            Content="">
-                    </Button>
+                            Content="" />
                 </StackPanel>
 
                 <StackPanel Grid.Row="4" Grid.Column="0">
@@ -109,8 +100,7 @@
                             ToolTip.Tip="Настройки"
                             Classes="ControlPanelButton"
                             Content=""
-                            Command="{Binding SetSettingsPage}">
-                    </Button>
+                            Command="{Binding SetSettingsPage}" />
 
                     <Button Name="ExitButton"
                             ToolTip.Tip="Выход"
@@ -119,20 +109,20 @@
                             Command="{Binding SetExitPage}">
                         <Button.Styles>
                             <Style Selector=":pointerover /template/ ContentPresenter">
-                                <Setter Property="Background" Value="LightCoral"></Setter>
+                                <Setter Property="Background" Value="LightCoral" />
                             </Style>
                         </Button.Styles>
                     </Button>
                 </StackPanel>
             </Grid>
 
-        <!-- Главная панель -->
+            <!-- Главная панель -->
         </Border>
         <!--Background="rgb(247,247,247)"-->
-        <Border  BorderBrush="rgb(223,223,223)" BorderThickness="0">
-			<Grid RowDefinitions="*">
-				<TransitioningContentControl Content="{Binding CurrentPage}" />
-			</Grid>
+        <Border BorderBrush="rgb(223,223,223)" BorderThickness="0">
+            <Grid RowDefinitions="*">
+                <TransitioningContentControl Content="{Binding CurrentPage}" />
+            </Grid>
         </Border>
     </DockPanel>
 </Window>
