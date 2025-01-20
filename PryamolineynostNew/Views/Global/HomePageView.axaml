@@ -19,15 +19,6 @@
 								  Command="{Binding SetLevelToolCommand}"/>
 						<MenuItem Header="Автоколлиматор"
 								  Command="{Binding SetAutocollimatorToolCommand}"/>
-							
-							<!-- 
-							<MenuItem Header="Subitem 1" />
-							<MenuItem Header="Subitem 2" />
-							<MenuItem Header="Subitem 3" />
-						</MenuItem>
-						<MenuItem Header="Item 2"
-								  InputGesture="Ctrl+A" />
-						<MenuItem Header="Item 3" />-->
 					</MenuFlyout>
 				</SplitButton.Flyout>
 			</SplitButton>
