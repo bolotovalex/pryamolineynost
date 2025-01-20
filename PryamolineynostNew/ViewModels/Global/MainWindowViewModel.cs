@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PryamolineynostNew.Models.Enums;
 using PryamolineynostNew.Models.LevelTool;
-using DataRow = System.Data.DataRow;
+
 
 namespace PryamolineynostNew.ViewModels
 {
