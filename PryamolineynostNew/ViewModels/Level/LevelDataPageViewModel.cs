@@ -17,6 +17,11 @@ public partial class LevelDataPageViewModel : PageViewModelBase
     public ICommand DeleteRowCommand { get; }
     [ObservableProperty] private List<DataRow> _dataRows;
 
+    [ObservableProperty] private bool _isMicrometrSelect;
+    [ObservableProperty] private bool _isAngleSelect;
+    [ObservableProperty] private bool _isAdvancedFieldSelect;
+    [ObservableProperty] private bool _ReverseStrokeSelect;
+
 
     [ObservableProperty] private Units _selectedUnitItem;
     private string _selectedItemText;
