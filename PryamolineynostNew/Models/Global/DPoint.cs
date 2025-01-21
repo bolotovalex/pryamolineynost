@@ -1,5 +1,5 @@
 ﻿using System;
-namespace PryamolineynostNew.Models.LevelTool
+namespace PryamolineynostNew.Models.Global
 {
     public class DPoint
     {
@@ -7,16 +7,16 @@ namespace PryamolineynostNew.Models.LevelTool
         public double Y { get; init; }
         public DPoint(int x, decimal y)
         {
-            this.X = x;
-            this.Y = Math.Round(decimal.ToDouble(y),2);
+            X = x;
+            Y = Math.Round(decimal.ToDouble(y), 2);
         }
 
         public DPoint(int x, double y)
         {
-            this.X = x;
-            this.Y = Math.Round(y,2);
+            X = x;
+            Y = Math.Round(y, 2);
         }
     }
 
-   
+
 }

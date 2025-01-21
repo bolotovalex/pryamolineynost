@@ -1,4 +1,4 @@
-﻿namespace PryamolineynostNew.Models.LevelTool
+﻿namespace PryamolineynostNew.Models.Global
 {
     public class AreaDeviation
     {
@@ -17,15 +17,15 @@
             this.nextArea = nextArea;
         }
         public AreaDeviation((int x, decimal y) firstCoord, (int x, decimal y) secondCoord, decimal deviation) : this(firstCoord, secondCoord, deviation, null, null) { }
-        
-        public AreaDeviation(int x1, decimal y1, int x2, decimal y2 ,decimal deviation) : this((x1, y1), (x2, y2), deviation, null, null) { }
+
+        public AreaDeviation(int x1, decimal y1, int x2, decimal y2, decimal deviation) : this((x1, y1), (x2, y2), deviation, null, null) { }
 
         public bool MoreThen(decimal value)
         {
             return value < deviation;
         }
 
-        public bool MoreThen(AreaDeviation areaDeviation) 
+        public bool MoreThen(AreaDeviation areaDeviation)
         {
             return areaDeviation.deviation < deviation;
         }

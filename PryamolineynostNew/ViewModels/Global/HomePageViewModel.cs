@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using PryamolineynostNew.Enums;
 using PryamolineynostNew.Interfaces;
 
 
@@ -22,14 +23,14 @@ public partial class HomePageViewModel : PageViewModelBase
     private void SetLevelTool()
     {
         Title = "Уровень";
-        _mainWindowViewModel.SelectedTool = Models.Enums.Tools.Level;
+        _mainWindowViewModel.SelectedTool = Tools.Level;
     }
 
     [RelayCommand]
     private void SetAutocollimatorTool()
     {
         Title = "Автоколлиматор";
-        _mainWindowViewModel.SelectedTool = Models.Enums.Tools.Autocollimator;
+        _mainWindowViewModel.SelectedTool = Tools.Autocollimator;
     }
     
     

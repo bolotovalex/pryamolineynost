@@ -1,4 +1,4 @@
-﻿namespace PryamolineynostNew.Models.Enums;
+﻿namespace PryamolineynostNew.Enums;
 
 public enum Units
 {

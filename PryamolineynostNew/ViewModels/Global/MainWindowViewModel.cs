@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using PryamolineynostNew.Models.Enums;
+using PryamolineynostNew.Enums;
 using PryamolineynostNew.Models.LevelTool;
+using PryamolineynostNew.Models.NotUse;
 
 
 namespace PryamolineynostNew.ViewModels;

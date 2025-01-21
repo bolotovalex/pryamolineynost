@@ -1,5 +1,5 @@
 ﻿using System;
-using PryamolineynostNew.Models.Enums;
+using PryamolineynostNew.Enums;
 
 namespace PryamolineynostNew.Models.LevelTool;
 

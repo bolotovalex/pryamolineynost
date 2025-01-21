@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections;
+﻿using PryamolineynostNew.Models.Global;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PryamolineynostNew.Models.LevelTool
+namespace PryamolineynostNew.Models.NotUse
 {
     public class SortedQueueDeviation
-    {        
+    {
         public AreaDeviation? root { get; set; }
         public int ElementsCount = 0;
         private decimal _maxDeviation;
 
         public void AddArea(AreaDeviation area)
         {
-            AddArea((area.firstCoord.x, area.firstCoord.y), (area.secondCoord.x, area.secondCoord.y),area.deviation);
+            AddArea((area.firstCoord.x, area.firstCoord.y), (area.secondCoord.x, area.secondCoord.y), area.deviation);
         }
 
         public void AddArea((int x1, decimal y1) firstCoord, (int x2, decimal y2) seconCoord, decimal deviation)
@@ -29,7 +25,7 @@ namespace PryamolineynostNew.Models.LevelTool
 
             if (root == null)
             {
-                this.root = newArea;
+                root = newArea;
             }
             else
             {
@@ -126,10 +122,10 @@ namespace PryamolineynostNew.Models.LevelTool
                 //arr[i++] = currArea;
                 //if (currArea.nextArea == null)
                 //    break;
-                
+
                 //if (i != arr.Length) 
                 //    currArea = currArea.nextArea;
-                
+
             }
             return arr.ToArray();
         }

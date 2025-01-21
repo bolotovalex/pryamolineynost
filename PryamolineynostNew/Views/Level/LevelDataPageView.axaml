@@ -22,12 +22,12 @@
 
         <!-- Кнопка для добавления строки -->
         <StackPanel Orientation="Horizontal">
-            <Button Content="+" Command="{Binding AddRowCommand}" Margin="5,5,5,10" />
-            <Button Content="-" Command="{Binding DeleteRowCommand}" Margin="5,5,5,10" />
+            <Button Content="+" Width="30" Height="30" Command="{Binding AddRowCommand}" Margin="5,5,5,10" />
+            <Button Content="-" Width="30" Height="30" Command="{Binding DeleteRowCommand}" Margin="5,5,5,10" />
             <Border BorderBrush="LightGray" BorderThickness="1" Margin="5,5,5,10" />
             <TextBlock VerticalAlignment="Center">Единицы измерения:</TextBlock>
 
-            <ComboBox ItemsSource="{Binding AvailableUnits}"
+            <ComboBox Width="150" ItemsSource="{Binding AvailableUnits}"
                       SelectedItem="{Binding SelectedItemText}" />
 
 

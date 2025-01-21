@@ -2,15 +2,15 @@
 using OxyPlot.Axes;
 using OxyPlot.Legends;
 using OxyPlot.Series;
-namespace PryamolineynostNew.Models.LevelTool
+namespace PryamolineynostNew.Models.NotUse
 {
     public class GraphicModel
     {
-        
+
         public int Step { get; set; } = 200;
         public DPoint[] CurvePoints { get; set; }
         public DPoint[] StraightPoints { get; set; }
-        public DPoint[]? localStraightPoints { get;  set; }
+        public DPoint[]? localStraightPoints { get; set; }
         public int localStraightTolerance { get; set; } = 0;
 
         public PlotModel plotModel { get; }
@@ -84,7 +84,7 @@ namespace PryamolineynostNew.Models.LevelTool
             }
             if (localStraightPoints != null)
             {
-                var localLineStraight = new LineSeries { Title = "Отклонение на локальном участке", LineStyle = LineStyle.Dot, MarkerType = MarkerType.Square};
+                var localLineStraight = new LineSeries { Title = "Отклонение на локальном участке", LineStyle = LineStyle.Dot, MarkerType = MarkerType.Square };
                 //var toleranceLine1 = new LineSeries { Title = "Допуск" };
                 //var toleranceLine2 = new LineSeries { Title = "Допуск" };
                 for (var i = 0; i < localStraightPoints.Length; i++)
@@ -97,7 +97,7 @@ namespace PryamolineynostNew.Models.LevelTool
                 //plotModel.Series.Add(toleranceLine1);
                 //plotModel.Series.Add(toleranceLine2);
             }
-            
+
         }
     }
 }

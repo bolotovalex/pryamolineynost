@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PryamolineynostNew.Models.Enums;
-using PryamolineynostNew.Models.LevelTool;
 using PryamolineynostNew.Interfaces;
+using PryamolineynostNew.Enums;
+using PryamolineynostNew.Models.Global;
+using PryamolineynostNew.Models.LevelTool;
 
-namespace PryamolineynostNew.Models.LevelTool;
+namespace PryamolineynostNew.Models.NotUse;
 
 public class Level : IModel
 {
@@ -47,7 +48,7 @@ public class Level : IModel
         }
     }
 
- 
+
     public DPoint[] GetCurvePoints() => CurvePoints;
     public DPoint[] GetStraightPoint() => StraightPoints;
     public AreaDeviation[] GetAreaDeviations() => maxLocalAreaDeviations ?? new AreaDeviation[0];
@@ -65,9 +66,9 @@ public class Level : IModel
         Date = DateTime.Now.Date;
         Step = 200;
         UpdateStepsPerMeter(Step);
-        DataList.Add(new DataRow(0,0,null, RevStrokeEnable, Directions.Forward));
-        DataList.Add(new DataRow(0,0,null, RevStrokeEnable, Directions.Forward));
-        
+        DataList.Add(new DataRow(0, 0, null, RevStrokeEnable, Directions.Forward));
+        DataList.Add(new DataRow(0, 0, null, RevStrokeEnable, Directions.Forward));
+
         LocalAreaLength = 1000;
     }
 
@@ -78,10 +79,10 @@ public class Level : IModel
 
     public decimal GetVerticalDeflection() => _verticalDeflection;
     public decimal GetMinDeviation() => _minDeviation;
-    public  decimal GetMaxDeviation() => _maxDeviation;
+    public decimal GetMaxDeviation() => _maxDeviation;
     public decimal GetMeterDeflection() => _meterDeflection;
     public int GetBedAreaLength() => _bedAreaLength;
-    
+
 
     public void UpdateStepsPerMeter(int stepsLength)
     {
@@ -129,8 +130,8 @@ public class Level : IModel
                 // row = new DataRow(value, Step, prevRow, _revStrokeEnbled, directions, angleUnits);
                 break;
         }
-        
-        
+
+
         DataList.Add(row);
         UpdateProgramFactors();
         UpdateAllRows(currUnit);
@@ -139,11 +140,11 @@ public class Level : IModel
     private decimal GetMaxDeviationPerMeterForStep(int maxIndex)
     {
         //Нужно для расчета при шаге более 500мм
-        var delimeter = _stepsPerMeter >= 2 ? _stepsPerMeter : 2; 
+        var delimeter = _stepsPerMeter >= 2 ? _stepsPerMeter : 2;
 
         var startIndex = maxIndex - delimeter + 1;
         var lengthOnMeter = new List<decimal>() { };
-        
+
         for (var length = 0; length <= 1000; length += 1000 / delimeter)
             lengthOnMeter.Add(length);
 
@@ -255,7 +256,7 @@ public class Level : IModel
             }
         }
     }
-    
+
     public decimal GetY(int x1, decimal y1, int x2, decimal y2, int x3)
     {
         return Math.Round((x3 * y2 - x3 * y1 - x1 * y2 + x2 * y1) / (x2 - x1), 2);
@@ -263,7 +264,7 @@ public class Level : IModel
 
     private decimal GetYBetweenStepIndex(int index, int coord)
     {
-        
+
         return GetY(x1: DataList[index - 1].Position,
                     y1: DataList[index - 1].FactProfile,
                     x2: DataList[index].Position,
@@ -281,8 +282,8 @@ public class Level : IModel
         var interval = GetIntervalIndex(startX, endX);
         var adjStraightStepList = new List<(int x, decimal y)>();
 
-        startY = DataList[interval.startIndex].Position > startX 
-            ? GetYBetweenStepIndex(interval.startIndex, startX) 
+        startY = DataList[interval.startIndex].Position > startX
+            ? GetYBetweenStepIndex(interval.startIndex, startX)
             : DataList[interval.startIndex++].FactProfile;
         endY = DataList[interval.endIndex].Position > endX
             ? GetYBetweenStepIndex(interval.endIndex, endX)
@@ -318,7 +319,7 @@ public class Level : IModel
             else if (value > maxDeviation)
                 maxDeviation = value;
         }
-            
+
         return (LocalAreaStraight[0].x, LocalAreaStraight[^1].x, maxDeviation - minDeviation);
     }
 
@@ -333,7 +334,7 @@ public class Level : IModel
             localStep = Step;
             i = 1;
         }
-        else if (LocalAreaLength > Step) 
+        else if (LocalAreaLength > Step)
         {
             localStep = Step / 2;
             i = 0;
@@ -348,7 +349,7 @@ public class Level : IModel
             var areaDeviation = GetAreaDeviation(i);
             deviationList.AddArea(areaDeviation);
         }
-        
+
         _localAreaDeflection = deviationList.GetMaxDeviationValue();
 
         return deviationList.GetItemsArr();
@@ -369,7 +370,7 @@ public class Level : IModel
                 continue;
             }
 
-            if (!endIndexIsFind &&  DataList[i].Position >= endPos)
+            if (!endIndexIsFind && DataList[i].Position >= endPos)
             {
                 endIndex = i;
                 endIndexIsFind = true;
@@ -391,7 +392,7 @@ public class Level : IModel
         UpdateMeterDeflection();
         _bedAreaLength = DataList[^1].Position;
         maxLocalAreaDeviations = GetMaxLocalAreaDeviationList(30);
-        UpdatePoints(); 
+        UpdatePoints();
     }
 
     public void UpdateRow(int index, int value, Directions directions, Units unit, AngleUnits angleUnits = AngleUnits.Second) //int index, int value)
@@ -402,12 +403,12 @@ public class Level : IModel
                 case Units.Micrometer:
                     if (directions == Directions.Forward)
                         DataList[index].FStroke = value;
-                    
+
                     else if (directions == Directions.Reverse)
                         DataList[index].RevStroke = value;
-                    
+
                     break;
-                
+
                 case Units.Angle:
                     switch (angleUnits)
                     {
@@ -521,7 +522,7 @@ public class Level : IModel
             {
                 dataListValues[i + 1] = list1.Concat(DataList[i].GetAllCellsStringArray()).ToArray()[..^1];
             }
-            
+
         }
         return (dbValues, dataListValues);
 
