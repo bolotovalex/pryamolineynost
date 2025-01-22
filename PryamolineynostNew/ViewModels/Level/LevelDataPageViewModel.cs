@@ -27,7 +27,7 @@ public partial class LevelDataPageViewModel : PageViewModelBase
     
     private string _selectedItemText;
 
-    public string[] AvailableUnits { get; } = new string[] { "Микрометры", "Углы" };
+    public string[] AvailableUnits { get; } = new string[] { "Микрометры", "Градусы" };
 
     public string SelectedItemText
     {
@@ -96,7 +96,6 @@ public partial class LevelDataPageViewModel : PageViewModelBase
     public void AddRowCommand()
     {
         //TODO
-        Console.WriteLine("123");
     }
 
     [RelayCommand]
