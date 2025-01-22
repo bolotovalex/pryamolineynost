@@ -3,7 +3,7 @@ using System.Windows.Input;
 using PryamolineynostNew.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using PryamolineynostNew.Models.NotUse;
+using PryamolineynostNew.Models.LevelTool;
 
 namespace PryamolineynostNew.ViewModels;
 

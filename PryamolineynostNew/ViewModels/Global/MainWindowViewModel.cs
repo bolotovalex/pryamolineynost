@@ -2,8 +2,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PryamolineynostNew.Enums;
+using PryamolineynostNew.Interfaces;
+using PryamolineynostNew.Models.Collimator;
 using PryamolineynostNew.Models.LevelTool;
-using PryamolineynostNew.Models.NotUse;
 
 
 namespace PryamolineynostNew.ViewModels;
@@ -11,35 +12,28 @@ namespace PryamolineynostNew.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase
 {
     private readonly PageViewModelBase homePageViewModel;
-    private readonly Level levelModel;
-    private List<DataRow> _dataRows;
-
+    [ObservableProperty] private Level _levelModel = new Level();
     [ObservableProperty] private Tools? _selectedTool = null;
-
+    [ObservableProperty] private PageViewModelBase _currentPage;
+    [ObservableProperty] private bool isHomePageActive;
     private readonly PageViewModelBase[] _pages;
 
     public MainWindowViewModel()
     {
         homePageViewModel = new HomePageViewModel(this);
-        levelModel = new Level();
-        _dataRows = levelModel.DataList;
         _pages = new PageViewModelBase[]
         {
             homePageViewModel,
-            new LevelParamsPageViewModel(levelModel),
-            new LevelDataPageViewModel(_dataRows),
+            new LevelParamsPageViewModel(_levelModel),
+            new LevelDataPageViewModel(_levelModel),
             new GraphicPageViewModel(),
             new SettingsPageViewModel(),
             new ExitPageViewModel(),
             new CollimatorParamsPageViewModel(),
             new CollimatorDataPageViewModel()
         };
-        _currentPage = _pages[0];
+        SelectedTool = Tools.Level;
     }
-
-    [ObservableProperty] private PageViewModelBase _currentPage;
-
-    [ObservableProperty] private bool isHomePageActive;
 
     [RelayCommand]
     public void SetHomePage()
@@ -51,7 +45,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void ExitButton_Click()
     {
-        // Implementation for ExitButton_Click
+     
     }
 
     public void SetParamsPage()
@@ -91,6 +85,5 @@ public partial class MainWindowViewModel : ViewModelBase
     private void ActivatePage(string page)
     {
         IsHomePageActive = page == "Home";
-        // Additional page activation logic
     }
 }

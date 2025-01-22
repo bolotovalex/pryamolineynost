@@ -15,7 +15,7 @@ namespace PryamolineynostNew.ViewModels;
 public partial class LevelDataPageViewModel : PageViewModelBase
 {
     
-    [ObservableProperty] private List<DataRow> _dataRows;
+    [ObservableProperty] private List<LevelDataRow> _dataRows;
     
     [ObservableProperty] private bool isMicrometrSelect;
     private bool isReverseMicrometrSelect;
@@ -24,6 +24,7 @@ public partial class LevelDataPageViewModel : PageViewModelBase
     [ObservableProperty] private bool isAdvancedFieldSelect;
     private bool isReverseStrokeSelect;
     [ObservableProperty] private Units selectedUnitItem;
+
     
     private string _selectedItemText;
 
@@ -44,7 +45,7 @@ public partial class LevelDataPageViewModel : PageViewModelBase
                     IsReverseMicrometrSelect = IsReverseStrokeSelect;
                     IsReverseAngleSelect = false;
                     break;
-                case "Углы":
+                case "Градусы":
                     SelectedUnitItem = Units.Angle;
                     IsAngleSelect = true;
                     IsMicrometrSelect = false;
@@ -108,7 +109,7 @@ public partial class LevelDataPageViewModel : PageViewModelBase
     {
     }
 
-    public LevelDataPageViewModel(List<DataRow> dataRows)
+    public LevelDataPageViewModel(Level level)
     {
         // DataRows = dataRows;
         SelectedItemText = AvailableUnits[0];

@@ -4,13 +4,12 @@ using System.Linq;
 using PryamolineynostNew.Interfaces;
 using PryamolineynostNew.Enums;
 using PryamolineynostNew.Models.Global;
-using PryamolineynostNew.Models.LevelTool;
 
-namespace PryamolineynostNew.Models.NotUse;
+namespace PryamolineynostNew.Models.LevelTool;
 
 public class Level : IModel
 {
-    private string _backendVersion = "1.5.0.0";
+    private string _version = "1.5.0.0";
     public DateTime Date { get; set; } //Дата
     public string Name { get; set; } //Наименование
     public string Description { get; set; } //Обозначение
@@ -27,7 +26,7 @@ public class Level : IModel
     public int Step { get; set; } //Шаг измерения (расстояние между опорами мостика), мм
     private decimal _programFactor1; //Программный коэффициент
     private decimal _programFactor2; //Программный коэффициент
-    public List<DataRow> DataList { get; set; } //Таблица измерений
+    public List<LevelDataRow> DataList { get; set; } //Таблица измерений
     private int _stepsPerMeter { get; set; }
     private bool _revStrokeEnbled = false;
     private DPoint[] CurvePoints { get; set; }
@@ -57,7 +56,7 @@ public class Level : IModel
         maxLocalAreaDeviations = area;
     }
 
-    public string GetVersion() => _backendVersion;
+    public string GetVersion() => _version;
 
     public Level()
     {
@@ -66,8 +65,8 @@ public class Level : IModel
         Date = DateTime.Now.Date;
         Step = 200;
         UpdateStepsPerMeter(Step);
-        DataList.Add(new DataRow(0, 0, null, RevStrokeEnable, Directions.Forward));
-        DataList.Add(new DataRow(0, 0, null, RevStrokeEnable, Directions.Forward));
+        DataList.Add(new LevelDataRow(0, 0, null, RevStrokeEnable, Directions.Forward));
+        DataList.Add(new LevelDataRow(0, 0, null, RevStrokeEnable, Directions.Forward));
 
         LocalAreaLength = 1000;
     }
@@ -108,26 +107,26 @@ public class Level : IModel
     public void AddRow(int value, Directions directions, Units unit, AngleUnits angleUnits = AngleUnits.Second)
     {
         var prevRow = DataList[^1];
-        DataRow row = null;
+        LevelDataRow row = null;
         switch (unit)
         {
             case Units.Micrometer:
-                row = new DataRow(value, Step, prevRow, _revStrokeEnbled, directions);
+                row = new LevelDataRow(value, Step, prevRow, _revStrokeEnbled, directions);
                 break;
             case Units.Angle:
                 switch (angleUnits)
                 {
                     case AngleUnits.Degree:
-                        row = new DataRow(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Degree);
+                        row = new LevelDataRow(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Degree);
                         break;
                     case AngleUnits.Minute:
-                        row = new DataRow(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Minute);
+                        row = new LevelDataRow(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Minute);
                         break;
                     case AngleUnits.Second:
-                        row = new DataRow(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Second);
+                        row = new LevelDataRow(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Second);
                         break;
                 }
-                // row = new DataRow(value, Step, prevRow, _revStrokeEnbled, directions, angleUnits);
+                // row = new LevelDataRow(value, Step, prevRow, _revStrokeEnbled, directions, angleUnits);
                 break;
         }
 
@@ -214,15 +213,6 @@ public class Level : IModel
             selRow.RecalcRow(Step, prevRow, _revStrokeEnbled, unit);
         }
     }
-
-    //public void UpdateAllDeviationsDataList()
-    //{
-    //    for (var i = 1; i < DataList.Count; i++)
-    //    {
-    //        var selRow = DataList[i];
-    //        selRow.CalculateDeviation();
-    //    }
-    //}
 
     public void UpdateMinMaxDeviations()
     {
@@ -439,12 +429,12 @@ public class Level : IModel
     public void CleanDb()
     {
         Date = DateTime.Now.Date;
-        DataList.Clear(); //= new List<DataRow>();
+        DataList.Clear(); //= new List<LevelDataRow>();
         _programFactor1 = 0;
         _programFactor2 = 0;
         _verticalDeflection = 0;
         UpdateStepsPerMeter(Step);
-        DataList.Add(new DataRow(0, 0, null, _revStrokeEnbled, Directions.Forward));
+        DataList.Add(new LevelDataRow(0, 0, null, _revStrokeEnbled, Directions.Forward));
         UpdateAllRows(currUnit);
     }
 

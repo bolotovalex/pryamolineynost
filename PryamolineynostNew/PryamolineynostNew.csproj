@@ -13,13 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AvaloniaXaml Remove="Models\Collimator\**" />
-    <Compile Remove="Models\Collimator\**" />
-    <EmbeddedResource Remove="Models\Collimator\**" />
-    <None Remove="Models\Collimator\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Views\Level\LevelDataPageView.axaml.cs">
       <DependentUpon>LevelDataPageView.axaml</DependentUpon>
       <SubType>Code</SubType>

@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using PryamolineynostNew.Enums;
 using PryamolineynostNew.Interfaces;
+using PryamolineynostNew.Models.Collimator;
+using PryamolineynostNew.Models.LevelTool;
 
 
 namespace PryamolineynostNew.ViewModels;
@@ -24,6 +26,7 @@ public partial class HomePageViewModel : PageViewModelBase
     {
         Title = "Уровень";
         _mainWindowViewModel.SelectedTool = Tools.Level;
+        _mainWindowViewModel.LevelModel = new Level();
     }
 
     [RelayCommand]
@@ -32,6 +35,4 @@ public partial class HomePageViewModel : PageViewModelBase
         Title = "Автоколлиматор";
         _mainWindowViewModel.SelectedTool = Tools.Autocollimator;
     }
-    
-    
 }

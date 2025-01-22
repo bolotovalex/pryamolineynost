@@ -3,7 +3,7 @@ using PryamolineynostNew.Enums;
 
 namespace PryamolineynostNew.Models.LevelTool;
 
-public class DataRow
+public class LevelDataRow
 {
     /// <summary>
     /// Класс для хранения точек измерения и расчета служебных параметров.
@@ -18,8 +18,7 @@ public class DataRow
     private decimal _midValue { get; set; } //Среднее значение, мкм
     private int _fStroke { get; set; } //Прямой ход, мкм
     private int _revStroke { get; set; } //Обратный ход, мкм
-    private bool _revStrokeEnable { get; set; } //Включен-ли учет обратного хода
-    private DataRow? _prevDataRow { get; set; } //Предыдущая строка
+    private LevelDataRow? _prevDataRow { get; set; } //Предыдущая строка
     private decimal _progrmaFactor { get; set; } //Коэффициент для расчета прилегающей прямой
     private int _fDegree { get; set; } //Градусы прямой ход
     private int _fMinutes { get; set; } //Минуты прямой ход
@@ -27,6 +26,7 @@ public class DataRow
     private int _rDegree { get; set; } //Градусы обратный ход
     private int _rMinutes { get; set; } //Минуты обратный ход
     private int _rSeconds { get; set; } //Секунды обратный ход
+    private bool _revStrokeEnable { get; set; } //Включен-ли учет обратного хода
 
     public decimal ProgrmaFactor
     {
@@ -72,7 +72,7 @@ public class DataRow
         }
     }
 
-    public DataRow? PrevDataRow
+    public LevelDataRow? PrevDataRow
     {
         get => _prevDataRow;
         set
@@ -149,7 +149,7 @@ public class DataRow
         }
     }
 
-    public DataRow(int value, int step, DataRow? prevDataRow, bool revStrokeEnabled, Directions directions)
+    public LevelDataRow(int value, int step, LevelDataRow? prevDataRow, bool revStrokeEnabled, Directions directions)
     {
         _step = step;
         _prevDataRow = prevDataRow;
@@ -159,7 +159,7 @@ public class DataRow
         RevStroke = directions == Directions.Reverse ? value : int.MinValue;
     }
 
-    public DataRow(int value, int step, DataRow? prevDataRow,
+    public LevelDataRow(int value, int step, LevelDataRow? prevDataRow,
         bool revStrokeEnabled, Directions directions, AngleUnits unit)
     {
         _step = step;
@@ -184,7 +184,7 @@ public class DataRow
     }
 
     // пересчет свойств
-    public void RecalcRow(int step, DataRow? prevDataRow, bool revStrokeEnabled, Units unit)
+    public void RecalcRow(int step, LevelDataRow? prevDataRow, bool revStrokeEnabled, Units unit)
     {
         _step = step;
         _prevDataRow = prevDataRow;

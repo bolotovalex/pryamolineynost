@@ -1,7 +1,7 @@
 ﻿using PryamolineynostNew.Models.Global;
 using System.Collections.Generic;
 
-namespace PryamolineynostNew.Models.NotUse
+namespace PryamolineynostNew.Models.LevelTool
 {
     public class SortedQueueDeviation
     {
