@@ -77,70 +77,70 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="No" 
-                                    Binding="{Binding PointNumber}" 
+                                    Binding="{Binding Id}" 
                                     IsReadOnly="True" 
                                     IsVisible="True"/>
                 
                 <DataGridTextColumn Header="Длина измерения, мм" 
-                                    Binding="{Binding PointPosition}" 
+                                    Binding="{Binding Position}" 
                                     IsReadOnly="True" 
                                     IsVisible="True"/>
                 
                 <DataGridTextColumn Header="Фактический профиль проверяемой поверхности, мкм"
-                                    Binding="{Binding ActualProfilePoint}" 
+                                    Binding="{Binding FactProfile}" 
                                     IsReadOnly="True" 
                                     IsVisible="{Binding IsAdvancedFieldSelect}"/>
                 
                 <DataGridTextColumn Header="Прилягающая прямая, мкм" 
-                                    Binding="{Binding AdjStraightPoint}"
+                                    Binding="{Binding AdjStraight}"
                                     IsReadOnly="True" 
                                     IsVisible="{Binding IsAdvancedFieldSelect}"/>
                 
                 <DataGridTextColumn Header="Отклонение, мкм" 
-                                    Binding="{Binding DeviationSize}" 
+                                    Binding="{Binding Deviation}" 
                                     IsReadOnly="True" 
                                     IsVisible="{Binding IsAdvancedFieldSelect}"/>
                 
                 <DataGridTextColumn Header="Отклонение на метре, мкм" 
-                                    Binding="{Binding DeviationPerMeter}"
+                                    Binding="{Binding DevationPerMeter}"
                                     IsReadOnly="True" 
                                     IsVisible="{Binding IsAdvancedFieldSelect}"/>
                 
                 <DataGridTextColumn Header="Среднее значение, мкм" 
-                                    Binding="{Binding MeanPointValue}" 
+                                    Binding="{Binding MidValue}" 
                                     IsReadOnly="True" 
                                     IsVisible="{Binding IsReverseStrokeSelect}"/>
 
                 <DataGridTextColumn Header="Прямой ход, мкм" 
-                                    Binding="{Binding FwdPoint, Mode=TwoWay}" 
+                                    Binding="{Binding FStroke, Mode=TwoWay}" 
                                     IsVisible="{Binding IsMicrometrSelect}"/>
                 
                 <DataGridTextColumn Header="Обратный ход, мкм" 
-                                    Binding="{Binding RevPoint, Mode=TwoWay}" 
+                                    Binding="{Binding RevStroke, Mode=TwoWay}" 
                                     IsVisible="{Binding IsReverseMicrometrSelect}"/>
 
                 <DataGridTextColumn Header="°, ПрХод" 
-                                    Binding="{Binding FwdAngle, Mode=TwoWay}" 
+                                    Binding="{Binding FDegree, Mode=TwoWay}" 
                                     IsVisible="{Binding IsAngleSelect}"/>
 
                 <DataGridTextColumn Header="', ПрХод" 
-                                    Binding="{Binding FwdMinutes, Mode=TwoWay}" 
+                                    Binding="{Binding FMinutes, Mode=TwoWay}" 
                                     IsVisible="{Binding IsAngleSelect}"/>
                 
                 <DataGridTextColumn Header="'', ПрХод"
-                                    Binding="{Binding FwdSeconds, Mode=TwoWay}" 
+                                    Binding="{Binding FSeconds, Mode=TwoWay}" 
                                     IsVisible="{Binding IsAngleSelect}"/>
 
                 <DataGridTextColumn Header="°, ОбрХод" 
-                                    Binding="{Binding RevAngle, Mode=TwoWay}" 
+                                    Binding="{Binding RDegree, Mode=TwoWay}" 
                                     IsVisible="{Binding IsReverseAngleSelect}"/>
                 
                 <DataGridTextColumn Header="', ОбрХод" 
-                                    Binding="{Binding RevMinutes, Mode=TwoWay}" 
+                                    Binding="{Binding RMinutes, Mode=TwoWay}" 
                                     IsVisible="{Binding IsReverseAngleSelect}"/>
                 
                 <DataGridTextColumn Header="'', ОбрХод" 
-                                    Binding="{Binding RevSeconds, Mode=TwoWay}" 
+                                    Binding="{Binding RSeconds, Mode=TwoWay}" 
                                     IsVisible="{Binding IsReverseAngleSelect}"/>
             </DataGrid.Columns>
         </DataGrid>

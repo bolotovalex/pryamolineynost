@@ -4,6 +4,7 @@ using System.Linq;
 using PryamolineynostNew.Interfaces;
 using PryamolineynostNew.Enums;
 using PryamolineynostNew.Models.Global;
+using System.Collections.ObjectModel;
 
 namespace PryamolineynostNew.Models.LevelTool;
 
@@ -26,7 +27,7 @@ public class Level : IModel
     public int Step { get; set; } //Шаг измерения (расстояние между опорами мостика), мм
     private decimal _programFactor1; //Программный коэффициент
     private decimal _programFactor2; //Программный коэффициент
-    public List<LevelDataRow> DataList { get; set; } //Таблица измерений
+    public ObservableCollection<LevelDataItem> DataList = new ObservableCollection<LevelDataItem>(); //Таблица измерений
     private int _stepsPerMeter { get; set; }
     private bool _revStrokeEnbled = false;
     private DPoint[] CurvePoints { get; set; }
@@ -65,8 +66,8 @@ public class Level : IModel
         Date = DateTime.Now.Date;
         Step = 200;
         UpdateStepsPerMeter(Step);
-        DataList.Add(new LevelDataRow(0, 0, null, RevStrokeEnable, Directions.Forward));
-        DataList.Add(new LevelDataRow(0, 0, null, RevStrokeEnable, Directions.Forward));
+        DataList.Add(new LevelDataItem(0, 0, null, RevStrokeEnable, Directions.Forward));
+        DataList.Add(new LevelDataItem(0, 0, null, RevStrokeEnable, Directions.Forward));
 
         LocalAreaLength = 1000;
     }
@@ -107,23 +108,23 @@ public class Level : IModel
     public void AddRow(int value, Directions directions, Units unit, AngleUnits angleUnits = AngleUnits.Second)
     {
         var prevRow = DataList[^1];
-        LevelDataRow row = null;
+        LevelDataItem row = null;
         switch (unit)
         {
             case Units.Micrometer:
-                row = new LevelDataRow(value, Step, prevRow, _revStrokeEnbled, directions);
+                row = new LevelDataItem(value, Step, prevRow, _revStrokeEnbled, directions);
                 break;
             case Units.Angle:
                 switch (angleUnits)
                 {
                     case AngleUnits.Degree:
-                        row = new LevelDataRow(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Degree);
+                        row = new LevelDataItem(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Degree);
                         break;
                     case AngleUnits.Minute:
-                        row = new LevelDataRow(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Minute);
+                        row = new LevelDataItem(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Minute);
                         break;
                     case AngleUnits.Second:
-                        row = new LevelDataRow(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Second);
+                        row = new LevelDataItem(value, Step, prevRow, _revStrokeEnbled, directions, AngleUnits.Second);
                         break;
                 }
                 // row = new LevelDataRow(value, Step, prevRow, _revStrokeEnbled, directions, angleUnits);
@@ -183,7 +184,7 @@ public class Level : IModel
         decimal minDeflection = 0;
         for (var i = 1; i <= DataList.Count - _stepsPerMeter; i++)
         {
-            var rowDeviationPerMeter = DataList[i].DeviationPerMeter;
+            var rowDeviationPerMeter = DataList[i].DevationPerMeter;
             if (rowDeviationPerMeter > maxDeflection)
                 maxDeflection = rowDeviationPerMeter;
             else if (rowDeviationPerMeter < minDeflection)
@@ -238,11 +239,11 @@ public class Level : IModel
             var index = i - _stepsPerMeter + 1;
             if (DataList.Count - i >= 1 && DataList.Count > _stepsPerMeter && index >= 1)
             {
-                DataList[index].DeviationPerMeter = GetMaxDeviationPerMeterForStep(i);
+                DataList[index].DevationPerMeter = GetMaxDeviationPerMeterForStep(i);
             }
             if (DataList.Count - i < _stepsPerMeter)
             {
-                DataList[i].DeviationPerMeter = 0;
+                DataList[i].DevationPerMeter = 0;
             }
         }
     }
@@ -406,19 +407,19 @@ public class Level : IModel
                             if (directions == Directions.Forward)
                                 DataList[index].FDegree = value;
                             else if (directions == Directions.Reverse)
-                                DataList[index].RevDegree = value;
+                                DataList[index].RDegree = value;
                             break;
                         case AngleUnits.Minute:
                             if (directions == Directions.Forward)
                                 DataList[index].FMinutes = value;
                             else if (directions == Directions.Reverse)
-                                DataList[index].RevMinutes = value;
+                                DataList[index].RMinutes = value;
                             break;
                         case AngleUnits.Second:
                             if (directions == Directions.Forward)
                                 DataList[index].FSeconds = value;
                             else if (directions == Directions.Reverse)
-                                DataList[index].RevSeconds = value;
+                                DataList[index].RSeconds = value;
                             break;
                     }
                     break;
@@ -434,7 +435,7 @@ public class Level : IModel
         _programFactor2 = 0;
         _verticalDeflection = 0;
         UpdateStepsPerMeter(Step);
-        DataList.Add(new LevelDataRow(0, 0, null, _revStrokeEnbled, Directions.Forward));
+        DataList.Add(new LevelDataItem(0, 0, null, _revStrokeEnbled, Directions.Forward));
         UpdateAllRows(currUnit);
     }
 

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using OxyPlot;
 using PryamolineynostNew.Enums;
 using PryamolineynostNew.Models;
 using PryamolineynostNew.Models.LevelTool;
@@ -14,9 +15,9 @@ namespace PryamolineynostNew.ViewModels;
 
 public partial class LevelDataPageViewModel : PageViewModelBase
 {
-    
-    [ObservableProperty] private List<LevelDataRow> _dataRows;
-    
+
+    [ObservableProperty] private List<LevelDataItem> dataRows;
+    [ObservableProperty] private Level model;
     [ObservableProperty] private bool isMicrometrSelect;
     private bool isReverseMicrometrSelect;
     [ObservableProperty] private bool isAngleSelect;
@@ -24,8 +25,9 @@ public partial class LevelDataPageViewModel : PageViewModelBase
     [ObservableProperty] private bool isAdvancedFieldSelect;
     private bool isReverseStrokeSelect;
     [ObservableProperty] private Units selectedUnitItem;
+    [ObservableProperty] private ObservableCollection<LevelDataItem> levelData;
 
-    
+
     private string _selectedItemText;
 
     public string[] AvailableUnits { get; } = new string[] { "Микрометры", "Градусы" };
@@ -66,7 +68,7 @@ public partial class LevelDataPageViewModel : PageViewModelBase
     public bool IsReverseMicrometrSelect
     {
         get => isReverseMicrometrSelect && IsMicrometrSelect;
-        set 
+        set
         {
             SetProperty(ref isReverseMicrometrSelect, value);
         }
@@ -104,73 +106,18 @@ public partial class LevelDataPageViewModel : PageViewModelBase
     {
         //TODO
     }
-    
+
     public LevelDataPageViewModel()
     {
     }
 
     public LevelDataPageViewModel(Level level)
     {
-        // DataRows = dataRows;
+
         SelectedItemText = AvailableUnits[0];
-    }
-
-    public ObservableCollection<LevelDataItem> LevelData { get; set; } = new ObservableCollection<LevelDataItem>()
-    {
-        new LevelDataItem()
-        {
-            PointNumber = 1,
-            PointPosition = 0,
-            ActualProfilePoint = 0.0,
-            AdjStraightPoint = 0,
-            DeviationSize = 0,
-            DeviationPerMeter = 0,
-            MeanPointValue = 0,
-            FwdPoint = 0,
-            RevPoint = 0,
-            FwdAngle = 0,
-            FwdMinutes = 0,
-            FwdSeconds = 0,
-            RevAngle = 0,
-            RevMinutes = 0,
-            RevSeconds = 0
-        },
-        new LevelDataItem() 
-        { 
-            PointNumber = 2, 
-            PointPosition = 0, 
-            ActualProfilePoint = 0.0, 
-            AdjStraightPoint = 0,
-            DeviationSize = 0, 
-            DeviationPerMeter = 0,
-            MeanPointValue = 0, 
-            FwdPoint = 0, 
-            RevPoint = 0,
-            FwdAngle = 0,
-            FwdMinutes = 0, 
-            FwdSeconds = 0,
-            RevAngle = 0,
-            RevMinutes = 0,
-            RevSeconds = 0 
-        }
-    };
-
-    public class LevelDataItem
-    {
-        public int PointNumber { get; set; }
-        public int PointPosition { get; set; }
-        public double ActualProfilePoint { get; set; }
-        public decimal AdjStraightPoint { get; set; }
-        public decimal DeviationSize { get; set; }
-        public decimal DeviationPerMeter { get; set; }
-        public decimal MeanPointValue { get; set; }
-        public int FwdPoint { get; set; }
-        public int RevPoint { get; set; }
-        public int FwdAngle { get; set; }
-        public int FwdMinutes { get; set; }
-        public int FwdSeconds { get; set; }
-        public int RevAngle { get; set; }
-        public int RevMinutes { get; set; }
-        public int RevSeconds { get; set; }
+        Model = level;
+        LevelData = Model.DataList;
     }
 }
+
+    
