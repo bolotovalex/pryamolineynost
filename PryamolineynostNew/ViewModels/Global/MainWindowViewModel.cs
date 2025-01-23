@@ -32,7 +32,7 @@ public partial class MainWindowViewModel : ViewModelBase
             new CollimatorParamsPageViewModel(),
             new CollimatorDataPageViewModel()
         };
-        SelectedTool = Tools.Level;
+        CurrentPage = _pages[0];
     }
 
     [RelayCommand]
