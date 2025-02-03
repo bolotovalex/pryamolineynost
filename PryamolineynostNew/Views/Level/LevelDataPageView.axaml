@@ -73,75 +73,94 @@
                   IsReadOnly="False"
                   GridLinesVisibility="All"
                   Margin="0,0,0,10"
+                  VerticalAlignment="Stretch"
 				  >
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="No" 
+                <DataGridTextColumn Header="No"
+                                    
                                     Binding="{Binding Id}" 
                                     IsReadOnly="True" 
-                                    IsVisible="True"/>
+                                    IsVisible="True"
+                                    Width="*"
+                                    MinWidth="50"
+                                    MaxWidth="50"/>
                 
                 <DataGridTextColumn Header="Длина измерения, мм" 
                                     Binding="{Binding Position}" 
                                     IsReadOnly="True" 
-                                    IsVisible="True"/>
+                                    IsVisible="True"
+                                    Width="*"/>
                 
                 <DataGridTextColumn Header="Фактический профиль проверяемой поверхности, мкм"
                                     Binding="{Binding FactProfile}" 
                                     IsReadOnly="True" 
-                                    IsVisible="{Binding IsAdvancedFieldSelect}"/>
+                                    IsVisible="{Binding IsAdvancedFieldSelect}"
+                                    Width="*"/>
                 
                 <DataGridTextColumn Header="Прилягающая прямая, мкм" 
                                     Binding="{Binding AdjStraight}"
                                     IsReadOnly="True" 
-                                    IsVisible="{Binding IsAdvancedFieldSelect}"/>
+                                    IsVisible="{Binding IsAdvancedFieldSelect}"
+                                    Width="*"/>
                 
                 <DataGridTextColumn Header="Отклонение, мкм" 
                                     Binding="{Binding Deviation}" 
                                     IsReadOnly="True" 
-                                    IsVisible="{Binding IsAdvancedFieldSelect}"/>
+                                    IsVisible="{Binding IsAdvancedFieldSelect}"
+                                    Width="*"/>
                 
                 <DataGridTextColumn Header="Отклонение на метре, мкм" 
                                     Binding="{Binding DevationPerMeter}"
                                     IsReadOnly="True" 
-                                    IsVisible="{Binding IsAdvancedFieldSelect}"/>
+                                    IsVisible="{Binding IsAdvancedFieldSelect}"
+                                    Width="*"/>
                 
                 <DataGridTextColumn Header="Среднее значение, мкм" 
                                     Binding="{Binding MidValue}" 
                                     IsReadOnly="True" 
-                                    IsVisible="{Binding IsReverseStrokeSelect}"/>
+                                    IsVisible="{Binding IsReverseStrokeSelect}"
+                                    Width="*"/>
 
                 <DataGridTextColumn Header="Прямой ход, мкм" 
                                     Binding="{Binding FStroke, Mode=TwoWay}" 
-                                    IsVisible="{Binding IsMicrometrSelect}"/>
+                                    IsVisible="{Binding IsMicrometrSelect}"
+                                    Width="*"/>
                 
                 <DataGridTextColumn Header="Обратный ход, мкм" 
                                     Binding="{Binding RevStroke, Mode=TwoWay}" 
-                                    IsVisible="{Binding IsReverseMicrometrSelect}"/>
+                                    IsVisible="{Binding IsReverseMicrometrSelect}"
+                                    Width="*"/>
 
                 <DataGridTextColumn Header="°, ПрХод" 
                                     Binding="{Binding FDegree, Mode=TwoWay}" 
-                                    IsVisible="{Binding IsAngleSelect}"/>
+                                    IsVisible="{Binding IsAngleSelect}"
+                                    Width="*"/>
 
                 <DataGridTextColumn Header="', ПрХод" 
                                     Binding="{Binding FMinutes, Mode=TwoWay}" 
-                                    IsVisible="{Binding IsAngleSelect}"/>
+                                    IsVisible="{Binding IsAngleSelect}"
+                                    Width="*"/>
                 
                 <DataGridTextColumn Header="'', ПрХод"
                                     Binding="{Binding FSeconds, Mode=TwoWay}" 
-                                    IsVisible="{Binding IsAngleSelect}"/>
+                                    IsVisible="{Binding IsAngleSelect}"
+                                    Width="*"/>
 
                 <DataGridTextColumn Header="°, ОбрХод" 
                                     Binding="{Binding RDegree, Mode=TwoWay}" 
-                                    IsVisible="{Binding IsReverseAngleSelect}"/>
+                                    IsVisible="{Binding IsReverseAngleSelect}"
+                                    Width="*"/>
                 
                 <DataGridTextColumn Header="', ОбрХод" 
                                     Binding="{Binding RMinutes, Mode=TwoWay}" 
-                                    IsVisible="{Binding IsReverseAngleSelect}"/>
+                                    IsVisible="{Binding IsReverseAngleSelect}"
+                                    Width="*"/>
                 
                 <DataGridTextColumn Header="'', ОбрХод" 
                                     Binding="{Binding RSeconds, Mode=TwoWay}" 
-                                    IsVisible="{Binding IsReverseAngleSelect}"/>
+                                    IsVisible="{Binding IsReverseAngleSelect}"
+                                    Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -1,30 +1,31 @@
 ﻿using System;
-using System.Windows.Input;
-using PryamolineynostNew.Interfaces;
+using System.ComponentModel.DataAnnotations;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PryamolineynostNew.Models.LevelTool;
+
 
 namespace PryamolineynostNew.ViewModels;
 
 public partial class LevelParamsPageViewModel : PageViewModelBase
 {
     [ObservableProperty] private DateTimeOffset _date;
-    [ObservableProperty] private string _projectName;
-    [ObservableProperty] private string _description;
-    [ObservableProperty] private string _author;
-    [ObservableProperty] private decimal _maxDeviation;
-    [ObservableProperty] private decimal _minDeviation;
-    [ObservableProperty] private decimal _verticalDeviation;
-    [ObservableProperty] private decimal _localAreaDeviation;
-    [ObservableProperty] private int _bedLength;
-    [ObservableProperty] private int _localAreaLength;
-    [ObservableProperty] private int _localAreaTolerance;
-    [ObservableProperty] private int _allLengthTolerance;
-    [ObservableProperty] private int _step;
-    [ObservableProperty] private Level _model;
-    [ObservableProperty] private bool _canApplyChanges;
-    [ObservableProperty] private bool _canCancelChanges;
+    [ObservableProperty] private string projectName;
+    [ObservableProperty] private string description;
+    [ObservableProperty] private string author;
+    [ObservableProperty] private decimal maxDeviation;
+    [ObservableProperty] private decimal minDeviation;
+    [ObservableProperty] private decimal verticalDeviation;
+    [ObservableProperty] private decimal localAreaDeviation;
+    [ObservableProperty] private int bedLength;
+    [ObservableProperty] private int localAreaLength;
+    [ObservableProperty] private int localAreaTolerance;
+    [ObservableProperty] private int allLengthTolerance;
+    [ObservableProperty] private int step;
+    [ObservableProperty] private Level model;
+    [ObservableProperty] private bool canApplyChanges;
+    [ObservableProperty] private bool canCancelChanges;
 
 
     private void InitializeProperties()
@@ -32,6 +33,7 @@ public partial class LevelParamsPageViewModel : PageViewModelBase
         CanApplyChanges = false;
         CanCancelChanges = false;
     }
+    
 
     private void EvaluateChanges()
     {
@@ -45,7 +47,7 @@ public partial class LevelParamsPageViewModel : PageViewModelBase
             Model.FullTolerance == AllLengthTolerance &&
             Model.Step == Step
         );
-
+        
         CanCancelChanges = CanApplyChanges; // Если есть изменения, активна и кнопка отмены
     }
 
@@ -103,14 +105,20 @@ public partial class LevelParamsPageViewModel : PageViewModelBase
         VerticalDeviation = Model.GetVerticalDeflection();
     }
 
+   
 
     partial void OnDateChanged(DateTimeOffset date)
     {
         EvaluateChanges();
     }
 
+    private IBrush TextBoxBackground()
+    {
+        return Brushes.Red;
+    }
     partial void OnProjectNameChanged(string value)
     {
+        
         EvaluateChanges();
     }
 

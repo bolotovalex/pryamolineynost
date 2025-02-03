@@ -48,19 +48,19 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.resx</DependentUpon>
       </Compile>
-      <Compile Update="Views\MainForm.cs">
+      <Compile Update="Views\Level\DataForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="Views\GraphicsForm.cs">
+      <Compile Update="Views\Level\DeviceChooseForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="Views\ErrorForm.cs">
+      <Compile Update="Views\Level\ErrorForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="Views\DataForm.cs">
+      <Compile Update="Views\Level\GraphicsForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="Views\DeviceChooseForm.cs">
+      <Compile Update="Views\Level\MainForm.cs">
         <SubType>Form</SubType>
       </Compile>
     </ItemGroup>

@@ -13,5 +13,18 @@
         <FluentTheme />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
     </Application.Styles>
+             <Application.Resources>
+                 <ResourceDictionary>
+                     <!-- Определяем цвета -->
+                     <Color x:Key="TextBoxValidColor">White</Color>
+                     <Color x:Key="TextBoxInvalidColor">LightPink</Color>
+
+                     <!-- Определяем кисти на основе цветов с использованием DynamicResource -->
+                     <!-- DynamicResource гарантирует, что при смене темы или изменении значения цвета все связанные элементы обновятся -->
+                     <SolidColorBrush x:Key="TextBoxValidBrush" Color="{DynamicResource TextBoxValidColor}" />
+                     <SolidColorBrush x:Key="TextBoxInvalidBrush" Color="{DynamicResource TextBoxInvalidColor}" />
+
+                 </ResourceDictionary>
+             </Application.Resources>
 	
 </Application>

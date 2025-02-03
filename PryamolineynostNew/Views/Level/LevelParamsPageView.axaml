@@ -67,15 +67,20 @@
                             Margin="3,3,3,3"
                             SelectedDate="{Binding Date}" />
 
-                <TextBlock Grid.Row="1"
+                <TextBlock Name="Name" 
+                            Grid.Row="1"
                            Grid.Column="0"
                            Grid.ColumnSpan="2"
-                           Text="Наименование" />
+                           Text="Наименование" 
+                           />
 
-                <TextBox Grid.Row="1"
+                <TextBox x:Name="asd" 
+                    Grid.Row="1"
                          Grid.Column="2"
                          Grid.ColumnSpan="4"
-                         Text="{Binding ProjectName, Mode=OneWay}" />
+                         Text="{Binding ProjectName, Mode=TwoWay}" 
+                         Background="Red"/>
+                         
 
                 <TextBlock Grid.Row="2"
                            Grid.Column="0"
@@ -85,7 +90,7 @@
                 <TextBox Grid.Row="2"
                          Grid.Column="2"
                          Grid.ColumnSpan="4"
-                         Text="{Binding Description, Mode=OneWay}" />
+                         Text="{Binding Description, Mode=TwoWay}" />
 
                 <TextBlock Grid.Row="3"
                            Grid.Column="0"
@@ -95,7 +100,7 @@
                 <TextBox Grid.Row="3"
                          Grid.Column="2"
                          Grid.ColumnSpan="4"
-                         Text="{Binding Author, Mode=OneWay}" />
+                         Text="{Binding Author, Mode=TwoWay}" />
 
                 <TextBlock Grid.Row="4"
                            Grid.Column="0"

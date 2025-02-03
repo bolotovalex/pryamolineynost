@@ -6,6 +6,9 @@
         </Border>
     </Design.PreviewWith>
 
+	<Style Selector="TextBox.invalid">
+		<Setter Property="Background" Value="LightPink"/>
+	</Style>
 	
 	<Style Selector="Button.ControlPanelButton">
         <Setter Property="CornerRadius" Value="3"></Setter>
@@ -45,11 +48,12 @@
     <Style Selector="TextBox">
         <!-- <Setter Property="Background" Value="rgb(247,247,247)"></Setter> -->
         <!-- <Setter Property="Foreground" Value="Black"></Setter> -->
-        <Setter Property="Padding" Value="7"></Setter>
-        <Setter Property="Margin" Value="2"></Setter>
+        <Setter Property="Padding" Value="7"/>
+        <Setter Property="Margin" Value="2"/>
         <!-- <Setter Property="FontWeight" Value="Bold"></Setter> -->
         <!-- <Setter Property="BorderBrush" Value="rgb(223,223,223)"></Setter> -->
-        <Setter Property="BorderThickness" Value="1"></Setter>
+        <Setter Property="BorderThickness" Value="1" />
+        
     </Style>
     
     <Style Selector="TextBox.InputCol:pointerover /template/ ContentPresenter">
