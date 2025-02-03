@@ -1,14 +1,11 @@
-﻿using LogicLibrary;
-using Pryamolineynost;
-using PryamolineynostWF.Controllers;
+﻿using Pryamolineynost;
 using PryamolineynostWF.Enums;
+using PryamolineynostWF.Views.Collimator;
 
 namespace PryamolineynostWF.Views;
 
 public partial class DeviceChooseForm : Form
 {
-    public event EventHandler OkClicked;
-    public event EventHandler CancelClicked;
     private Thread secondThread;
 
     public DeviceChooseForm()
@@ -22,21 +19,11 @@ public partial class DeviceChooseForm : Form
     private void FillDeviceTypeComboBox()
     {
         deviceComboBox.DataSource = Enum.GetValues(typeof(MeasurementDevices));
-        //    .Cast<MeasurementDevices>()
-        //    .Select(d => new { Value = d, Display = DeviceTypeTranslation.GetTranslation[d] })
-        //    .ToList();
-        //deviceComboBox.DisplayMember = "Display";
-        //deviceComboBox.ValueMember = "Value";
     }
 
     private void FillCollimatorTypeComboBox()
     {
         collimatorModelComboBox.DataSource = Enum.GetValues(typeof(CollimatorType));
-        //    .Cast<CollimatorType>()
-        //    .Select(d => new { Value = d, Display = CollimatorTypeTranslation.GetTranslation[d] })
-        //    .ToList();
-        //collimatorModelComboBox.DisplayMember = "Display";
-        //collimatorModelComboBox.ValueMember = "Value";
     }
 
     private void ToogleCollimatorTypeElements()
@@ -55,7 +42,12 @@ public partial class DeviceChooseForm : Form
 
     private void startLevelForm()
     {
-        Application.Run(new MainForm());
+        Application.Run(new LevelMainForm());
+    }
+    
+    private void startCollimatorForm()
+    {
+        Application.Run(new CollimatorMainForm((CollimatorType)collimatorModelComboBox.SelectedValue));
     }
 
     private void cancelButton_Click(object sender, EventArgs e)
@@ -67,12 +59,17 @@ public partial class DeviceChooseForm : Form
     {
         if ((MeasurementDevices)deviceComboBox.SelectedValue == MeasurementDevices.Level)
         {
-            this.Close();
             secondThread = new Thread(startLevelForm);
             secondThread.SetApartmentState(ApartmentState.STA);
             secondThread.Start();
         }
-        
+        else if ((MeasurementDevices)deviceComboBox.SelectedValue == MeasurementDevices.Collimator)
+        {
+            secondThread = new Thread(startCollimatorForm);
+            secondThread.SetApartmentState(ApartmentState.STA);
+            secondThread.Start();
+        }
+        this.Close();
     }
 
     private void deviceComboBox_SelectedIndexChanged(object sender, EventArgs e)
