@@ -111,7 +111,7 @@ partial class DeviceChooseForm
         cancelButton.TabIndex = 8;
         cancelButton.Text = "Отмена";
         cancelButton.UseVisualStyleBackColor = true;
-        cancelButton.Click += cancelButton_Click;
+        //cancelButton.Click += cancelButton_Click;
         // 
         // DeviceChooseForm
         // 
@@ -139,9 +139,9 @@ partial class DeviceChooseForm
     private Label DeviceLabel;
     private Label DeviceText;
     private Label ModelLabel;
-    private Label collimatorModelText;
-    private ComboBox deviceComboBox;
-    private ComboBox collimatorModelComboBox;
+    public Label collimatorModelText;
+    public ComboBox deviceComboBox;
+    public ComboBox collimatorModelComboBox;
     private Button okButton;
     private Button cancelButton;
 }

@@ -43,6 +43,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Update="Views\Collimator\CollimatorCalibrationDateForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
       <Compile Update="Views\Level\LevelDataForm.cs">
         <SubType>Form</SubType>
       </Compile>
