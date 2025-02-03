@@ -71,9 +71,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\Collimator\" />
       <Folder Include="Controllers\Level\" />
-      <Folder Include="Models\Collimator\" />
     </ItemGroup>
 
 </Project>
