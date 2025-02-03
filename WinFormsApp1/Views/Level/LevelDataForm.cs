@@ -5,17 +5,17 @@ using System.Windows.Forms;
 using System.Windows.Forms.Design;
 namespace Pryamolineynost;
 
-public partial class DataForm : Form
+public partial class LevelDataForm : Form
 {
     private DB _db;
-    private MainForm _mainForm;
-    private readonly GraphicsForm _graphicsForm;
+    private LevelMainForm _mainForm;
+    private readonly LevelGraphicsForm _graphicsForm;
     private bool _initFlag;
     private int[] _micrometersColumnsIndex = new int[] { 7, 8 };
     private int[] _angleColumnsIndex = new int[] { 9, 10, 11, 12, 13, 14 };
     private ContextMenuStrip contextMenu;
 
-    public DataForm(DB db, MainForm parrentForm, GraphicsForm graphicsForm)
+    public LevelDataForm(DB db, LevelMainForm parrentForm, LevelGraphicsForm graphicsForm)
     {
         _initFlag = true;
         this._db = db;
@@ -85,7 +85,7 @@ public partial class DataForm : Form
         unitComboBox.Items.Add(_db.GetUnitDescription(Units.Angle));
         unitComboBox.SelectedIndex = _db.GetUnitOrder(_db.currUnit);
     }
-    public void ReloadDataForm(DB db, MainForm parrentForm)
+    public void ReloadDataForm(DB db, LevelMainForm parrentForm)
     {
         this._db = db;
         _mainForm = parrentForm;

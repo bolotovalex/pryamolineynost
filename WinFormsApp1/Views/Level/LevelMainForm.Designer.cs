@@ -4,7 +4,7 @@ using Pryamolineynost;
 
 namespace Pryamolineynost
 {
-    partial class MainForm
+    partial class LevelMainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -570,7 +570,7 @@ namespace Pryamolineynost
             Controls.Add(datePanel);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
-            Name = "MainForm";
+            Name = "LevelMainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Прямолинейность";
             datePanel.ResumeLayout(false);

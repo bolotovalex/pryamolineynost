@@ -6,13 +6,13 @@ using PryamolineynostWF.Interfaces;
 
 namespace Pryamolineynost;
 
-public partial class MainForm : Form, IView
+public partial class LevelMainForm : Form, IView
 {
     
     private string _version = "1.2.7.2";
     private DB _dB;
-    private DataForm _dataForm;
-    private GraphicsForm _graphicsForm;
+    private LevelDataForm _dataForm;
+    private LevelGraphicsForm _graphicsForm;
     private GraphicModel _graphic;
     private ErrorForm _errorForm;
        
@@ -22,7 +22,7 @@ public partial class MainForm : Form, IView
         Pdf
     }
 
-    public MainForm()
+    public LevelMainForm()
     {
         InitializeComponent();
         _dB = new DB() { Description = "", Name = "", Fio = "" };
@@ -145,7 +145,7 @@ public partial class MainForm : Form, IView
         if (ChangeComboBoxColor())
         {
             //_dataForm.Dispose();
-            _dataForm = new DataForm(_dB, this, _graphicsForm);
+            _dataForm = new LevelDataForm(_dB, this, _graphicsForm);
             _dataForm.Show();
         }
         else
@@ -276,7 +276,7 @@ public partial class MainForm : Form, IView
                 _graphicsForm.Dispose();
 
             var newGraphic = new GraphicModel(_dB.GetCurvePoints(), _dB.GetStraightPoint(), _dB.DataList.Count < 12 ? _dB.Step : _dB.DataList.Count / 12 * _dB.Step);
-            _graphicsForm = new GraphicsForm(_dB, this, newGraphic);
+            _graphicsForm = new LevelGraphicsForm(_dB, this, newGraphic);
             _graphicsForm.UpdateDeviationList();
             _graphicsForm.Show();
         }

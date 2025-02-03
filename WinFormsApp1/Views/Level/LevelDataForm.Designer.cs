@@ -1,6 +1,6 @@
 ﻿namespace Pryamolineynost
 {
-    partial class DataForm
+    partial class LevelDataForm
     {
         /// <summary>
         /// Required designer variable.
@@ -246,7 +246,7 @@
             Controls.Add(closeButton);
             Controls.Add(dataGrid);
             MinimumSize = new Size(640, 480);
-            Name = "DataForm";
+            Name = "LevelDataForm";
             Text = "Измерения";
             Load += DataForm_Load;
             Resize += DataForm_SizeChanged;

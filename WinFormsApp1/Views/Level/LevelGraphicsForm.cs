@@ -4,17 +4,17 @@ using OxyPlot.WindowsForms;
 
 namespace Pryamolineynost
 {
-    public partial class GraphicsForm : Form
+    public partial class LevelGraphicsForm : Form
     {
         DB DB;
-        MainForm mainForm;
+        LevelMainForm mainForm;
         GraphicModel graphic;
         public int _rightGraphIndexnt = 150;
         public int _botomGraphIndention = 37;
         public int _initFormWidth = 860;
         public int _initFormHeight = 600;
         
-        public GraphicsForm(DB db, MainForm mainForm, GraphicModel graphic)
+        public LevelGraphicsForm(DB db, LevelMainForm mainForm, GraphicModel graphic)
         {
             this.DB = db;
             this.mainForm = mainForm;

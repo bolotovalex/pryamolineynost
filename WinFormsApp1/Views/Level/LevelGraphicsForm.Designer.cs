@@ -1,6 +1,6 @@
 ﻿namespace Pryamolineynost
 {
-    partial class GraphicsForm
+    partial class LevelGraphicsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -81,7 +81,7 @@
             Controls.Add(label1);
             Controls.Add(listBox1);
             Controls.Add(plotView1);
-            Name = "GraphicsForm";
+            Name = "LevelGraphicsForm";
             Text = "График";
             Resize += GraphicsForm_Resize;
             ResumeLayout(false);
