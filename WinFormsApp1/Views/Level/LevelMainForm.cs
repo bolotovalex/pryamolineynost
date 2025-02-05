@@ -38,16 +38,7 @@ public partial class LevelMainForm : Form, IView
 
     private void FormClosingOverride(object sender, FormClosingEventArgs e)
     {
-        DialogResult result = MessageBox.Show("Вы уверены, что хотите закрыть ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-        if (result == DialogResult.No)
-        {
-            e.Cancel = true;
-        }
-        else
-        {
-            NavigationStack.Clear();
-        }
+        ExitDialog.ShowDialog(sender, e);
     }
     public bool CheckComboBox(ComboBox comboBox)
     {

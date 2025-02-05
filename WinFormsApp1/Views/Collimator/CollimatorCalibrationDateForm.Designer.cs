@@ -35,9 +35,8 @@ partial class CollimatorCalibrationDateForm
         DeviceText = new Label();
         ModelLabel = new Label();
         collimatorModelText = new Label();
-        collimatorModelComboBox = new ComboBox();
+        CBActNumber = new ComboBox();
         OkButton = new Button();
-        ExitButton = new Button();
         dateTimePicker1 = new DateTimePicker();
         BackButton = new Button();
         SuspendLayout();
@@ -76,31 +75,23 @@ partial class CollimatorCalibrationDateForm
         collimatorModelText.TabIndex = 4;
         collimatorModelText.Text = "Введите номер акта:";
         // 
-        // collimatorModelComboBox
+        // CBActNumber
         // 
-        collimatorModelComboBox.FormattingEnabled = true;
-        collimatorModelComboBox.Location = new Point(164, 53);
-        collimatorModelComboBox.Name = "collimatorModelComboBox";
-        collimatorModelComboBox.Size = new Size(380, 23);
-        collimatorModelComboBox.TabIndex = 6;
+        CBActNumber.FormattingEnabled = true;
+        CBActNumber.Location = new Point(164, 53);
+        CBActNumber.Name = "CBActNumber";
+        CBActNumber.Size = new Size(380, 23);
+        CBActNumber.TabIndex = 6;
+        CBActNumber.TextChanged += CBActNumber_TextChanged;
         // 
         // OkButton
         // 
-        OkButton.Location = new Point(14, 93);
+        OkButton.Location = new Point(77, 93);
         OkButton.Name = "OkButton";
         OkButton.Size = new Size(128, 37);
         OkButton.TabIndex = 7;
         OkButton.Text = "ОК";
         OkButton.UseVisualStyleBackColor = true;
-        // 
-        // ExitButton
-        // 
-        ExitButton.Location = new Point(214, 93);
-        ExitButton.Name = "ExitButton";
-        ExitButton.Size = new Size(128, 37);
-        ExitButton.TabIndex = 8;
-        ExitButton.Text = "Выход";
-        ExitButton.UseVisualStyleBackColor = true;
         // 
         // dateTimePicker1
         // 
@@ -111,7 +102,7 @@ partial class CollimatorCalibrationDateForm
         // 
         // BackButton
         // 
-        BackButton.Location = new Point(414, 93);
+        BackButton.Location = new Point(343, 94);
         BackButton.Name = "BackButton";
         BackButton.Size = new Size(128, 37);
         BackButton.TabIndex = 10;
@@ -126,9 +117,8 @@ partial class CollimatorCalibrationDateForm
         ClientSize = new Size(556, 139);
         Controls.Add(BackButton);
         Controls.Add(dateTimePicker1);
-        Controls.Add(ExitButton);
         Controls.Add(OkButton);
-        Controls.Add(collimatorModelComboBox);
+        Controls.Add(CBActNumber);
         Controls.Add(collimatorModelText);
         Controls.Add(ModelLabel);
         Controls.Add(DeviceText);
@@ -146,9 +136,8 @@ partial class CollimatorCalibrationDateForm
     private Label DeviceText;
     private Label ModelLabel;
     private Label collimatorModelText;
-    private ComboBox collimatorModelComboBox;
-    private Button OkButton;
-    private Button ExitButton;
+    public ComboBox CBActNumber;
+    public Button OkButton;
     private DateTimePicker dateTimePicker1;
     private Button BackButton;
 }

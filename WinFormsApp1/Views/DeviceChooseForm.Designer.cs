@@ -110,7 +110,7 @@ partial class DeviceChooseForm
         btnCancel.Name = "btnCancel";
         btnCancel.Size = new Size(128, 37);
         btnCancel.TabIndex = 8;
-        btnCancel.Text = "Отмена";
+        btnCancel.Text = "Выход";
         btnCancel.UseVisualStyleBackColor = true;
         btnCancel.Click += btnCancel_Click;
         // 
