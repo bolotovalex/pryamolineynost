@@ -1,11 +1,7 @@
 ﻿using Pryamolineynost;
 using PryamolineynostWF.Enums;
+using PryamolineynostWF.Services;
 using PryamolineynostWF.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PryamolineynostWF.Controllers.DeviceChooseController
 {
@@ -20,7 +16,6 @@ namespace PryamolineynostWF.Controllers.DeviceChooseController
             _view.BtnLoadClicked += OnBtnLoadClicked;
             _view.BtnCancelClicked += OnBtnCancelClicked;
             _view.MeasurementDeviceSelect += MeasurementDeviceToolge;
-
             _view.deviceComboBox.DataSource = Enum.GetValues(typeof(MeasurementDevices));
             _view.collimatorModelComboBox.DataSource = Enum.GetValues(typeof(CollimatorType));
         }
@@ -42,42 +37,40 @@ namespace PryamolineynostWF.Controllers.DeviceChooseController
         private void OnBtnOkClicked(object sender, EventArgs e)
         {
             var selectedDevice = (MeasurementDevices)_view.SelectedDevice;
-            _view.Hide();
 
             if (selectedDevice == MeasurementDevices.Level)
-                OpenLevelForm();
+            {
+                var levelForm = new LevelMainForm();
+                NavigationStack.Navigate(_view, levelForm);
+            }
+                
             else if (selectedDevice == MeasurementDevices.Collimator)
-                OpenCollimatorForm();
+            {
+                var collimatorForm = new CollimatorCalibrationDateForm((CollimatorType)_view.SelectedCollimator);
+                NavigationStack.Navigate(_view, collimatorForm);
+            }
+                
         }
 
         private void OnBtnLoadClicked(object sender, EventArgs e)
         {
+            //Пока заглушка
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"
+            };
 
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                // Обработка файла
+                MessageBox.Show($"Файл {filePath} успешно загружен.");
+            }
         }
 
         private void OnBtnCancelClicked(object sender, EventArgs e)
         {
-
-        }
-
-        private void OpenLevelForm()
-        {
-            using (var levelForm = new LevelMainForm())
-            {
-                levelForm.ShowDialog();
-            }
             _view.Close();
         }
-
-        private void OpenCollimatorForm()
-        {
-            //using (var collimatorForm = new CollimatorCalibrationDateForm((CollimatorType)_view.SelectedCollimator))
-            //{
-            //    collimatorForm.ShowDialog();
-            //}
-            //_view.Hide();
-        }
-
-        
     }
 }
