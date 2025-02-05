@@ -24,12 +24,12 @@ namespace PryamolineynostWF.Controllers.DeviceChooseController
         {
             if ((MeasurementDevices)_view.deviceComboBox.SelectedValue == MeasurementDevices.Collimator)
             {
-                _view.collimatorModelComboBox.Enabled = true;
+                _view.collimatorModelComboBox.Show();
                 _view.collimatorModelText.Enabled = true;
             }
             else
             {
-                _view.collimatorModelComboBox.Enabled = false;
+                _view.collimatorModelComboBox.Hide();
                 _view.collimatorModelText.Enabled = false;
             }
         }
@@ -54,17 +54,9 @@ namespace PryamolineynostWF.Controllers.DeviceChooseController
 
         private void OnBtnLoadClicked(object sender, EventArgs e)
         {
-            //Пока заглушка
-            var openFileDialog = new OpenFileDialog
+            using (var stubDialog = new StubDialog("Пока не реализовано"))
             {
-                Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"
-            };
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string filePath = openFileDialog.FileName;
-                // Обработка файла
-                MessageBox.Show($"Файл {filePath} успешно загружен.");
+                stubDialog.ShowDialog();
             }
         }
 
