@@ -1,7 +1,6 @@
-﻿using Pryamolineynost;
-using PryamolineynostWF.Controllers.DeviceChooseController;
+﻿using PryamolineynostWF.Controllers.DeviceChooseController;
 using PryamolineynostWF.Enums;
-using PryamolineynostWF.Views.Collimator;
+using PryamolineynostWF.Services;
 
 namespace PryamolineynostWF.Views;
 

@@ -137,7 +137,7 @@ public partial class LevelMainForm : Form, IView
 
     private void ExitButton_Click(object sender, EventArgs e)
     {
-        Close();
+        Application.Exit();
     }
 
     private void DataForm_Click(object sender, EventArgs e)
