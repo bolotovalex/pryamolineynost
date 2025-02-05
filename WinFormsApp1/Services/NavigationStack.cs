@@ -35,5 +35,10 @@
             nextForm.Show();
         }
 
+        public static void Clear()
+        {
+            _formStack.Clear();
+        }
+
     }
 }

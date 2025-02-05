@@ -3,6 +3,7 @@ using System.Text.Json;
 using LogicLibrary;
 using PryamolineynostWF;
 using PryamolineynostWF.Interfaces;
+using PryamolineynostWF.Services;
 
 namespace Pryamolineynost;
 
@@ -32,8 +33,22 @@ public partial class LevelMainForm : Form, IView
         ChangeComboBoxColor();
         //_graphicsForm = new GraphicsForm(_dB, this, _graphic);
         Text = $"Прямолинейность. ver. {_version}";
+        this.FormClosing += FormClosingOverride;
     }
 
+    private void FormClosingOverride(object sender, FormClosingEventArgs e)
+    {
+        DialogResult result = MessageBox.Show("Вы уверены, что хотите закрыть ?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+        if (result == DialogResult.No)
+        {
+            e.Cancel = true;
+        }
+        else
+        {
+            NavigationStack.Clear();
+        }
+    }
     public bool CheckComboBox(ComboBox comboBox)
     {
         if (comboBox.Text.Length == 0)
