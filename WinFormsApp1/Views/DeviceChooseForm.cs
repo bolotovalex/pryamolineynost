@@ -8,9 +8,11 @@ namespace PryamolineynostWF.Views;
 public partial class DeviceChooseForm : Form
 {
     private Thread secondThread;
-    public event EventHandler OkButtonClicked;
-    public event EventHandler CancelButtonClicked;
+    public event EventHandler BtnOkClicked;
+    public event EventHandler BtnCancelClicked;
+    public event EventHandler BtnLoadClicked;
     public event EventHandler MeasurementDeviceSelect;
+    
     
     
     public MeasurementDevices SelectedDevice => (MeasurementDevices)deviceComboBox.SelectedValue;
@@ -19,30 +21,28 @@ public partial class DeviceChooseForm : Form
 
     public DeviceChooseForm()
     {
-
         InitializeComponent();
         _controller = new DeviceChooseController(this);
     }
 
-    private void ToogleCollimatorTypeElements()
+    private void btnOk_Click(object sender, EventArgs e)
     {
-        MeasurementDeviceSelect?.Invoke(this, EventArgs.Empty);
+        BtnOkClicked?.Invoke(this, EventArgs.Empty);
     }
-    
 
-    //private void cancelButton_Click(object sender, EventArgs e)
-    //{
-    //    Close();
-    //}
-
-    private void okButton_Click(object sender, EventArgs e)
+    private void btnCancel_Click(object sender, EventArgs e)
     {
-        OkButtonClicked?.Invoke(this, EventArgs.Empty);
+        BtnCancelClicked?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void btnLoad_Click(object sender, EventArgs e)
+    {
+        BtnLoadClicked?.Invoke(this, EventArgs.Empty);
     }
 
     private void deviceComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ToogleCollimatorTypeElements();
+        MeasurementDeviceSelect?.Invoke(this, EventArgs.Empty);
     }
 
     private void collimatorModelComboBox_SelectedIndexChanged(object sender, EventArgs e)

@@ -37,8 +37,9 @@ partial class DeviceChooseForm
         collimatorModelText = new Label();
         deviceComboBox = new ComboBox();
         collimatorModelComboBox = new ComboBox();
-        okButton = new Button();
-        cancelButton = new Button();
+        btnOk = new Button();
+        btnCancel = new Button();
+        btnLoad = new Button();
         SuspendLayout();
         // 
         // DeviceLabel
@@ -93,25 +94,35 @@ partial class DeviceChooseForm
         collimatorModelComboBox.TabIndex = 6;
         collimatorModelComboBox.SelectedIndexChanged += collimatorModelComboBox_SelectedIndexChanged;
         // 
-        // okButton
+        // btnOk
         // 
-        okButton.Location = new Point(72, 93);
-        okButton.Name = "okButton";
-        okButton.Size = new Size(128, 37);
-        okButton.TabIndex = 7;
-        okButton.Text = "ОК";
-        okButton.UseVisualStyleBackColor = true;
-        okButton.Click += okButton_Click;
+        btnOk.Location = new Point(48, 93);
+        btnOk.Name = "btnOk";
+        btnOk.Size = new Size(128, 37);
+        btnOk.TabIndex = 7;
+        btnOk.Text = "ОК";
+        btnOk.UseVisualStyleBackColor = true;
+        btnOk.Click += btnOk_Click;
         // 
-        // cancelButton
+        // btnCancel
         // 
-        cancelButton.Location = new Point(351, 93);
-        cancelButton.Name = "cancelButton";
-        cancelButton.Size = new Size(128, 37);
-        cancelButton.TabIndex = 8;
-        cancelButton.Text = "Отмена";
-        cancelButton.UseVisualStyleBackColor = true;
-        //cancelButton.Click += cancelButton_Click;
+        btnCancel.Location = new Point(379, 93);
+        btnCancel.Name = "btnCancel";
+        btnCancel.Size = new Size(128, 37);
+        btnCancel.TabIndex = 8;
+        btnCancel.Text = "Отмена";
+        btnCancel.UseVisualStyleBackColor = true;
+        btnCancel.Click += btnCancel_Click;
+        // 
+        // btnLoad
+        // 
+        btnLoad.Location = new Point(214, 93);
+        btnLoad.Name = "btnLoad";
+        btnLoad.Size = new Size(128, 37);
+        btnLoad.TabIndex = 9;
+        btnLoad.Text = "Загрузить";
+        btnLoad.UseVisualStyleBackColor = true;
+        btnLoad.Click += btnLoad_Click;
         // 
         // DeviceChooseForm
         // 
@@ -119,8 +130,9 @@ partial class DeviceChooseForm
         AutoScaleMode = AutoScaleMode.Font;
         AutoSizeMode = AutoSizeMode.GrowAndShrink;
         ClientSize = new Size(556, 139);
-        Controls.Add(cancelButton);
-        Controls.Add(okButton);
+        Controls.Add(btnLoad);
+        Controls.Add(btnCancel);
+        Controls.Add(btnOk);
         Controls.Add(collimatorModelComboBox);
         Controls.Add(deviceComboBox);
         Controls.Add(collimatorModelText);
@@ -142,6 +154,7 @@ partial class DeviceChooseForm
     public Label collimatorModelText;
     public ComboBox deviceComboBox;
     public ComboBox collimatorModelComboBox;
-    private Button okButton;
-    private Button cancelButton;
+    private Button btnOk;
+    private Button btnCancel;
+    private Button btnLoad;
 }
