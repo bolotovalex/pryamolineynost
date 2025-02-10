@@ -23,12 +23,7 @@ public partial class CollimatorCalibrationDateForm : Form
         ExitDialog.ShowDialog(sender, e);
     }
 
-    private void CBActNumber_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
-    }
-
-    private void CBActNumber_TextChanged(object sender, EventArgs e)
+    private void tbActNumber_TextChanged(object sender, EventArgs e)
     {
         ActNumberChanged?.Invoke(this, EventArgs.Empty);
     }

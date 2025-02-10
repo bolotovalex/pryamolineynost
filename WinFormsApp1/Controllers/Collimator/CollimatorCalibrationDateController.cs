@@ -10,13 +10,13 @@ namespace PryamolineynostWF.Controllers.Collimator
         {
             _view = view;
             _view.ActNumberChanged += ActNmberTextChanged;
-            ComboBoxValidator.InitializeValidation(_view);
+            FieldValidator.InitializeValidation(_view);
             _view.OkButton.Enabled = false;
         }
 
         private void ActNmberTextChanged(object? sender, EventArgs e)
         {
-            _view.OkButton.Enabled = ComboBoxValidator.CheckComboBoxIsFilled(_view.CBActNumber);
+            _view.OkButton.Enabled = FieldValidator.TextBoxIsFilledCheck(_view.tbActNumber);
         }
     }
 }

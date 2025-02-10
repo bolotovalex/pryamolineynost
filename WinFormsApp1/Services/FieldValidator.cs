@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace PryamolineynostWF.Services
 {
-    public class ComboBoxValidator
+    public class FieldValidator
     {
-        public static bool CheckComboBoxIsFilled(ComboBox comboBox)
+        public static bool ComboBoxIsFilledCheck(ComboBox comboBox)
         {
             bool isValid = !string.IsNullOrWhiteSpace(comboBox.Text);
             comboBox.BackColor = isValid ? SystemColors.Window : Color.LightCoral;
+            return isValid;
+        }
+
+        public static bool TextBoxIsFilledCheck(TextBox textBox)
+        {
+            bool isValid = !string.IsNullOrWhiteSpace(textBox.Text);
+            textBox.BackColor = isValid ? SystemColors.Window : Color.LightCoral;
             return isValid;
         }
 
@@ -19,7 +26,7 @@ namespace PryamolineynostWF.Services
         {
             int result;
             bool isInt = int.TryParse(comboBox.Text, out result);
-            if (isInt) 
+            if (isInt)
             {
                 comboBox.BackColor = SystemColors.Window;
                 comboBox.Text = result.ToString();
@@ -35,17 +42,24 @@ namespace PryamolineynostWF.Services
             {
                 if (control is ComboBox comboBox)
                 {
-                    ValidateComboBox(comboBox);  // Первичная проверка
-                    comboBox.TextChanged += (s, e) => ValidateComboBox((ComboBox)s);
+                    ValidateControl(comboBox);  // Первичная проверка
+                    comboBox.TextChanged += (s, e) => ValidateControl((ComboBox)s);
+                }
+                else if (control is TextBox textBox)
+                {
+                    ValidateControl(textBox);  // Первичная проверка
+                    textBox.TextChanged += (s, e) => ValidateControl((TextBox)s);
                 }
             }
         }
 
-        private static void ValidateComboBox(ComboBox comboBox)
+        private static void ValidateControl(ComboBox comboBox)
         {
-            ComboBoxValidator.CheckComboBoxIsFilled(comboBox);
+            FieldValidator.ComboBoxIsFilledCheck(comboBox);
         }
-
-
+        private static void ValidateControl(TextBox textBox)
+        {
+            FieldValidator.TextBoxIsFilledCheck(textBox);
         }
+    }
 }

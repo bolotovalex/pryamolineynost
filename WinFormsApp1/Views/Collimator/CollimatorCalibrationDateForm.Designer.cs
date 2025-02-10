@@ -35,7 +35,7 @@ partial class CollimatorCalibrationDateForm
         DeviceText = new Label();
         ModelLabel = new Label();
         collimatorModelText = new Label();
-        CBActNumber = new ComboBox();
+        tbActNumber = new TextBox();
         OkButton = new Button();
         dateTimePicker1 = new DateTimePicker();
         BackButton = new Button();
@@ -75,14 +75,14 @@ partial class CollimatorCalibrationDateForm
         collimatorModelText.TabIndex = 4;
         collimatorModelText.Text = "Введите номер акта:";
         // 
-        // CBActNumber
+        // tbActNumber
         // 
-        CBActNumber.FormattingEnabled = true;
-        CBActNumber.Location = new Point(164, 53);
-        CBActNumber.Name = "CBActNumber";
-        CBActNumber.Size = new Size(380, 23);
-        CBActNumber.TabIndex = 6;
-        CBActNumber.TextChanged += CBActNumber_TextChanged;
+        //tbActNumber.FormattingEnabled = true;
+        tbActNumber.Location = new Point(164, 53);
+        tbActNumber.Name = "tbActNumber";
+        tbActNumber.Size = new Size(380, 23);
+        tbActNumber.TabIndex = 6;
+        tbActNumber.TextChanged += tbActNumber_TextChanged;
         // 
         // OkButton
         // 
@@ -118,7 +118,7 @@ partial class CollimatorCalibrationDateForm
         Controls.Add(BackButton);
         Controls.Add(dateTimePicker1);
         Controls.Add(OkButton);
-        Controls.Add(CBActNumber);
+        Controls.Add(tbActNumber);
         Controls.Add(collimatorModelText);
         Controls.Add(ModelLabel);
         Controls.Add(DeviceText);
@@ -136,7 +136,7 @@ partial class CollimatorCalibrationDateForm
     private Label DeviceText;
     private Label ModelLabel;
     private Label collimatorModelText;
-    public ComboBox CBActNumber;
+    public TextBox tbActNumber;
     public Button OkButton;
     private DateTimePicker dateTimePicker1;
     private Button BackButton;
