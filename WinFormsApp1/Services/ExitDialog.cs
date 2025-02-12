@@ -13,7 +13,7 @@
             }
             else
             {
-                NavigationStack.Clear();
+                NavigationStack.Exit();
             }
         }
         

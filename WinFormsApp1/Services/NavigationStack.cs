@@ -36,11 +36,16 @@
             nextForm.Show();
         }
 
-        public static void Clear()
+        public static void Exit()
         {
             _formStack.Clear();
             Application.Exit();
         }
 
+        public static void Clear()
+        {
+            _formStack.Clear();
+
+        }
     }
 }

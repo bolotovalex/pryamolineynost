@@ -30,12 +30,9 @@ namespace PryamolineynostWF.Controllers.Collimator
 
         private void BtnOkClicked(object sender, EventArgs e) 
         {
-            var selectedDevice = MeasurementDevices.Collimator;
-            CollimatorType collimatorType;
-
-            //NavigationStack.Navigate(_view, new CollimatorMainForm());
             _mainForm = new CollimatorMainForm(_selectedCollimatorType, _view.dateTimePicker1.Value, _view.tbActNumber.Text);
-
+            NavigationStack.Clear(); //TODO Пока костыль
+            NavigationStack.Navigate(_view, _mainForm);
         }
 
         private void BtnPrevClicked(object sender, EventArgs e)
