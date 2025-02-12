@@ -31,10 +31,6 @@ partial class CollimatorMainForm
     /// </summary>
     private void InitializeComponent()
     {
-        this.components = new System.ComponentModel.Container();
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(800, 450);
-        this.Text = "CollimatorMainForm";
         datePanel = new Panel();
         dateLabel = new Label();
         dateTimePicker = new DateTimePicker();
@@ -532,11 +528,11 @@ partial class CollimatorMainForm
         exitButton.Text = "Выход";
         exitButton.UseVisualStyleBackColor = true;
         // 
-        // MainForm
+        // CollimatorMainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(541, 566);
+        ClientSize = new Size(828, 566);
         Controls.Add(bedPanelLength);
         Controls.Add(localAreaPanel);
         Controls.Add(descriptionPanel);
@@ -558,7 +554,7 @@ partial class CollimatorMainForm
         Controls.Add(datePanel);
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
-        Name = "LevelMainForm";
+        Name = "CollimatorMainForm";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Прямолинейность";
         datePanel.ResumeLayout(false);

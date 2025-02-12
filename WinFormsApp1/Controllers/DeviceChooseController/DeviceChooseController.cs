@@ -46,8 +46,8 @@ namespace PryamolineynostWF.Controllers.DeviceChooseController
                 
             else if (selectedDevice == MeasurementDevices.Collimator)
             {
-                var collimatorForm = new CollimatorCalibrationDateForm((CollimatorType)_view.SelectedCollimator);
-                NavigationStack.Navigate(_view, collimatorForm);
+                var collimatorDateChooseForm = new CollimatorCalibrationDateForm((CollimatorType)_view.SelectedCollimator);
+                NavigationStack.Navigate(_view, collimatorDateChooseForm);
             }
                 
         }

@@ -40,6 +40,7 @@
       <PackageReference Include="OxyPlot.WindowsForms" Version="2.2.0" />
       <PackageReference Include="PDFsharp" Version="6.1.1" />
       <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
+      <PackageReference Include="Plotly.NET" Version="5.1.0" />
     </ItemGroup>
 
     <ItemGroup>

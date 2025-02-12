@@ -82,7 +82,7 @@ partial class CollimatorCalibrationDateForm
         tbActNumber.Name = "tbActNumber";
         tbActNumber.Size = new Size(380, 23);
         tbActNumber.TabIndex = 6;
-        tbActNumber.TextChanged += tbActNumber_TextChanged;
+        tbActNumber.TextChanged += TbActNumber_TextChanged;
         // 
         // OkButton
         // 
@@ -92,6 +92,7 @@ partial class CollimatorCalibrationDateForm
         OkButton.TabIndex = 7;
         OkButton.Text = "ОК";
         OkButton.UseVisualStyleBackColor = true;
+        OkButton.Click += BtnOk_Click;
         // 
         // dateTimePicker1
         // 
@@ -108,6 +109,7 @@ partial class CollimatorCalibrationDateForm
         BackButton.TabIndex = 10;
         BackButton.Text = "Назад";
         BackButton.UseVisualStyleBackColor = true;
+        BackButton.Click += BtnPrev_Click;
         // 
         // CollimatorCalibrationDateForm
         // 
@@ -138,6 +140,6 @@ partial class CollimatorCalibrationDateForm
     private Label collimatorModelText;
     public TextBox tbActNumber;
     public Button OkButton;
-    private DateTimePicker dateTimePicker1;
+    public DateTimePicker dateTimePicker1;
     private Button BackButton;
 }

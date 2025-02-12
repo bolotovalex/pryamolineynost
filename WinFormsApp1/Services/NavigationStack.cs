@@ -3,6 +3,7 @@
     public static class NavigationStack
     {
         private static Stack<Form> _formStack = new Stack<Form>();
+        public static bool HasPreviousForm => _formStack.Count > 0;
 
         public static void Navigate(Form currentForm, Form nextForm)
         {
