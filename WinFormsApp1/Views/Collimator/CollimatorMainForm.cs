@@ -11,8 +11,8 @@ public partial class CollimatorMainForm : Form, ICollimatorView
     private CollimatorType _collimatorType;
     private DateOnly _inspectionDate;
     private string _actNumber;
-    
-    
+
+
     public CollimatorMainForm(CollimatorType collimatorType, DateTime date, string actNumber)
     {
         InitializeComponent();
@@ -23,5 +23,15 @@ public partial class CollimatorMainForm : Form, ICollimatorView
         //_inspectionDate = date;
         //_actNumber = actNumber;
         //_controller = new CollimatorController(this, _collimatorType);
+    }
+
+    private void label4_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void saveButton_Click(object sender, EventArgs e)
+    {
+
     }
 }
