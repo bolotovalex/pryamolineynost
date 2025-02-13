@@ -1,7 +1,6 @@
 ﻿using PryamolineynostWF.Controllers.Collimator;
 using PryamolineynostWF.Enums;
 using PryamolineynostWF.Interfaces;
-using PryamolineynostWF.Models.Collimator;
 
 namespace PryamolineynostWF.Views.Collimator;
 
@@ -17,17 +16,7 @@ public partial class CollimatorMainForm : Form, ICollimatorView
     {
         InitializeComponent();
         _controller = new CollimatorController(this, collimatorType, date, actNumber);
-
-
-        //_collimatorType = collimatorType;
-        //_inspectionDate = date;
-        //_actNumber = actNumber;
-        //_controller = new CollimatorController(this, _collimatorType);
-    }
-
-    private void label4_Click(object sender, EventArgs e)
-    {
-
+        labelCollimatorType.Text = collimatorType.ToString();
     }
 
     private void saveButton_Click(object sender, EventArgs e)

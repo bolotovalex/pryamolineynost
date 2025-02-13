@@ -92,8 +92,9 @@ partial class CollimatorMainForm
         label2 = new Label();
         panel4 = new Panel();
         button1 = new Button();
-        label4 = new Label();
+        labelCollimatorType = new Label();
         label3 = new Label();
+        label4 = new Label();
         datePanel.SuspendLayout();
         namePanel.SuspendLayout();
         descriptionPanel.SuspendLayout();
@@ -544,27 +545,28 @@ partial class CollimatorMainForm
         // 
         // fillDataFormButton
         // 
-        fillDataFormButton.Location = new Point(8, 528);
+        fillDataFormButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        fillDataFormButton.Location = new Point(8, 527);
         fillDataFormButton.Name = "fillDataFormButton";
-        fillDataFormButton.Size = new Size(125, 31);
+        fillDataFormButton.Size = new Size(151, 31);
         fillDataFormButton.TabIndex = 38;
-        fillDataFormButton.Text = "Заполнить данные";
+        fillDataFormButton.Text = "Заполнить измерения";
         fillDataFormButton.UseVisualStyleBackColor = true;
         // 
         // graphicButton
         // 
-        graphicButton.Location = new Point(386, 527);
+        graphicButton.Location = new Point(365, 527);
         graphicButton.Name = "graphicButton";
-        graphicButton.Size = new Size(125, 31);
+        graphicButton.Size = new Size(100, 31);
         graphicButton.TabIndex = 39;
         graphicButton.Text = "График";
         graphicButton.UseVisualStyleBackColor = true;
         // 
         // saveButton
         // 
-        saveButton.Location = new Point(134, 527);
+        saveButton.Location = new Point(161, 527);
         saveButton.Name = "saveButton";
-        saveButton.Size = new Size(125, 31);
+        saveButton.Size = new Size(100, 31);
         saveButton.TabIndex = 40;
         saveButton.Text = "Сохранить";
         saveButton.UseVisualStyleBackColor = true;
@@ -572,30 +574,31 @@ partial class CollimatorMainForm
         // 
         // loadFileButton
         // 
-        loadFileButton.Location = new Point(260, 527);
+        loadFileButton.Location = new Point(263, 527);
         loadFileButton.Name = "loadFileButton";
-        loadFileButton.Size = new Size(125, 31);
+        loadFileButton.Size = new Size(100, 31);
         loadFileButton.TabIndex = 41;
         loadFileButton.Text = "Загрузить";
         loadFileButton.UseVisualStyleBackColor = true;
         // 
         // savePdfButton
         // 
-        savePdfButton.Location = new Point(512, 527);
+        savePdfButton.Location = new Point(467, 527);
         savePdfButton.Name = "savePdfButton";
-        savePdfButton.Size = new Size(125, 31);
+        savePdfButton.Size = new Size(100, 31);
         savePdfButton.TabIndex = 42;
         savePdfButton.Text = "Выгрузить PDF";
         savePdfButton.UseVisualStyleBackColor = true;
         // 
         // exitButton
         // 
-        exitButton.Location = new Point(643, 527);
+        exitButton.BackColor = Color.FromArgb(255, 192, 192);
+        exitButton.Location = new Point(587, 527);
         exitButton.Name = "exitButton";
-        exitButton.Size = new Size(44, 31);
+        exitButton.Size = new Size(100, 31);
         exitButton.TabIndex = 43;
-        exitButton.Text = "X";
-        exitButton.UseVisualStyleBackColor = true;
+        exitButton.Text = "Выход";
+        exitButton.UseVisualStyleBackColor = false;
         // 
         // textBox2
         // 
@@ -671,6 +674,7 @@ partial class CollimatorMainForm
         // panel1
         // 
         panel1.BorderStyle = BorderStyle.FixedSingle;
+        panel1.Controls.Add(label4);
         panel1.Controls.Add(panel3);
         panel1.Controls.Add(panel2);
         panel1.Location = new Point(8, 160);
@@ -718,8 +722,9 @@ partial class CollimatorMainForm
         // 
         // panel4
         // 
+        panel4.BorderStyle = BorderStyle.FixedSingle;
         panel4.Controls.Add(button1);
-        panel4.Controls.Add(label4);
+        panel4.Controls.Add(labelCollimatorType);
         panel4.Controls.Add(label3);
         panel4.Location = new Point(8, 12);
         panel4.Name = "panel4";
@@ -736,15 +741,14 @@ partial class CollimatorMainForm
         button1.Text = "Изменить";
         button1.UseVisualStyleBackColor = true;
         // 
-        // label4
+        // labelCollimatorType
         // 
-        label4.AutoSize = true;
-        label4.Location = new Point(137, 8);
-        label4.Name = "label4";
-        label4.Size = new Size(126, 15);
-        label4.TabIndex = 1;
-        label4.Text = "Тут отображается тип";
-        label4.Click += label4_Click;
+        labelCollimatorType.AutoSize = true;
+        labelCollimatorType.Location = new Point(137, 8);
+        labelCollimatorType.Name = "labelCollimatorType";
+        labelCollimatorType.Size = new Size(126, 15);
+        labelCollimatorType.TabIndex = 1;
+        labelCollimatorType.Text = "Тут отображается тип";
         // 
         // label3
         // 
@@ -754,6 +758,15 @@ partial class CollimatorMainForm
         label3.Size = new Size(107, 15);
         label3.TabIndex = 0;
         label3.Text = "Тип коллиматора:";
+        // 
+        // label4
+        // 
+        label4.AutoSize = true;
+        label4.Location = new Point(10, 7);
+        label4.Name = "label4";
+        label4.Size = new Size(69, 15);
+        label4.TabIndex = 46;
+        label4.Text = "Плоскость:";
         // 
         // CollimatorMainForm
         // 
@@ -819,6 +832,7 @@ partial class CollimatorMainForm
         stepPanel.ResumeLayout(false);
         stepPanel.PerformLayout();
         panel1.ResumeLayout(false);
+        panel1.PerformLayout();
         panel3.ResumeLayout(false);
         panel3.PerformLayout();
         panel2.ResumeLayout(false);
@@ -892,8 +906,9 @@ partial class CollimatorMainForm
     private Label label1;
     private Label label2;
     private Panel panel4;
-    private Label label4;
+    public Label labelCollimatorType;
     private Label label3;
     private Button button1;
+    private Label label4;
 }
 

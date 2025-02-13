@@ -16,6 +16,7 @@ public partial class DeviceChooseForm : Form
     
     public MeasurementDevices SelectedDevice => (MeasurementDevices)deviceComboBox.SelectedValue;
     public CollimatorType SelectedCollimator => (CollimatorType)collimatorModelComboBox.SelectedValue;
+
     private DeviceChooseController _controller;
 
     public DeviceChooseForm()
