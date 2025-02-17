@@ -21,7 +21,5 @@ namespace PryamolineynostWF.Controllers.Collimator
         {
             panel1.Width = this.Width;
         }
-
-       
     }
 }
