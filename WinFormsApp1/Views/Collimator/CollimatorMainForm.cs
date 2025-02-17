@@ -23,4 +23,10 @@ public partial class CollimatorMainForm : Form, ICollimatorView
     {
 
     }
+
+    private void fillDataFormButton_Click(object sender, EventArgs e)
+    {
+        var f = new MeasurementForm();
+        f.Show();
+    }
 }

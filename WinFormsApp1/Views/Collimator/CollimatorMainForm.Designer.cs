@@ -83,9 +83,8 @@ partial class CollimatorMainForm
         textBox3 = new TextBox();
         textBox4 = new TextBox();
         textBox6 = new TextBox();
-        textBox7 = new TextBox();
-        textBox8 = new TextBox();
         panel1 = new Panel();
+        label4 = new Label();
         panel3 = new Panel();
         label1 = new Label();
         panel2 = new Panel();
@@ -94,7 +93,8 @@ partial class CollimatorMainForm
         button1 = new Button();
         labelCollimatorType = new Label();
         label3 = new Label();
-        label4 = new Label();
+        textBox7 = new TextBox();
+        textBox8 = new TextBox();
         datePanel.SuspendLayout();
         namePanel.SuspendLayout();
         descriptionPanel.SuspendLayout();
@@ -119,9 +119,9 @@ partial class CollimatorMainForm
         datePanel.BorderStyle = BorderStyle.FixedSingle;
         datePanel.Controls.Add(dateLabel);
         datePanel.Controls.Add(dateTimePicker);
-        datePanel.Location = new Point(380, 12);
+        datePanel.Location = new Point(375, 12);
         datePanel.Name = "datePanel";
-        datePanel.Size = new Size(307, 31);
+        datePanel.Size = new Size(312, 31);
         datePanel.TabIndex = 0;
         // 
         // dateLabel
@@ -137,11 +137,11 @@ partial class CollimatorMainForm
         // 
         dateTimePicker.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
         dateTimePicker.CustomFormat = "dd MMMM yyyy";
-        dateTimePicker.Location = new Point(180, 3);
+        dateTimePicker.Location = new Point(161, 3);
         dateTimePicker.MinDate = new DateTime(2024, 9, 1, 0, 0, 0, 0);
         dateTimePicker.Name = "dateTimePicker";
         dateTimePicker.RightToLeft = RightToLeft.No;
-        dateTimePicker.Size = new Size(122, 23);
+        dateTimePicker.Size = new Size(146, 23);
         dateTimePicker.TabIndex = 1;
         // 
         // namePanel
@@ -159,18 +159,18 @@ partial class CollimatorMainForm
         nameLabel.AutoSize = true;
         nameLabel.Location = new Point(10, 7);
         nameLabel.Name = "nameLabel";
-        nameLabel.Size = new Size(90, 15);
+        nameLabel.Size = new Size(255, 15);
         nameLabel.TabIndex = 3;
-        nameLabel.Text = "Наименование";
+        nameLabel.Text = "Наименование проверяемого оборудования";
         // 
         // nameComboBox
         // 
         nameComboBox.FlatStyle = FlatStyle.System;
         nameComboBox.FormattingEnabled = true;
-        nameComboBox.Location = new Point(108, 3);
+        nameComboBox.Location = new Point(271, 3);
         nameComboBox.Name = "nameComboBox";
         nameComboBox.RightToLeft = RightToLeft.Yes;
-        nameComboBox.Size = new Size(563, 23);
+        nameComboBox.Size = new Size(400, 23);
         nameComboBox.TabIndex = 4;
         // 
         // descriptionPanel
@@ -187,10 +187,10 @@ partial class CollimatorMainForm
         // 
         descriptionComboBox.FlatStyle = FlatStyle.System;
         descriptionComboBox.FormattingEnabled = true;
-        descriptionComboBox.Location = new Point(108, 3);
+        descriptionComboBox.Location = new Point(169, 3);
         descriptionComboBox.Name = "descriptionComboBox";
         descriptionComboBox.RightToLeft = RightToLeft.Yes;
-        descriptionComboBox.Size = new Size(563, 23);
+        descriptionComboBox.Size = new Size(502, 23);
         descriptionComboBox.TabIndex = 7;
         // 
         // descriptionLabel
@@ -198,9 +198,9 @@ partial class CollimatorMainForm
         descriptionLabel.AutoSize = true;
         descriptionLabel.Location = new Point(8, 7);
         descriptionLabel.Name = "descriptionLabel";
-        descriptionLabel.Size = new Size(81, 15);
+        descriptionLabel.Size = new Size(155, 15);
         descriptionLabel.TabIndex = 6;
-        descriptionLabel.Text = "Обозначение";
+        descriptionLabel.Text = "Обозначение поверхности";
         // 
         // fioPanel
         // 
@@ -336,9 +336,9 @@ partial class CollimatorMainForm
         verticalDeviationLabel.AutoSize = true;
         verticalDeviationLabel.Location = new Point(10, 7);
         verticalDeviationLabel.Name = "verticalDeviationLabel";
-        verticalDeviationLabel.Size = new Size(374, 15);
+        verticalDeviationLabel.Size = new Size(224, 15);
         verticalDeviationLabel.TabIndex = 18;
-        verticalDeviationLabel.Text = "Отклонение от прямолинейности в вертикальной плоскости, мкм";
+        verticalDeviationLabel.Text = "Отклонение от прямолинейности, мкм";
         // 
         // lineDeviationPanel
         // 
@@ -375,6 +375,7 @@ partial class CollimatorMainForm
         // bedPanelLength
         // 
         bedPanelLength.BorderStyle = BorderStyle.FixedSingle;
+        bedPanelLength.Controls.Add(textBox8);
         bedPanelLength.Controls.Add(bedLengthTextBox);
         bedPanelLength.Controls.Add(bedLengthLabel);
         bedPanelLength.Location = new Point(8, 344);
@@ -385,7 +386,7 @@ partial class CollimatorMainForm
         // bedLengthTextBox
         // 
         bedLengthTextBox.BorderStyle = BorderStyle.FixedSingle;
-        bedLengthTextBox.Location = new Point(402, 3);
+        bedLengthTextBox.Location = new Point(403, 3);
         bedLengthTextBox.Name = "bedLengthTextBox";
         bedLengthTextBox.ReadOnly = true;
         bedLengthTextBox.Size = new Size(132, 23);
@@ -399,9 +400,9 @@ partial class CollimatorMainForm
         bedLengthLabel.AutoSize = true;
         bedLengthLabel.Location = new Point(8, 7);
         bedLengthLabel.Name = "bedLengthLabel";
-        bedLengthLabel.Size = new Size(116, 15);
+        bedLengthLabel.Size = new Size(129, 15);
         bedLengthLabel.TabIndex = 24;
-        bedLengthLabel.Text = "Длина станины, мм";
+        bedLengthLabel.Text = "Длина измерения, мм";
         // 
         // localAreaPanel
         // 
@@ -418,7 +419,7 @@ partial class CollimatorMainForm
         // 
         localAreaTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
         localAreaTextBox.BorderStyle = BorderStyle.FixedSingle;
-        localAreaTextBox.Location = new Point(401, 3);
+        localAreaTextBox.Location = new Point(403, 3);
         localAreaTextBox.Name = "localAreaTextBox";
         localAreaTextBox.Size = new Size(132, 23);
         localAreaTextBox.TabIndex = 28;
@@ -459,7 +460,7 @@ partial class CollimatorMainForm
         // tolerPerMeterTextBox
         // 
         tolerPerMeterTextBox.BorderStyle = BorderStyle.FixedSingle;
-        tolerPerMeterTextBox.Location = new Point(401, 3);
+        tolerPerMeterTextBox.Location = new Point(403, 3);
         tolerPerMeterTextBox.Name = "tolerPerMeterTextBox";
         tolerPerMeterTextBox.Size = new Size(132, 23);
         tolerPerMeterTextBox.TabIndex = 31;
@@ -498,7 +499,7 @@ partial class CollimatorMainForm
         // tolerLenghtTextBox
         // 
         tolerLenghtTextBox.BorderStyle = BorderStyle.FixedSingle;
-        tolerLenghtTextBox.Location = new Point(401, 3);
+        tolerLenghtTextBox.Location = new Point(403, 3);
         tolerLenghtTextBox.Name = "tolerLenghtTextBox";
         tolerLenghtTextBox.Size = new Size(132, 23);
         tolerLenghtTextBox.TabIndex = 34;
@@ -517,6 +518,7 @@ partial class CollimatorMainForm
         // stepPanel
         // 
         stepPanel.BorderStyle = BorderStyle.FixedSingle;
+        stepPanel.Controls.Add(textBox7);
         stepPanel.Controls.Add(stepTextBox);
         stepPanel.Controls.Add(stepLabel);
         stepPanel.Location = new Point(8, 492);
@@ -527,7 +529,7 @@ partial class CollimatorMainForm
         // stepTextBox
         // 
         stepTextBox.BorderStyle = BorderStyle.FixedSingle;
-        stepTextBox.Location = new Point(401, 3);
+        stepTextBox.Location = new Point(403, 3);
         stepTextBox.Name = "stepTextBox";
         stepTextBox.Size = new Size(132, 23);
         stepTextBox.TabIndex = 37;
@@ -552,6 +554,7 @@ partial class CollimatorMainForm
         fillDataFormButton.TabIndex = 38;
         fillDataFormButton.Text = "Заполнить измерения";
         fillDataFormButton.UseVisualStyleBackColor = true;
+        fillDataFormButton.Click += fillDataFormButton_Click;
         // 
         // graphicButton
         // 
@@ -649,28 +652,6 @@ partial class CollimatorMainForm
         textBox6.Text = "0";
         textBox6.TextAlign = HorizontalAlignment.Right;
         // 
-        // textBox7
-        // 
-        textBox7.BorderStyle = BorderStyle.FixedSingle;
-        textBox7.Location = new Point(550, 496);
-        textBox7.Name = "textBox7";
-        textBox7.Size = new Size(132, 23);
-        textBox7.TabIndex = 38;
-        textBox7.Text = "0";
-        textBox7.TextAlign = HorizontalAlignment.Right;
-        // 
-        // textBox8
-        // 
-        textBox8.BorderStyle = BorderStyle.FixedSingle;
-        textBox8.Location = new Point(550, 348);
-        textBox8.Name = "textBox8";
-        textBox8.ReadOnly = true;
-        textBox8.Size = new Size(132, 23);
-        textBox8.TabIndex = 26;
-        textBox8.TabStop = false;
-        textBox8.Text = "0";
-        textBox8.TextAlign = HorizontalAlignment.Right;
-        // 
         // panel1
         // 
         panel1.BorderStyle = BorderStyle.FixedSingle;
@@ -681,6 +662,15 @@ partial class CollimatorMainForm
         panel1.Name = "panel1";
         panel1.Size = new Size(683, 31);
         panel1.TabIndex = 44;
+        // 
+        // label4
+        // 
+        label4.AutoSize = true;
+        label4.Location = new Point(10, 7);
+        label4.Name = "label4";
+        label4.Size = new Size(69, 15);
+        label4.TabIndex = 46;
+        label4.Text = "Плоскость:";
         // 
         // panel3
         // 
@@ -734,9 +724,9 @@ partial class CollimatorMainForm
         // button1
         // 
         button1.Font = new Font("Segoe UI", 6.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-        button1.Location = new Point(284, 4);
+        button1.Location = new Point(298, 4);
         button1.Name = "button1";
-        button1.Size = new Size(72, 23);
+        button1.Size = new Size(58, 23);
         button1.TabIndex = 2;
         button1.Text = "Изменить";
         button1.UseVisualStyleBackColor = true;
@@ -744,7 +734,7 @@ partial class CollimatorMainForm
         // labelCollimatorType
         // 
         labelCollimatorType.AutoSize = true;
-        labelCollimatorType.Location = new Point(137, 8);
+        labelCollimatorType.Location = new Point(164, 8);
         labelCollimatorType.Name = "labelCollimatorType";
         labelCollimatorType.Size = new Size(126, 15);
         labelCollimatorType.TabIndex = 1;
@@ -755,18 +745,31 @@ partial class CollimatorMainForm
         label3.AutoSize = true;
         label3.Location = new Point(9, 8);
         label3.Name = "label3";
-        label3.Size = new Size(107, 15);
+        label3.Size = new Size(154, 15);
         label3.TabIndex = 0;
-        label3.Text = "Тип коллиматора:";
+        label3.Text = "Модель автоколлиматора:";
         // 
-        // label4
+        // textBox7
         // 
-        label4.AutoSize = true;
-        label4.Location = new Point(10, 7);
-        label4.Name = "label4";
-        label4.Size = new Size(69, 15);
-        label4.TabIndex = 46;
-        label4.Text = "Плоскость:";
+        textBox7.BorderStyle = BorderStyle.FixedSingle;
+        textBox7.Location = new Point(541, 3);
+        textBox7.Name = "textBox7";
+        textBox7.Size = new Size(132, 23);
+        textBox7.TabIndex = 38;
+        textBox7.Text = "0";
+        textBox7.TextAlign = HorizontalAlignment.Right;
+        // 
+        // textBox8
+        // 
+        textBox8.BorderStyle = BorderStyle.FixedSingle;
+        textBox8.Location = new Point(541, 3);
+        textBox8.Name = "textBox8";
+        textBox8.ReadOnly = true;
+        textBox8.Size = new Size(132, 23);
+        textBox8.TabIndex = 26;
+        textBox8.TabStop = false;
+        textBox8.Text = "0";
+        textBox8.TextAlign = HorizontalAlignment.Right;
         // 
         // CollimatorMainForm
         // 
@@ -775,8 +778,6 @@ partial class CollimatorMainForm
         ClientSize = new Size(692, 564);
         Controls.Add(panel4);
         Controls.Add(panel1);
-        Controls.Add(textBox8);
-        Controls.Add(textBox7);
         Controls.Add(textBox6);
         Controls.Add(textBox4);
         Controls.Add(textBox3);
@@ -897,8 +898,6 @@ partial class CollimatorMainForm
     private TextBox textBox3;
     internal TextBox textBox4;
     private TextBox textBox6;
-    private TextBox textBox7;
-    private TextBox textBox8;
     private TextBox textBox9;
     private Panel panel1;
     private Panel panel3;
@@ -910,5 +909,7 @@ partial class CollimatorMainForm
     private Label label3;
     private Button button1;
     private Label label4;
+    private TextBox textBox8;
+    private TextBox textBox7;
 }
 
