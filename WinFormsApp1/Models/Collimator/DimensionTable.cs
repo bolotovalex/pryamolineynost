@@ -1,29 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Data;
 namespace PryamolineynostWF.Models.Collimator
 {
-    public abstract class DimensionTable
+    public class DimensionTable : DataTable
     {
-        public DataTable table;
-        protected DimensionTable(string tableName)
+        public DimensionTable(string tableName)
         {
-            this.table = new DataTable(tableName);
-            table.Columns.Add("PointNumber", typeof(int));
-            table.Columns.Add("Interval", typeof(int));
-            table.Columns.Add("fStroke", typeof(Angle));
-            table.Columns.Add("revStroke", typeof(Angle));
-            table.Columns.Add("meanAngle", typeof(Angle));
-            table.Columns.Add("bi", typeof(decimal));
-            table.Columns.Add("hi", typeof(decimal));
-            table.Columns.Add("Ai", typeof(decimal));
-            table.Columns.Add("Bi", typeof(decimal));
-            table.Columns.Add("Hi", typeof(decimal));
-            table.Rows.Add(0,0,0,0,0,0,0,0,0,0);
+            TableName = tableName;
+            Columns.Add("Interval", typeof(int));
+            //Columns.Add("fStroke", typeof(Angle));
+            //Columns.Add("revStroke", typeof(Angle));
+            //Columns.Add("meanAngle", typeof(Angle));
+            Columns.Add("bi", typeof(decimal));
+            Columns.Add("hi", typeof(decimal));
+            Columns.Add("Ai", typeof(decimal));
+            Columns.Add("Bi", typeof(decimal));
+            Columns.Add("Hi", typeof(decimal));
         }
     }
 }
