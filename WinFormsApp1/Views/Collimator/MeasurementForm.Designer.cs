@@ -28,23 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             menuStrip1 = new MenuStrip();
             файлToolStripMenuItem = new ToolStripMenuItem();
             таблицаToolStripMenuItem = new ToolStripMenuItem();
             справкаToolStripMenuItem = new ToolStripMenuItem();
             panel1 = new Panel();
-            radioButton3 = new RadioButton();
-            radioButton2 = new RadioButton();
-            radioButton1 = new RadioButton();
+            label1 = new Label();
+            comboBox1 = new ComboBox();
             checkBox2 = new CheckBox();
             checkBox1 = new CheckBox();
             button3 = new Button();
             button2 = new Button();
             button1 = new Button();
             dataGridView1 = new DataGridView();
+            collimatorControllerBindingSource = new BindingSource(components);
+            deviceChooseFormBindingSource = new BindingSource(components);
+            collimatorCalibrationDateControllerBindingSource = new BindingSource(components);
+            dBBindingSource = new BindingSource(components);
+            panel2 = new Panel();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)collimatorControllerBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)deviceChooseFormBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)collimatorCalibrationDateControllerBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dBBindingSource).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -76,60 +85,44 @@
             // 
             // panel1
             // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.AutoSize = true;
             panel1.BackColor = SystemColors.Control;
-            panel1.Controls.Add(radioButton3);
-            panel1.Controls.Add(radioButton2);
-            panel1.Controls.Add(radioButton1);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(comboBox1);
             panel1.Controls.Add(checkBox2);
             panel1.Controls.Add(checkBox1);
             panel1.Controls.Add(button3);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
-            panel1.Location = new Point(0, 27);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 24);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 35);
+            panel1.Size = new Size(800, 33);
             panel1.TabIndex = 1;
             panel1.AutoSizeChanged += panel1_AutoSizeChanged;
             // 
-            // radioButton3
+            // label1
             // 
-            radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(683, 9);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(101, 19);
-            radioButton3.TabIndex = 7;
-            radioButton3.TabStop = true;
-            radioButton3.Text = "Вертикальная";
-            radioButton3.UseVisualStyleBackColor = true;
+            label1.Location = new Point(129, 10);
+            label1.Name = "label1";
+            label1.Size = new Size(71, 18);
+            label1.TabIndex = 6;
+            label1.Text = "Плоскость:";
+            label1.Click += label1_Click;
             // 
-            // radioButton2
+            // comboBox1
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(563, 9);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(114, 19);
-            radioButton2.TabIndex = 6;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Горизонтальная";
-            radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(449, 9);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(108, 19);
-            radioButton1.TabIndex = 5;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Обе плоскости";
-            radioButton1.UseVisualStyleBackColor = true;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "------------------", "Горизонтальная", "Вертикальная", "Гор. и верт." });
+            comboBox1.Location = new Point(206, 7);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(158, 23);
+            comboBox1.TabIndex = 5;
             // 
             // checkBox2
             // 
             checkBox2.AutoSize = true;
-            checkBox2.Location = new Point(240, 9);
+            checkBox2.Location = new Point(490, 9);
             checkBox2.Name = "checkBox2";
             checkBox2.Size = new Size(203, 19);
             checkBox2.TabIndex = 4;
@@ -140,7 +133,7 @@
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(129, 9);
+            checkBox1.Location = new Point(379, 9);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(105, 19);
             checkBox1.TabIndex = 3;
@@ -177,17 +170,49 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(0, 63);
+            dataGridView1.DataSource = collimatorControllerBindingSource;
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(0, 57);
+            dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(800, 310);
+            dataGridView1.Size = new Size(800, 393);
             dataGridView1.TabIndex = 2;
+            // 
+            // collimatorControllerBindingSource
+            // 
+            collimatorControllerBindingSource.DataSource = typeof(CollimatorController);
+            // 
+            // deviceChooseFormBindingSource
+            // 
+            deviceChooseFormBindingSource.DataSource = typeof(Views.DeviceChooseForm);
+            // 
+            // collimatorCalibrationDateControllerBindingSource
+            // 
+            collimatorCalibrationDateControllerBindingSource.DataSource = typeof(CollimatorCalibrationDateController);
+            // 
+            // dBBindingSource
+            // 
+            dBBindingSource.DataSource = typeof(LogicLibrary.DB);
+            // 
+            // panel2
+            // 
+            panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Dock = DockStyle.Bottom;
+            panel2.Location = new Point(0, 424);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(800, 26);
+            panel2.TabIndex = 3;
             // 
             // MeasurementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(panel2);
             Controls.Add(dataGridView1);
             Controls.Add(panel1);
             Controls.Add(menuStrip1);
@@ -200,9 +225,18 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)collimatorControllerBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)deviceChooseFormBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)collimatorCalibrationDateControllerBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dBBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
+
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBox1;
+
+        private System.Windows.Forms.Panel panel2;
 
         #endregion
 
@@ -210,15 +244,19 @@
         private ToolStripMenuItem файлToolStripMenuItem;
         private ToolStripMenuItem таблицаToolStripMenuItem;
         private ToolStripMenuItem справкаToolStripMenuItem;
-        private Panel panel1;
+        private System.Windows.Forms.Panel panel1;
         private Button button2;
         private Button button1;
-        private CheckBox checkBox2;
-        private CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
         private Button button3;
         private RadioButton radioButton3;
         private RadioButton radioButton2;
         private RadioButton radioButton1;
-        private DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private BindingSource collimatorCalibrationDateControllerBindingSource;
+        private BindingSource deviceChooseFormBindingSource;
+        private BindingSource collimatorControllerBindingSource;
+        private BindingSource dBBindingSource;
     }
 }
