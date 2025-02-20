@@ -16,7 +16,7 @@ public class CollimatorController
     {
         _type = collimatorType;
         _view = view;
-        _view.lblColimmatorType.Text = collimatorType.ToString();
+        _view._lblColimmatorType.Text = collimatorType.ToString();
         CreateTables();
     }
 

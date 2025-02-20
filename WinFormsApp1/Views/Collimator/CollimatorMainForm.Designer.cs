@@ -93,7 +93,7 @@ partial class CollimatorMainForm
         label1 = new Label();
         panel4 = new Panel();
         btnCollimatorTypeChange = new Button();
-        lblColimmatorType = new Label();
+        _lblColimmatorType = new Label();
         _lblModelCollimator = new Label();
         datePanel.SuspendLayout();
         namePanel.SuspendLayout();
@@ -143,7 +143,7 @@ partial class CollimatorMainForm
         dateTimePicker.RightToLeft = RightToLeft.No;
         dateTimePicker.Size = new Size(146, 23);
         dateTimePicker.TabIndex = 1;
-        dateTimePicker.ValueChanged += dateTimePickerDateChanged;
+        dateTimePicker.ValueChanged += dateTimePicker_ValueChange;
         
         // 
         // namePanel
@@ -749,7 +749,7 @@ partial class CollimatorMainForm
         // 
         panel4.BorderStyle = BorderStyle.FixedSingle;
         panel4.Controls.Add(btnCollimatorTypeChange);
-        panel4.Controls.Add(lblColimmatorType);
+        panel4.Controls.Add(_lblColimmatorType);
         panel4.Controls.Add(_lblModelCollimator);
         panel4.Location = new Point(8, 12);
         panel4.Name = "panel4";
@@ -767,14 +767,14 @@ partial class CollimatorMainForm
         btnCollimatorTypeChange.UseVisualStyleBackColor = true;
         btnCollimatorTypeChange.Click += btnCollimatorTypeChange_Click;
         // 
-        // lblColimmatorType
+        // _lblColimmatorType
         // 
-        lblColimmatorType.AutoSize = true;
-        lblColimmatorType.Location = new Point(164, 8);
-        lblColimmatorType.Name = "lblColimmatorType";
-        lblColimmatorType.Size = new Size(126, 15);
-        lblColimmatorType.TabIndex = 1;
-        lblColimmatorType.Text = "Тут отображается тип";
+        _lblColimmatorType.AutoSize = true;
+        _lblColimmatorType.Location = new Point(164, 8);
+        _lblColimmatorType.Name = "_lblColimmatorType";
+        _lblColimmatorType.Size = new Size(126, 15);
+        _lblColimmatorType.TabIndex = 1;
+        _lblColimmatorType.Text = "Тут отображается тип";
         // 
         // _lblModelCollimator
         // 
@@ -919,7 +919,7 @@ partial class CollimatorMainForm
     private Label label1;
     private Label label2;
     private Panel panel4;
-    public Label lblColimmatorType;
+    public Label _lblColimmatorType;
     private Label _lblModelCollimator;
     private Button btnCollimatorTypeChange;
     private Label label4;
