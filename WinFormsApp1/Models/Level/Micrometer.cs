@@ -1,4 +1,5 @@
 ﻿using PryamolineynostWF.Interfaces;
+using PryamolineynostWF.Models;
 
 namespace LogicLibrary
 {
