@@ -32,69 +32,69 @@ partial class CollimatorMainForm
     private void InitializeComponent()
     {
         datePanel = new Panel();
-        dateLabel = new Label();
+        _lblDate = new Label();
         dateTimePicker = new DateTimePicker();
         namePanel = new Panel();
         nameLabel = new Label();
-        nameComboBox = new ComboBox();
+        tbToolName = new TextBox();
         descriptionPanel = new Panel();
-        descriptionComboBox = new ComboBox();
+        tbDescription = new TextBox();
         descriptionLabel = new Label();
         fioPanel = new Panel();
-        fioComboBox = new ComboBox();
+        tbWorkerName = new TextBox();
         fioLabel = new Label();
         maxDeviationPanel = new Panel();
-        textBox1 = new TextBox();
-        maxDeviationTextBox = new TextBox();
+        _tbVMaxDeviation = new TextBox();
+        _tbHMaxDeviation = new TextBox();
         maxDeviationLabel = new Label();
         minDeviationPanel = new Panel();
-        minDeviationTextBox = new TextBox();
+        _tbHMinDeviation = new TextBox();
         minDeviationLabel = new Label();
         verticalDeviationPanel = new Panel();
-        verticalDeviationTextBox = new TextBox();
+        _tbHDeviation = new TextBox();
         verticalDeviationLabel = new Label();
         lineDeviationPanel = new Panel();
-        lineDeviationTextBox = new TextBox();
+        _tbHLineDeviation = new TextBox();
         lineDeviationLabel = new Label();
         bedPanelLength = new Panel();
-        bedLengthTextBox = new TextBox();
+        _tbVBedLength = new TextBox();
+        _tbHBedLength = new TextBox();
         bedLengthLabel = new Label();
         localAreaPanel = new Panel();
-        localAreaTextBox = new TextBox();
-        textBox9 = new TextBox();
+        tbHLocalAreaSize = new TextBox();
+        tbVLocalAreaSize = new TextBox();
         localAreaLabel = new Label();
         tolerPerMeterPanel = new Panel();
-        tolerPerMeterTextBox = new TextBox();
+        tbHTolerLocalAreaSize = new TextBox();
         tolerPerMeterLabel = new Label();
-        textBox5 = new TextBox();
+        tbVTolerLocalAreaSize = new TextBox();
         tolerLenghtPanel = new Panel();
-        tolerLenghtTextBox = new TextBox();
+        tbHTolerAllLength = new TextBox();
         tolerLengthLabel = new Label();
         stepPanel = new Panel();
-        stepTextBox = new TextBox();
+        tbVStepSize = new TextBox();
+        tbHStepSize = new TextBox();
         stepLabel = new Label();
-        fillDataFormButton = new Button();
-        graphicButton = new Button();
-        saveButton = new Button();
-        loadFileButton = new Button();
-        savePdfButton = new Button();
-        exitButton = new Button();
-        textBox2 = new TextBox();
-        textBox3 = new TextBox();
-        textBox4 = new TextBox();
-        textBox6 = new TextBox();
+        btnShowDataForm = new Button();
+        btnGraphicForm = new Button();
+        btnSave = new Button();
+        btnLoad = new Button();
+        btnPdfForm = new Button();
+        btnExit = new Button();
+        _tbVMinDeviation = new TextBox();
+        _tbVDeviation = new TextBox();
+        _tbVLineDeviation = new TextBox();
+        tbVTolerAllLength = new TextBox();
         panel1 = new Panel();
         label4 = new Label();
         panel3 = new Panel();
-        label1 = new Label();
-        panel2 = new Panel();
         label2 = new Label();
+        panel2 = new Panel();
+        label1 = new Label();
         panel4 = new Panel();
-        button1 = new Button();
-        labelCollimatorType = new Label();
-        label3 = new Label();
-        textBox7 = new TextBox();
-        textBox8 = new TextBox();
+        btnCollimatorTypeChange = new Button();
+        lblColimmatorType = new Label();
+        _lblModelCollimator = new Label();
         datePanel.SuspendLayout();
         namePanel.SuspendLayout();
         descriptionPanel.SuspendLayout();
@@ -117,21 +117,21 @@ partial class CollimatorMainForm
         // datePanel
         // 
         datePanel.BorderStyle = BorderStyle.FixedSingle;
-        datePanel.Controls.Add(dateLabel);
+        datePanel.Controls.Add(_lblDate);
         datePanel.Controls.Add(dateTimePicker);
         datePanel.Location = new Point(375, 12);
         datePanel.Name = "datePanel";
         datePanel.Size = new Size(312, 31);
         datePanel.TabIndex = 0;
         // 
-        // dateLabel
+        // _lblDate
         // 
-        dateLabel.AutoSize = true;
-        dateLabel.Location = new Point(10, 7);
-        dateLabel.Name = "dateLabel";
-        dateLabel.Size = new Size(32, 15);
-        dateLabel.TabIndex = 3;
-        dateLabel.Text = "Дата";
+        _lblDate.AutoSize = true;
+        _lblDate.Location = new Point(10, 7);
+        _lblDate.Name = "_lblDate";
+        _lblDate.Size = new Size(32, 15);
+        _lblDate.TabIndex = 3;
+        _lblDate.Text = "Дата";
         // 
         // dateTimePicker
         // 
@@ -143,12 +143,14 @@ partial class CollimatorMainForm
         dateTimePicker.RightToLeft = RightToLeft.No;
         dateTimePicker.Size = new Size(146, 23);
         dateTimePicker.TabIndex = 1;
+        dateTimePicker.ValueChanged += dateTimePickerDateChanged;
+        
         // 
         // namePanel
         // 
         namePanel.BorderStyle = BorderStyle.FixedSingle;
         namePanel.Controls.Add(nameLabel);
-        namePanel.Controls.Add(nameComboBox);
+        namePanel.Controls.Add(tbToolName);
         namePanel.Location = new Point(8, 49);
         namePanel.Name = "namePanel";
         namePanel.Size = new Size(679, 31);
@@ -163,35 +165,33 @@ partial class CollimatorMainForm
         nameLabel.TabIndex = 3;
         nameLabel.Text = "Наименование проверяемого оборудования";
         // 
-        // nameComboBox
+        // tbToolName
         // 
-        nameComboBox.FlatStyle = FlatStyle.System;
-        nameComboBox.FormattingEnabled = true;
-        nameComboBox.Location = new Point(271, 3);
-        nameComboBox.Name = "nameComboBox";
-        nameComboBox.RightToLeft = RightToLeft.Yes;
-        nameComboBox.Size = new Size(400, 23);
-        nameComboBox.TabIndex = 4;
+        tbToolName.Location = new Point(271, 3);
+        tbToolName.Name = "tbToolName";
+        tbToolName.RightToLeft = RightToLeft.Yes;
+        tbToolName.Size = new Size(400, 23);
+        tbToolName.TabIndex = 4;
+        tbToolName.TextChanged += tbToolName_Change;
         // 
         // descriptionPanel
         // 
         descriptionPanel.BorderStyle = BorderStyle.FixedSingle;
-        descriptionPanel.Controls.Add(descriptionComboBox);
+        descriptionPanel.Controls.Add(tbDescription);
         descriptionPanel.Controls.Add(descriptionLabel);
         descriptionPanel.Location = new Point(8, 86);
         descriptionPanel.Name = "descriptionPanel";
         descriptionPanel.Size = new Size(679, 31);
         descriptionPanel.TabIndex = 5;
         // 
-        // descriptionComboBox
+        // tbDescription
         // 
-        descriptionComboBox.FlatStyle = FlatStyle.System;
-        descriptionComboBox.FormattingEnabled = true;
-        descriptionComboBox.Location = new Point(169, 3);
-        descriptionComboBox.Name = "descriptionComboBox";
-        descriptionComboBox.RightToLeft = RightToLeft.Yes;
-        descriptionComboBox.Size = new Size(502, 23);
-        descriptionComboBox.TabIndex = 7;
+        tbDescription.Location = new Point(169, 3);
+        tbDescription.Name = "tbDescription";
+        tbDescription.RightToLeft = RightToLeft.Yes;
+        tbDescription.Size = new Size(502, 23);
+        tbDescription.TabIndex = 7;
+        tbDescription.TextChanged += tbDescription_Change;
         // 
         // descriptionLabel
         // 
@@ -205,21 +205,22 @@ partial class CollimatorMainForm
         // fioPanel
         // 
         fioPanel.BorderStyle = BorderStyle.FixedSingle;
-        fioPanel.Controls.Add(fioComboBox);
+        fioPanel.Controls.Add(tbWorkerName);
         fioPanel.Controls.Add(fioLabel);
         fioPanel.Location = new Point(8, 123);
         fioPanel.Name = "fioPanel";
         fioPanel.Size = new Size(679, 31);
         fioPanel.TabIndex = 8;
+        tbWorkerName.TextChanged += tbWorkerName_Change;
         // 
-        // fioComboBox
+        // tbWorkerName
         // 
-        fioComboBox.FormattingEnabled = true;
-        fioComboBox.Location = new Point(140, 3);
-        fioComboBox.Name = "fioComboBox";
-        fioComboBox.RightToLeft = RightToLeft.Yes;
-        fioComboBox.Size = new Size(531, 23);
-        fioComboBox.TabIndex = 10;
+        tbWorkerName.Location = new Point(140, 3);
+        tbWorkerName.Name = "tbWorkerName";
+        tbWorkerName.RightToLeft = RightToLeft.Yes;
+        tbWorkerName.Size = new Size(531, 23);
+        tbWorkerName.TabIndex = 10;
+        tbWorkerName.TextChanged += tbWorkerNameChanged;
         // 
         // fioLabel
         // 
@@ -233,39 +234,39 @@ partial class CollimatorMainForm
         // maxDeviationPanel
         // 
         maxDeviationPanel.BorderStyle = BorderStyle.FixedSingle;
-        maxDeviationPanel.Controls.Add(textBox1);
-        maxDeviationPanel.Controls.Add(maxDeviationTextBox);
+        maxDeviationPanel.Controls.Add(_tbVMaxDeviation);
+        maxDeviationPanel.Controls.Add(_tbHMaxDeviation);
         maxDeviationPanel.Controls.Add(maxDeviationLabel);
         maxDeviationPanel.Location = new Point(8, 196);
         maxDeviationPanel.Name = "maxDeviationPanel";
         maxDeviationPanel.Size = new Size(679, 31);
         maxDeviationPanel.TabIndex = 11;
         // 
-        // textBox1
+        // _tbVMaxDeviation
         // 
-        textBox1.BackColor = SystemColors.Control;
-        textBox1.BorderStyle = BorderStyle.FixedSingle;
-        textBox1.Location = new Point(541, 3);
-        textBox1.Name = "textBox1";
-        textBox1.ReadOnly = true;
-        textBox1.Size = new Size(132, 23);
-        textBox1.TabIndex = 14;
-        textBox1.TabStop = false;
-        textBox1.Text = "0";
-        textBox1.TextAlign = HorizontalAlignment.Right;
+        _tbVMaxDeviation.BackColor = SystemColors.Control;
+        _tbVMaxDeviation.BorderStyle = BorderStyle.FixedSingle;
+        _tbVMaxDeviation.Location = new Point(541, 3);
+        _tbVMaxDeviation.Name = "_tbVMaxDeviation";
+        _tbVMaxDeviation.ReadOnly = true;
+        _tbVMaxDeviation.Size = new Size(132, 23);
+        _tbVMaxDeviation.TabIndex = 14;
+        _tbVMaxDeviation.TabStop = false;
+        _tbVMaxDeviation.Text = "0";
+        _tbVMaxDeviation.TextAlign = HorizontalAlignment.Right;
         // 
-        // maxDeviationTextBox
+        // _tbHMaxDeviation
         // 
-        maxDeviationTextBox.BackColor = SystemColors.Control;
-        maxDeviationTextBox.BorderStyle = BorderStyle.FixedSingle;
-        maxDeviationTextBox.Location = new Point(404, 3);
-        maxDeviationTextBox.Name = "maxDeviationTextBox";
-        maxDeviationTextBox.ReadOnly = true;
-        maxDeviationTextBox.Size = new Size(132, 23);
-        maxDeviationTextBox.TabIndex = 13;
-        maxDeviationTextBox.TabStop = false;
-        maxDeviationTextBox.Text = "0";
-        maxDeviationTextBox.TextAlign = HorizontalAlignment.Right;
+        _tbHMaxDeviation.BackColor = SystemColors.Control;
+        _tbHMaxDeviation.BorderStyle = BorderStyle.FixedSingle;
+        _tbHMaxDeviation.Location = new Point(404, 3);
+        _tbHMaxDeviation.Name = "_tbHMaxDeviation";
+        _tbHMaxDeviation.ReadOnly = true;
+        _tbHMaxDeviation.Size = new Size(132, 23);
+        _tbHMaxDeviation.TabIndex = 13;
+        _tbHMaxDeviation.TabStop = false;
+        _tbHMaxDeviation.Text = "0";
+        _tbHMaxDeviation.TextAlign = HorizontalAlignment.Right;
         // 
         // maxDeviationLabel
         // 
@@ -279,25 +280,25 @@ partial class CollimatorMainForm
         // minDeviationPanel
         // 
         minDeviationPanel.BorderStyle = BorderStyle.FixedSingle;
-        minDeviationPanel.Controls.Add(minDeviationTextBox);
+        minDeviationPanel.Controls.Add(_tbHMinDeviation);
         minDeviationPanel.Controls.Add(minDeviationLabel);
         minDeviationPanel.Location = new Point(8, 233);
         minDeviationPanel.Name = "minDeviationPanel";
         minDeviationPanel.Size = new Size(679, 31);
         minDeviationPanel.TabIndex = 14;
         // 
-        // minDeviationTextBox
+        // tbHMinDeviation
         // 
-        minDeviationTextBox.BackColor = SystemColors.Control;
-        minDeviationTextBox.BorderStyle = BorderStyle.FixedSingle;
-        minDeviationTextBox.Location = new Point(404, 3);
-        minDeviationTextBox.Name = "minDeviationTextBox";
-        minDeviationTextBox.ReadOnly = true;
-        minDeviationTextBox.Size = new Size(132, 23);
-        minDeviationTextBox.TabIndex = 16;
-        minDeviationTextBox.TabStop = false;
-        minDeviationTextBox.Text = "0";
-        minDeviationTextBox.TextAlign = HorizontalAlignment.Right;
+        _tbHMinDeviation.BackColor = SystemColors.Control;
+        _tbHMinDeviation.BorderStyle = BorderStyle.FixedSingle;
+        _tbHMinDeviation.Location = new Point(404, 3);
+        _tbHMinDeviation.Name = "_tbHMinDeviation";
+        _tbHMinDeviation.ReadOnly = true;
+        _tbHMinDeviation.Size = new Size(132, 23);
+        _tbHMinDeviation.TabIndex = 16;
+        _tbHMinDeviation.TabStop = false;
+        _tbHMinDeviation.Text = "0";
+        _tbHMinDeviation.TextAlign = HorizontalAlignment.Right;
         // 
         // minDeviationLabel
         // 
@@ -311,25 +312,25 @@ partial class CollimatorMainForm
         // verticalDeviationPanel
         // 
         verticalDeviationPanel.BorderStyle = BorderStyle.FixedSingle;
-        verticalDeviationPanel.Controls.Add(verticalDeviationTextBox);
+        verticalDeviationPanel.Controls.Add(_tbHDeviation);
         verticalDeviationPanel.Controls.Add(verticalDeviationLabel);
         verticalDeviationPanel.Location = new Point(8, 270);
         verticalDeviationPanel.Name = "verticalDeviationPanel";
         verticalDeviationPanel.Size = new Size(679, 31);
         verticalDeviationPanel.TabIndex = 17;
         // 
-        // verticalDeviationTextBox
+        // tbHDeviation
         // 
-        verticalDeviationTextBox.BackColor = SystemColors.Control;
-        verticalDeviationTextBox.BorderStyle = BorderStyle.FixedSingle;
-        verticalDeviationTextBox.Location = new Point(403, 3);
-        verticalDeviationTextBox.Name = "verticalDeviationTextBox";
-        verticalDeviationTextBox.ReadOnly = true;
-        verticalDeviationTextBox.Size = new Size(132, 23);
-        verticalDeviationTextBox.TabIndex = 19;
-        verticalDeviationTextBox.TabStop = false;
-        verticalDeviationTextBox.Text = "0";
-        verticalDeviationTextBox.TextAlign = HorizontalAlignment.Right;
+        _tbHDeviation.BackColor = SystemColors.Control;
+        _tbHDeviation.BorderStyle = BorderStyle.FixedSingle;
+        _tbHDeviation.Location = new Point(403, 3);
+        _tbHDeviation.Name = "_tbHDeviation";
+        _tbHDeviation.ReadOnly = true;
+        _tbHDeviation.Size = new Size(132, 23);
+        _tbHDeviation.TabIndex = 19;
+        _tbHDeviation.TabStop = false;
+        _tbHDeviation.Text = "0";
+        _tbHDeviation.TextAlign = HorizontalAlignment.Right;
         // 
         // verticalDeviationLabel
         // 
@@ -343,25 +344,25 @@ partial class CollimatorMainForm
         // lineDeviationPanel
         // 
         lineDeviationPanel.BorderStyle = BorderStyle.FixedSingle;
-        lineDeviationPanel.Controls.Add(lineDeviationTextBox);
+        lineDeviationPanel.Controls.Add(_tbHLineDeviation);
         lineDeviationPanel.Controls.Add(lineDeviationLabel);
         lineDeviationPanel.Location = new Point(8, 307);
         lineDeviationPanel.Name = "lineDeviationPanel";
         lineDeviationPanel.Size = new Size(679, 31);
         lineDeviationPanel.TabIndex = 20;
         // 
-        // lineDeviationTextBox
+        // tbHLineDeviation
         // 
-        lineDeviationTextBox.BackColor = SystemColors.Control;
-        lineDeviationTextBox.BorderStyle = BorderStyle.FixedSingle;
-        lineDeviationTextBox.Location = new Point(403, 3);
-        lineDeviationTextBox.Name = "lineDeviationTextBox";
-        lineDeviationTextBox.ReadOnly = true;
-        lineDeviationTextBox.Size = new Size(132, 23);
-        lineDeviationTextBox.TabIndex = 22;
-        lineDeviationTextBox.TabStop = false;
-        lineDeviationTextBox.Text = "0";
-        lineDeviationTextBox.TextAlign = HorizontalAlignment.Right;
+        _tbHLineDeviation.BackColor = SystemColors.Control;
+        _tbHLineDeviation.BorderStyle = BorderStyle.FixedSingle;
+        _tbHLineDeviation.Location = new Point(403, 3);
+        _tbHLineDeviation.Name = "_tbHLineDeviation";
+        _tbHLineDeviation.ReadOnly = true;
+        _tbHLineDeviation.Size = new Size(132, 23);
+        _tbHLineDeviation.TabIndex = 22;
+        _tbHLineDeviation.TabStop = false;
+        _tbHLineDeviation.Text = "0";
+        _tbHLineDeviation.TextAlign = HorizontalAlignment.Right;
         // 
         // lineDeviationLabel
         // 
@@ -375,25 +376,37 @@ partial class CollimatorMainForm
         // bedPanelLength
         // 
         bedPanelLength.BorderStyle = BorderStyle.FixedSingle;
-        bedPanelLength.Controls.Add(textBox8);
-        bedPanelLength.Controls.Add(bedLengthTextBox);
+        bedPanelLength.Controls.Add(_tbVBedLength);
+        bedPanelLength.Controls.Add(_tbHBedLength);
         bedPanelLength.Controls.Add(bedLengthLabel);
         bedPanelLength.Location = new Point(8, 344);
         bedPanelLength.Name = "bedPanelLength";
         bedPanelLength.Size = new Size(679, 31);
         bedPanelLength.TabIndex = 23;
         // 
-        // bedLengthTextBox
+        // _tbVBedLength
         // 
-        bedLengthTextBox.BorderStyle = BorderStyle.FixedSingle;
-        bedLengthTextBox.Location = new Point(403, 3);
-        bedLengthTextBox.Name = "bedLengthTextBox";
-        bedLengthTextBox.ReadOnly = true;
-        bedLengthTextBox.Size = new Size(132, 23);
-        bedLengthTextBox.TabIndex = 25;
-        bedLengthTextBox.TabStop = false;
-        bedLengthTextBox.Text = "0";
-        bedLengthTextBox.TextAlign = HorizontalAlignment.Right;
+        _tbVBedLength.BorderStyle = BorderStyle.FixedSingle;
+        _tbVBedLength.Location = new Point(541, 3);
+        _tbVBedLength.Name = "_tbVBedLength";
+        _tbVBedLength.ReadOnly = true;
+        _tbVBedLength.Size = new Size(132, 23);
+        _tbVBedLength.TabIndex = 26;
+        _tbVBedLength.TabStop = false;
+        _tbVBedLength.Text = "0";
+        _tbVBedLength.TextAlign = HorizontalAlignment.Right;
+        // 
+        // tbHBedLength
+        // 
+        _tbHBedLength.BorderStyle = BorderStyle.FixedSingle;
+        _tbHBedLength.Location = new Point(403, 3);
+        _tbHBedLength.Name = "_tbHBedLength";
+        _tbHBedLength.ReadOnly = true;
+        _tbHBedLength.Size = new Size(132, 23);
+        _tbHBedLength.TabIndex = 25;
+        _tbHBedLength.TabStop = false;
+        _tbHBedLength.Text = "0";
+        _tbHBedLength.TextAlign = HorizontalAlignment.Right;
         // 
         // bedLengthLabel
         // 
@@ -407,35 +420,37 @@ partial class CollimatorMainForm
         // localAreaPanel
         // 
         localAreaPanel.BorderStyle = BorderStyle.FixedSingle;
-        localAreaPanel.Controls.Add(localAreaTextBox);
-        localAreaPanel.Controls.Add(textBox9);
+        localAreaPanel.Controls.Add(tbHLocalAreaSize);
+        localAreaPanel.Controls.Add(tbVLocalAreaSize);
         localAreaPanel.Controls.Add(localAreaLabel);
         localAreaPanel.Location = new Point(8, 381);
         localAreaPanel.Name = "localAreaPanel";
         localAreaPanel.Size = new Size(679, 31);
         localAreaPanel.TabIndex = 26;
         // 
-        // localAreaTextBox
+        // tbHLocalAreaSize
         // 
-        localAreaTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-        localAreaTextBox.BorderStyle = BorderStyle.FixedSingle;
-        localAreaTextBox.Location = new Point(403, 3);
-        localAreaTextBox.Name = "localAreaTextBox";
-        localAreaTextBox.Size = new Size(132, 23);
-        localAreaTextBox.TabIndex = 28;
-        localAreaTextBox.Text = "0";
-        localAreaTextBox.TextAlign = HorizontalAlignment.Right;
+        tbHLocalAreaSize.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+        tbHLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
+        tbHLocalAreaSize.Location = new Point(403, 3);
+        tbHLocalAreaSize.Name = "tbHLocalAreaSize";
+        tbHLocalAreaSize.Size = new Size(132, 23);
+        tbHLocalAreaSize.TabIndex = 28;
+        tbHLocalAreaSize.Text = "0";
+        tbHLocalAreaSize.TextAlign = HorizontalAlignment.Right;
+        tbHLocalAreaSize.TextChanged += tbHLocalAreaSize_Change;
         // 
-        // textBox9
+        // tbVLocalAreaSize
         // 
-        textBox9.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-        textBox9.BorderStyle = BorderStyle.FixedSingle;
-        textBox9.Location = new Point(540, 3);
-        textBox9.Name = "textBox9";
-        textBox9.Size = new Size(132, 23);
-        textBox9.TabIndex = 29;
-        textBox9.Text = "0";
-        textBox9.TextAlign = HorizontalAlignment.Right;
+        tbVLocalAreaSize.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+        tbVLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
+        tbVLocalAreaSize.Location = new Point(540, 3);
+        tbVLocalAreaSize.Name = "tbVLocalAreaSize";
+        tbVLocalAreaSize.Size = new Size(132, 23);
+        tbVLocalAreaSize.TabIndex = 29;
+        tbVLocalAreaSize.Text = "0";
+        tbVLocalAreaSize.TextAlign = HorizontalAlignment.Right;
+        tbVLocalAreaSize.TextChanged += tbVLocalAreaSize_Change;
         // 
         // localAreaLabel
         // 
@@ -449,23 +464,24 @@ partial class CollimatorMainForm
         // tolerPerMeterPanel
         // 
         tolerPerMeterPanel.BorderStyle = BorderStyle.FixedSingle;
-        tolerPerMeterPanel.Controls.Add(tolerPerMeterTextBox);
+        tolerPerMeterPanel.Controls.Add(tbHTolerLocalAreaSize);
         tolerPerMeterPanel.Controls.Add(tolerPerMeterLabel);
-        tolerPerMeterPanel.Controls.Add(textBox5);
+        tolerPerMeterPanel.Controls.Add(tbVTolerLocalAreaSize);
         tolerPerMeterPanel.Location = new Point(8, 418);
         tolerPerMeterPanel.Name = "tolerPerMeterPanel";
         tolerPerMeterPanel.Size = new Size(679, 31);
         tolerPerMeterPanel.TabIndex = 29;
         // 
-        // tolerPerMeterTextBox
+        // tbHTolerLocalAreaSize
         // 
-        tolerPerMeterTextBox.BorderStyle = BorderStyle.FixedSingle;
-        tolerPerMeterTextBox.Location = new Point(403, 3);
-        tolerPerMeterTextBox.Name = "tolerPerMeterTextBox";
-        tolerPerMeterTextBox.Size = new Size(132, 23);
-        tolerPerMeterTextBox.TabIndex = 31;
-        tolerPerMeterTextBox.Text = "0";
-        tolerPerMeterTextBox.TextAlign = HorizontalAlignment.Right;
+        tbHTolerLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
+        tbHTolerLocalAreaSize.Location = new Point(403, 3);
+        tbHTolerLocalAreaSize.Name = "tbHTolerLocalAreaSize";
+        tbHTolerLocalAreaSize.Size = new Size(132, 23);
+        tbHTolerLocalAreaSize.TabIndex = 31;
+        tbHTolerLocalAreaSize.Text = "0";
+        tbHTolerLocalAreaSize.TextAlign = HorizontalAlignment.Right;
+        tbHTolerLocalAreaSize.TextChanged += tbHTolerLocalAreaSize_Change;
         // 
         // tolerPerMeterLabel
         // 
@@ -476,35 +492,37 @@ partial class CollimatorMainForm
         tolerPerMeterLabel.TabIndex = 30;
         tolerPerMeterLabel.Text = "Допуск на локальном участке, мкм";
         // 
-        // textBox5
+        // tbVTolerLocalAreaSize
         // 
-        textBox5.BorderStyle = BorderStyle.FixedSingle;
-        textBox5.Location = new Point(541, 3);
-        textBox5.Name = "textBox5";
-        textBox5.Size = new Size(132, 23);
-        textBox5.TabIndex = 32;
-        textBox5.Text = "0";
-        textBox5.TextAlign = HorizontalAlignment.Right;
+        tbVTolerLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
+        tbVTolerLocalAreaSize.Location = new Point(541, 3);
+        tbVTolerLocalAreaSize.Name = "tbVTolerLocalAreaSize";
+        tbVTolerLocalAreaSize.Size = new Size(132, 23);
+        tbVTolerLocalAreaSize.TabIndex = 32;
+        tbVTolerLocalAreaSize.Text = "0";
+        tbVTolerLocalAreaSize.TextAlign = HorizontalAlignment.Right;
+        tbVTolerLocalAreaSize.TextChanged += tbVTolerLocalAreaSize_Change;
         // 
         // tolerLenghtPanel
         // 
         tolerLenghtPanel.BorderStyle = BorderStyle.FixedSingle;
-        tolerLenghtPanel.Controls.Add(tolerLenghtTextBox);
+        tolerLenghtPanel.Controls.Add(tbHTolerAllLength);
         tolerLenghtPanel.Controls.Add(tolerLengthLabel);
         tolerLenghtPanel.Location = new Point(8, 455);
         tolerLenghtPanel.Name = "tolerLenghtPanel";
         tolerLenghtPanel.Size = new Size(679, 31);
         tolerLenghtPanel.TabIndex = 32;
         // 
-        // tolerLenghtTextBox
+        // tbHTolerAllLength
         // 
-        tolerLenghtTextBox.BorderStyle = BorderStyle.FixedSingle;
-        tolerLenghtTextBox.Location = new Point(403, 3);
-        tolerLenghtTextBox.Name = "tolerLenghtTextBox";
-        tolerLenghtTextBox.Size = new Size(132, 23);
-        tolerLenghtTextBox.TabIndex = 34;
-        tolerLenghtTextBox.Text = "0";
-        tolerLenghtTextBox.TextAlign = HorizontalAlignment.Right;
+        tbHTolerAllLength.BorderStyle = BorderStyle.FixedSingle;
+        tbHTolerAllLength.Location = new Point(403, 3);
+        tbHTolerAllLength.Name = "tbHTolerAllLength";
+        tbHTolerAllLength.Size = new Size(132, 23);
+        tbHTolerAllLength.TabIndex = 34;
+        tbHTolerAllLength.Text = "0";
+        tbHTolerAllLength.TextAlign = HorizontalAlignment.Right;
+        tbHTolerAllLength.TextChanged += tbHTolerAllLength_Change;
         // 
         // tolerLengthLabel
         // 
@@ -518,23 +536,35 @@ partial class CollimatorMainForm
         // stepPanel
         // 
         stepPanel.BorderStyle = BorderStyle.FixedSingle;
-        stepPanel.Controls.Add(textBox7);
-        stepPanel.Controls.Add(stepTextBox);
+        stepPanel.Controls.Add(tbVStepSize);
+        stepPanel.Controls.Add(tbHStepSize);
         stepPanel.Controls.Add(stepLabel);
         stepPanel.Location = new Point(8, 492);
         stepPanel.Name = "stepPanel";
         stepPanel.Size = new Size(679, 31);
         stepPanel.TabIndex = 35;
         // 
-        // stepTextBox
+        // tbVStepSize
         // 
-        stepTextBox.BorderStyle = BorderStyle.FixedSingle;
-        stepTextBox.Location = new Point(403, 3);
-        stepTextBox.Name = "stepTextBox";
-        stepTextBox.Size = new Size(132, 23);
-        stepTextBox.TabIndex = 37;
-        stepTextBox.Text = "0";
-        stepTextBox.TextAlign = HorizontalAlignment.Right;
+        tbVStepSize.BorderStyle = BorderStyle.FixedSingle;
+        tbVStepSize.Location = new Point(541, 3);
+        tbVStepSize.Name = "tbVStepSize";
+        tbVStepSize.Size = new Size(132, 23);
+        tbVStepSize.TabIndex = 38;
+        tbVStepSize.Text = "0";
+        tbVStepSize.TextAlign = HorizontalAlignment.Right;
+        tbVStepSize.TextChanged += tbVStepSize_Change;
+        // 
+        // tbHStepSize
+        // 
+        tbHStepSize.BorderStyle = BorderStyle.FixedSingle;
+        tbHStepSize.Location = new Point(403, 3);
+        tbHStepSize.Name = "tbHStepSize";
+        tbHStepSize.Size = new Size(132, 23);
+        tbHStepSize.TabIndex = 37;
+        tbHStepSize.Text = "0";
+        tbHStepSize.TextAlign = HorizontalAlignment.Right;
+        tbHStepSize.TextChanged += tbHStepSize_Change;
         // 
         // stepLabel
         // 
@@ -545,112 +575,117 @@ partial class CollimatorMainForm
         stepLabel.TabIndex = 36;
         stepLabel.Text = "Шаг измерения (расстояние между опорами мостика), мм";
         // 
-        // fillDataFormButton
+        // btnShowDataForm
         // 
-        fillDataFormButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
-        fillDataFormButton.Location = new Point(8, 527);
-        fillDataFormButton.Name = "fillDataFormButton";
-        fillDataFormButton.Size = new Size(151, 31);
-        fillDataFormButton.TabIndex = 38;
-        fillDataFormButton.Text = "Заполнить измерения";
-        fillDataFormButton.UseVisualStyleBackColor = true;
-        fillDataFormButton.Click += fillDataFormButton_Click;
+        btnShowDataForm.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        btnShowDataForm.Location = new Point(8, 527);
+        btnShowDataForm.Name = "btnShowDataForm";
+        btnShowDataForm.Size = new Size(151, 31);
+        btnShowDataForm.TabIndex = 38;
+        btnShowDataForm.Text = "Заполнить измерения";
+        btnShowDataForm.UseVisualStyleBackColor = true;
+        btnShowDataForm.Click += btnSaveChanged_Click;
         // 
-        // graphicButton
+        // btnGraphicForm
         // 
-        graphicButton.Location = new Point(365, 527);
-        graphicButton.Name = "graphicButton";
-        graphicButton.Size = new Size(100, 31);
-        graphicButton.TabIndex = 39;
-        graphicButton.Text = "График";
-        graphicButton.UseVisualStyleBackColor = true;
+        btnGraphicForm.Location = new Point(365, 527);
+        btnGraphicForm.Name = "btnGraphicForm";
+        btnGraphicForm.Size = new Size(100, 31);
+        btnGraphicForm.TabIndex = 39;
+        btnGraphicForm.Text = "График";
+        btnGraphicForm.UseVisualStyleBackColor = true;
+        btnGraphicForm.Click += btnGraphicForm_Click;
         // 
-        // saveButton
+        // btnSave
         // 
-        saveButton.Location = new Point(161, 527);
-        saveButton.Name = "saveButton";
-        saveButton.Size = new Size(100, 31);
-        saveButton.TabIndex = 40;
-        saveButton.Text = "Сохранить";
-        saveButton.UseVisualStyleBackColor = true;
-        saveButton.Click += saveButton_Click;
+        btnSave.Location = new Point(161, 527);
+        btnSave.Name = "btnSave";
+        btnSave.Size = new Size(100, 31);
+        btnSave.TabIndex = 40;
+        btnSave.Text = "Сохранить";
+        btnSave.UseVisualStyleBackColor = true;
+        btnSave.Click += btnSaveChanged_Click;
         // 
-        // loadFileButton
+        // btnLoad
         // 
-        loadFileButton.Location = new Point(263, 527);
-        loadFileButton.Name = "loadFileButton";
-        loadFileButton.Size = new Size(100, 31);
-        loadFileButton.TabIndex = 41;
-        loadFileButton.Text = "Загрузить";
-        loadFileButton.UseVisualStyleBackColor = true;
+        btnLoad.Location = new Point(263, 527);
+        btnLoad.Name = "btnLoad";
+        btnLoad.Size = new Size(100, 31);
+        btnLoad.TabIndex = 41;
+        btnLoad.Text = "Загрузить";
+        btnLoad.UseVisualStyleBackColor = true;
+        btnLoad.Click += btnLoadChanged_Click;
         // 
-        // savePdfButton
+        // btnPdfForm
         // 
-        savePdfButton.Location = new Point(467, 527);
-        savePdfButton.Name = "savePdfButton";
-        savePdfButton.Size = new Size(100, 31);
-        savePdfButton.TabIndex = 42;
-        savePdfButton.Text = "Выгрузить PDF";
-        savePdfButton.UseVisualStyleBackColor = true;
+        btnPdfForm.Location = new Point(467, 527);
+        btnPdfForm.Name = "btnPdfForm";
+        btnPdfForm.Size = new Size(100, 31);
+        btnPdfForm.TabIndex = 42;
+        btnPdfForm.Text = "Выгрузить PDF";
+        btnPdfForm.UseVisualStyleBackColor = true;
+        btnPdfForm.Click += btnPdfForm_Click;
         // 
-        // exitButton
+        // btnExit
         // 
-        exitButton.BackColor = Color.FromArgb(255, 192, 192);
-        exitButton.Location = new Point(587, 527);
-        exitButton.Name = "exitButton";
-        exitButton.Size = new Size(100, 31);
-        exitButton.TabIndex = 43;
-        exitButton.Text = "Выход";
-        exitButton.UseVisualStyleBackColor = false;
+        btnExit.BackColor = Color.FromArgb(255, 192, 192);
+        btnExit.Location = new Point(587, 527);
+        btnExit.Name = "btnExit";
+        btnExit.Size = new Size(100, 31);
+        btnExit.TabIndex = 43;
+        btnExit.Text = "Выход";
+        btnExit.UseVisualStyleBackColor = false;
+        btnExit.Click += btnExit_Click;
         // 
-        // textBox2
+        // _tbVMinDeviation
         // 
-        textBox2.BackColor = SystemColors.Control;
-        textBox2.BorderStyle = BorderStyle.FixedSingle;
-        textBox2.Location = new Point(550, 237);
-        textBox2.Name = "textBox2";
-        textBox2.ReadOnly = true;
-        textBox2.Size = new Size(132, 23);
-        textBox2.TabIndex = 17;
-        textBox2.TabStop = false;
-        textBox2.Text = "0";
-        textBox2.TextAlign = HorizontalAlignment.Right;
+        _tbVMinDeviation.BackColor = SystemColors.Control;
+        _tbVMinDeviation.BorderStyle = BorderStyle.FixedSingle;
+        _tbVMinDeviation.Location = new Point(550, 237);
+        _tbVMinDeviation.Name = "_tbVMinDeviation";
+        _tbVMinDeviation.ReadOnly = true;
+        _tbVMinDeviation.Size = new Size(132, 23);
+        _tbVMinDeviation.TabIndex = 17;
+        _tbVMinDeviation.TabStop = false;
+        _tbVMinDeviation.Text = "0";
+        _tbVMinDeviation.TextAlign = HorizontalAlignment.Right;
         // 
-        // textBox3
+        // _tbVDeviation
         // 
-        textBox3.BackColor = SystemColors.Control;
-        textBox3.BorderStyle = BorderStyle.FixedSingle;
-        textBox3.Location = new Point(550, 274);
-        textBox3.Name = "textBox3";
-        textBox3.ReadOnly = true;
-        textBox3.Size = new Size(132, 23);
-        textBox3.TabIndex = 20;
-        textBox3.TabStop = false;
-        textBox3.Text = "0";
-        textBox3.TextAlign = HorizontalAlignment.Right;
+        _tbVDeviation.BackColor = SystemColors.Control;
+        _tbVDeviation.BorderStyle = BorderStyle.FixedSingle;
+        _tbVDeviation.Location = new Point(550, 274);
+        _tbVDeviation.Name = "_tbVDeviation";
+        _tbVDeviation.ReadOnly = true;
+        _tbVDeviation.Size = new Size(132, 23);
+        _tbVDeviation.TabIndex = 20;
+        _tbVDeviation.TabStop = false;
+        _tbVDeviation.Text = "0";
+        _tbVDeviation.TextAlign = HorizontalAlignment.Right;
         // 
-        // textBox4
+        // _tbVLineDeviation
         // 
-        textBox4.BackColor = SystemColors.Control;
-        textBox4.BorderStyle = BorderStyle.FixedSingle;
-        textBox4.Location = new Point(550, 310);
-        textBox4.Name = "textBox4";
-        textBox4.ReadOnly = true;
-        textBox4.Size = new Size(132, 23);
-        textBox4.TabIndex = 23;
-        textBox4.TabStop = false;
-        textBox4.Text = "0";
-        textBox4.TextAlign = HorizontalAlignment.Right;
+        _tbVLineDeviation.BackColor = SystemColors.Control;
+        _tbVLineDeviation.BorderStyle = BorderStyle.FixedSingle;
+        _tbVLineDeviation.Location = new Point(550, 310);
+        _tbVLineDeviation.Name = "_tbVLineDeviation";
+        _tbVLineDeviation.ReadOnly = true;
+        _tbVLineDeviation.Size = new Size(132, 23);
+        _tbVLineDeviation.TabIndex = 23;
+        _tbVLineDeviation.TabStop = false;
+        _tbVLineDeviation.Text = "0";
+        _tbVLineDeviation.TextAlign = HorizontalAlignment.Right;
         // 
-        // textBox6
+        // tbVTolerAllLength
         // 
-        textBox6.BorderStyle = BorderStyle.FixedSingle;
-        textBox6.Location = new Point(550, 459);
-        textBox6.Name = "textBox6";
-        textBox6.Size = new Size(132, 23);
-        textBox6.TabIndex = 35;
-        textBox6.Text = "0";
-        textBox6.TextAlign = HorizontalAlignment.Right;
+        tbVTolerAllLength.BorderStyle = BorderStyle.FixedSingle;
+        tbVTolerAllLength.Location = new Point(550, 459);
+        tbVTolerAllLength.Name = "tbVTolerAllLength";
+        tbVTolerAllLength.Size = new Size(132, 23);
+        tbVTolerAllLength.TabIndex = 35;
+        tbVTolerAllLength.Text = "0";
+        tbVTolerAllLength.TextAlign = HorizontalAlignment.Right;
+        tbVTolerAllLength.TextChanged += tbVTolerAllLength_Change;
         // 
         // panel1
         // 
@@ -676,100 +711,79 @@ partial class CollimatorMainForm
         // 
         panel3.BackColor = SystemColors.ActiveCaption;
         panel3.BorderStyle = BorderStyle.FixedSingle;
-        panel3.Controls.Add(label1);
+        panel3.Controls.Add(label2);
         panel3.Location = new Point(400, -1);
         panel3.Name = "panel3";
         panel3.Size = new Size(140, 384);
         panel3.TabIndex = 45;
         // 
-        // label1
-        // 
-        label1.AutoSize = true;
-        label1.Location = new Point(28, 7);
-        label1.Name = "label1";
-        label1.Size = new Size(96, 15);
-        label1.TabIndex = 45;
-        label1.Text = "Горизонтальная";
-        // 
-        // panel2
-        // 
-        panel2.BackColor = SystemColors.Info;
-        panel2.BorderStyle = BorderStyle.FixedSingle;
-        panel2.Controls.Add(label2);
-        panel2.Location = new Point(539, -1);
-        panel2.Name = "panel2";
-        panel2.Size = new Size(143, 384);
-        panel2.TabIndex = 45;
-        // 
         // label2
         // 
         label2.AutoSize = true;
-        label2.Location = new Point(32, 7);
+        label2.Location = new Point(30, 7);
         label2.Name = "label2";
         label2.Size = new Size(83, 15);
         label2.TabIndex = 46;
         label2.Text = "Вертикальная";
         // 
+        // panel2
+        // 
+        panel2.BackColor = SystemColors.Info;
+        panel2.BorderStyle = BorderStyle.FixedSingle;
+        panel2.Controls.Add(label1);
+        panel2.Location = new Point(539, -1);
+        panel2.Name = "panel2";
+        panel2.Size = new Size(143, 384);
+        panel2.TabIndex = 45;
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Location = new Point(24, 7);
+        label1.Name = "label1";
+        label1.Size = new Size(96, 15);
+        label1.TabIndex = 45;
+        label1.Text = "Горизонтальная";
+        // 
         // panel4
         // 
         panel4.BorderStyle = BorderStyle.FixedSingle;
-        panel4.Controls.Add(button1);
-        panel4.Controls.Add(labelCollimatorType);
-        panel4.Controls.Add(label3);
+        panel4.Controls.Add(btnCollimatorTypeChange);
+        panel4.Controls.Add(lblColimmatorType);
+        panel4.Controls.Add(_lblModelCollimator);
         panel4.Location = new Point(8, 12);
         panel4.Name = "panel4";
         panel4.Size = new Size(361, 31);
         panel4.TabIndex = 45;
         // 
-        // button1
+        // btnCollimatorTypeChange
         // 
-        button1.Font = new Font("Segoe UI", 6.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-        button1.Location = new Point(298, 4);
-        button1.Name = "button1";
-        button1.Size = new Size(58, 23);
-        button1.TabIndex = 2;
-        button1.Text = "Изменить";
-        button1.UseVisualStyleBackColor = true;
+        btnCollimatorTypeChange.Font = new Font("Segoe UI", 6.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+        btnCollimatorTypeChange.Location = new Point(298, 4);
+        btnCollimatorTypeChange.Name = "btnCollimatorTypeChange";
+        btnCollimatorTypeChange.Size = new Size(58, 23);
+        btnCollimatorTypeChange.TabIndex = 2;
+        btnCollimatorTypeChange.Text = "Изменить";
+        btnCollimatorTypeChange.UseVisualStyleBackColor = true;
+        btnCollimatorTypeChange.Click += btnCollimatorTypeChange_Click;
         // 
-        // labelCollimatorType
+        // lblColimmatorType
         // 
-        labelCollimatorType.AutoSize = true;
-        labelCollimatorType.Location = new Point(164, 8);
-        labelCollimatorType.Name = "labelCollimatorType";
-        labelCollimatorType.Size = new Size(126, 15);
-        labelCollimatorType.TabIndex = 1;
-        labelCollimatorType.Text = "Тут отображается тип";
+        lblColimmatorType.AutoSize = true;
+        lblColimmatorType.Location = new Point(164, 8);
+        lblColimmatorType.Name = "lblColimmatorType";
+        lblColimmatorType.Size = new Size(126, 15);
+        lblColimmatorType.TabIndex = 1;
+        lblColimmatorType.Text = "Тут отображается тип";
         // 
-        // label3
+        // _lblModelCollimator
         // 
-        label3.AutoSize = true;
-        label3.Location = new Point(9, 8);
-        label3.Name = "label3";
-        label3.Size = new Size(154, 15);
-        label3.TabIndex = 0;
-        label3.Text = "Модель автоколлиматора:";
-        // 
-        // textBox7
-        // 
-        textBox7.BorderStyle = BorderStyle.FixedSingle;
-        textBox7.Location = new Point(541, 3);
-        textBox7.Name = "textBox7";
-        textBox7.Size = new Size(132, 23);
-        textBox7.TabIndex = 38;
-        textBox7.Text = "0";
-        textBox7.TextAlign = HorizontalAlignment.Right;
-        // 
-        // textBox8
-        // 
-        textBox8.BorderStyle = BorderStyle.FixedSingle;
-        textBox8.Location = new Point(541, 3);
-        textBox8.Name = "textBox8";
-        textBox8.ReadOnly = true;
-        textBox8.Size = new Size(132, 23);
-        textBox8.TabIndex = 26;
-        textBox8.TabStop = false;
-        textBox8.Text = "0";
-        textBox8.TextAlign = HorizontalAlignment.Right;
+        _lblModelCollimator.AutoSize = true;
+        _lblModelCollimator.Location = new Point(9, 8);
+        _lblModelCollimator.Name = "_lblModelCollimator";
+        _lblModelCollimator.Size = new Size(154, 15);
+        _lblModelCollimator.TabIndex = 0;
+        _lblModelCollimator.Text = "Модель автоколлиматора:";
         // 
         // CollimatorMainForm
         // 
@@ -778,19 +792,19 @@ partial class CollimatorMainForm
         ClientSize = new Size(692, 564);
         Controls.Add(panel4);
         Controls.Add(panel1);
-        Controls.Add(textBox6);
-        Controls.Add(textBox4);
-        Controls.Add(textBox3);
-        Controls.Add(textBox2);
+        Controls.Add(tbVTolerAllLength);
+        Controls.Add(_tbVLineDeviation);
+        Controls.Add(_tbVDeviation);
+        Controls.Add(_tbVMinDeviation);
         Controls.Add(bedPanelLength);
         Controls.Add(localAreaPanel);
         Controls.Add(descriptionPanel);
-        Controls.Add(loadFileButton);
-        Controls.Add(saveButton);
-        Controls.Add(exitButton);
-        Controls.Add(savePdfButton);
-        Controls.Add(graphicButton);
-        Controls.Add(fillDataFormButton);
+        Controls.Add(btnLoad);
+        Controls.Add(btnSave);
+        Controls.Add(btnExit);
+        Controls.Add(btnPdfForm);
+        Controls.Add(btnGraphicForm);
+        Controls.Add(btnShowDataForm);
         Controls.Add(stepPanel);
         Controls.Add(tolerPerMeterPanel);
         Controls.Add(tolerLenghtPanel);
@@ -848,9 +862,9 @@ partial class CollimatorMainForm
     #endregion
 
     private DateTimePicker dateTimePicker;
-    private ComboBox fioComboBox;
-    private ComboBox nameComboBox;
-    private Label dateLabel;
+    private TextBox tbWorkerName;
+    private TextBox tbToolName;
+    private Label _lblDate;
     private Label nameLabel;
     private Label fioLabel;
     private Label maxDeviationLabel;
@@ -870,46 +884,46 @@ partial class CollimatorMainForm
     private Panel tolerLenghtPanel;
     private Panel tolerPerMeterPanel;
     private Panel stepPanel;
-    private Button graphicButton;
-    private Button savePdfButton;
-    private Button exitButton;
-    private TextBox maxDeviationTextBox;
-    private TextBox minDeviationTextBox;
-    private TextBox verticalDeviationTextBox;
-    private TextBox tolerLenghtTextBox;
-    private TextBox tolerPerMeterTextBox;
-    private TextBox stepTextBox;
-    private Button loadFileButton;
-    private Button saveButton;
-    private Button fillDataFormButton;
+    private Button btnGraphicForm;
+    private Button btnPdfForm;
+    private Button btnExit;
+    private TextBox _tbHMaxDeviation;
+    private TextBox _tbHMinDeviation;
+    private TextBox _tbHDeviation;
+    private TextBox tbHTolerAllLength;
+    private TextBox tbHTolerLocalAreaSize;
+    private TextBox tbHStepSize;
+    private Button btnLoad;
+    private Button btnSave;
+    private Button btnShowDataForm;
     private Panel descriptionPanel;
-    private ComboBox descriptionComboBox;
+    private TextBox tbDescription;
     private Label descriptionLabel;
     private Panel localAreaPanel;
     private Panel bedPanelLength;
     private Label localAreaLabel;
     private Label bedLengthLabel;
-    private TextBox localAreaTextBox;
-    private TextBox bedLengthTextBox;
-    internal TextBox lineDeviationTextBox;
-    private TextBox textBox1;
-    private TextBox textBox5;
-    private TextBox textBox2;
-    private TextBox textBox3;
-    internal TextBox textBox4;
-    private TextBox textBox6;
-    private TextBox textBox9;
+    private TextBox tbHLocalAreaSize;
+    private TextBox _tbHBedLength;
+    internal TextBox _tbHLineDeviation;
+    private TextBox _tbVMaxDeviation;
+    private TextBox tbVTolerLocalAreaSize;
+    private TextBox _tbVMinDeviation;
+    private TextBox _tbVDeviation;
+    internal TextBox _tbVLineDeviation;
+    private TextBox tbVTolerAllLength;
+    private TextBox tbVLocalAreaSize;
     private Panel panel1;
     private Panel panel3;
     private Panel panel2;
     private Label label1;
     private Label label2;
     private Panel panel4;
-    public Label labelCollimatorType;
-    private Label label3;
-    private Button button1;
+    public Label lblColimmatorType;
+    private Label _lblModelCollimator;
+    private Button btnCollimatorTypeChange;
     private Label label4;
-    private TextBox textBox8;
-    private TextBox textBox7;
+    private TextBox _tbVBedLength;
+    private TextBox tbVStepSize;
 }
 
