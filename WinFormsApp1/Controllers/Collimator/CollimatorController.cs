@@ -1,7 +1,6 @@
 ﻿using PryamolineynostWF.Enums;
 using PryamolineynostWF.Models.Collimator;
 using PryamolineynostWF.Views.Collimator;
-using PryamolineynostWF.Models;
 using PryamolineynostWF.Views;
 
 namespace PryamolineynostWF.Controllers.Collimator;

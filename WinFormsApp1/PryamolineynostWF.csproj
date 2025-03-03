@@ -65,7 +65,7 @@
       <Compile Update="Views\Collimator\CollimatorMainForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="Models\MeasurementTable.cs">
+      <Compile Update="Models\Collimator\MeasurementTable.cs">
         <SubType>Component</SubType>
       </Compile>
     </ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace PryamolineynostWF.Models
+﻿namespace PryamolineynostWF.Models.Collimator
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +20,7 @@
             _name = tableName;
             _columns.Add(new Column("id", "ID", typeof(int)));
             _dataTable.Columns.Add("ID", typeof(int));
+            _dataTable.Columns["ID"].ReadOnly = true;
         }
         
         public class Column

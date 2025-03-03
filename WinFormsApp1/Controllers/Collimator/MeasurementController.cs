@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PryamolineynostWF.Models;
+using PryamolineynostWF.Models.Collimator;
 
 namespace PryamolineynostWF.Controllers.Collimator
 {
