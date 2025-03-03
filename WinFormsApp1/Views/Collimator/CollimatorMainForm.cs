@@ -15,7 +15,6 @@ public partial class CollimatorMainForm : Form
     public EventHandler tbToolNameChanged;
     public EventHandler tbDescriptionChanged;
     public EventHandler tbWorkerNameChanged;
-
     public EventHandler tbHLocalAreaSizeChanged;
     public EventHandler tbHTolerLocalAreaSizeChanged;
     public EventHandler tbHTolerAllLengthChanged;
@@ -37,6 +36,7 @@ public partial class CollimatorMainForm : Form
         InitializeComponent();
         _controller = new CollimatorController(this, collimatorType, date, actNumber);
         _lblColimmatorType.Text = collimatorType.ToString();
+        
     }
 
     private void tbToolName_Change(object sender, EventArgs e)

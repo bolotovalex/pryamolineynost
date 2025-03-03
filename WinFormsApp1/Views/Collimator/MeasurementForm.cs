@@ -1,24 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
+using PryamolineynostWF.Models;
+using PryamolineynostWF.Services;
+using PryamolineynostWF.Enums;
 
 namespace PryamolineynostWF.Controllers.Collimator
 {
     public partial class MeasurementForm : Form
     {
-        private DataSet _dataSet;
+        private MeasurementTable _dataSet;
         private MeasurementController _controller;
-        public MeasurementForm(DataSet dataSet)
+        public EventHandler cbSelectedPlaneChanged;
+        public MeasurementForm(MeasurementTable dataSet, PryamolineynostWF.Enums.Plane? selectedPlane)
         {
             InitializeComponent();
             _dataSet = dataSet;
-            _controller = new MeasurementController(dataSet, this );
+            _controller = new MeasurementController(this, dataSet, selectedPlane);
+            this.dataGridView1.AutoGenerateColumns = true;
+            this.dataGridView1.DataSource = _dataSet.DataTable;
+
+            cbPlaneUse.DataSource = Enum.GetValues(typeof(Plane))
+                .Cast<Plane>()
+                .Select(e => new { Value = e, Name = e.GetDescription() })
+                .ToList();
+            cbPlaneUse.DisplayMember = "Name";
+            cbPlaneUse.ValueMember = "Value";
+            cbPlaneUse.SelectedValue = selectedPlane;
+            
+            cbPlaneUse.SelectedValueChanged += cbPlaneUse_Change;
         }
 
         private void panel1_AutoSizeChanged(object sender, EventArgs e)
@@ -30,5 +38,16 @@ namespace PryamolineynostWF.Controllers.Collimator
         {
             throw new System.NotImplementedException();
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void cbPlaneUse_Change(object sender, EventArgs e)
+        {
+            cbSelectedPlaneChanged?.Invoke(this, e);
+        }
+
     }
 }

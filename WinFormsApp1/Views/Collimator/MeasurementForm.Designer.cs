@@ -35,7 +35,7 @@
             справкаToolStripMenuItem = new ToolStripMenuItem();
             panel1 = new Panel();
             label1 = new Label();
-            comboBox1 = new ComboBox();
+            cbPlaneUse = new ComboBox();
             checkBox2 = new CheckBox();
             checkBox1 = new CheckBox();
             button3 = new Button();
@@ -88,7 +88,7 @@
             panel1.AutoSize = true;
             panel1.BackColor = SystemColors.Control;
             panel1.Controls.Add(label1);
-            panel1.Controls.Add(comboBox1);
+            panel1.Controls.Add(cbPlaneUse);
             panel1.Controls.Add(checkBox2);
             panel1.Controls.Add(checkBox1);
             panel1.Controls.Add(button3);
@@ -110,14 +110,14 @@
             label1.Text = "Плоскость:";
             label1.Click += label1_Click;
             // 
-            // comboBox1
+            // cbPlaneUse
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "------------------", "Горизонтальная", "Вертикальная", "Гор. и верт." });
-            comboBox1.Location = new Point(206, 7);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(158, 23);
-            comboBox1.TabIndex = 5;
+            cbPlaneUse.FormattingEnabled = true;
+            cbPlaneUse.Location = new Point(206, 7);
+            cbPlaneUse.Name = "cbPlaneUse";
+            cbPlaneUse.Size = new Size(158, 23);
+            cbPlaneUse.TabIndex = 5;
+            
             // 
             // checkBox2
             // 
@@ -180,6 +180,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(800, 393);
             dataGridView1.TabIndex = 2;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // collimatorControllerBindingSource
             // 
@@ -234,7 +235,7 @@
         }
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        public System.Windows.Forms.ComboBox cbPlaneUse;
 
         private System.Windows.Forms.Panel panel2;
 
@@ -250,9 +251,6 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private Button button3;
-        private RadioButton radioButton3;
-        private RadioButton radioButton2;
-        private RadioButton radioButton1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private BindingSource collimatorCalibrationDateControllerBindingSource;
         private BindingSource deviceChooseFormBindingSource;

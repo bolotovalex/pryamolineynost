@@ -211,7 +211,6 @@ partial class CollimatorMainForm
         fioPanel.Name = "fioPanel";
         fioPanel.Size = new Size(679, 31);
         fioPanel.TabIndex = 8;
-        tbWorkerName.TextChanged += tbWorkerName_Change;
         // 
         // tbWorkerName
         // 
@@ -220,7 +219,7 @@ partial class CollimatorMainForm
         tbWorkerName.RightToLeft = RightToLeft.Yes;
         tbWorkerName.Size = new Size(531, 23);
         tbWorkerName.TabIndex = 10;
-        tbWorkerName.TextChanged += tbWorkerNameChanged;
+        tbWorkerName.TextChanged += tbWorkerName_Change;
         // 
         // fioLabel
         // 
@@ -584,7 +583,7 @@ partial class CollimatorMainForm
         btnShowDataForm.TabIndex = 38;
         btnShowDataForm.Text = "Заполнить измерения";
         btnShowDataForm.UseVisualStyleBackColor = true;
-        btnShowDataForm.Click += btnSaveChanged_Click;
+        btnShowDataForm.Click += btnShowDataForm_Click;
         // 
         // btnGraphicForm
         // 
