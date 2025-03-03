@@ -36,10 +36,12 @@
             }
         }
         
-        public void AddColumn(string name, string displayName, Type dataType)
+        public void AddColumn(string name, string displayName, Type dataType, bool readOnly = false)
         {
             _columns.Add(new Column(name, displayName, dataType));
             _dataTable.Columns.Add(displayName, dataType); // Используем DisplayName в DataTable
+            _dataTable.Columns[displayName].ReadOnly = readOnly;
+
         }
 
         public class Row
