@@ -21,6 +21,34 @@ namespace PryamolineynostWF.Controllers.Collimator
             _view = view;
             _selectedPlane = selectedPlane;
             _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
+            _view.dataGridView1RowAdded += DataGridView1_RowAdded;
+            _view.dataGridView1RowRemoved += DataGridView1_RowRemoved;
+            _view.dataGridView1CellValueChanged += DataGridView1_CellValueChanged;
+            _view.dataGridViewCellFormattingChanged += DataGridView1_CellValueChanged;
+        }
+
+        private void DataGridView1_RowAdded(object? sender, DataGridViewRowsAddedEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= _dataSet.DataTable.Rows.Count)
+            {
+                _dataSet.AddRow();
+            }
+        }
+
+        private void DataGridView1_RowRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            //var dataGridView = sender as DataGridView;
+            //if (dataGridView != null)
+            //{
+            //    for (int i = 0; i < e.RowCount; i++)
+            //    {
+            //        int rowIndex = e.RowIndex + i;
+            //        if (rowIndex < _dataSet.DataTable.Rows.Count)
+            //        {
+            //            _dataSet.DataTable.Rows.RemoveAt(rowIndex);
+            //        }
+            //    }
+            //}
         }
 
         public Enums.Plane? SelectedPlane
@@ -43,6 +71,27 @@ namespace PryamolineynostWF.Controllers.Collimator
             //{
             //    _selectedPlane = null;
             //}
+        }
+
+        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var newValue = _view.dataGridView1[e.ColumnIndex, e.RowIndex].Value;
+            _dataSet.UpdateRow(e.RowIndex, e.ColumnIndex, newValue);
+
+        }
+
+        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.Value != DBNull.Value && (Int32)e.Value == MeasurementTable.IntPlaceholder)
+            {
+                e.CellStyle.BackColor = Color.Red;
+                e.Value = "";
+                e.FormattingApplied = true;
+            }
+            else
+            {
+                e.CellStyle.BackColor = Color.White;
+            }
         }
     }
 }

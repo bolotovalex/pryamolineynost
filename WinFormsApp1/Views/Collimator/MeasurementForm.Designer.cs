@@ -117,7 +117,6 @@
             cbPlaneUse.Name = "cbPlaneUse";
             cbPlaneUse.Size = new Size(158, 23);
             cbPlaneUse.TabIndex = 5;
-            
             // 
             // checkBox2
             // 
@@ -158,6 +157,7 @@
             button2.TabIndex = 1;
             button2.Text = "-";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -167,9 +167,11 @@
             button1.TabIndex = 0;
             button1.Text = "+";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -178,9 +180,15 @@
             dataGridView1.Location = new Point(0, 57);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             dataGridView1.Size = new Size(800, 393);
             dataGridView1.TabIndex = 2;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellContentDoubleClick += dataGridView1_CellContentDoubleClick;
+            dataGridView1.CellEnter += dataGridView1_CellEnter;
+            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+            dataGridView1.CellMouseClick += dataGridView1_CellMouseClick;
+            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
             // 
             // collimatorControllerBindingSource
             // 
@@ -251,7 +259,7 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private Button button3;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        public System.Windows.Forms.DataGridView dataGridView1;
         private BindingSource collimatorCalibrationDateControllerBindingSource;
         private BindingSource deviceChooseFormBindingSource;
         private BindingSource collimatorControllerBindingSource;

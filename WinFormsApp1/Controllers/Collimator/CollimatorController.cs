@@ -28,6 +28,7 @@ public class CollimatorController
         _view.btnShowDataFormClicked += BtnOpenMeasurementForm_click;
         CreateTables();
         _selectedPlane = Plane.Horizontal;
+
     }
 
     private void StubFormShow(object sender, EventArgs e)
@@ -47,7 +48,7 @@ public class CollimatorController
 
     private void CreateTables()
     {
-        _verticalPlateTable = MeasurementTableTepmplate.GetTable("Вертикальная поверхность");
+        _verticalPlateTable = new MeasurementTable("Вертикальная поверхность");
         _table = _verticalPlateTable;
 
     }
