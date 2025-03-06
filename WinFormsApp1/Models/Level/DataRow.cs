@@ -1,4 +1,5 @@
-﻿using System.Dynamic;
+﻿using PryamolineynostWF.Enums;
+using System.Dynamic;
 
 namespace LogicLibrary;
 

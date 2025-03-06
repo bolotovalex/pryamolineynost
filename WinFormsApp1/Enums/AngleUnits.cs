@@ -1,4 +1,4 @@
-﻿namespace LogicLibrary;
+﻿namespace PryamolineynostWF.Enums;
 
 public enum AngleUnits
 {
