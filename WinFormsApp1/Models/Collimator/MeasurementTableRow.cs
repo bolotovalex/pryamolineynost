@@ -8,10 +8,6 @@ namespace PryamolineynostWF.Models.Collimator
 {
     public class MeasurementTableRow
     {
-        private int _id;
-        private int _interval;
-        private int _fDegree;
-        private 
-
+      
     }
 }
