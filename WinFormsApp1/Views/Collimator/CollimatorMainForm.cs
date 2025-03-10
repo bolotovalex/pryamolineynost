@@ -10,8 +10,16 @@ public partial class CollimatorMainForm : Form
     private CollimatorType _collimatorType;
     private DateOnly _inspectionDate;
     private string _actNumber;
+    public EventHandler tpValueChanged;
+
     public EventHandler btnCollimatorTypeChangeClicked;
-    public EventHandler dateTimePickerValueChanged;
+    public EventHandler btnShowDataFormClicked;
+    public EventHandler btnSaveChangedClicked;
+    public EventHandler btnLoadChangedClicked;
+    public EventHandler btnGraphicFormClicked;
+    public EventHandler btnPdfFormClicked;
+    public EventHandler btnExitClicked;
+
     public EventHandler tbToolNameChanged;
     public EventHandler tbDescriptionChanged;
     public EventHandler tbWorkerNameChanged;
@@ -23,12 +31,8 @@ public partial class CollimatorMainForm : Form
     public EventHandler tbVTolerLocalAreaSizeChanged;
     public EventHandler tbVTolerAllLengthChanged;
     public EventHandler tbVStepSizeChanged;
-    public EventHandler btnShowDataFormClicked;
-    public EventHandler btnSaveChangedClicked;
-    public EventHandler btnLoadChangedClicked;
-    public EventHandler btnGraphicFormClicked;
-    public EventHandler btnPdfFormClicked;
-    public EventHandler btnExitClicked;
+
+
 
 
     public CollimatorMainForm(CollimatorType collimatorType, DateTime date, string actNumber)
@@ -56,7 +60,7 @@ public partial class CollimatorMainForm : Form
 
     private void dateTimePicker_ValueChange(object sender, EventArgs e)
     {
-        dateTimePickerValueChanged?.Invoke(this, e);
+        tpValueChanged?.Invoke(this, e);
     }
     
     private void btnCollimatorTypeChange_Click(object sender, EventArgs e)

@@ -44,36 +44,39 @@ partial class CollimatorMainForm
         tbWorkerName = new TextBox();
         lblWorkerName = new Label();
         pnlMaxDeviation = new Panel();
-        tbVerticalMaxDeviation = new TextBox();
-        tbHorizontalMaxDeviation = new TextBox();
+        lblVerticalMaxDeviation = new Label();
+        lblHorizontalMaxDeviation = new Label();
         lblMaxDeviation = new Label();
         pnlMinDeviation = new Panel();
-        tbHorizontalMinDeviation = new TextBox();
+        lblVericalMinDeviation = new Label();
+        lblHorizontalMinDeviation = new Label();
         lblMinDeviation = new Label();
-        pnlVerticalDeviation = new Panel();
-        tbHDeviation = new TextBox();
+        pnlDeviation = new Panel();
         lblVerticalDeviation = new Label();
+        lblHorizontalDeviation = new Label();
+        lblDeviation = new Label();
         pnlLineDeviation = new Panel();
-        tbHLineDeviation = new TextBox();
+        lblVerticalLineDeviation = new Label();
+        lblHorizontalLineDeviation = new Label();
         lnlLineDeviation = new Label();
         pnlBedLength = new Panel();
-        tbVBedLength = new TextBox();
-        tbHBedLength = new TextBox();
+        lblVerticalBedLength = new Label();
+        lblHorizontalBedLength = new Label();
         lblBedLength = new Label();
-        pnlLocalAreaPanel = new Panel();
-        tbHLocalAreaSize = new TextBox();
-        tbVLocalAreaSize = new TextBox();
+        pnlLocalArea = new Panel();
+        tbHorizontalLocalAreaSize = new TextBox();
+        tbVerticalLocalAreaSize = new TextBox();
         lblLocalArea = new Label();
         pnlTolerPerMeter = new Panel();
-        tbHTolerLocalAreaSize = new TextBox();
+        tbHorizontalTolerLocalAreaSize = new TextBox();
         lblTolerPerMeter = new Label();
-        tbVTolerLocalAreaSize = new TextBox();
+        tbVerticalTolerLocalAreaSize = new TextBox();
         pnlTolerLenght = new Panel();
-        tbHTolerAllLength = new TextBox();
+        tbHorizontalTolerAllLength = new TextBox();
         lblTolerLength = new Label();
         pnlStep = new Panel();
-        tbVStepSize = new TextBox();
-        tbHStepSize = new TextBox();
+        tbVerticalStepSize = new TextBox();
+        tbHorizontalStepSize = new TextBox();
         lblStep = new Label();
         btnShowDataForm = new Button();
         btnGraphicForm = new Button();
@@ -81,10 +84,7 @@ partial class CollimatorMainForm
         btnLoad = new Button();
         btnPdfForm = new Button();
         btnExit = new Button();
-        tbVerticalMinDeviation = new TextBox();
-        tbVDeviation = new TextBox();
-        tbVLineDeviation = new TextBox();
-        tbVTolerAllLength = new TextBox();
+        tbVerticalTolerAllLength = new TextBox();
         pnlPlate = new Panel();
         lblPlateType = new Label();
         pnlVerticalPlate = new Panel();
@@ -101,10 +101,10 @@ partial class CollimatorMainForm
         pnlWorkerName.SuspendLayout();
         pnlMaxDeviation.SuspendLayout();
         pnlMinDeviation.SuspendLayout();
-        pnlVerticalDeviation.SuspendLayout();
+        pnlDeviation.SuspendLayout();
         pnlLineDeviation.SuspendLayout();
         pnlBedLength.SuspendLayout();
-        pnlLocalAreaPanel.SuspendLayout();
+        pnlLocalArea.SuspendLayout();
         pnlTolerPerMeter.SuspendLayout();
         pnlTolerLenght.SuspendLayout();
         pnlStep.SuspendLayout();
@@ -232,39 +232,33 @@ partial class CollimatorMainForm
         // pnlMaxDeviation
         // 
         pnlMaxDeviation.BorderStyle = BorderStyle.FixedSingle;
-        pnlMaxDeviation.Controls.Add(tbVerticalMaxDeviation);
-        pnlMaxDeviation.Controls.Add(tbHorizontalMaxDeviation);
+        pnlMaxDeviation.Controls.Add(lblVerticalMaxDeviation);
+        pnlMaxDeviation.Controls.Add(lblHorizontalMaxDeviation);
         pnlMaxDeviation.Controls.Add(lblMaxDeviation);
         pnlMaxDeviation.Location = new Point(8, 196);
         pnlMaxDeviation.Name = "pnlMaxDeviation";
         pnlMaxDeviation.Size = new Size(679, 31);
         pnlMaxDeviation.TabIndex = 11;
         // 
-        // tbVerticalMaxDeviation
+        // lblVerticalMaxDeviation
         // 
-        tbVerticalMaxDeviation.BackColor = SystemColors.Control;
-        tbVerticalMaxDeviation.BorderStyle = BorderStyle.FixedSingle;
-        tbVerticalMaxDeviation.Location = new Point(541, 3);
-        tbVerticalMaxDeviation.Name = "tbVerticalMaxDeviation";
-        tbVerticalMaxDeviation.ReadOnly = true;
-        tbVerticalMaxDeviation.Size = new Size(132, 23);
-        tbVerticalMaxDeviation.TabIndex = 14;
-        tbVerticalMaxDeviation.TabStop = false;
-        tbVerticalMaxDeviation.Text = "0";
-        tbVerticalMaxDeviation.TextAlign = HorizontalAlignment.Right;
+        lblVerticalMaxDeviation.BorderStyle = BorderStyle.FixedSingle;
+        lblVerticalMaxDeviation.Location = new Point(539, 3);
+        lblVerticalMaxDeviation.Name = "lblVerticalMaxDeviation";
+        lblVerticalMaxDeviation.Size = new Size(134, 23);
+        lblVerticalMaxDeviation.TabIndex = 28;
+        lblVerticalMaxDeviation.Text = "lblVerticalMaxDeviation";
+        lblVerticalMaxDeviation.TextAlign = ContentAlignment.MiddleRight;
         // 
-        // tbHorizontalMaxDeviation
+        // lblHorizontalMaxDeviation
         // 
-        tbHorizontalMaxDeviation.BackColor = SystemColors.Control;
-        tbHorizontalMaxDeviation.BorderStyle = BorderStyle.FixedSingle;
-        tbHorizontalMaxDeviation.Location = new Point(404, 3);
-        tbHorizontalMaxDeviation.Name = "tbHorizontalMaxDeviation";
-        tbHorizontalMaxDeviation.ReadOnly = true;
-        tbHorizontalMaxDeviation.Size = new Size(132, 23);
-        tbHorizontalMaxDeviation.TabIndex = 13;
-        tbHorizontalMaxDeviation.TabStop = false;
-        tbHorizontalMaxDeviation.Text = "0";
-        tbHorizontalMaxDeviation.TextAlign = HorizontalAlignment.Right;
+        lblHorizontalMaxDeviation.BorderStyle = BorderStyle.FixedSingle;
+        lblHorizontalMaxDeviation.Location = new Point(403, 3);
+        lblHorizontalMaxDeviation.Name = "lblHorizontalMaxDeviation";
+        lblHorizontalMaxDeviation.Size = new Size(132, 23);
+        lblHorizontalMaxDeviation.TabIndex = 15;
+        lblHorizontalMaxDeviation.Text = "lblHorizontalMaxDeviation";
+        lblHorizontalMaxDeviation.TextAlign = ContentAlignment.MiddleRight;
         // 
         // lblMaxDeviation
         // 
@@ -278,25 +272,33 @@ partial class CollimatorMainForm
         // pnlMinDeviation
         // 
         pnlMinDeviation.BorderStyle = BorderStyle.FixedSingle;
-        pnlMinDeviation.Controls.Add(tbHorizontalMinDeviation);
+        pnlMinDeviation.Controls.Add(lblVericalMinDeviation);
+        pnlMinDeviation.Controls.Add(lblHorizontalMinDeviation);
         pnlMinDeviation.Controls.Add(lblMinDeviation);
         pnlMinDeviation.Location = new Point(8, 233);
         pnlMinDeviation.Name = "pnlMinDeviation";
         pnlMinDeviation.Size = new Size(679, 31);
         pnlMinDeviation.TabIndex = 14;
         // 
-        // tbHorizontalMinDeviation
+        // lblVericalMinDeviation
         // 
-        tbHorizontalMinDeviation.BackColor = SystemColors.Control;
-        tbHorizontalMinDeviation.BorderStyle = BorderStyle.FixedSingle;
-        tbHorizontalMinDeviation.Location = new Point(404, 3);
-        tbHorizontalMinDeviation.Name = "tbHorizontalMinDeviation";
-        tbHorizontalMinDeviation.ReadOnly = true;
-        tbHorizontalMinDeviation.Size = new Size(132, 23);
-        tbHorizontalMinDeviation.TabIndex = 16;
-        tbHorizontalMinDeviation.TabStop = false;
-        tbHorizontalMinDeviation.Text = "0";
-        tbHorizontalMinDeviation.TextAlign = HorizontalAlignment.Right;
+        lblVericalMinDeviation.BorderStyle = BorderStyle.FixedSingle;
+        lblVericalMinDeviation.Location = new Point(539, 3);
+        lblVericalMinDeviation.Name = "lblVericalMinDeviation";
+        lblVericalMinDeviation.Size = new Size(134, 23);
+        lblVericalMinDeviation.TabIndex = 29;
+        lblVericalMinDeviation.Text = "lblVericalMinDeviation";
+        lblVericalMinDeviation.TextAlign = ContentAlignment.MiddleRight;
+        // 
+        // lblHorizontalMinDeviation
+        // 
+        lblHorizontalMinDeviation.BorderStyle = BorderStyle.FixedSingle;
+        lblHorizontalMinDeviation.Location = new Point(403, 3);
+        lblHorizontalMinDeviation.Name = "lblHorizontalMinDeviation";
+        lblHorizontalMinDeviation.Size = new Size(132, 23);
+        lblHorizontalMinDeviation.TabIndex = 16;
+        lblHorizontalMinDeviation.Text = "lblHorizontalMinDeviation";
+        lblHorizontalMinDeviation.TextAlign = ContentAlignment.MiddleRight;
         // 
         // lblMinDeviation
         // 
@@ -307,60 +309,76 @@ partial class CollimatorMainForm
         lblMinDeviation.TabIndex = 15;
         lblMinDeviation.Text = "Наименьшее отклонение, мкм";
         // 
-        // pnlVerticalDeviation
+        // pnlDeviation
         // 
-        pnlVerticalDeviation.BorderStyle = BorderStyle.FixedSingle;
-        pnlVerticalDeviation.Controls.Add(tbHDeviation);
-        pnlVerticalDeviation.Controls.Add(lblVerticalDeviation);
-        pnlVerticalDeviation.Location = new Point(8, 270);
-        pnlVerticalDeviation.Name = "pnlVerticalDeviation";
-        pnlVerticalDeviation.Size = new Size(679, 31);
-        pnlVerticalDeviation.TabIndex = 17;
-        // 
-        // tbHDeviation
-        // 
-        tbHDeviation.BackColor = SystemColors.Control;
-        tbHDeviation.BorderStyle = BorderStyle.FixedSingle;
-        tbHDeviation.Location = new Point(403, 3);
-        tbHDeviation.Name = "tbHDeviation";
-        tbHDeviation.ReadOnly = true;
-        tbHDeviation.Size = new Size(132, 23);
-        tbHDeviation.TabIndex = 19;
-        tbHDeviation.TabStop = false;
-        tbHDeviation.Text = "0";
-        tbHDeviation.TextAlign = HorizontalAlignment.Right;
+        pnlDeviation.BorderStyle = BorderStyle.FixedSingle;
+        pnlDeviation.Controls.Add(lblVerticalDeviation);
+        pnlDeviation.Controls.Add(lblHorizontalDeviation);
+        pnlDeviation.Controls.Add(lblDeviation);
+        pnlDeviation.Location = new Point(8, 270);
+        pnlDeviation.Name = "pnlDeviation";
+        pnlDeviation.Size = new Size(679, 31);
+        pnlDeviation.TabIndex = 17;
         // 
         // lblVerticalDeviation
         // 
-        lblVerticalDeviation.AutoSize = true;
-        lblVerticalDeviation.Location = new Point(10, 7);
+        lblVerticalDeviation.BorderStyle = BorderStyle.FixedSingle;
+        lblVerticalDeviation.Location = new Point(539, 3);
         lblVerticalDeviation.Name = "lblVerticalDeviation";
-        lblVerticalDeviation.Size = new Size(224, 15);
-        lblVerticalDeviation.TabIndex = 18;
-        lblVerticalDeviation.Text = "Отклонение от прямолинейности, мкм";
+        lblVerticalDeviation.Size = new Size(134, 23);
+        lblVerticalDeviation.TabIndex = 29;
+        lblVerticalDeviation.Text = "lblVerticalDeviation";
+        lblVerticalDeviation.TextAlign = ContentAlignment.MiddleRight;
+        // 
+        // lblHorizontalDeviation
+        // 
+        lblHorizontalDeviation.BorderStyle = BorderStyle.FixedSingle;
+        lblHorizontalDeviation.Location = new Point(403, 3);
+        lblHorizontalDeviation.Name = "lblHorizontalDeviation";
+        lblHorizontalDeviation.Size = new Size(132, 23);
+        lblHorizontalDeviation.TabIndex = 19;
+        lblHorizontalDeviation.Text = "lblHorizontalDeviation";
+        lblHorizontalDeviation.TextAlign = ContentAlignment.MiddleRight;
+        // 
+        // lblDeviation
+        // 
+        lblDeviation.AutoSize = true;
+        lblDeviation.Location = new Point(10, 7);
+        lblDeviation.Name = "lblDeviation";
+        lblDeviation.Size = new Size(224, 15);
+        lblDeviation.TabIndex = 18;
+        lblDeviation.Text = "Отклонение от прямолинейности, мкм";
         // 
         // pnlLineDeviation
         // 
         pnlLineDeviation.BorderStyle = BorderStyle.FixedSingle;
-        pnlLineDeviation.Controls.Add(tbHLineDeviation);
+        pnlLineDeviation.Controls.Add(lblVerticalLineDeviation);
+        pnlLineDeviation.Controls.Add(lblHorizontalLineDeviation);
         pnlLineDeviation.Controls.Add(lnlLineDeviation);
         pnlLineDeviation.Location = new Point(8, 307);
         pnlLineDeviation.Name = "pnlLineDeviation";
         pnlLineDeviation.Size = new Size(679, 31);
         pnlLineDeviation.TabIndex = 20;
         // 
-        // tbHLineDeviation
+        // lblVerticalLineDeviation
         // 
-        tbHLineDeviation.BackColor = SystemColors.Control;
-        tbHLineDeviation.BorderStyle = BorderStyle.FixedSingle;
-        tbHLineDeviation.Location = new Point(403, 3);
-        tbHLineDeviation.Name = "tbHLineDeviation";
-        tbHLineDeviation.ReadOnly = true;
-        tbHLineDeviation.Size = new Size(132, 23);
-        tbHLineDeviation.TabIndex = 22;
-        tbHLineDeviation.TabStop = false;
-        tbHLineDeviation.Text = "0";
-        tbHLineDeviation.TextAlign = HorizontalAlignment.Right;
+        lblVerticalLineDeviation.BorderStyle = BorderStyle.FixedSingle;
+        lblVerticalLineDeviation.Location = new Point(539, 3);
+        lblVerticalLineDeviation.Name = "lblVerticalLineDeviation";
+        lblVerticalLineDeviation.Size = new Size(134, 23);
+        lblVerticalLineDeviation.TabIndex = 29;
+        lblVerticalLineDeviation.Text = "lblVerticalLineDeviation";
+        lblVerticalLineDeviation.TextAlign = ContentAlignment.MiddleRight;
+        // 
+        // lblHorizontalLineDeviation
+        // 
+        lblHorizontalLineDeviation.BorderStyle = BorderStyle.FixedSingle;
+        lblHorizontalLineDeviation.Location = new Point(403, 3);
+        lblHorizontalLineDeviation.Name = "lblHorizontalLineDeviation";
+        lblHorizontalLineDeviation.Size = new Size(132, 23);
+        lblHorizontalLineDeviation.TabIndex = 22;
+        lblHorizontalLineDeviation.Text = "lblHorizontalLineDeviation";
+        lblHorizontalLineDeviation.TextAlign = ContentAlignment.MiddleRight;
         // 
         // lnlLineDeviation
         // 
@@ -374,37 +392,33 @@ partial class CollimatorMainForm
         // pnlBedLength
         // 
         pnlBedLength.BorderStyle = BorderStyle.FixedSingle;
-        pnlBedLength.Controls.Add(tbVBedLength);
-        pnlBedLength.Controls.Add(tbHBedLength);
+        pnlBedLength.Controls.Add(lblVerticalBedLength);
+        pnlBedLength.Controls.Add(lblHorizontalBedLength);
         pnlBedLength.Controls.Add(lblBedLength);
         pnlBedLength.Location = new Point(8, 344);
         pnlBedLength.Name = "pnlBedLength";
         pnlBedLength.Size = new Size(679, 31);
         pnlBedLength.TabIndex = 23;
         // 
-        // tbVBedLength
+        // lblVerticalBedLength
         // 
-        tbVBedLength.BorderStyle = BorderStyle.FixedSingle;
-        tbVBedLength.Location = new Point(541, 3);
-        tbVBedLength.Name = "tbVBedLength";
-        tbVBedLength.ReadOnly = true;
-        tbVBedLength.Size = new Size(132, 23);
-        tbVBedLength.TabIndex = 26;
-        tbVBedLength.TabStop = false;
-        tbVBedLength.Text = "0";
-        tbVBedLength.TextAlign = HorizontalAlignment.Right;
+        lblVerticalBedLength.BorderStyle = BorderStyle.FixedSingle;
+        lblVerticalBedLength.Location = new Point(539, 3);
+        lblVerticalBedLength.Name = "lblVerticalBedLength";
+        lblVerticalBedLength.Size = new Size(134, 23);
+        lblVerticalBedLength.TabIndex = 29;
+        lblVerticalBedLength.Text = "lblVerticalBedLength";
+        lblVerticalBedLength.TextAlign = ContentAlignment.MiddleRight;
         // 
-        // tbHBedLength
+        // lblHorizontalBedLength
         // 
-        tbHBedLength.BorderStyle = BorderStyle.FixedSingle;
-        tbHBedLength.Location = new Point(403, 3);
-        tbHBedLength.Name = "tbHBedLength";
-        tbHBedLength.ReadOnly = true;
-        tbHBedLength.Size = new Size(132, 23);
-        tbHBedLength.TabIndex = 25;
-        tbHBedLength.TabStop = false;
-        tbHBedLength.Text = "0";
-        tbHBedLength.TextAlign = HorizontalAlignment.Right;
+        lblHorizontalBedLength.BorderStyle = BorderStyle.FixedSingle;
+        lblHorizontalBedLength.Location = new Point(403, 3);
+        lblHorizontalBedLength.Name = "lblHorizontalBedLength";
+        lblHorizontalBedLength.Size = new Size(132, 23);
+        lblHorizontalBedLength.TabIndex = 27;
+        lblHorizontalBedLength.Text = "lblHorizontalBedLength";
+        lblHorizontalBedLength.TextAlign = ContentAlignment.MiddleRight;
         // 
         // lblBedLength
         // 
@@ -415,40 +429,40 @@ partial class CollimatorMainForm
         lblBedLength.TabIndex = 24;
         lblBedLength.Text = "Длина измерения, мм";
         // 
-        // pnlLocalAreaPanel
+        // pnlLocalArea
         // 
-        pnlLocalAreaPanel.BorderStyle = BorderStyle.FixedSingle;
-        pnlLocalAreaPanel.Controls.Add(tbHLocalAreaSize);
-        pnlLocalAreaPanel.Controls.Add(tbVLocalAreaSize);
-        pnlLocalAreaPanel.Controls.Add(lblLocalArea);
-        pnlLocalAreaPanel.Location = new Point(8, 381);
-        pnlLocalAreaPanel.Name = "pnlLocalAreaPanel";
-        pnlLocalAreaPanel.Size = new Size(679, 31);
-        pnlLocalAreaPanel.TabIndex = 26;
+        pnlLocalArea.BorderStyle = BorderStyle.FixedSingle;
+        pnlLocalArea.Controls.Add(tbHorizontalLocalAreaSize);
+        pnlLocalArea.Controls.Add(tbVerticalLocalAreaSize);
+        pnlLocalArea.Controls.Add(lblLocalArea);
+        pnlLocalArea.Location = new Point(8, 381);
+        pnlLocalArea.Name = "pnlLocalArea";
+        pnlLocalArea.Size = new Size(679, 31);
+        pnlLocalArea.TabIndex = 26;
         // 
-        // tbHLocalAreaSize
+        // tbHorizontalLocalAreaSize
         // 
-        tbHLocalAreaSize.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-        tbHLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
-        tbHLocalAreaSize.Location = new Point(403, 3);
-        tbHLocalAreaSize.Name = "tbHLocalAreaSize";
-        tbHLocalAreaSize.Size = new Size(132, 23);
-        tbHLocalAreaSize.TabIndex = 28;
-        tbHLocalAreaSize.Text = "0";
-        tbHLocalAreaSize.TextAlign = HorizontalAlignment.Right;
-        tbHLocalAreaSize.TextChanged += tbHLocalAreaSize_Change;
+        tbHorizontalLocalAreaSize.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+        tbHorizontalLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
+        tbHorizontalLocalAreaSize.Location = new Point(403, 3);
+        tbHorizontalLocalAreaSize.Name = "tbHorizontalLocalAreaSize";
+        tbHorizontalLocalAreaSize.Size = new Size(132, 23);
+        tbHorizontalLocalAreaSize.TabIndex = 28;
+        tbHorizontalLocalAreaSize.Text = "0";
+        tbHorizontalLocalAreaSize.TextAlign = HorizontalAlignment.Right;
+        tbHorizontalLocalAreaSize.TextChanged += tbHLocalAreaSize_Change;
         // 
-        // tbVLocalAreaSize
+        // tbVerticalLocalAreaSize
         // 
-        tbVLocalAreaSize.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-        tbVLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
-        tbVLocalAreaSize.Location = new Point(540, 3);
-        tbVLocalAreaSize.Name = "tbVLocalAreaSize";
-        tbVLocalAreaSize.Size = new Size(132, 23);
-        tbVLocalAreaSize.TabIndex = 29;
-        tbVLocalAreaSize.Text = "0";
-        tbVLocalAreaSize.TextAlign = HorizontalAlignment.Right;
-        tbVLocalAreaSize.TextChanged += tbVLocalAreaSize_Change;
+        tbVerticalLocalAreaSize.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+        tbVerticalLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
+        tbVerticalLocalAreaSize.Location = new Point(540, 3);
+        tbVerticalLocalAreaSize.Name = "tbVerticalLocalAreaSize";
+        tbVerticalLocalAreaSize.Size = new Size(132, 23);
+        tbVerticalLocalAreaSize.TabIndex = 29;
+        tbVerticalLocalAreaSize.Text = "0";
+        tbVerticalLocalAreaSize.TextAlign = HorizontalAlignment.Right;
+        tbVerticalLocalAreaSize.TextChanged += tbVLocalAreaSize_Change;
         // 
         // lblLocalArea
         // 
@@ -462,24 +476,24 @@ partial class CollimatorMainForm
         // pnlTolerPerMeter
         // 
         pnlTolerPerMeter.BorderStyle = BorderStyle.FixedSingle;
-        pnlTolerPerMeter.Controls.Add(tbHTolerLocalAreaSize);
+        pnlTolerPerMeter.Controls.Add(tbHorizontalTolerLocalAreaSize);
         pnlTolerPerMeter.Controls.Add(lblTolerPerMeter);
-        pnlTolerPerMeter.Controls.Add(tbVTolerLocalAreaSize);
+        pnlTolerPerMeter.Controls.Add(tbVerticalTolerLocalAreaSize);
         pnlTolerPerMeter.Location = new Point(8, 418);
         pnlTolerPerMeter.Name = "pnlTolerPerMeter";
         pnlTolerPerMeter.Size = new Size(679, 31);
         pnlTolerPerMeter.TabIndex = 29;
         // 
-        // tbHTolerLocalAreaSize
+        // tbHorizontalTolerLocalAreaSize
         // 
-        tbHTolerLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
-        tbHTolerLocalAreaSize.Location = new Point(403, 3);
-        tbHTolerLocalAreaSize.Name = "tbHTolerLocalAreaSize";
-        tbHTolerLocalAreaSize.Size = new Size(132, 23);
-        tbHTolerLocalAreaSize.TabIndex = 31;
-        tbHTolerLocalAreaSize.Text = "0";
-        tbHTolerLocalAreaSize.TextAlign = HorizontalAlignment.Right;
-        tbHTolerLocalAreaSize.TextChanged += tbHTolerLocalAreaSize_Change;
+        tbHorizontalTolerLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
+        tbHorizontalTolerLocalAreaSize.Location = new Point(403, 3);
+        tbHorizontalTolerLocalAreaSize.Name = "tbHorizontalTolerLocalAreaSize";
+        tbHorizontalTolerLocalAreaSize.Size = new Size(132, 23);
+        tbHorizontalTolerLocalAreaSize.TabIndex = 31;
+        tbHorizontalTolerLocalAreaSize.Text = "0";
+        tbHorizontalTolerLocalAreaSize.TextAlign = HorizontalAlignment.Right;
+        tbHorizontalTolerLocalAreaSize.TextChanged += tbHTolerLocalAreaSize_Change;
         // 
         // lblTolerPerMeter
         // 
@@ -490,37 +504,37 @@ partial class CollimatorMainForm
         lblTolerPerMeter.TabIndex = 30;
         lblTolerPerMeter.Text = "Допуск на локальном участке, мкм";
         // 
-        // tbVTolerLocalAreaSize
+        // tbVerticalTolerLocalAreaSize
         // 
-        tbVTolerLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
-        tbVTolerLocalAreaSize.Location = new Point(541, 3);
-        tbVTolerLocalAreaSize.Name = "tbVTolerLocalAreaSize";
-        tbVTolerLocalAreaSize.Size = new Size(132, 23);
-        tbVTolerLocalAreaSize.TabIndex = 32;
-        tbVTolerLocalAreaSize.Text = "0";
-        tbVTolerLocalAreaSize.TextAlign = HorizontalAlignment.Right;
-        tbVTolerLocalAreaSize.TextChanged += tbVTolerLocalAreaSize_Change;
+        tbVerticalTolerLocalAreaSize.BorderStyle = BorderStyle.FixedSingle;
+        tbVerticalTolerLocalAreaSize.Location = new Point(541, 3);
+        tbVerticalTolerLocalAreaSize.Name = "tbVerticalTolerLocalAreaSize";
+        tbVerticalTolerLocalAreaSize.Size = new Size(132, 23);
+        tbVerticalTolerLocalAreaSize.TabIndex = 32;
+        tbVerticalTolerLocalAreaSize.Text = "0";
+        tbVerticalTolerLocalAreaSize.TextAlign = HorizontalAlignment.Right;
+        tbVerticalTolerLocalAreaSize.TextChanged += tbVTolerLocalAreaSize_Change;
         // 
         // pnlTolerLenght
         // 
         pnlTolerLenght.BorderStyle = BorderStyle.FixedSingle;
-        pnlTolerLenght.Controls.Add(tbHTolerAllLength);
+        pnlTolerLenght.Controls.Add(tbHorizontalTolerAllLength);
         pnlTolerLenght.Controls.Add(lblTolerLength);
         pnlTolerLenght.Location = new Point(8, 455);
         pnlTolerLenght.Name = "pnlTolerLenght";
         pnlTolerLenght.Size = new Size(679, 31);
         pnlTolerLenght.TabIndex = 32;
         // 
-        // tbHTolerAllLength
+        // tbHorizontalTolerAllLength
         // 
-        tbHTolerAllLength.BorderStyle = BorderStyle.FixedSingle;
-        tbHTolerAllLength.Location = new Point(403, 3);
-        tbHTolerAllLength.Name = "tbHTolerAllLength";
-        tbHTolerAllLength.Size = new Size(132, 23);
-        tbHTolerAllLength.TabIndex = 34;
-        tbHTolerAllLength.Text = "0";
-        tbHTolerAllLength.TextAlign = HorizontalAlignment.Right;
-        tbHTolerAllLength.TextChanged += tbHTolerAllLength_Change;
+        tbHorizontalTolerAllLength.BorderStyle = BorderStyle.FixedSingle;
+        tbHorizontalTolerAllLength.Location = new Point(403, 3);
+        tbHorizontalTolerAllLength.Name = "tbHorizontalTolerAllLength";
+        tbHorizontalTolerAllLength.Size = new Size(132, 23);
+        tbHorizontalTolerAllLength.TabIndex = 34;
+        tbHorizontalTolerAllLength.Text = "0";
+        tbHorizontalTolerAllLength.TextAlign = HorizontalAlignment.Right;
+        tbHorizontalTolerAllLength.TextChanged += tbHTolerAllLength_Change;
         // 
         // lblTolerLength
         // 
@@ -534,35 +548,35 @@ partial class CollimatorMainForm
         // pnlStep
         // 
         pnlStep.BorderStyle = BorderStyle.FixedSingle;
-        pnlStep.Controls.Add(tbVStepSize);
-        pnlStep.Controls.Add(tbHStepSize);
+        pnlStep.Controls.Add(tbVerticalStepSize);
+        pnlStep.Controls.Add(tbHorizontalStepSize);
         pnlStep.Controls.Add(lblStep);
         pnlStep.Location = new Point(8, 492);
         pnlStep.Name = "pnlStep";
         pnlStep.Size = new Size(679, 31);
         pnlStep.TabIndex = 35;
         // 
-        // tbVStepSize
+        // tbVerticalStepSize
         // 
-        tbVStepSize.BorderStyle = BorderStyle.FixedSingle;
-        tbVStepSize.Location = new Point(541, 3);
-        tbVStepSize.Name = "tbVStepSize";
-        tbVStepSize.Size = new Size(132, 23);
-        tbVStepSize.TabIndex = 38;
-        tbVStepSize.Text = "0";
-        tbVStepSize.TextAlign = HorizontalAlignment.Right;
-        tbVStepSize.TextChanged += tbVStepSize_Change;
+        tbVerticalStepSize.BorderStyle = BorderStyle.FixedSingle;
+        tbVerticalStepSize.Location = new Point(541, 3);
+        tbVerticalStepSize.Name = "tbVerticalStepSize";
+        tbVerticalStepSize.Size = new Size(132, 23);
+        tbVerticalStepSize.TabIndex = 38;
+        tbVerticalStepSize.Text = "0";
+        tbVerticalStepSize.TextAlign = HorizontalAlignment.Right;
+        tbVerticalStepSize.TextChanged += tbVStepSize_Change;
         // 
-        // tbHStepSize
+        // tbHorizontalStepSize
         // 
-        tbHStepSize.BorderStyle = BorderStyle.FixedSingle;
-        tbHStepSize.Location = new Point(403, 3);
-        tbHStepSize.Name = "tbHStepSize";
-        tbHStepSize.Size = new Size(132, 23);
-        tbHStepSize.TabIndex = 37;
-        tbHStepSize.Text = "0";
-        tbHStepSize.TextAlign = HorizontalAlignment.Right;
-        tbHStepSize.TextChanged += tbHStepSize_Change;
+        tbHorizontalStepSize.BorderStyle = BorderStyle.FixedSingle;
+        tbHorizontalStepSize.Location = new Point(403, 3);
+        tbHorizontalStepSize.Name = "tbHorizontalStepSize";
+        tbHorizontalStepSize.Size = new Size(132, 23);
+        tbHorizontalStepSize.TabIndex = 37;
+        tbHorizontalStepSize.Text = "0";
+        tbHorizontalStepSize.TextAlign = HorizontalAlignment.Right;
+        tbHorizontalStepSize.TextChanged += tbHStepSize_Change;
         // 
         // lblStep
         // 
@@ -635,55 +649,16 @@ partial class CollimatorMainForm
         btnExit.UseVisualStyleBackColor = false;
         btnExit.Click += btnExit_Click;
         // 
-        // tbVerticalMinDeviation
+        // tbVerticalTolerAllLength
         // 
-        tbVerticalMinDeviation.BackColor = SystemColors.Control;
-        tbVerticalMinDeviation.BorderStyle = BorderStyle.FixedSingle;
-        tbVerticalMinDeviation.Location = new Point(550, 237);
-        tbVerticalMinDeviation.Name = "tbVerticalMinDeviation";
-        tbVerticalMinDeviation.ReadOnly = true;
-        tbVerticalMinDeviation.Size = new Size(132, 23);
-        tbVerticalMinDeviation.TabIndex = 17;
-        tbVerticalMinDeviation.TabStop = false;
-        tbVerticalMinDeviation.Text = "0";
-        tbVerticalMinDeviation.TextAlign = HorizontalAlignment.Right;
-        // 
-        // tbVDeviation
-        // 
-        tbVDeviation.BackColor = SystemColors.Control;
-        tbVDeviation.BorderStyle = BorderStyle.FixedSingle;
-        tbVDeviation.Location = new Point(550, 274);
-        tbVDeviation.Name = "tbVDeviation";
-        tbVDeviation.ReadOnly = true;
-        tbVDeviation.Size = new Size(132, 23);
-        tbVDeviation.TabIndex = 20;
-        tbVDeviation.TabStop = false;
-        tbVDeviation.Text = "0";
-        tbVDeviation.TextAlign = HorizontalAlignment.Right;
-        // 
-        // tbVLineDeviation
-        // 
-        tbVLineDeviation.BackColor = SystemColors.Control;
-        tbVLineDeviation.BorderStyle = BorderStyle.FixedSingle;
-        tbVLineDeviation.Location = new Point(550, 310);
-        tbVLineDeviation.Name = "tbVLineDeviation";
-        tbVLineDeviation.ReadOnly = true;
-        tbVLineDeviation.Size = new Size(132, 23);
-        tbVLineDeviation.TabIndex = 23;
-        tbVLineDeviation.TabStop = false;
-        tbVLineDeviation.Text = "0";
-        tbVLineDeviation.TextAlign = HorizontalAlignment.Right;
-        // 
-        // tbVTolerAllLength
-        // 
-        tbVTolerAllLength.BorderStyle = BorderStyle.FixedSingle;
-        tbVTolerAllLength.Location = new Point(550, 459);
-        tbVTolerAllLength.Name = "tbVTolerAllLength";
-        tbVTolerAllLength.Size = new Size(132, 23);
-        tbVTolerAllLength.TabIndex = 35;
-        tbVTolerAllLength.Text = "0";
-        tbVTolerAllLength.TextAlign = HorizontalAlignment.Right;
-        tbVTolerAllLength.TextChanged += tbVTolerAllLength_Change;
+        tbVerticalTolerAllLength.BorderStyle = BorderStyle.FixedSingle;
+        tbVerticalTolerAllLength.Location = new Point(550, 459);
+        tbVerticalTolerAllLength.Name = "tbVerticalTolerAllLength";
+        tbVerticalTolerAllLength.Size = new Size(132, 23);
+        tbVerticalTolerAllLength.TabIndex = 35;
+        tbVerticalTolerAllLength.Text = "0";
+        tbVerticalTolerAllLength.TextAlign = HorizontalAlignment.Right;
+        tbVerticalTolerAllLength.TextChanged += tbVTolerAllLength_Change;
         // 
         // pnlPlate
         // 
@@ -790,12 +765,9 @@ partial class CollimatorMainForm
         ClientSize = new Size(692, 564);
         Controls.Add(pnlCollimatorType);
         Controls.Add(pnlPlate);
-        Controls.Add(tbVTolerAllLength);
-        Controls.Add(tbVLineDeviation);
-        Controls.Add(tbVDeviation);
-        Controls.Add(tbVerticalMinDeviation);
+        Controls.Add(tbVerticalTolerAllLength);
         Controls.Add(pnlBedLength);
-        Controls.Add(pnlLocalAreaPanel);
+        Controls.Add(pnlLocalArea);
         Controls.Add(pnlDescription);
         Controls.Add(btnLoad);
         Controls.Add(btnSave);
@@ -807,7 +779,7 @@ partial class CollimatorMainForm
         Controls.Add(pnlTolerPerMeter);
         Controls.Add(pnlTolerLenght);
         Controls.Add(pnlLineDeviation);
-        Controls.Add(pnlVerticalDeviation);
+        Controls.Add(pnlDeviation);
         Controls.Add(pnlMinDeviation);
         Controls.Add(pnlMaxDeviation);
         Controls.Add(pnlWorkerName);
@@ -830,14 +802,14 @@ partial class CollimatorMainForm
         pnlMaxDeviation.PerformLayout();
         pnlMinDeviation.ResumeLayout(false);
         pnlMinDeviation.PerformLayout();
-        pnlVerticalDeviation.ResumeLayout(false);
-        pnlVerticalDeviation.PerformLayout();
+        pnlDeviation.ResumeLayout(false);
+        pnlDeviation.PerformLayout();
         pnlLineDeviation.ResumeLayout(false);
         pnlLineDeviation.PerformLayout();
         pnlBedLength.ResumeLayout(false);
         pnlBedLength.PerformLayout();
-        pnlLocalAreaPanel.ResumeLayout(false);
-        pnlLocalAreaPanel.PerformLayout();
+        pnlLocalArea.ResumeLayout(false);
+        pnlLocalArea.PerformLayout();
         pnlTolerPerMeter.ResumeLayout(false);
         pnlTolerPerMeter.PerformLayout();
         pnlTolerLenght.ResumeLayout(false);
@@ -858,70 +830,73 @@ partial class CollimatorMainForm
 
 
     #endregion
-
     private DateTimePicker tpDate;
-    private TextBox tbWorkerName;
-    private TextBox tbToolName;
-    private Label lblDate;
-    private Label lblName;
-    private Label lblWorkerName;
-    private Label lblMaxDeviation;
-    private Label lblMinDeviation;
-    private Label lblVerticalDeviation;
-    private Label lnlLineDeviation;
-    private Label lblTolerLength;
-    private Label lblTolerPerMeter;
-    private Label lblStep;
+
+    private Button btnGraphicForm;
+    private Button btnPdfForm;
+    private Button btnExit;
+    private Button btnLoad;
+    private Button btnSave;
+    private Button btnShowDataForm;
+    private Button btnCollimatorTypeChange;
+
     private Panel pnlDate;
     private Panel pnlNameProject;
     private Panel pnlWorkerName;
     private Panel pnlMaxDeviation;
     private Panel pnlMinDeviation;
-    private Panel pnlVerticalDeviation;
+    private Panel pnlDeviation;
     private Panel pnlLineDeviation;
     private Panel pnlTolerLenght;
     private Panel pnlTolerPerMeter;
     private Panel pnlStep;
-    private Button btnGraphicForm;
-    private Button btnPdfForm;
-    private Button btnExit;
-    private TextBox tbHorizontalMaxDeviation;
-    private TextBox tbHorizontalMinDeviation;
-    private TextBox tbHDeviation;
-    private TextBox tbHTolerAllLength;
-    private TextBox tbHTolerLocalAreaSize;
-    private TextBox tbHStepSize;
-    private Button btnLoad;
-    private Button btnSave;
-    private Button btnShowDataForm;
     private Panel pnlDescription;
-    private TextBox tbDescription;
-    private Label lblDescription;
-    private Panel pnlLocalAreaPanel;
+    private Panel pnlLocalArea;
     private Panel pnlBedLength;
-    private Label lblLocalArea;
-    private Label lblBedLength;
-    private TextBox tbHLocalAreaSize;
-    private TextBox tbHBedLength;
-    internal TextBox tbHLineDeviation;
-    private TextBox tbVerticalMaxDeviation;
-    private TextBox tbVTolerLocalAreaSize;
-    private TextBox tbVerticalMinDeviation;
-    private TextBox tbVDeviation;
-    internal TextBox tbVLineDeviation;
-    private TextBox tbVTolerAllLength;
-    private TextBox tbVLocalAreaSize;
     private Panel pnlPlate;
     private Panel pnlVerticalPlate;
     private Panel pnlHorizontalPlate;
+    private Panel pnlCollimatorType;
+
+    private Label lblDate;
+    private Label lblName;
+    private Label lblWorkerName;
+    private Label lblMaxDeviation;
+    private Label lblMinDeviation;
+    private Label lblDeviation;
+    private Label lnlLineDeviation;
+    private Label lblTolerLength;
+    private Label lblTolerPerMeter;
+    private Label lblStep;
     private Label lblHorizontalPlate;
     private Label lblVerticalPlate;
-    private Panel pnlCollimatorType;
     public Label lblColimmatorType;
     private Label lblModelCollimator;
-    private Button btnCollimatorTypeChange;
     private Label lblPlateType;
-    private TextBox tbVBedLength;
-    private TextBox tbVStepSize;
+    private Label lblDescription;
+    private Label lblLocalArea;
+    private Label lblBedLength;
+
+    private TextBox tbHorizontalLocalAreaSize;
+    private TextBox tbVerticalTolerLocalAreaSize;
+    private TextBox tbVerticalTolerAllLength;
+    private TextBox tbVerticalLocalAreaSize;
+    private TextBox tbWorkerName;
+    private TextBox tbToolName;
+    private TextBox tbHorizontalTolerAllLength;
+    private TextBox tbHorizontalTolerLocalAreaSize;
+    private TextBox tbHorizontalStepSize;
+    private TextBox tbDescription;
+    private TextBox tbVerticalStepSize;
+    private Label lblHorizontalMaxDeviation;
+    private Label lblVerticalMaxDeviation;
+    private Label lblHorizontalMinDeviation;
+    private Label lblHorizontalDeviation;
+    private Label lblHorizontalLineDeviation;
+    private Label lblHorizontalBedLength;
+    private Label lblVericalMinDeviation;
+    private Label lblVerticalDeviation;
+    private Label lblVerticalLineDeviation;
+    private Label lblVerticalBedLength;
 }
 
