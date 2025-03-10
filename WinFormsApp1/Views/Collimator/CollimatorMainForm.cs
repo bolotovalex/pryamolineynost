@@ -38,7 +38,7 @@ public partial class CollimatorMainForm : Form
     public CollimatorMainForm(CollimatorType collimatorType, DateTime date, string actNumber)
     {
         InitializeComponent();
-        _controller = new CollimatorController(this, collimatorType, date, actNumber);
+        //_controller = new CollimatorController(this, collimatorType, date, actNumber);
         lblColimmatorType.Text = collimatorType.ToString();
         
     }

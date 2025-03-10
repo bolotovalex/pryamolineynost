@@ -6,19 +6,25 @@ namespace PryamolineynostWF.Models.Collimator
 {
     public class MainCollimatorModel : INotifyPropertyChanged
     {
+        private DateTime _measurementDate;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public DateTime AutocollimatorCheckDate { get; set; }
-        public string AutocollimatorCheckAct { get; set; }
-        public DateTime MeasurementDate { get; set; }
-        public CollimatorType CollimatorType { get; set; }
-        public string ToolName { get; set; }
-        public string Description { get; set; }
-        public string WorkerName { get; set; }
+        public DateTime MeasurementDate
+        {
+            get => _measurementDate;
+            set
+            {
+                _measurementDate = value;
+                OnPropertyChanged(nameof(MeasurementDate));
+            }
+        }
 
-        public MeasurementPlane HorizontalPlane { get; set; } = new MeasurementPlane();
-        public MeasurementPlane VerticalPlane { get; set; } = new MeasurementPlane();
+        
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-        protected void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
     }
 }

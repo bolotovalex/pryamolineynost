@@ -1,5 +1,6 @@
 using LogicLibrary;
 using Pryamolineynost;
+using PryamolineynostWF.Controllers.Collimator;
 using PryamolineynostWF.Views;
 using PryamolineynostWF.Views.Collimator;
 
@@ -18,10 +19,7 @@ internal static class Program
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
         ApplicationConfiguration.Initialize();
-        //var deviceChooserForm = new DeviceChooseForm();
-        //Application.Run(deviceChooserForm);
-
-        Application.Run(new CollimatorMainForm(Enums.CollimatorType.ACU05, DateTime.Now, "SomeActNumber1231231"));
-
+        var deviceChooserForm = new DeviceChooseForm();
+        Application.Run(deviceChooserForm);
     }
 }

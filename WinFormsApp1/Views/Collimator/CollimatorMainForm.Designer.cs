@@ -876,6 +876,16 @@ partial class CollimatorMainForm
     private Label lblDescription;
     private Label lblLocalArea;
     private Label lblBedLength;
+    private Label lblHorizontalMaxDeviation;
+    private Label lblVerticalMaxDeviation;
+    private Label lblHorizontalMinDeviation;
+    private Label lblHorizontalDeviation;
+    private Label lblHorizontalLineDeviation;
+    private Label lblHorizontalBedLength;
+    private Label lblVericalMinDeviation;
+    private Label lblVerticalDeviation;
+    private Label lblVerticalLineDeviation;
+    private Label lblVerticalBedLength;
 
     private TextBox tbHorizontalLocalAreaSize;
     private TextBox tbVerticalTolerLocalAreaSize;
@@ -888,15 +898,6 @@ partial class CollimatorMainForm
     private TextBox tbHorizontalStepSize;
     private TextBox tbDescription;
     private TextBox tbVerticalStepSize;
-    private Label lblHorizontalMaxDeviation;
-    private Label lblVerticalMaxDeviation;
-    private Label lblHorizontalMinDeviation;
-    private Label lblHorizontalDeviation;
-    private Label lblHorizontalLineDeviation;
-    private Label lblHorizontalBedLength;
-    private Label lblVericalMinDeviation;
-    private Label lblVerticalDeviation;
-    private Label lblVerticalLineDeviation;
-    private Label lblVerticalBedLength;
+
 }
 
