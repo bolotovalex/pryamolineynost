@@ -4,7 +4,7 @@ using PryamolineynostWF.Enums;
 
 namespace PryamolineynostWF.Models.Collimator
 {
-    public class MainCollimatorModel : INotifyPropertyChanged
+    public class CollimatorModel : INotifyPropertyChanged
     {
         private DateTime _measurementDate;
         public event PropertyChangedEventHandler PropertyChanged;

@@ -9,7 +9,7 @@ namespace PryamolineynostWF.Controllers.Collimator
     public class CollimatorCalibrationDateController
     {
         private readonly CollimatorCalibrationDateForm _view;
-        private CollimatorMainForm _mainForm;
+        private CollimatorForm _mainForm;
         private CollimatorType _selectedCollimatorType;
         public CollimatorCalibrationDateController(CollimatorCalibrationDateForm view, CollimatorType selectedCollimatorType) 
         {

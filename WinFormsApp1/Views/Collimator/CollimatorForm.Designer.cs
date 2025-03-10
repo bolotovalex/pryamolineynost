@@ -2,7 +2,7 @@
 
 namespace PryamolineynostWF.Views.Collimator;
 
-partial class CollimatorMainForm
+partial class CollimatorForm
 {
     /// <summary>
     /// Required designer variable.

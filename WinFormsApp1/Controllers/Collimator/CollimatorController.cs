@@ -7,20 +7,17 @@ namespace PryamolineynostWF.Controllers.Collimator;
 
 public class CollimatorController
 {
-    public CollimatorMainForm mainForm { get; set; }
+    public CollimatorForm mainForm { get; set; }
+    private CollimatorModel _model;
+
     
     public CollimatorController(CollimatorType collimatorType, DateTime date, string actNumber) 
     {
-        
-        mainForm = new CollimatorMainForm(collimatorType, date, actNumber);
-    }
-
-    
-    public void ShowMainForm(CollimatorType collimatorType, DateTime date, string actNumber)
-    {
+        var _model = new CollimatorModel();
+        mainForm = new CollimatorForm(collimatorType, date, actNumber);
         mainForm.Show();
     }
-    
+
 
     private void StubFormShow(object sender, EventArgs e)
     {

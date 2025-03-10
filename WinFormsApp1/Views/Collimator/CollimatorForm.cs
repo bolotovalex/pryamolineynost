@@ -4,7 +4,7 @@ using PryamolineynostWF.Enums;
 
 namespace PryamolineynostWF.Views.Collimator;
 
-public partial class CollimatorMainForm : Form
+public partial class CollimatorForm : Form
 {
     private readonly CollimatorController _controller;
     private CollimatorType _collimatorType;
@@ -35,11 +35,12 @@ public partial class CollimatorMainForm : Form
 
 
 
-    public CollimatorMainForm(CollimatorType collimatorType, DateTime date, string actNumber)
+    public CollimatorForm(CollimatorType collimatorType, DateTime date, string actNumber)
     {
         InitializeComponent();
         //_controller = new CollimatorController(this, collimatorType, date, actNumber);
         lblColimmatorType.Text = collimatorType.ToString();
+        tpDate.DataBindings.Add("Value", measurementModel, "MeasurementDate", true, DataSourceUpdateMode.OnPropertyChanged);
         
     }
 
