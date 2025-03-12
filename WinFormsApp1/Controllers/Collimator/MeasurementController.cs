@@ -15,10 +15,10 @@ namespace PryamolineynostWF.Controllers.Collimator
         private MeasurementForm _view;
         private MeasurementTable _dataSet;
         private Enums.Plane? _selectedPlane;
-        public MeasurementController(MeasurementForm view, MeasurementTable dataSet, Enums.Plane? selectedPlane)
+        public MeasurementController(MeasurementTable dataSet, Enums.Plane? selectedPlane)
         {
             _dataSet = dataSet;
-            _view = view;
+            _view = new MeasurementForm(dataSet, selectedPlane);
             _selectedPlane = selectedPlane;
             _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
             _view.dataGridView1RowAdded += DataGridView1_RowAdded;
@@ -92,6 +92,11 @@ namespace PryamolineynostWF.Controllers.Collimator
             {
                 e.CellStyle.BackColor = Color.White;
             }
+        }
+
+        public void ShowForm()
+        {
+            _view.Show();
         }
     }
 }

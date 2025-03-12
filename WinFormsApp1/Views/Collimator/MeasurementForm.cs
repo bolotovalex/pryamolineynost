@@ -23,7 +23,7 @@ namespace PryamolineynostWF.Controllers.Collimator
         {
             InitializeComponent();
             _dataSet = dataSet;
-            _controller = new MeasurementController(this, dataSet, selectedPlane);
+            _controller = new MeasurementController(dataSet, selectedPlane);
             this.dataGridView1.AutoGenerateColumns = true;
             this.dataGridView1.DataSource = _dataSet.DataTable;
 
