@@ -1,7 +1,6 @@
 ﻿using PryamolineynostWF.Interfaces;
-using PryamolineynostWF.Models;
 
-namespace LogicLibrary
+namespace PryamolineynostWF.Models.Level
 {
     public class Micrometer : IUnit
     {

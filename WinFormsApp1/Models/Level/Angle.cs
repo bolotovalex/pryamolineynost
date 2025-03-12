@@ -1,7 +1,7 @@
 ﻿using LogicLibrary;
 using PryamolineynostWF.Interfaces;
 
-namespace PryamolineynostWF.Models
+namespace PryamolineynostWF.Models.Level
 {
     public class Angle : IUnit
     {

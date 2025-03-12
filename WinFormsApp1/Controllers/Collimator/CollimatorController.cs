@@ -10,12 +10,17 @@ public class CollimatorController
 {
     public CollimatorForm _view { get; init; }
     private CollimatorModel _model;
+    private Dictionary<string, List<MeasurementRow>> _measurements;
 
     
     public CollimatorController(CollimatorType collimatorType, DateTime date, string actNumber) 
     {
         _model = new CollimatorModel();
         _view = new CollimatorForm(collimatorType, date, actNumber);
+        _measurements = new Dictionary<string, List<MeasurementRow>>();
+        _measurements.Add("Horizontal", new List<MeasurementRow>());
+        _measurements.Add("Vertical", new List<MeasurementRow>());
+
         Initialization();
         BindingTextBoxData();
         BindinLabelData();
@@ -73,12 +78,18 @@ public class CollimatorController
 
     private void BindingButtons()
     {
-        _view.btnShowDataFormClicked += StubFormShow;
+        _view.btnShowDataFormClicked += ShowMeasurementForm;
         _view.btnGraphicFormClicked += StubFormShow;
         _view.btnPdfFormClicked += StubFormShow;
         _view.btnExitClicked += StubFormShow;    
         _view.btnSaveChangedClicked += StubFormShow;
         _view.btnLoadChangedClicked += StubFormShow;
         _view.btnCollimatorTypeChangeClicked += StubFormShow;
+    }
+
+    private void ShowMeasurementForm(object sender, EventArgs e)
+    {
+        //var measurementControll?er = new MeasurementController(_measurements);
+        //measurementController.SowForm();
     }
 }

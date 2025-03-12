@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace PryamolineynostWF.Models.Collimator
 {
-    public class MeasurementTableRow
+    public static class MeasurementColumnsModel
     {
-      
+        //public static string[] Columns = new string[]
+        //{
+
+
+        //}
     }
 }

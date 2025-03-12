@@ -9,6 +9,4 @@ namespace PryamolineynostWF.Enums
         [Description("Горизонтальная")] Horizontal,
         [Description("Вертикальная")] Vertical
     }
-
-    
 }
