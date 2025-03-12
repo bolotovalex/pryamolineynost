@@ -6,11 +6,11 @@ namespace PryamolineynostWF.Views.Collimator;
 
 public partial class CollimatorForm : Form
 {
-    private readonly CollimatorController _controller;
-    private CollimatorType _collimatorType;
-    private DateOnly _inspectionDate;
-    private string _actNumber;
-    public EventHandler tpValueChanged;
+    //private readonly CollimatorController _controller;
+    //private CollimatorType _collimatorType;
+    //private DateOnly _inspectionDate;
+    //private string _actNumber;
+    //public EventHandler tpValueChanged;
 
     public EventHandler btnCollimatorTypeChangeClicked;
     public EventHandler btnShowDataFormClicked;
@@ -20,17 +20,17 @@ public partial class CollimatorForm : Form
     public EventHandler btnPdfFormClicked;
     public EventHandler btnExitClicked;
 
-    public EventHandler tbToolNameChanged;
-    public EventHandler tbDescriptionChanged;
-    public EventHandler tbWorkerNameChanged;
-    public EventHandler tbHLocalAreaSizeChanged;
-    public EventHandler tbHTolerLocalAreaSizeChanged;
-    public EventHandler tbHTolerAllLengthChanged;
-    public EventHandler tbHStepSizeChanged;
-    public EventHandler tbVLocalAreaSizeChanged;
-    public EventHandler tbVTolerLocalAreaSizeChanged;
-    public EventHandler tbVTolerAllLengthChanged;
-    public EventHandler tbVStepSizeChanged;
+    //public EventHandler tbToolNameChanged;
+    //public EventHandler tbDescriptionChanged;
+    //public EventHandler tbWorkerNameChanged;
+    //public EventHandler tbHLocalAreaSizeChanged;
+    //public EventHandler tbHTolerLocalAreaSizeChanged;
+    //public EventHandler tbHTolerAllLengthChanged;
+    //public EventHandler tbHStepSizeChanged;
+    //public EventHandler tbVLocalAreaSizeChanged;
+    //public EventHandler tbVTolerLocalAreaSizeChanged;
+    //public EventHandler tbVTolerAllLengthChanged;
+    //public EventHandler tbVStepSizeChanged;
 
 
 
@@ -38,32 +38,12 @@ public partial class CollimatorForm : Form
     public CollimatorForm(CollimatorType collimatorType, DateTime date, string actNumber)
     {
         InitializeComponent();
-        //_controller = new CollimatorController(this, collimatorType, date, actNumber);
         lblColimmatorType.Text = collimatorType.ToString();
-        //tpDate.DataBindings.Add("Value", measurementModel, "MeasurementDate", true, DataSourceUpdateMode.OnPropertyChanged);
-        
     }
 
-    private void tbToolName_Change(object sender, EventArgs e)
-    {
-        tbToolNameChanged?.Invoke(this, e);
-    }
-
-    private void tbDescription_Change(object sender, EventArgs e)
-    {
-        tbDescriptionChanged?.Invoke(this, e);
-    }
-
-    private void tbWorkerName_Change(object sender, EventArgs e)
-    {
-        tbWorkerNameChanged?.Invoke(this, e);
-    }
-
-    private void dateTimePicker_ValueChange(object sender, EventArgs e)
-    {
-        tpValueChanged?.Invoke(this, e);
-    }
     
+
+
     private void btnCollimatorTypeChange_Click(object sender, EventArgs e)
     {
         btnCollimatorTypeChangeClicked?.Invoke(this, e);
@@ -99,43 +79,28 @@ public partial class CollimatorForm : Form
         btnExitClicked?.Invoke(this, e);
     }
 
-    private void tbHLocalAreaSize_Change(object sender, EventArgs e)
-    {
-        tbHLocalAreaSizeChanged.Invoke(this, e);
-    }
-
-    private void tbHTolerLocalAreaSize_Change(object sender, EventArgs e)
-    {
-        tbHTolerLocalAreaSizeChanged.Invoke(this, e);
-    }
-
-    private void tbHTolerAllLength_Change(object sender, EventArgs e)
-    {
-        tbHTolerAllLengthChanged.Invoke(this, e);
-    }
-
-    private void tbHStepSize_Change(object sender, EventArgs e)
-    {
-        tbHStepSizeChanged.Invoke(this, e);
-    }
+    public DateTimePicker GetDateTimeControl => tpDate;
+    public Label GetLblColimmatorType => lblColimmatorType;
+    public TextBox GetTbObjectName => tbObjectName;
+    public TextBox GetTbDescription => tbDescription;
+    public TextBox GetTbWorkerName => tbWorkerName;
+    public TextBox GetTbLocalAreaSize => tbLocalAreaSize;
+    public TextBox GetTbHorizontalTolerLocalAreaSize => tbHorizontalTolerLocalAreaSize;
+    public TextBox GetTbHorizontalTolerAllLength => tbHorizontalTolerAllLength;
+    public TextBox GetTbVerticalTolerLocalAreaSize => tbVerticalTolerLocalAreaSize;
+    public TextBox GetTbVerticalTolerAllLength => tbVerticalTolerAllLength;
+    public TextBox GetTbStepSize => tbStepSize;
+    public Label GetLblBedLength => lblBedLengthValue;
     
-    private void tbVLocalAreaSize_Change(object sender, EventArgs e)
-    {
-        tbVLocalAreaSizeChanged.Invoke(this, e);
-    }
+    public Label GetLblHorizontalMaxDeviation => lblHorizontalMaxDeviation;
+    public Label GetLblVerticalMaxDeviation => lblVerticalMaxDeviation;
 
-    private void tbVTolerLocalAreaSize_Change(object sender, EventArgs e)
-    {
-        tbVTolerLocalAreaSizeChanged.Invoke(this, e);
-    }
+    public Label GetLblHorizontalMinDeviation => lblHorizontalMinDeviation;
+    public Label GetLblVericalMinDeviation => lblVericalMinDeviation;
 
-    private void tbVTolerAllLength_Change(object sender, EventArgs e)
-    {
-        tbVTolerAllLengthChanged.Invoke(this, e);
-    }
+    public Label GetLblHorizontalMeanDeviation => lblHorizontalMeanDeviation;
+    public Label GetLblVerticalMeanDeviation => lblVerticalMeanDeviation;
 
-    private void tbVStepSize_Change(object sender, EventArgs e)
-    {
-        tbVStepSizeChanged.Invoke(this, e);
-    }
+    public Label GetLblHorizontalLineDeviation => lblHorizontalLineDeviation;
+    public Label GetLblVerticalLineDeviation => lblVerticalLineDeviation;
 }
