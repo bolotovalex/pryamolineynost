@@ -5,10 +5,6 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PryamolineynostWF", "WinFormsApp1\PryamolineynostWF.csproj", "{39710D99-F7EF-4EAB-9617-678A3501AC14}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PryamolineynostNew", "PryamolineynostNew\PryamolineynostNew.csproj", "{B3B3B6AC-2802-49BF-8C96-A03BEE6C04FE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{14B74D4B-F060-4613-8756-80138966D50F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,22 +21,6 @@ Global
 		{39710D99-F7EF-4EAB-9617-678A3501AC14}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39710D99-F7EF-4EAB-9617-678A3501AC14}.Release|x86.ActiveCfg = Release|x86
 		{39710D99-F7EF-4EAB-9617-678A3501AC14}.Release|x86.Build.0 = Release|x86
-		{B3B3B6AC-2802-49BF-8C96-A03BEE6C04FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3B3B6AC-2802-49BF-8C96-A03BEE6C04FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3B3B6AC-2802-49BF-8C96-A03BEE6C04FE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B3B3B6AC-2802-49BF-8C96-A03BEE6C04FE}.Debug|x86.Build.0 = Debug|Any CPU
-		{B3B3B6AC-2802-49BF-8C96-A03BEE6C04FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3B3B6AC-2802-49BF-8C96-A03BEE6C04FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3B3B6AC-2802-49BF-8C96-A03BEE6C04FE}.Release|x86.ActiveCfg = Release|Any CPU
-		{B3B3B6AC-2802-49BF-8C96-A03BEE6C04FE}.Release|x86.Build.0 = Release|Any CPU
-		{14B74D4B-F060-4613-8756-80138966D50F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14B74D4B-F060-4613-8756-80138966D50F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14B74D4B-F060-4613-8756-80138966D50F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{14B74D4B-F060-4613-8756-80138966D50F}.Debug|x86.Build.0 = Debug|Any CPU
-		{14B74D4B-F060-4613-8756-80138966D50F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14B74D4B-F060-4613-8756-80138966D50F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14B74D4B-F060-4613-8756-80138966D50F}.Release|x86.ActiveCfg = Release|Any CPU
-		{14B74D4B-F060-4613-8756-80138966D50F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
