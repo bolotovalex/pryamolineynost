@@ -40,7 +40,7 @@ public partial class CollimatorForm : Form
         InitializeComponent();
         //_controller = new CollimatorController(this, collimatorType, date, actNumber);
         lblColimmatorType.Text = collimatorType.ToString();
-        tpDate.DataBindings.Add("Value", measurementModel, "MeasurementDate", true, DataSourceUpdateMode.OnPropertyChanged);
+        //tpDate.DataBindings.Add("Value", measurementModel, "MeasurementDate", true, DataSourceUpdateMode.OnPropertyChanged);
         
     }
 

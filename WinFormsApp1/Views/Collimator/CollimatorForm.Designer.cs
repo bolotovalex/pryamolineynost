@@ -830,7 +830,7 @@ partial class CollimatorForm
 
 
     #endregion
-    private DateTimePicker tpDate;
+    public DateTimePicker tpDate;
 
     private Button btnGraphicForm;
     private Button btnPdfForm;
