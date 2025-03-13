@@ -10,7 +10,7 @@ public class CollimatorController
 {
     public CollimatorForm _view { get; init; }
     private CollimatorModel _model;
-    private Dictionary<string, List<MeasurementRow>> _measurements;
+    private Dictionary<string, List<MeasurementRowModel>> _measurements;
     private CollimatorType _collimatorType;
 
 
@@ -19,9 +19,9 @@ public class CollimatorController
         _model = new CollimatorModel();
         _view = new CollimatorForm(collimatorType, date, actNumber);
         _collimatorType = collimatorType;
-        _measurements = new Dictionary<string, List<MeasurementRow>>();
-        _measurements.Add("Horizontal", new List<MeasurementRow>());
-        _measurements.Add("Vertical", new List<MeasurementRow>());
+        _measurements = new Dictionary<string, List<MeasurementRowModel>>();
+        _measurements.Add("Horizontal", new List<MeasurementRowModel>());
+        _measurements.Add("Vertical", new List<MeasurementRowModel>());
 
 
         Initialization();

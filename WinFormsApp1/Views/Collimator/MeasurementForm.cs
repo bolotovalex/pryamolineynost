@@ -15,17 +15,23 @@ namespace PryamolineynostWF.Controllers.Collimator
         public DataGridViewRowsAddedEventHandler dataGridView1RowAdded;
         public DataGridViewRowsRemovedEventHandler dataGridView1RowRemoved;
         public DataGridViewCellFormattingEventHandler dataGridViewCellFormattingChanged;
+        public DataGridViewCellValidatingEventHandler dataGridViewCellValidating;
 
+
+        private BindingSource _bindingSource;
+        private MeasurementTableModel _measurementTableModel;
 
 
 
         public MeasurementForm(MeasurementTable dataSet, PryamolineynostWF.Enums.Plane? selectedPlane)
         {
+            
             InitializeComponent();
             _dataSet = dataSet;
-            _controller = new MeasurementController(dataSet, selectedPlane);
             this.dataGridView1.AutoGenerateColumns = true;
-            this.dataGridView1.DataSource = _dataSet.DataTable;
+
+            BindingTable();
+            //this.dataGridView1.DataSource = _dataSet.DataTable;
 
             cbPlaneUse.DataSource = Enum.GetValues(typeof(Plane))
                 .Cast<Plane>()
@@ -38,17 +44,34 @@ namespace PryamolineynostWF.Controllers.Collimator
             cbPlaneUse.SelectedValueChanged += cbPlaneUse_Change;
         }
 
-        private void panel1_AutoSizeChanged(object sender, EventArgs e)
+        private void BindingTable()
+        {
+            _bindingSource = new BindingSource();
+            
+            _measurementTableModel = new MeasurementTableModel("Горизонтальная поверхность");
+            _measurementTableModel.Table.Add(new MeasurementRowModel(222, null, false));
+            _bindingSource.DataSource = _measurementTableModel.Table;
+            dataGridView1.DataSource = _bindingSource;
+            
+            //_bindingSource.ResetBindings(false); //Обновление
+        }
+
+        private void DataGridView1_CellValidated(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            dataGridViewCellValidating?.Invoke(this, e);
+        }
+
+        private void Panel1_AutoSizeChanged(object sender, EventArgs e)
         {
             panel1.Width = this.Width;
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void Label1_Click(object sender, EventArgs e)
         {
             throw new System.NotImplementedException();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             //throw new System.NotImplementedException();
         }
@@ -78,28 +101,28 @@ namespace PryamolineynostWF.Controllers.Collimator
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            var dataGridView = sender as DataGridView;
-            if (dataGridView != null)
-            {
-                var cell = dataGridView[e.ColumnIndex, e.RowIndex];
-                if (cell.ReadOnly)
-                {
-                    cell.Selected = false;
-                }
-            }
+            //    var dataGridView = sender as DataGridView;
+            //    if (dataGridView != null)
+            //    {
+            //        var cell = dataGridView[e.ColumnIndex, e.RowIndex];
+            //        if (cell.ReadOnly)
+            //        {
+            //            cell.Selected = false;
+            //        }
+            //    }
         }
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var dataGridView = sender as DataGridView;
-            if (dataGridView != null)
-            {
-                var cell = dataGridView[e.ColumnIndex, e.RowIndex];
-                if (cell.ReadOnly)
-                {
-                    cell.Selected = false;
-                }
-            }
+            //var dataGridView = sender as DataGridView;
+            //if (dataGridView != null)
+            //{
+            //    var cell = dataGridView[e.ColumnIndex, e.RowIndex];
+            //    if (cell.ReadOnly)
+            //    {
+            //        cell.Selected = false;
+            //    }
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)

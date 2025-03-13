@@ -25,6 +25,7 @@ namespace PryamolineynostWF.Controllers.Collimator
             _view.dataGridView1RowRemoved += DataGridView1_RowRemoved;
             _view.dataGridView1CellValueChanged += DataGridView1_CellValueChanged;
             _view.dataGridViewCellFormattingChanged += DataGridView1_CellValueChanged;
+            _view.dataGridViewCellValidating += DataGridView1_CellValidating;
         }
 
         private void DataGridView1_RowAdded(object? sender, DataGridViewRowsAddedEventArgs e)
@@ -67,22 +68,19 @@ namespace PryamolineynostWF.Controllers.Collimator
             {
                 _selectedPlane = selected;
             }
-            //else
-            //{
-            //    _selectedPlane = null;
-            //}
         }
 
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            var newValue = _view.dataGridView1[e.ColumnIndex, e.RowIndex].Value;
-            _dataSet.UpdateRow(e.RowIndex, e.ColumnIndex, newValue);
 
         }
 
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.Value != DBNull.Value && (Int32)e.Value == MeasurementTable.IntPlaceholder)
+            object cellValue = e.Value;
+
+            if ((cellValue is int intValue && intValue == MeasurementTableModel.DecimalPlaceholder) ||
+                (cellValue is decimal decValue && decValue == MeasurementTableModel.DecimalPlaceholder))
             {
                 e.CellStyle.BackColor = Color.Red;
                 e.Value = "";
@@ -94,9 +92,65 @@ namespace PryamolineynostWF.Controllers.Collimator
             }
         }
 
+        private void DataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            DataGridViewColumn column = _view.dataGridView1.Columns[e.ColumnIndex];
+            object cellValue = e.FormattedValue;
+            string propertyName = column.DataPropertyName; // Получаем название поля из модели
+
+            if (cellValue == null || string.IsNullOrWhiteSpace(cellValue.ToString()))
+                return; // Пропускаем пустые значения
+
+            // Проверяем, является ли столбец decimal или int в модели
+            Type propertyType = typeof(MeasurementRowModel).GetProperty(propertyName)?.PropertyType;
+
+            if (propertyType == typeof(decimal))
+            {
+                if (decimal.TryParse(cellValue.ToString().Replace(".", ","), out decimal result))
+                {
+                    _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = result; // Корректируем ввод
+                }
+                else
+                {
+                    MarkCellAsInvalid(e.RowIndex, e.ColumnIndex, (decimal)int.MinValue);
+                }
+            }
+            else if (propertyType == typeof(int))
+            {
+                if (decimal.TryParse(cellValue.ToString(), out decimal result))
+                {
+                    _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (int)Math.Floor(result); // Обрезаем дробную часть
+                }
+                else
+                {
+                    MarkCellAsInvalid(e.RowIndex, e.ColumnIndex, int.MinValue);
+                }
+            }
+        }
+
+        // Помечаем ячейку как некорректную
+        private void MarkCellAsInvalid(int rowIndex, int columnIndex, object minValue)
+        {
+            _view.dataGridView1.Rows[rowIndex].Cells[columnIndex].Style.BackColor = Color.Red;
+            _view.dataGridView1.Rows[rowIndex].Cells[columnIndex].Value = minValue;
+        }
+
         public void ShowForm()
         {
             _view.Show();
+            ApplyColumnHeaders();
+
+        }
+
+        private void ApplyColumnHeaders()
+        {
+            foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
+            {
+                if (MeasurementRowModel.ColumnHeaders.ContainsKey(column.DataPropertyName))
+                {
+                    column.HeaderText = MeasurementRowModel.ColumnHeaders[column.DataPropertyName];
+                }
+            }
         }
     }
 }

@@ -99,7 +99,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 33);
             panel1.TabIndex = 1;
-            panel1.AutoSizeChanged += panel1_AutoSizeChanged;
+            panel1.AutoSizeChanged += Panel1_AutoSizeChanged;
             // 
             // label1
             // 
@@ -108,7 +108,7 @@
             label1.Size = new Size(71, 18);
             label1.TabIndex = 6;
             label1.Text = "Плоскость:";
-            label1.Click += label1_Click;
+            label1.Click += Label1_Click;
             // 
             // cbPlaneUse
             // 
@@ -183,12 +183,13 @@
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             dataGridView1.Size = new Size(800, 393);
             dataGridView1.TabIndex = 2;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellContentClick += DataGridView1_CellContentClick;
             dataGridView1.CellContentDoubleClick += dataGridView1_CellContentDoubleClick;
             dataGridView1.CellEnter += dataGridView1_CellEnter;
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             dataGridView1.CellMouseClick += dataGridView1_CellMouseClick;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
+            dataGridView1.CellValidating += DataGridView1_CellValidated;
             // 
             // collimatorControllerBindingSource
             // 
@@ -228,7 +229,7 @@
             MainMenuStrip = menuStrip1;
             Name = "MeasurementForm";
             Text = "0";
-            SizeChanged += panel1_AutoSizeChanged;
+            SizeChanged += Panel1_AutoSizeChanged;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             panel1.ResumeLayout(false);
