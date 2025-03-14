@@ -16,12 +16,12 @@ namespace PryamolineynostWF.Models.Collimator
         private int? _meanDegrees; // Средние градусы
         private int? _meanMinutes; // Средние минуты
         private decimal? _meanSeconds; // Средние секунды
-        private decimal _relativeAngle; // bi Наклон проверяемых участков
-        private decimal _relativeAngleToPrevious; // hi Наклон проверяемых участков относительно предыдущего
-        private decimal _relativeAngleToFirst; // Hi Наклон проверяемых участков относительно первой точки
-        private decimal _ordinateStraightness; // bi Ордината прямой величины в проверяемых точках
-        private decimal _straightnessDeviation; // Hi Отклонения прямолинейности от направляющей
-        private string _meanValue;
+        private decimal? _relativeAngle; // bi Наклон проверяемых участков
+        private decimal? _relativeAngleToPrevious; // hi Наклон проверяемых участков относительно предыдущего
+        private decimal? _relativeAngleToFirst; // Hi Наклон проверяемых участков относительно первой точки
+        private decimal? _ordinateStraightness; // bi Ордината прямой величины в проверяемых точках
+        private decimal? _straightnessDeviation; // Hi Отклонения прямолинейности от направляющей
+        private string? _meanValue;
         private MeasurementRowModel? _previousDataRow; // Предыдущая строка
         private int _stepSize; // Шаг
         private bool _isReverseStrokeEnabled; // Включен ли учет обратного хода
@@ -60,7 +60,10 @@ namespace PryamolineynostWF.Models.Collimator
         public int StepSize
         {
             get => _stepSize;
-            set => _stepSize = value;
+            set
+            {
+                _stepSize = value;
+            } 
         }
 
         public int? ForwardDegrees
@@ -165,31 +168,31 @@ namespace PryamolineynostWF.Models.Collimator
             set => _previousDataRow = value;
         }
 
-        public decimal RelativeAngle
+        public decimal? RelativeAngle
         {
             get => _relativeAngle;
             private set => _relativeAngle = value;
         }
 
-        public decimal RelativeAngleToPrevious
+        public decimal? RelativeAngleToPrevious
         {
             get => _relativeAngleToPrevious;
             private set => _relativeAngleToPrevious = value;
         }
 
-        public decimal RelativeAngleToFirst
+        public decimal? RelativeAngleToFirst
         {
             get => _relativeAngleToFirst;
             private set => _relativeAngleToFirst = value;
         }
 
-        public decimal OrdinateStraightness
+        public decimal? OrdinateStraightness
         {
             get => _ordinateStraightness;
             private set => _ordinateStraightness = value;
         }
 
-        public decimal StraightnessDeviation
+        public decimal? StraightnessDeviation
         {
             get => _straightnessDeviation;
             private set => _straightnessDeviation = value;
@@ -197,35 +200,20 @@ namespace PryamolineynostWF.Models.Collimator
 
         public MeasurementRowModel(int step, MeasurementRowModel? prevRow, bool revStrokeEnable)
         {
+            IsReverseStrokeEnabled = revStrokeEnable;
+            StepSize = step;
+            
             if (prevRow != null)
             {
-                IsReverseStrokeEnabled = revStrokeEnable;
-                PreviousDataRow = prevRow;
                 Position = prevRow.Position + 1;
                 StepSize = step;
                 MeasurementLength = prevRow.MeasurementLength + StepSize;
-
-                ForwardDegrees = int.MinValue;
-                ForwardMinutes = int.MinValue;
-                ForwardSeconds = decimal.MinValue;
-                ReverseDegrees = int.MinValue;
-                ReverseMinutes = int.MinValue;
-                ReverseSeconds = decimal.MinValue;
             }
             else
             {
-                IsReverseStrokeEnabled = revStrokeEnable;
-                PreviousDataRow = null;
                 Position = 0;
                 StepSize = step;
                 MeasurementLength = 0;
-
-                ForwardDegrees = 0;
-                ForwardMinutes = 0;
-                ForwardSeconds = 0.0M;
-                ReverseDegrees = 0;
-                ReverseMinutes = 0;
-                ReverseSeconds = 0.0M;
             }
         }
 
