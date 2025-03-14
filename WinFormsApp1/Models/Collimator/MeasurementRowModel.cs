@@ -7,15 +7,15 @@ namespace PryamolineynostWF.Models.Collimator
     {
         private int _position; // Номер измерений
         private int _measurementLength; // Длина измерения, мм
-        private int _forwardDegrees; // Градусы прямой ход
-        private int _forwardMinutes; // Минуты прямой ход
-        private decimal _forwardSeconds; // Секунды прямой ход
-        private int _reverseDegrees; // Градусы обратный ход
-        private int _reverseMinutes; // Минуты обратный ход
-        private decimal _reverseSeconds; // Секунды обратный ход
-        private int _meanDegrees; // Средние градусы
-        private int _meanMinutes; // Средние минуты
-        private int _meanSeconds; // Средние секунды
+        private int? _forwardDegrees; // Градусы прямой ход
+        private int? _forwardMinutes; // Минуты прямой ход
+        private decimal? _forwardSeconds; // Секунды прямой ход
+        private int? _reverseDegrees; // Градусы обратный ход
+        private int? _reverseMinutes; // Минуты обратный ход
+        private decimal? _reverseSeconds; // Секунды обратный ход
+        private int? _meanDegrees; // Средние градусы
+        private int? _meanMinutes; // Средние минуты
+        private int? _meanSeconds; // Средние секунды
         private decimal _relativeAngle; // bi Наклон проверяемых участков
         private decimal _relativeAngleToPrevious; // hi Наклон проверяемых участков относительно предыдущего
         private decimal _relativeAngleToFirst; // Hi Наклон проверяемых участков относительно первой точки
@@ -63,37 +63,37 @@ namespace PryamolineynostWF.Models.Collimator
             set => _stepSize = value;
         }
 
-        public int ForwardDegrees
+        public int? ForwardDegrees
         {
             get => _forwardDegrees;
             set => _forwardDegrees = value;
         }
 
-        public int ForwardMinutes
+        public int? ForwardMinutes
         {
             get => _forwardMinutes;
             set => _forwardMinutes = value;
         }
 
-        public decimal ForwardSeconds
+        public decimal? ForwardSeconds
         {
             get => _forwardSeconds;
             set => _forwardSeconds = value;
         }
 
-        public int ReverseDegrees
+        public int? ReverseDegrees
         {
             get => _reverseDegrees;
             set => _reverseDegrees = value;
         }
 
-        public int ReverseMinutes
+        public int? ReverseMinutes
         {
             get => _reverseMinutes;
             set => _reverseMinutes = value;
         }
 
-        public decimal ReverseSeconds
+        public decimal? ReverseSeconds
         {
             get => _reverseSeconds;
             set => _reverseSeconds = value;
@@ -106,21 +106,21 @@ namespace PryamolineynostWF.Models.Collimator
         }
 
         [Browsable(false)]
-        public int MeanDegrees
+        public int? MeanDegrees
         {
             get => _meanDegrees;
             private set => _meanDegrees = value;
         }
         
         [Browsable(false)]
-        public int MeanMinutes
+        public int? MeanMinutes
         {
             get => _meanMinutes;
             private set => _meanMinutes = value;
         }
 
         [Browsable(false)]
-        public int MeanSeconds
+        public int? MeanSeconds
         {
             get => _meanSeconds;
             private set => _meanSeconds = value;
