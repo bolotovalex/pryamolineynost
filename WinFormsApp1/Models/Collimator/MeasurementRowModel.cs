@@ -15,7 +15,7 @@ namespace PryamolineynostWF.Models.Collimator
         private decimal? _reverseSeconds; // Секунды обратный ход
         private int? _meanDegrees; // Средние градусы
         private int? _meanMinutes; // Средние минуты
-        private int? _meanSeconds; // Средние секунды
+        private decimal? _meanSeconds; // Средние секунды
         private decimal _relativeAngle; // bi Наклон проверяемых участков
         private decimal _relativeAngleToPrevious; // hi Наклон проверяемых участков относительно предыдущего
         private decimal _relativeAngleToFirst; // Hi Наклон проверяемых участков относительно первой точки
@@ -66,42 +66,66 @@ namespace PryamolineynostWF.Models.Collimator
         public int? ForwardDegrees
         {
             get => _forwardDegrees;
-            set => _forwardDegrees = value;
+            set 
+            {
+                _forwardDegrees = value != null ? value % 360 : value;
+                CalculateMeanValue();
+            }
         }
 
         public int? ForwardMinutes
         {
             get => _forwardMinutes;
-            set => _forwardMinutes = value;
+            set
+            {
+                _forwardMinutes = value != null ? value % 60 : value;
+                CalculateMeanValue();
+            }
         }
 
         public decimal? ForwardSeconds
         {
             get => _forwardSeconds;
-            set => _forwardSeconds = value;
+            set 
+            {
+                _forwardSeconds = value != null ? value % 60.0M : value;
+                CalculateMeanValue();
+            } 
         }
 
         public int? ReverseDegrees
         {
             get => _reverseDegrees;
-            set => _reverseDegrees = value;
+            set
+            {
+                _reverseDegrees = value != null ? value % 360 : value;
+                CalculateMeanValue();
+            }
         }
 
         public int? ReverseMinutes
         {
             get => _reverseMinutes;
-            set => _reverseMinutes = value;
+            set
+            {
+                _reverseMinutes = value != null ? value % 60 : value;
+                CalculateMeanValue();
+            }
         }
 
         public decimal? ReverseSeconds
         {
             get => _reverseSeconds;
-            set => _reverseSeconds = value;
+            set
+            {
+                _reverseSeconds = value != null ? value % 60.0M : value;
+                CalculateMeanValue();
+            }
         }
 
         public string MeanValue
         {
-            get => "";
+            get => _meanValue;
             private set => _meanValue = value;
         }
 
@@ -120,7 +144,7 @@ namespace PryamolineynostWF.Models.Collimator
         }
 
         [Browsable(false)]
-        public int? MeanSeconds
+        public decimal? MeanSeconds
         {
             get => _meanSeconds;
             private set => _meanSeconds = value;
@@ -203,6 +227,38 @@ namespace PryamolineynostWF.Models.Collimator
                 ReverseMinutes = 0;
                 ReverseSeconds = 0.0M;
             }
+        }
+
+        private void CalculateMeanValue()
+        {
+            if (ForwardDegrees == null || ForwardMinutes == null || ForwardSeconds == null)
+            {
+                MeanValue = "";
+                return;
+            }
+            
+            if ( IsReverseStrokeEnabled && (ReverseDegrees == null || ReverseMinutes == null || ReverseSeconds == null))
+            {
+                MeanValue = "";
+                return;
+            }
+
+            if (IsReverseStrokeEnabled)
+            {
+                var meanInSeconds = (ForwardDegrees * 3600 + ForwardMinutes * 60 + ForwardSeconds) +
+                                   (ReverseDegrees * 3600 + ReverseMinutes * 60 + ReverseSeconds) / 2M;
+
+                MeanDegrees = (int)(meanInSeconds / 3600 % 360);
+                MeanMinutes = (int)(meanInSeconds / 60 % 60);
+                MeanSeconds = meanInSeconds % 60;
+            }
+            else
+            {
+                MeanDegrees = ForwardDegrees;
+                MeanMinutes = ForwardMinutes;
+                MeanSeconds = ForwardSeconds;
+            }
+            MeanValue = $"{MeanDegrees.ToString()}°{MeanMinutes.ToString()}'{MeanSeconds.ToString()}\"";
         }
     }
 }
