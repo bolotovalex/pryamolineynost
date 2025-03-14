@@ -94,7 +94,7 @@ public class CollimatorController
 
     private void ShowMeasurementForm(object sender, EventArgs e)
     {
-        var measurementController = new MeasurementController(new MeasurementTable(""), Plane.Horizontal);
+        var measurementController = new MeasurementController(new MeasurementTableModel(""), Plane.Horizontal);
         measurementController.ShowForm();
     }
 }

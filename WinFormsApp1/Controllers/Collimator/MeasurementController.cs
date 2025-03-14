@@ -14,29 +14,30 @@ namespace PryamolineynostWF.Controllers.Collimator
     public class MeasurementController
     {
         private MeasurementForm _view;
-        private MeasurementTable _dataSet;
+        private MeasurementTableModel _dataSet;
         private Enums.Plane? _selectedPlane;
-        public MeasurementController(MeasurementTable dataSet, Enums.Plane? selectedPlane)
+        public MeasurementController(MeasurementTableModel dataSet, Enums.Plane? selectedPlane)
         {
             _dataSet = dataSet;
             _view = new MeasurementForm(dataSet, selectedPlane);
             _selectedPlane = selectedPlane;
             _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
-            _view.dataGridView1RowAdded += DataGridView1_RowAdded;
+            //_view.dataGridView1RowAdded += DataGridView1_RowAdded;
             _view.dataGridView1RowRemoved += DataGridView1_RowRemoved;
             _view.dataGridView1CellValueChanged += DataGridView1_CellValueChanged;
             _view.dataGridViewCellFormattingChanged += DataGridView1_CellValueChanged;
             _view.dataGridViewCellValidating += DataGridView1_CellValidating;
             _view.DataGridView1CellBeginEdit += DataGridView1_CellEditCanacel;
+
         }
 
-        private void DataGridView1_RowAdded(object? sender, DataGridViewRowsAddedEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.RowIndex >= _dataSet.DataTable.Rows.Count)
-            {
-                _dataSet.AddRow();
-            }
-        }
+        //private void DataGridView1_RowAdded(object? sender, DataGridViewRowsAddedEventArgs e)
+        //{
+        //    if (e.RowIndex < 0 || e.RowIndex >= _dataSet.DataTable.Rows.Count)
+        //    {
+        //        _dataSet.AddRow();
+        //    }
+        //}
 
         private void DataGridView1_RowRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
@@ -96,38 +97,6 @@ namespace PryamolineynostWF.Controllers.Collimator
 
         private void DataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            //DataGridViewColumn column = _view.dataGridView1.Columns[e.ColumnIndex];
-            //object cellValue = e.FormattedValue;
-            //string propertyName = column.DataPropertyName; // Получаем название поля из модели
-
-            //if (cellValue == null || string.IsNullOrWhiteSpace(cellValue.ToString()))
-            //    return; // Пропускаем пустые значения
-
-            //// Проверяем, является ли столбец decimal или int в модели
-            //Type propertyType = typeof(MeasurementRowModel).GetProperty(propertyName)?.PropertyType;
-
-            //if (propertyType == typeof(decimal))
-            //{
-            //    if (decimal.TryParse(cellValue.ToString().Replace(".", ","), out decimal result))
-            //    {
-            //        _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = result; // Корректируем ввод
-            //    }
-            //    else
-            //    {
-            //        MarkCellAsInvalid(e.RowIndex, e.ColumnIndex, (decimal)int.MinValue);
-            //    }
-            //}
-            //else if (propertyType == typeof(int))
-            //{
-            //    if (decimal.TryParse(cellValue.ToString(), out decimal result))
-            //    {
-            //        _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (int)Math.Floor(result); // Обрезаем дробную часть
-            //    }
-            //    else
-            //    {
-            //        MarkCellAsInvalid(e.RowIndex, e.ColumnIndex, int.MinValue);
-            //    }
-            //}
             // Получаем имя свойства модели, соответствующее колонке
             string propertyName = _view.dataGridView1.Columns[e.ColumnIndex].DataPropertyName;
 

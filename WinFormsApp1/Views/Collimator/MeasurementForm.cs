@@ -7,7 +7,7 @@ namespace PryamolineynostWF.Controllers.Collimator
 {
     public partial class MeasurementForm : Form
     {
-        private MeasurementTable _dataSet;
+        private MeasurementTableModel _dataSet;
         private MeasurementController _controller;
         public EventHandler cbSelectedPlaneChanged;
 
@@ -24,7 +24,7 @@ namespace PryamolineynostWF.Controllers.Collimator
 
 
 
-        public MeasurementForm(MeasurementTable dataSet, PryamolineynostWF.Enums.Plane? selectedPlane)
+        public MeasurementForm(MeasurementTableModel dataSet, PryamolineynostWF.Enums.Plane? selectedPlane)
         {
             
             InitializeComponent();
@@ -128,12 +128,12 @@ namespace PryamolineynostWF.Controllers.Collimator
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _dataSet.AddRow(0, 0, 0, 0, 0, 0);
+            //_dataSet.AddRow(0, 0, 0, 0, 0, 0);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _dataSet.Rows.Clear();
+            //_dataSet.Rows.Clear();
         }
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
