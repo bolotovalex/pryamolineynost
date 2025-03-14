@@ -27,7 +27,7 @@ public class CollimatorController
         Initialization();
         BindingTextBoxData();
         BindinLabelData();
-        BindingButtons();
+        BindButtonActions();
         _view.Show();
         
     }
@@ -79,7 +79,7 @@ public class CollimatorController
         _view.GetLblVerticalLineDeviation.DataBindings.Add("Text", _model, "VerticalAreaDeviation", true, DataSourceUpdateMode.OnPropertyChanged);
     }
 
-    private void BindingButtons()
+    private void BindButtonActions()
     {
         _view.btnShowDataFormClicked += ShowMeasurementForm;
         _view.btnGraphicFormClicked += StubFormShow;
@@ -89,6 +89,8 @@ public class CollimatorController
         _view.btnLoadChangedClicked += StubFormShow;
         _view.btnCollimatorTypeChangeClicked += StubFormShow;
     }
+
+    
 
     private void ShowMeasurementForm(object sender, EventArgs e)
     {

@@ -31,6 +31,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <AvaloniaXaml Remove="Controllers\Level\**" />
+      <Compile Remove="Controllers\Level\**" />
+      <EmbeddedResource Remove="Controllers\Level\**" />
+      <None Remove="Controllers\Level\**" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Content Include="Icon.ico" />
     </ItemGroup>
 
@@ -72,10 +79,6 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Controllers\Level\" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace PryamolineynostWF.Controllers.Collimator
             _view.dataGridView1CellValueChanged += DataGridView1_CellValueChanged;
             _view.dataGridViewCellFormattingChanged += DataGridView1_CellValueChanged;
             _view.dataGridViewCellValidating += DataGridView1_CellValidating;
+            _view.DataGridView1CellBeginEdit += DataGridView1_CellEditCanacel;
         }
 
         private void DataGridView1_RowAdded(object? sender, DataGridViewRowsAddedEventArgs e)
@@ -94,37 +96,66 @@ namespace PryamolineynostWF.Controllers.Collimator
 
         private void DataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            DataGridViewColumn column = _view.dataGridView1.Columns[e.ColumnIndex];
-            object cellValue = e.FormattedValue;
-            string propertyName = column.DataPropertyName; // Получаем название поля из модели
+            //DataGridViewColumn column = _view.dataGridView1.Columns[e.ColumnIndex];
+            //object cellValue = e.FormattedValue;
+            //string propertyName = column.DataPropertyName; // Получаем название поля из модели
 
-            if (cellValue == null || string.IsNullOrWhiteSpace(cellValue.ToString()))
-                return; // Пропускаем пустые значения
+            //if (cellValue == null || string.IsNullOrWhiteSpace(cellValue.ToString()))
+            //    return; // Пропускаем пустые значения
 
-            // Проверяем, является ли столбец decimal или int в модели
+            //// Проверяем, является ли столбец decimal или int в модели
+            //Type propertyType = typeof(MeasurementRowModel).GetProperty(propertyName)?.PropertyType;
+
+            //if (propertyType == typeof(decimal))
+            //{
+            //    if (decimal.TryParse(cellValue.ToString().Replace(".", ","), out decimal result))
+            //    {
+            //        _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = result; // Корректируем ввод
+            //    }
+            //    else
+            //    {
+            //        MarkCellAsInvalid(e.RowIndex, e.ColumnIndex, (decimal)int.MinValue);
+            //    }
+            //}
+            //else if (propertyType == typeof(int))
+            //{
+            //    if (decimal.TryParse(cellValue.ToString(), out decimal result))
+            //    {
+            //        _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (int)Math.Floor(result); // Обрезаем дробную часть
+            //    }
+            //    else
+            //    {
+            //        MarkCellAsInvalid(e.RowIndex, e.ColumnIndex, int.MinValue);
+            //    }
+            //}
+            // Получаем имя свойства модели, соответствующее колонке
+            string propertyName = _view.dataGridView1.Columns[e.ColumnIndex].DataPropertyName;
+
+            // Определяем тип данных колонки
             Type propertyType = typeof(MeasurementRowModel).GetProperty(propertyName)?.PropertyType;
 
+            // Если тип данных колонки - decimal
             if (propertyType == typeof(decimal))
             {
-                if (decimal.TryParse(cellValue.ToString().Replace(".", ","), out decimal result))
+                // Пытаемся разобрать строку с учетом разделения запятыми и точками
+                string input = e.FormattedValue.ToString().Trim();
+                decimal parsedDecimal;
+
+                // Пробуем парсинг с точкой
+                if (!decimal.TryParse(input.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out parsedDecimal))
                 {
-                    _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = result; // Корректируем ввод
+                    // Пробуем парсинг с запятой
+                    if (!decimal.TryParse(input.Replace('.', ','), NumberStyles.Any, CultureInfo.InvariantCulture, out parsedDecimal))
+                    {
+                        // Если оба варианта провалились, сообщаем ошибку
+                        MessageBox.Show($"Некорректное значение '{input}' для колонки '{_view.dataGridView1.Columns[e.ColumnIndex].HeaderText}'. Значение должно быть числом.");
+                        e.Cancel = true; // Отменяем изменение
+                        return;
+                    }
                 }
-                else
-                {
-                    MarkCellAsInvalid(e.RowIndex, e.ColumnIndex, (decimal)int.MinValue);
-                }
-            }
-            else if (propertyType == typeof(int))
-            {
-                if (decimal.TryParse(cellValue.ToString(), out decimal result))
-                {
-                    _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (int)Math.Floor(result); // Обрезаем дробную часть
-                }
-                else
-                {
-                    MarkCellAsInvalid(e.RowIndex, e.ColumnIndex, int.MinValue);
-                }
+
+                // Если удалось распарсить, устанавливаем правильное значение
+                _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedDecimal;
             }
         }
 
@@ -150,6 +181,14 @@ namespace PryamolineynostWF.Controllers.Collimator
                 {
                     column.HeaderText = MeasurementRowModel.ColumnHeaders[column.DataPropertyName];
                 }
+            }
+        }
+
+        private void DataGridView1_CellEditCanacel(object sender, DataGridViewCellCancelEventArgs e) 
+        {
+            if (e.RowIndex == 0)
+            {
+                e.Cancel = true;
             }
         }
     }

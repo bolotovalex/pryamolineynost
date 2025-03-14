@@ -16,6 +16,7 @@ namespace PryamolineynostWF.Controllers.Collimator
         public DataGridViewRowsRemovedEventHandler dataGridView1RowRemoved;
         public DataGridViewCellFormattingEventHandler dataGridViewCellFormattingChanged;
         public DataGridViewCellValidatingEventHandler dataGridViewCellValidating;
+        public DataGridViewCellCancelEventHandler DataGridView1CellBeginEdit;
 
 
         private BindingSource _bindingSource;
@@ -138,6 +139,11 @@ namespace PryamolineynostWF.Controllers.Collimator
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             dataGridViewCellFormattingChanged.Invoke(this, e);
+        }
+
+        private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            DataGridView1CellBeginEdit?.Invoke(this, e);
         }
     }
 }

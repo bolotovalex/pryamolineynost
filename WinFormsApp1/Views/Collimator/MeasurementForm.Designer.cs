@@ -190,6 +190,7 @@
             dataGridView1.CellMouseClick += dataGridView1_CellMouseClick;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
             dataGridView1.CellValidating += DataGridView1_CellValidated;
+            dataGridView1.CellBeginEdit += DataGridView1_CellBeginEdit;
             // 
             // collimatorControllerBindingSource
             // 
