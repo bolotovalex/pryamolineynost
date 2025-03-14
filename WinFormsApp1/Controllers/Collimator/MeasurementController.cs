@@ -15,11 +15,15 @@ namespace PryamolineynostWF.Controllers.Collimator
     {
         private MeasurementForm _view;
         private MeasurementTableModel _dataSet;
+        private BindingSource _bindingSource;
+        private MeasurementTableModel _measurementTableModel;
+
         private Enums.Plane? _selectedPlane;
         public MeasurementController(MeasurementTableModel dataSet, Enums.Plane? selectedPlane)
         {
             _dataSet = dataSet;
-            _view = new MeasurementForm(dataSet, selectedPlane);
+            CreateBindinSource();
+            _view = new MeasurementForm(_bindingSource, selectedPlane);
             _selectedPlane = selectedPlane;
             _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
             //_view.dataGridView1RowAdded += DataGridView1_RowAdded;
@@ -29,6 +33,17 @@ namespace PryamolineynostWF.Controllers.Collimator
             _view.dataGridViewCellValidating += DataGridView1_CellValidating;
             _view.DataGridView1CellBeginEdit += DataGridView1_CellEditCanacel;
 
+        }
+
+        private void CreateBindinSource()
+        {
+            _bindingSource = new BindingSource();
+            _measurementTableModel = new MeasurementTableModel("Горизонтальная поверхность");
+            _measurementTableModel.Table.Add(new MeasurementRowModel(222, null, false));
+            _bindingSource.DataSource = _measurementTableModel.Table;
+            
+
+            //_bindingSource.ResetBindings(false); //Обновление
         }
 
         //private void DataGridView1_RowAdded(object? sender, DataGridViewRowsAddedEventArgs e)

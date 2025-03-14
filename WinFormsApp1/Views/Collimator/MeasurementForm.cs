@@ -2,6 +2,7 @@
 using PryamolineynostWF.Services;
 using PryamolineynostWF.Enums;
 using PryamolineynostWF.Models.Collimator;
+using System.Windows.Forms;
 
 namespace PryamolineynostWF.Controllers.Collimator
 {
@@ -19,20 +20,16 @@ namespace PryamolineynostWF.Controllers.Collimator
         public DataGridViewCellCancelEventHandler DataGridView1CellBeginEdit;
 
 
-        private BindingSource _bindingSource;
-        private MeasurementTableModel _measurementTableModel;
+        
 
 
 
-        public MeasurementForm(MeasurementTableModel dataSet, PryamolineynostWF.Enums.Plane? selectedPlane)
+        public MeasurementForm(BindingSource bindingSource, PryamolineynostWF.Enums.Plane? selectedPlane)
         {
             
             InitializeComponent();
-            _dataSet = dataSet;
             this.dataGridView1.AutoGenerateColumns = true;
-
-            BindingTable();
-            //this.dataGridView1.DataSource = _dataSet.DataTable;
+            dataGridView1.DataSource = bindingSource;
 
             cbPlaneUse.DataSource = Enum.GetValues(typeof(Plane))
                 .Cast<Plane>()
@@ -43,18 +40,6 @@ namespace PryamolineynostWF.Controllers.Collimator
             cbPlaneUse.SelectedValue = selectedPlane;
 
             cbPlaneUse.SelectedValueChanged += cbPlaneUse_Change;
-        }
-
-        private void BindingTable()
-        {
-            _bindingSource = new BindingSource();
-            
-            _measurementTableModel = new MeasurementTableModel("Горизонтальная поверхность");
-            _measurementTableModel.Table.Add(new MeasurementRowModel(222, null, false));
-            _bindingSource.DataSource = _measurementTableModel.Table;
-            dataGridView1.DataSource = _bindingSource;
-            
-            //_bindingSource.ResetBindings(false); //Обновление
         }
 
         private void DataGridView1_CellValidated(object sender, DataGridViewCellValidatingEventArgs e)
