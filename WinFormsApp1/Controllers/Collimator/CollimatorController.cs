@@ -10,21 +10,16 @@ public class CollimatorController
 {
     public CollimatorForm _view { get; init; }
     private CollimatorModel _model;
-    private Dictionary<string, List<MeasurementRowModel>> _measurements;
-    private CollimatorType _collimatorType;
+
 
 
     public CollimatorController(CollimatorType collimatorType, DateTime date, string actNumber) 
     {
         _model = new CollimatorModel();
         _view = new CollimatorForm(collimatorType, date, actNumber);
-        _collimatorType = collimatorType;
-        _measurements = new Dictionary<string, List<MeasurementRowModel>>();
-        _measurements.Add("Horizontal", new List<MeasurementRowModel>());
-        _measurements.Add("Vertical", new List<MeasurementRowModel>());
 
-
-        Initialization();
+        
+        Initialization(collimatorType, date, actNumber);
         BindingTextBoxData();
         BindinLabelData();
         BindButtonActions();
@@ -40,14 +35,16 @@ public class CollimatorController
         stubForm.Dispose();
     }
 
-    private void Initialization()
+    private void Initialization(CollimatorType collimatorType, DateTime collimatorCheckDate, string actNumber)
     {
         _model.MeasurementDate = DateTime.Now;
-        //_model.CollimatorType = _view.GetLblColimmatorType; //TODO: Сделать передачу типа коллиматора
-        //_model.ActNumber = "123"; //TODO: Сделать передачу номера акта
+        _model.CollimatorType = collimatorType;
+        _model.CollimatorCheckDate = collimatorCheckDate;
+        _model.ActNumber = actNumber;
         _model.ObjectName = "";
         _model.Description = "";
         _model.WorkerName = "";
+
 
     }
 
@@ -94,7 +91,13 @@ public class CollimatorController
 
     private void ShowMeasurementForm(object sender, EventArgs e)
     {
-        var measurementController = new MeasurementController(new MeasurementTableModel(""), Plane.Horizontal);
+        var measurementController = new MeasurementController(_model);
         measurementController.ShowForm();
+    }
+
+    public Form TemporaryGetMeasurementForm()
+    {
+        var measurementController = new MeasurementController(_model);
+        return measurementController.View();
     }
 }

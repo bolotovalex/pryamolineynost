@@ -7,6 +7,7 @@ namespace PryamolineynostWF.Models.Collimator
     public class CollimatorModel : INotifyPropertyChanged
     {
         private DateTime _measurementDate = DateTime.Now;
+        private DateTime _collimatorCheckDate;
         private CollimatorType _collimatorType;
         private string _actNumber;
         private string _objectName = "";
@@ -27,9 +28,22 @@ namespace PryamolineynostWF.Models.Collimator
         private decimal _verticalMeanDeviation = 0;
         private decimal _horizontalAreaDeviation = 0;
         private decimal _verticalAreaDeviation = 0;
-
-
+        private bool _revstrokeEnable;
+        private Plane _plane;
+        private MeasurementTableModel _table;
         public event PropertyChangedEventHandler PropertyChanged;
+        
+        public CollimatorModel()
+        {
+            Plane = Plane.Horizontal;
+            _table = new MeasurementTableModel(_plane);
+            _table.Table.Add(new MeasurementRowModel(_stepSize, null, _revstrokeEnable));
+        }
+
+        
+
+        
+
 
         public DateTime MeasurementDate
         {
@@ -236,6 +250,42 @@ namespace PryamolineynostWF.Models.Collimator
                 _verticalAreaDeviation = value; 
                 OnPropertyChanged(nameof(VerticalAreaDeviation)); 
             } 
+        }
+
+        public bool RevStrokeEnable
+        {
+            get => _revstrokeEnable;
+            set
+            {
+                _revstrokeEnable = value;
+            }
+        }
+
+        public Plane Plane
+        {
+            get => _plane;
+            set
+            {
+                _plane = value;
+            }
+        }
+
+        public MeasurementTableModel MeasurementTable
+        {
+            get => _table;
+            private set
+            {
+                _table = value;
+            }
+        }
+
+        public DateTime CollimatorCheckDate
+        {
+            get => _collimatorCheckDate;
+            set
+            {
+                _collimatorCheckDate = value;
+            }
         }
 
         protected void OnPropertyChanged(string propertyName)

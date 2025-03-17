@@ -16,17 +16,15 @@ namespace PryamolineynostWF.Controllers.Collimator
         public MeasurementForm _view;
         private MeasurementTableModel _model;
         private BindingSource _bindingSource;
-        private MeasurementTableModel _measurementTableModel;
+        private CollimatorModel _dataSet;
 
-        private Enums.Plane? _selectedPlane;
-        public MeasurementController(MeasurementTableModel dataSet, Enums.Plane? selectedPlane)
+        public MeasurementController(CollimatorModel dataSet)
         {
-            _model = dataSet;
+            _model = dataSet.MeasurementTable;
+            _dataSet = dataSet;
             CreateBindinSource();
-            _view = new MeasurementForm(_bindingSource, selectedPlane);
-            _selectedPlane = selectedPlane;
+            _view = new MeasurementForm(_bindingSource, _dataSet.Plane);
             _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
-            //_view.dataGridView1RowAdded += DataGridView1_RowAdded;
             _view.dataGridView1RowRemoved += DataGridView1_RowRemoved;
             _view.dataGridView1CellValueChanged += DataGridView1_CellValueChanged;
             _view.dataGridViewCellFormattingChanged += DataGridView1_CellValueChanged;
@@ -37,9 +35,7 @@ namespace PryamolineynostWF.Controllers.Collimator
         private void CreateBindinSource()
         {
             _bindingSource = new BindingSource();
-            _measurementTableModel = new MeasurementTableModel("Горизонтальная поверхность");
-            _measurementTableModel.Table.Add(new MeasurementRowModel(222, null, false));
-            _bindingSource.DataSource = _measurementTableModel.Table;
+            _bindingSource.DataSource = _model.Table;
 
             //_bindingSource.ResetBindings(false); //Обновление
         }
@@ -70,21 +66,12 @@ namespace PryamolineynostWF.Controllers.Collimator
             //}
         }
 
-        public Enums.Plane? SelectedPlane
-        {
-            get => _selectedPlane;
-            set 
-            {
-                _selectedPlane = value;
-                _view.cbPlaneUse.SelectedValue = value;
-            }
-        }
         
         private void ComboBox1_SelectedValueChange(object? sender, EventArgs e)
         {
             if (_view.cbPlaneUse.SelectedValue is PryamolineynostWF.Enums.Plane selected)
             {
-                _selectedPlane = selected;
+                _dataSet.Plane = selected;
             }
         }
 

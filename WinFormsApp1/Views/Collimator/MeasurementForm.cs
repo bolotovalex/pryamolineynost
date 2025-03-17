@@ -18,11 +18,7 @@ namespace PryamolineynostWF.Controllers.Collimator
         public DataGridViewCellFormattingEventHandler dataGridViewCellFormattingChanged;
         public DataGridViewCellValidatingEventHandler dataGridViewCellValidating;
         public DataGridViewCellCancelEventHandler DataGridView1CellBeginEdit;
-
-
         
-
-
 
         public MeasurementForm(BindingSource bindingSource, PryamolineynostWF.Enums.Plane? selectedPlane)
         {

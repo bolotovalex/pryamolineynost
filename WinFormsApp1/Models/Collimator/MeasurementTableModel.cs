@@ -4,23 +4,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using PryamolineynostWF.Enums;
 
 namespace PryamolineynostWF.Models.Collimator
 {
     public class MeasurementTableModel
     {
         private string _name;
+        private Plane _plane;
         private BindingList<MeasurementRowModel> _table;
         public const int IntPlaceholder = int.MinValue;
         public const decimal DecimalPlaceholder = decimal.MinValue;
 
-        public MeasurementTableModel(string name)
+        public MeasurementTableModel(Plane plane)
         {
-            _name = name;
-            _table = new BindingList<MeasurementRowModel>();
+            Table = new BindingList<MeasurementRowModel>();
+            Plane = plane;
         }
 
         public string Name { get => _name; }
-        public BindingList<MeasurementRowModel> Table { get => _table; }
+        public BindingList<MeasurementRowModel> Table 
+        {
+            get => _table; 
+            private set => _table = value; 
+        }
+        
+        public Plane Plane
+        {
+            get => _plane;
+            set
+            {
+                _plane = value;
+                switch (value)
+                {
+                    case Plane.Horizontal:
+                        _name = "Горизонтальная";
+                        break;
+                    case Plane.Vertical:
+                        _name = "Вертикальная";
+                        break;
+                    case Plane.Both:
+                        _name = "Горизовнтальная и вертикальная";
+                        break;
+                }
+            }
+        }
     }
 }
