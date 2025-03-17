@@ -262,12 +262,12 @@ namespace PryamolineynostWF.Models.Collimator
 
             if (IsReverseStrokeEnabled)
             {
-                var meanInSeconds = (ForwardDegrees * 3600 + ForwardMinutes * 60 + ForwardSeconds) +
-                                   (ReverseDegrees * 3600 + ReverseMinutes * 60 + ReverseSeconds) / 2M;
+                decimal meanInSeconds = (decimal)(((ForwardDegrees + ReverseDegrees) * 3600) 
+                    + (decimal)((ForwardMinutes + ReverseMinutes) * 60) + ((ForwardSeconds + ReverseSeconds))) / 2M;
 
-                MeanDegrees = (int)(meanInSeconds / 3600 % 360)/2;
-                MeanMinutes = (int)(meanInSeconds / 60 % 60)/2;
-                MeanSeconds = meanInSeconds % 60 / 2;
+                MeanDegrees = (int)(meanInSeconds / 3600 % 360);
+                MeanMinutes = (int)(meanInSeconds / 60 % 60);
+                MeanSeconds = Math.Round(meanInSeconds % 60,1);
             }
             else
             {
