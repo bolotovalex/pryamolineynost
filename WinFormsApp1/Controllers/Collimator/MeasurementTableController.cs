@@ -17,8 +17,7 @@ namespace PryamolineynostWF.Controllers.Collimator
         private MeasurementTableModel _model;
         private BindingSource _bindingSource;
         private CollimatorModel _dataSet;
-        private bool _additionFiledsEnable = false;
-
+        
         public MeasurementTableController(CollimatorModel dataSet)
         {
             _model = dataSet.MeasurementTable;
@@ -32,9 +31,10 @@ namespace PryamolineynostWF.Controllers.Collimator
             _view.dataGridViewCellFormattingChanged += DataGridView1_CellValueChanged;
             _view.dataGridViewCellValidating += DataGridView1_CellValidating;
             _view.DataGridView1CellBeginEdit += DataGridView1_CellEditCanacel;
-            
-            //_view.cbRevStrokeEnable.DataBindings.Add("Checked", _dataSet, "RevStrokeEnable", false, DataSourceUpdateMode.OnPropertyChanged);
-            //_view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", this, "AdditionFiledsEnbled;", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            _view.cbRevStrokeEnable.DataBindings.Add("Checked", _dataSet, "RevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            _view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _dataSet, "AdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
 
         }
 

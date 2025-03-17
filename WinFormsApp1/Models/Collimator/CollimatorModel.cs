@@ -27,17 +27,18 @@ namespace PryamolineynostWF.Models.Collimator
         private decimal _verticalMeanDeviation = 0;
         private decimal _horizontalAreaDeviation = 0;
         private decimal _verticalAreaDeviation = 0;
-        private bool _revstrokeEnable;
+        private bool _revstrokeEnabled;
         private Plane _plane;
         private MeasurementTableModel _dataSet;
+        private bool _addtionsFieldEnabled;
         public event PropertyChangedEventHandler PropertyChanged;
         
         public CollimatorModel()
         {
             Plane = Plane.Horizontal;
             _dataSet = new MeasurementTableModel(_plane);
-            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, null, _revstrokeEnable));
-            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, _dataSet.Table[^1], _revstrokeEnable));
+            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, null, _revstrokeEnabled));
+            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, _dataSet.Table[^1], _revstrokeEnabled));
         }
 
         public DateTime MeasurementDate
@@ -247,13 +248,13 @@ namespace PryamolineynostWF.Models.Collimator
             } 
         }
 
-        public bool RevStrokeEnable
+        public bool RevStrokeEnabled
         {
-            get => _revstrokeEnable;
+            get => _revstrokeEnabled;
             set
             {
-                _revstrokeEnable = value;
-                OnPropertyChanged(nameof(RevStrokeEnable));
+                _revstrokeEnabled = value;
+                OnPropertyChanged(nameof(RevStrokeEnabled));
             }
         }
 
@@ -281,6 +282,16 @@ namespace PryamolineynostWF.Models.Collimator
             set
             {
                 _collimatorCheckDate = value;
+            }
+        }
+
+        public bool AdditionsFieldEnabled
+        {
+            get => _addtionsFieldEnabled;
+            set
+            {
+                _addtionsFieldEnabled = value;
+                OnPropertyChanged(nameof(AdditionsFieldEnabled));
             }
         }
 
