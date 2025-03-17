@@ -14,7 +14,10 @@ namespace PryamolineynostWF.Controllers.Collimator
         public DataGridViewCellFormattingEventHandler dataGridViewCellFormattingChanged;
         public DataGridViewCellValidatingEventHandler dataGridViewCellValidating;
         public DataGridViewCellCancelEventHandler DataGridView1CellBeginEdit;
-       
+        public EventHandler RevStrokeChanged;
+        public EventHandler AdditionFieldsChanged;
+        
+
 
         public MeasurementTableForm(BindingSource bindingSource, PryamolineynostWF.Enums.Plane? selectedPlane)
         {
@@ -29,7 +32,6 @@ namespace PryamolineynostWF.Controllers.Collimator
             cbPlaneUse.DisplayMember = "Name";
             cbPlaneUse.ValueMember = "Value";
             cbPlaneUse.SelectedValue = selectedPlane;
-
             cbPlaneUse.SelectedValueChanged += cbPlaneUse_Change;
         }
 
@@ -120,6 +122,16 @@ namespace PryamolineynostWF.Controllers.Collimator
         private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             DataGridView1CellBeginEdit?.Invoke(this, e);
+        }
+
+        private void RevStrokeCheckBox_Changed(object sender, EventArgs e)
+        {
+            RevStrokeChanged?.Invoke(this, e);
+        }
+
+        private void AdditionFields_Changed(object sender, EventArgs e)
+        {
+            AdditionFieldsChanged?.Invoke(this, e);
         }
     }
 }

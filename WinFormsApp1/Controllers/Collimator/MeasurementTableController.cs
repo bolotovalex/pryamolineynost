@@ -31,10 +31,14 @@ namespace PryamolineynostWF.Controllers.Collimator
             _view.dataGridViewCellFormattingChanged += DataGridView1_CellValueChanged;
             _view.dataGridViewCellValidating += DataGridView1_CellValidating;
             _view.DataGridView1CellBeginEdit += DataGridView1_CellEditCanacel;
+            _view.RevStrokeChanged += CBRevStroke_Changed;
+            _view.AdditionFieldsChanged += CBAdditionFieldsVisible_Changed;
+            
+            _view.cbRevStrokeEnable.Checked = _dataSet.RevStrokeEnabled;
+            _view.cbAdditionsFileldsEnable.Checked = _dataSet.AdditionsFieldEnabled;
 
-            _view.cbRevStrokeEnable.DataBindings.Add("Checked", _dataSet, "RevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
-
-            _view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _dataSet, "AdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+            //_view.cbRevStrokeEnable.DataBindings.Add("Checked", _dataSet, "RevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+            //_view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _dataSet, "AdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
 
         }
 
@@ -168,6 +172,17 @@ namespace PryamolineynostWF.Controllers.Collimator
                 e.Cancel = true;
             }
         }
+
+        private void CBRevStroke_Changed(object? sender, EventArgs e) 
+        {
+            _dataSet.RevStrokeEnabled = _view.cbRevStrokeEnable.Checked;
+        }
+
+        private void CBAdditionFieldsVisible_Changed(object? sender, EventArgs e) 
+        {
+            _dataSet.AdditionsFieldEnabled = _view.cbAdditionsFileldsEnable.Checked;
+        }
+
 
     }
 }

@@ -47,6 +47,7 @@
             collimatorCalibrationDateControllerBindingSource = new BindingSource(components);
             dBBindingSource = new BindingSource(components);
             panel2 = new Panel();
+            viewDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -122,17 +123,18 @@
             cbPlaneUse.Size = new Size(180, 28);
             cbPlaneUse.TabIndex = 5;
             // 
-            // cbAdditionsFilelds
+            // cbAdditionsFileldsEnable
             // 
             cbAdditionsFileldsEnable.AutoSize = true;
             cbAdditionsFileldsEnable.Location = new Point(560, 12);
             cbAdditionsFileldsEnable.Margin = new Padding(3, 4, 3, 4);
-            cbAdditionsFileldsEnable.Name = "cbAdditionsFilelds";
+            cbAdditionsFileldsEnable.Name = "cbAdditionsFileldsEnable";
             cbAdditionsFileldsEnable.Size = new Size(256, 24);
             cbAdditionsFileldsEnable.TabIndex = 4;
             cbAdditionsFileldsEnable.Text = "Показать дополнительные поля";
             cbAdditionsFileldsEnable.TextAlign = ContentAlignment.MiddleCenter;
             cbAdditionsFileldsEnable.UseVisualStyleBackColor = true;
+            cbAdditionsFileldsEnable.CheckedChanged += AdditionFields_Changed;
             // 
             // cbRevStrokeEnable
             // 
@@ -145,6 +147,7 @@
             cbRevStrokeEnable.Text = "Обратный ход";
             cbRevStrokeEnable.TextAlign = ContentAlignment.MiddleCenter;
             cbRevStrokeEnable.UseVisualStyleBackColor = true;
+            cbRevStrokeEnable.CheckedChanged += RevStrokeCheckBox_Changed;
             // 
             // button3
             // 
@@ -184,6 +187,7 @@
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { viewDataGridViewTextBoxColumn });
             dataGridView1.DataSource = collimatorControllerBindingSource;
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(0, 74);
@@ -231,6 +235,14 @@
             // 
             // viewDataGridViewTextBoxColumn
             // 
+            viewDataGridViewTextBoxColumn.DataPropertyName = "_view";
+            viewDataGridViewTextBoxColumn.HeaderText = "_view";
+            viewDataGridViewTextBoxColumn.MinimumWidth = 6;
+            viewDataGridViewTextBoxColumn.Name = "viewDataGridViewTextBoxColumn";
+            viewDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // MeasurementTableForm
+            // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 600);
@@ -240,7 +252,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 4, 3, 4);
-            Name = "MeasurementForm";
+            Name = "MeasurementTableForm";
             Text = "0";
             SizeChanged += Panel1_AutoSizeChanged;
             menuStrip1.ResumeLayout(false);
@@ -278,5 +290,6 @@
         private BindingSource deviceChooseFormBindingSource;
         private BindingSource collimatorControllerBindingSource;
         private BindingSource dBBindingSource;
+        private DataGridViewTextBoxColumn viewDataGridViewTextBoxColumn;
     }
 }
