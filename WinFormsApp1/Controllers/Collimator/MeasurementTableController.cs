@@ -11,31 +11,38 @@ using PryamolineynostWF.Models.Collimator;
 namespace PryamolineynostWF.Controllers.Collimator
 {
     
-    public class MeasurementController
+    public class MeasurementTableController
     {
-        public MeasurementForm _view;
+        private MeasurementTableForm _view;
         private MeasurementTableModel _model;
         private BindingSource _bindingSource;
         private CollimatorModel _dataSet;
+        private bool _additionFiledsEnable = false;
 
-        public MeasurementController(CollimatorModel dataSet)
+        public MeasurementTableController(CollimatorModel dataSet)
         {
             _model = dataSet.MeasurementTable;
             _dataSet = dataSet;
-            CreateBindinSource();
-            _view = new MeasurementForm(_bindingSource, _dataSet.Plane);
+            CreateBindingSource();
+            _view = new MeasurementTableForm(_bindingSource, _dataSet.Plane);
+
             _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
             _view.dataGridView1RowRemoved += DataGridView1_RowRemoved;
             _view.dataGridView1CellValueChanged += DataGridView1_CellValueChanged;
             _view.dataGridViewCellFormattingChanged += DataGridView1_CellValueChanged;
             _view.dataGridViewCellValidating += DataGridView1_CellValidating;
             _view.DataGridView1CellBeginEdit += DataGridView1_CellEditCanacel;
+            
+            //_view.cbRevStrokeEnable.DataBindings.Add("Checked", _dataSet, "RevStrokeEnable", false, DataSourceUpdateMode.OnPropertyChanged);
+            //_view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", this, "AdditionFiledsEnbled;", false, DataSourceUpdateMode.OnPropertyChanged);
+
         }
 
-        private void CreateBindinSource()
+        private void CreateBindingSource()
         {
             _bindingSource = new BindingSource();
             _bindingSource.DataSource = _model.Table;
+    
 
             //_bindingSource.ResetBindings(false); //Обновление
         }
@@ -48,7 +55,6 @@ namespace PryamolineynostWF.Controllers.Collimator
         //    }
         //}
 
-        public Form View() => _view;
 
         private void DataGridView1_RowRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
@@ -133,8 +139,8 @@ namespace PryamolineynostWF.Controllers.Collimator
         // Помечаем ячейку как некорректную
         private void MarkCellAsInvalid(int rowIndex, int columnIndex, object minValue)
         {
-            _view.dataGridView1.Rows[rowIndex].Cells[columnIndex].Style.BackColor = Color.Red;
-            _view.dataGridView1.Rows[rowIndex].Cells[columnIndex].Value = minValue;
+            //_view.dataGridView1.Rows[rowIndex].Cells[columnIndex].Style.BackColor = Color.Red;
+            //_view.dataGridView1.Rows[rowIndex].Cells[columnIndex].Value = minValue;
         }
 
         public void ShowForm()
@@ -162,5 +168,6 @@ namespace PryamolineynostWF.Controllers.Collimator
                 e.Cancel = true;
             }
         }
+
     }
 }

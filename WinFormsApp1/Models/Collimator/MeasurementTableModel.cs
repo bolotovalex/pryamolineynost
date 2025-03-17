@@ -5,17 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using PryamolineynostWF.Enums;
+using PryamolineynostWF.Services;
 
 namespace PryamolineynostWF.Models.Collimator
 {
-    public class MeasurementTableModel
+    public class MeasurementTableModel : INotifyPropertyChanged
     {
         private string _name;
         private Plane _plane;
         private BindingList<MeasurementRowModel> _table;
         public const int IntPlaceholder = int.MinValue;
         public const decimal DecimalPlaceholder = decimal.MinValue;
-
+        public event PropertyChangedEventHandler PropertyChanged;
+        private bool _additionsFildEnabled;
         public MeasurementTableModel(Plane plane)
         {
             Table = new BindingList<MeasurementRowModel>();
@@ -49,5 +51,20 @@ namespace PryamolineynostWF.Models.Collimator
                 }
             }
         }
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private bool AdditionFiledsEnbled
+        {
+            get => _additionsFildEnabled;
+            set
+            {
+                _additionsFildEnabled = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AdditionFiledsEnbled)));
+            }
+        }
+        
     }
 }

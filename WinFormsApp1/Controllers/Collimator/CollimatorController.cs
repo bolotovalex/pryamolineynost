@@ -13,7 +13,8 @@ public class CollimatorController
 
 
 
-    public CollimatorController(CollimatorType collimatorType, DateTime date, string actNumber) 
+    public 
+        CollimatorController(CollimatorType collimatorType, DateTime date, string actNumber) 
     {
         _model = new CollimatorModel();
         _view = new CollimatorForm(collimatorType, date, actNumber);
@@ -27,6 +28,7 @@ public class CollimatorController
         
     }
 
+    //public Form View() => _view;
     private void StubFormShow(object sender, EventArgs e)
     {
         //Заглушка
@@ -91,13 +93,7 @@ public class CollimatorController
 
     private void ShowMeasurementForm(object sender, EventArgs e)
     {
-        var measurementController = new MeasurementController(_model);
+        var measurementController = new MeasurementTableController(_model);
         measurementController.ShowForm();
-    }
-
-    public Form TemporaryGetMeasurementForm()
-    {
-        var measurementController = new MeasurementController(_model);
-        return measurementController.View();
     }
 }

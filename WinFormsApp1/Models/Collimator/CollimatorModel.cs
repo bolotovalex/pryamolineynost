@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using PryamolineynostWF.Enums;
 
 namespace PryamolineynostWF.Models.Collimator
@@ -30,20 +29,16 @@ namespace PryamolineynostWF.Models.Collimator
         private decimal _verticalAreaDeviation = 0;
         private bool _revstrokeEnable;
         private Plane _plane;
-        private MeasurementTableModel _table;
+        private MeasurementTableModel _dataSet;
         public event PropertyChangedEventHandler PropertyChanged;
         
         public CollimatorModel()
         {
             Plane = Plane.Horizontal;
-            _table = new MeasurementTableModel(_plane);
-            _table.Table.Add(new MeasurementRowModel(_stepSize, null, _revstrokeEnable));
+            _dataSet = new MeasurementTableModel(_plane);
+            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, null, _revstrokeEnable));
+            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, _dataSet.Table[^1], _revstrokeEnable));
         }
-
-        
-
-        
-
 
         public DateTime MeasurementDate
         {
@@ -258,6 +253,7 @@ namespace PryamolineynostWF.Models.Collimator
             set
             {
                 _revstrokeEnable = value;
+                OnPropertyChanged(nameof(RevStrokeEnable));
             }
         }
 
@@ -272,10 +268,10 @@ namespace PryamolineynostWF.Models.Collimator
 
         public MeasurementTableModel MeasurementTable
         {
-            get => _table;
+            get => _dataSet;
             private set
             {
-                _table = value;
+                _dataSet = value;
             }
         }
 

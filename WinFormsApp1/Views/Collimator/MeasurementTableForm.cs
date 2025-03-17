@@ -1,26 +1,22 @@
 ﻿using System.Data;
 using PryamolineynostWF.Services;
 using PryamolineynostWF.Enums;
-using PryamolineynostWF.Models.Collimator;
-using System.Windows.Forms;
 
 namespace PryamolineynostWF.Controllers.Collimator
 {
-    public partial class MeasurementForm : Form
+    public partial class MeasurementTableForm : Form
     {
-        private MeasurementTableModel _dataSet;
-        private MeasurementController _controller;
-        public EventHandler cbSelectedPlaneChanged;
 
+        public EventHandler cbSelectedPlaneChanged;
         public DataGridViewCellEventHandler dataGridView1CellValueChanged;
         public DataGridViewRowsAddedEventHandler dataGridView1RowAdded;
         public DataGridViewRowsRemovedEventHandler dataGridView1RowRemoved;
         public DataGridViewCellFormattingEventHandler dataGridViewCellFormattingChanged;
         public DataGridViewCellValidatingEventHandler dataGridViewCellValidating;
         public DataGridViewCellCancelEventHandler DataGridView1CellBeginEdit;
-        
+       
 
-        public MeasurementForm(BindingSource bindingSource, PryamolineynostWF.Enums.Plane? selectedPlane)
+        public MeasurementTableForm(BindingSource bindingSource, PryamolineynostWF.Enums.Plane? selectedPlane)
         {
             InitializeComponent();
             this.dataGridView1.AutoGenerateColumns = true;
@@ -75,12 +71,12 @@ namespace PryamolineynostWF.Controllers.Collimator
             }
         }
 
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView1CellValueChanged.Invoke(this, e);
+            dataGridView1CellValueChanged?.Invoke(this, e);
         }
 
-        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             //    var dataGridView = sender as DataGridView;
             //    if (dataGridView != null)
@@ -93,7 +89,7 @@ namespace PryamolineynostWF.Controllers.Collimator
             //    }
         }
 
-        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             //var dataGridView = sender as DataGridView;
             //if (dataGridView != null)
