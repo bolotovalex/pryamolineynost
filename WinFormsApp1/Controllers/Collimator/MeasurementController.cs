@@ -13,7 +13,7 @@ namespace PryamolineynostWF.Controllers.Collimator
     
     public class MeasurementController
     {
-        private MeasurementForm _view;
+        public MeasurementForm _view;
         private MeasurementTableModel _model;
         private BindingSource _bindingSource;
         private MeasurementTableModel _measurementTableModel;
@@ -51,6 +51,8 @@ namespace PryamolineynostWF.Controllers.Collimator
         //        _dataSet.AddRow();
         //    }
         //}
+
+        public Form View() => _view;
 
         private void DataGridView1_RowRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
