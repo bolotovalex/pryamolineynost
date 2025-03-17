@@ -17,6 +17,7 @@ namespace PryamolineynostWF.Models.Collimator
         public const int IntPlaceholder = int.MinValue;
         public const decimal DecimalPlaceholder = decimal.MinValue;
         public event PropertyChangedEventHandler PropertyChanged;
+        private bool _isRevStrokeEnabled;
         public MeasurementTableModel(Plane plane)
         {
             Table = new BindingList<MeasurementRowModel>();
@@ -50,6 +51,20 @@ namespace PryamolineynostWF.Models.Collimator
                 }
             }
         }
+        
+        public bool IsRevStrokeEnabled
+        {
+            get => _isRevStrokeEnabled;
+            set
+            {
+                _isRevStrokeEnabled = value;
+                foreach (var row in Table)
+                    row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
+            }
+        }
+
+
+        
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

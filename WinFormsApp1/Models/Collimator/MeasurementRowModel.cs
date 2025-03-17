@@ -1,9 +1,10 @@
 ﻿using PryamolineynostWF.Enums;
+using PryamolineynostWF.Services;
 using System.ComponentModel;
 
 namespace PryamolineynostWF.Models.Collimator
 {
-    public class MeasurementRowModel
+    public class MeasurementRowModel : INotifyPropertyChanged
     {
         private int _position; // Номер измерений
         private int _measurementLength; // Длина измерения, мм
@@ -59,7 +60,9 @@ namespace PryamolineynostWF.Models.Collimator
             "RelativeAngleToFirst",
             "OrdinateStraightness",
             "StraightnessDeviation"
-        };s
+        };
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public int Position
         {
@@ -89,6 +92,7 @@ namespace PryamolineynostWF.Models.Collimator
             set 
             {
                 _forwardDegrees = value != null ? value % 360 : value;
+                OnPropertyChanged("ForwardDegrees");
                 CalculateMeanValue();
             }
         }
@@ -146,7 +150,11 @@ namespace PryamolineynostWF.Models.Collimator
         public string MeanValue
         {
             get => _meanValue;
-            private set => _meanValue = value;
+            private set
+            {
+                _meanValue = value;
+                OnPropertyChanged("MeanValue");
+            }
         }
 
         [Browsable(false)]
@@ -175,7 +183,11 @@ namespace PryamolineynostWF.Models.Collimator
         public bool IsReverseStrokeEnabled
         {
             get => _isReverseStrokeEnabled;
-            set => _isReverseStrokeEnabled = value;
+            set
+            {
+                _isReverseStrokeEnabled = value;
+                CalculateMeanValue() ;
+            }
         }
 
         [Browsable(false)]
@@ -253,9 +265,9 @@ namespace PryamolineynostWF.Models.Collimator
                 var meanInSeconds = (ForwardDegrees * 3600 + ForwardMinutes * 60 + ForwardSeconds) +
                                    (ReverseDegrees * 3600 + ReverseMinutes * 60 + ReverseSeconds) / 2M;
 
-                MeanDegrees = (int)(meanInSeconds / 3600 % 360);
-                MeanMinutes = (int)(meanInSeconds / 60 % 60);
-                MeanSeconds = meanInSeconds % 60;
+                MeanDegrees = (int)(meanInSeconds / 3600 % 360)/2;
+                MeanMinutes = (int)(meanInSeconds / 60 % 60)/2;
+                MeanSeconds = meanInSeconds % 60 / 2;
             }
             else
             {
@@ -264,6 +276,15 @@ namespace PryamolineynostWF.Models.Collimator
                 MeanSeconds = ForwardSeconds;
             }
             MeanValue = $"{MeanDegrees.ToString()}°{MeanMinutes.ToString()}'{MeanSeconds.ToString()}\"";
+            OnPropertyChanged("MeanDegrees");
+            OnPropertyChanged("MeanMinutes");
+            OnPropertyChanged("MeanSeconds");
+
+        }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

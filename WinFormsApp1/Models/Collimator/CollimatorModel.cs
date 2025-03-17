@@ -254,6 +254,7 @@ namespace PryamolineynostWF.Models.Collimator
             set
             {
                 _revstrokeEnabled = value;
+                _dataSet.IsRevStrokeEnabled = value;
                 OnPropertyChanged(nameof(RevStrokeEnabled));
             }
         }
