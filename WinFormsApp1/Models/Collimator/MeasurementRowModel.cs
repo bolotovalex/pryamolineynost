@@ -44,6 +44,23 @@ namespace PryamolineynostWF.Models.Collimator
             { "StraightnessDeviation", "Hi, мкм" }
         };
 
+        public static readonly List<string> ReverseStrokeEnableColumns = new List<string>
+        {
+            "ReverseDegrees",
+            "ReverseMinutes",
+            "ReverseSeconds",
+            "MeanValue"
+        };
+
+        public static readonly List<string> AdditionFields = new List<string>
+        {
+            "RelativeAngle",
+            "RelativeAngleToPrevious",
+            "RelativeAngleToFirst",
+            "OrdinateStraightness",
+            "StraightnessDeviation"
+        };s
+
         public int Position
         {
             get => _position;
