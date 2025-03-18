@@ -265,6 +265,8 @@ namespace PryamolineynostWF.Models.Collimator
             set
             {
                 _plane = value;
+                OnPropertyChanged(nameof(Plane));
+
             }
         }
 

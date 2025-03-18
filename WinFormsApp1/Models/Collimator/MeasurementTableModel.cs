@@ -25,6 +25,7 @@ namespace PryamolineynostWF.Models.Collimator
         }
 
         public string Name { get => _name; }
+        
         public BindingList<MeasurementRowModel> Table 
         {
             get => _table; 
@@ -36,19 +37,24 @@ namespace PryamolineynostWF.Models.Collimator
             get => _plane;
             set
             {
-                _plane = value;
-                switch (value)
+                if (_plane != value)
                 {
-                    case Plane.Horizontal:
-                        _name = "Горизонтальная";
-                        break;
-                    case Plane.Vertical:
-                        _name = "Вертикальная";
-                        break;
-                    case Plane.Both:
-                        _name = "Горизовнтальная и вертикальная";
-                        break;
+                    switch (value)
+                    {
+                        case Plane.Horizontal:
+                            _name = "Горизонтальная";
+                            
+                            break;
+                        case Plane.Vertical:
+                            _name = "Вертикальная";
+                            break;
+                        case Plane.Both:
+                            _name = "Горизовнтальная и вертикальная";
+                            break;
+                    }
                 }
+                
+                _plane = value;
             }
         }
         
