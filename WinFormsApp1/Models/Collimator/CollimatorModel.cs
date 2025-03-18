@@ -27,18 +27,18 @@ namespace PryamolineynostWF.Models.Collimator
         private decimal _verticalMeanDeviation = 0;
         private decimal _horizontalAreaDeviation = 0;
         private decimal _verticalAreaDeviation = 0;
-        private bool _revstrokeEnabled;
+        private bool _isRevstrokeEnabled;
         private Plane _plane;
         private MeasurementTableModel _dataSet;
-        private bool _addtionsFieldEnabled;
+        private bool _isAddtionsFieldEnabled;
         public event PropertyChangedEventHandler PropertyChanged;
         
         public CollimatorModel()
         {
             Plane = Plane.Horizontal;
             _dataSet = new MeasurementTableModel(_plane);
-            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, null, _revstrokeEnabled));
-            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, _dataSet.Table[^1], _revstrokeEnabled));
+            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, null, _isRevstrokeEnabled));
+            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, _dataSet.Table[^1], _isRevstrokeEnabled));
         }
 
         public DateTime MeasurementDate
@@ -248,14 +248,14 @@ namespace PryamolineynostWF.Models.Collimator
             } 
         }
 
-        public bool RevStrokeEnabled
+        public bool IsRevStrokeEnabled
         {
-            get => _revstrokeEnabled;
+            get => _isRevstrokeEnabled;
             set
             {
-                _revstrokeEnabled = value;
+                _isRevstrokeEnabled = value;
                 _dataSet.IsRevStrokeEnabled = value;
-                OnPropertyChanged(nameof(RevStrokeEnabled));
+                OnPropertyChanged(nameof(IsRevStrokeEnabled));
             }
         }
 
@@ -286,13 +286,13 @@ namespace PryamolineynostWF.Models.Collimator
             }
         }
 
-        public bool AdditionsFieldEnabled
+        public bool IsAdditionsFieldEnabled
         {
-            get => _addtionsFieldEnabled;
+            get => _isAddtionsFieldEnabled;
             set
             {
-                _addtionsFieldEnabled = value;
-                OnPropertyChanged(nameof(AdditionsFieldEnabled));
+                _isAddtionsFieldEnabled = value;
+                OnPropertyChanged(nameof(IsAdditionsFieldEnabled));
             }
         }
 

@@ -29,6 +29,7 @@ namespace PryamolineynostWF.Controllers.Collimator
                 .Cast<Plane>()
                 .Select(e => new { Value = e, Name = e.GetDescription() })
                 .ToList();
+
             cbPlaneUse.DisplayMember = "Name";
             cbPlaneUse.ValueMember = "Value";
             cbPlaneUse.SelectedValue = selectedPlane;

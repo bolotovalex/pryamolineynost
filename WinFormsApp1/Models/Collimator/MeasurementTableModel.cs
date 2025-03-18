@@ -60,6 +60,7 @@ namespace PryamolineynostWF.Models.Collimator
                 _isRevStrokeEnabled = value;
                 foreach (var row in Table)
                     row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
+
             }
         }
 

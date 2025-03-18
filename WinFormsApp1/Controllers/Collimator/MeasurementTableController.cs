@@ -34,11 +34,13 @@ namespace PryamolineynostWF.Controllers.Collimator
             _view.RevStrokeChanged += CBRevStroke_Changed;
             _view.AdditionFieldsChanged += CBAdditionFieldsVisible_Changed;
             
-            _view.cbRevStrokeEnable.Checked = _dataSet.RevStrokeEnabled;
-            _view.cbAdditionsFileldsEnable.Checked = _dataSet.AdditionsFieldEnabled;
+            _view.cbRevStrokeEnable.Checked = _dataSet.IsRevStrokeEnabled;
+            _view.cbAdditionsFileldsEnable.Checked = _dataSet.IsAdditionsFieldEnabled;
+            ReverseFieldHandler();
+            AdditionFildsHandler();
 
-            //_view.cbRevStrokeEnable.DataBindings.Add("Checked", _dataSet, "RevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
-            //_view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _dataSet, "AdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+            //_view.cbRevStrokeEnable.DataBindings.Add("Checked", _dataSet, "IsRevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+            //_view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _dataSet, "IsAdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
 
         }
 
@@ -165,6 +167,28 @@ namespace PryamolineynostWF.Controllers.Collimator
             }
         }
 
+        private void ReverseFieldHandler()
+        {
+            foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
+            {
+                if (MeasurementRowModel.ReverseStrokeEnableColumns.Contains(column.DataPropertyName))
+                {
+                    column.Visible = _dataSet.IsRevStrokeEnabled;
+                }
+            }
+        }
+
+        private void AdditionFildsHandler()
+        {
+            foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
+            {
+                if (MeasurementRowModel.AdditionFields.Contains(column.DataPropertyName))
+                {
+                    column.Visible = _dataSet.IsAdditionsFieldEnabled;
+                }
+            }
+        }
+
         private void DataGridView1_CellEditCanacel(object sender, DataGridViewCellCancelEventArgs e) 
         {
             if (e.RowIndex == 0)
@@ -175,12 +199,14 @@ namespace PryamolineynostWF.Controllers.Collimator
 
         private void CBRevStroke_Changed(object? sender, EventArgs e) 
         {
-            _dataSet.RevStrokeEnabled = _view.cbRevStrokeEnable.Checked;
+            _dataSet.IsRevStrokeEnabled = _view.cbRevStrokeEnable.Checked;
+            ReverseFieldHandler();
         }
 
         private void CBAdditionFieldsVisible_Changed(object? sender, EventArgs e) 
         {
-            _dataSet.AdditionsFieldEnabled = _view.cbAdditionsFileldsEnable.Checked;
+            _dataSet.IsAdditionsFieldEnabled = _view.cbAdditionsFileldsEnable.Checked;
+            AdditionFildsHandler();
         }
 
 
