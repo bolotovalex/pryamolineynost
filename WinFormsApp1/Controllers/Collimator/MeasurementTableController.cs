@@ -169,7 +169,6 @@ namespace PryamolineynostWF.Controllers.Collimator
             foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
                 if (MeasurementTableModel.ColumnHeaders.ContainsKey(column.DataPropertyName))
                     column.HeaderText = MeasurementTableModel.ColumnHeaders[column.DataPropertyName];
-            }
         }
 
         private bool IsReverseColumnEnable(DataGridViewColumn column)
