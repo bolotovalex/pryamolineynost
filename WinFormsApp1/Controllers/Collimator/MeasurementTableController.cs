@@ -94,19 +94,19 @@ namespace PryamolineynostWF.Controllers.Collimator
 
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            object cellValue = e.Value;
+            //object cellValue = e.Value;
 
-            if ((cellValue is int intValue && intValue == MeasurementTableModel.DecimalPlaceholder) ||
-                (cellValue is decimal decValue && decValue == MeasurementTableModel.DecimalPlaceholder))
-            {
-                e.CellStyle.BackColor = Color.Red;
-                e.Value = "";
-                e.FormattingApplied = true;
-            }
-            else
-            {
-                e.CellStyle.BackColor = Color.White;
-            }
+            //if ((cellValue is int intValue && intValue == MeasurementTableModel.DecimalPlaceholder) ||
+            //    (cellValue is decimal decValue && decValue == MeasurementTableModel.DecimalPlaceholder))
+            //{
+            //    e.CellStyle.BackColor = Color.Red;
+            //    e.Value = "";
+            //    e.FormattingApplied = true;
+            //}
+            //else
+            //{
+            //    e.CellStyle.BackColor = Color.White;
+            //}
         }
 
         private void DataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)

@@ -19,11 +19,11 @@ namespace PryamolineynostWF.Controllers.Collimator
         
 
 
-        public MeasurementTableForm(BindingSource bindingSource, PryamolineynostWF.Enums.Plane? selectedPlane)
+        public MeasurementTableForm(BindingSource horizontalBindingSource, PryamolineynostWF.Enums.Plane? selectedPlane)
         {
             InitializeComponent();
             this.dataGridView1.AutoGenerateColumns = true;
-            dataGridView1.DataSource = bindingSource;
+            dataGridView1.DataSource = horizontalBindingSource;
 
             cbPlaneUse.DataSource = Enum.GetValues(typeof(Plane))
                 .Cast<Plane>()

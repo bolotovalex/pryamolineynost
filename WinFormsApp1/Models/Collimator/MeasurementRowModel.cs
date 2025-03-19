@@ -8,21 +8,20 @@ namespace PryamolineynostWF.Models.Collimator
     {
         private int _position; // Номер измерений
         private int _measurementLength; // Длина измерения, мм
+        
         private int? _forwardDegrees; // Градусы прямой ход
         private int? _forwardMinutes; // Минуты прямой ход
         private decimal? _forwardSeconds; // Секунды прямой ход
         private int? _reverseDegrees; // Градусы обратный ход
         private int? _reverseMinutes; // Минуты обратный ход
         private decimal? _reverseSeconds; // Секунды обратный ход
-        private int? _meanDegrees; // Средние градусы
-        private int? _meanMinutes; // Средние минуты
         private decimal? _meanSeconds; // Средние секунды
         private decimal? _relativeAngle; // bi Наклон проверяемых участков
         private decimal? _relativeAngleToPrevious; // hi Наклон проверяемых участков относительно предыдущего
         private decimal? _relativeAngleToFirst; // Hi Наклон проверяемых участков относительно первой точки
         private decimal? _ordinateStraightness; // bi Ордината прямой величины в проверяемых точках
         private decimal? _straightnessDeviation; // Hi Отклонения прямолинейности от направляющей
-        private string? _meanValue;
+        
         private MeasurementRowModel? _previousDataRow; // Предыдущая строка
         private int _stepSize; // Шаг
         private bool _isReverseStrokeEnabled; // Включен ли учет обратного хода
@@ -104,6 +103,7 @@ namespace PryamolineynostWF.Models.Collimator
             {
                 _forwardMinutes = value != null ? value % 60 : value;
                 CalculateMeanValue();
+                OnPropertyChanged("ForwardMinutes");
             }
         }
 
@@ -114,6 +114,7 @@ namespace PryamolineynostWF.Models.Collimator
             {
                 _forwardSeconds = value != null ? value % 60.0M : value;
                 CalculateMeanValue();
+                OnPropertyChanged("ForwardSeconds");
             } 
         }
 
@@ -124,6 +125,7 @@ namespace PryamolineynostWF.Models.Collimator
             {
                 _reverseDegrees = value != null ? value % 360 : value;
                 CalculateMeanValue();
+                OnPropertyChanged("ReverseDegrees");
             }
         }
 
@@ -134,6 +136,7 @@ namespace PryamolineynostWF.Models.Collimator
             {
                 _reverseMinutes = value != null ? value % 60 : value;
                 CalculateMeanValue();
+                OnPropertyChanged("ReverseMinutes");
             }
         }
 
@@ -144,31 +147,21 @@ namespace PryamolineynostWF.Models.Collimator
             {
                 _reverseSeconds = value != null ? value % 60.0M : value;
                 CalculateMeanValue();
+                OnPropertyChanged("ReverseSeconds");
             }
         }
 
-        public string MeanValue
+        public string? MeanValue
         {
-            get => _meanValue;
-            private set
+            get
             {
-                _meanValue = value;
-                OnPropertyChanged("MeanValue");
+                if (MeanSeconds == null)
+                    return null;
+                int meanDegrees = (int)(MeanSeconds / 3600 % 360);
+                int meanMinutes = (int)(MeanSeconds / 60 % 60);
+                decimal meanSeconds = Math.Round((decimal)(MeanSeconds % 60), 1);
+                return $"{meanDegrees.ToString()}°{meanMinutes.ToString()}'{meanSeconds.ToString()}\"";
             }
-        }
-
-        [Browsable(false)]
-        public int? MeanDegrees
-        {
-            get => _meanDegrees;
-            private set => _meanDegrees = value;
-        }
-        
-        [Browsable(false)]
-        public int? MeanMinutes
-        {
-            get => _meanMinutes;
-            private set => _meanMinutes = value;
         }
 
         [Browsable(false)]
@@ -200,31 +193,51 @@ namespace PryamolineynostWF.Models.Collimator
         public decimal? RelativeAngle
         {
             get => _relativeAngle;
-            private set => _relativeAngle = value;
+            private set 
+            {
+                _relativeAngle = value;
+                OnPropertyChanged("RelativeAngle");
+            } 
         }
 
         public decimal? RelativeAngleToPrevious
         {
             get => _relativeAngleToPrevious;
-            private set => _relativeAngleToPrevious = value;
+            private set
+            {
+                _relativeAngleToPrevious = value;
+                OnPropertyChanged("RelativeAngleToPrevious");
+            } 
         }
 
         public decimal? RelativeAngleToFirst
         {
             get => _relativeAngleToFirst;
-            private set => _relativeAngleToFirst = value;
+            private set
+            {
+                _relativeAngleToFirst = value;
+                OnPropertyChanged("RelativeAngleToFirst");
+            } 
         }
 
         public decimal? OrdinateStraightness
         {
             get => _ordinateStraightness;
-            private set => _ordinateStraightness = value;
+            private set
+            {
+                _ordinateStraightness = value;
+                OnPropertyChanged("OrdinateStraightness");
+            }
         }
 
         public decimal? StraightnessDeviation
         {
             get => _straightnessDeviation;
-            private set => _straightnessDeviation = value;
+            private set
+            {
+                _straightnessDeviation = value;
+                OnPropertyChanged("StraightnessDeviation");
+            }
         }
 
         public MeasurementRowModel(int step, MeasurementRowModel? prevRow, bool revStrokeEnable)
@@ -250,35 +263,26 @@ namespace PryamolineynostWF.Models.Collimator
         {
             if (ForwardDegrees == null || ForwardMinutes == null || ForwardSeconds == null)
             {
-                MeanValue = "";
+                MeanSeconds = null;
                 return;
             }
             
             if ( IsReverseStrokeEnabled && (ReverseDegrees == null || ReverseMinutes == null || ReverseSeconds == null))
             {
-                MeanValue = "";
+                MeanSeconds = null;
                 return;
             }
 
             if (IsReverseStrokeEnabled)
             {
-                decimal meanInSeconds = (decimal)(((ForwardDegrees + ReverseDegrees) * 3600) 
+                MeanSeconds = (decimal)(((ForwardDegrees + ReverseDegrees) * 3600) 
                     + (decimal)((ForwardMinutes + ReverseMinutes) * 60) + ((ForwardSeconds + ReverseSeconds))) / 2M;
-
-                MeanDegrees = (int)(meanInSeconds / 3600 % 360);
-                MeanMinutes = (int)(meanInSeconds / 60 % 60);
-                MeanSeconds = Math.Round(meanInSeconds % 60,1);
             }
             else
             {
-                MeanDegrees = ForwardDegrees;
-                MeanMinutes = ForwardMinutes;
-                MeanSeconds = ForwardSeconds;
+                MeanSeconds = (decimal)(ForwardDegrees * 3600 + ForwardMinutes * 60 + ForwardSeconds);
             }
-            MeanValue = $"{MeanDegrees.ToString()}°{MeanMinutes.ToString()}'{MeanSeconds.ToString()}\"";
-            OnPropertyChanged("MeanDegrees");
-            OnPropertyChanged("MeanMinutes");
-            OnPropertyChanged("MeanSeconds");
+            OnPropertyChanged("MeanValue");
 
         }
 

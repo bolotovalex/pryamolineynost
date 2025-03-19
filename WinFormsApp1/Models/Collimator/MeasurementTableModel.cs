@@ -13,19 +13,22 @@ namespace PryamolineynostWF.Models.Collimator
     {
         private string _name;
         private Plane _plane;
-        private BindingList<MeasurementRowModel> _table;
-        public const int IntPlaceholder = int.MinValue;
-        public const decimal DecimalPlaceholder = decimal.MinValue;
+        private BindingList<CombinedMeasurementRowModel> _table;
+        
+        private BindingList<MeasurementRowModel> _horizontalTable;
+        private BindingList<MeasurementRowModel> _verticalTable;
+        public BindingList<CombinedMeasurementRowModel> _combinedTable;
+
         public event PropertyChangedEventHandler PropertyChanged;
         private bool _isRevStrokeEnabled;
         public MeasurementTableModel(Plane plane)
         {
             Table = new BindingList<MeasurementRowModel>();
             Plane = plane;
+
         }
 
-        public string Name { get => _name; }
-        
+
         public BindingList<MeasurementRowModel> Table 
         {
             get => _table; 
@@ -66,12 +69,60 @@ namespace PryamolineynostWF.Models.Collimator
                 _isRevStrokeEnabled = value;
                 foreach (var row in Table)
                     row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
-
             }
         }
 
+        public MeasurementRowModel HorizontalRow { get; set; }
+        public MeasurementRowModel VerticalRow { get; set; }
 
-        
+        public BindingList<CombinedMeasurementRowModel> CreateCombinedBindingList(BindingList<MeasurementRowModel> horizontalTable, BindingList<MeasurementRowModel> verticalTable)
+        {
+            var combinedList = new BindingList<CombinedMeasurementRowModel>();
+
+            // Предполагаем, что обе таблицы имеют одинаковое количество строк
+            for (int i = 0; i < horizontalTable.Count; i++)
+            {
+                var horizontalRow = horizontalTable[i];
+                var verticalRow = verticalTable[i];
+
+                combinedList.Add(new CombinedMeasurementRowModel
+                {
+                    // Общие поля
+                    Position = horizontalRow.Position,
+                    MeasurementLength = horizontalRow.MeasurementLength,
+                    
+                    ForwardDegreesHorizontal = horizontalRow.ForwardDegrees,
+                    ForwardMinutesHorizontal  = horizontalRow.ForwardMinutes,
+                    ForwardSecondsHorizontal = horizontalRow.ForwardSeconds,
+                    ReverseDegreesHorizontal = horizontalRow.ReverseDegrees,
+                    ReverseMinutesHorizontal = horizontalRow.ReverseMinutes,
+                    ReverseSecondsHorizontal = horizontalRow.ReverseSeconds,
+                    
+                    MeanSecondsHorizontal = horizontalRow.MeanValue,
+                    RelativeAngleHorizontal = horizontalRow.RelativeAngle,
+                    RelativeAngleToPreviousHorizontal = horizontalRow.RelativeAngleToPrevious,
+                    RelativeAngleToFirstHorizontal = horizontalRow.RelativeAngleToFirst,
+                    OrdinateStraightnessHorizontal = horizontalRow.OrdinateStraightness,
+                    StraightnessDeviationHorizontal = horizontalRow.StraightnessDeviation,
+                    
+                    ForwardDegreesVertical = verticalRow.ForwardDegrees,
+                    ForwardMinutesVertical = verticalRow.ForwardMinutes,
+                    ForwardSecondsVertical = verticalRow.ForwardSeconds,
+                    ReverseDegreesVertical = verticalRow.ReverseDegrees,
+                    ReverseMinutesVertical = verticalRow.ReverseMinutes,
+                    ReverseSecondsVertical = verticalRow.ReverseSeconds,
+
+                    MeanSecondsVertical = verticalRow.MeanValue,
+                    RelativeAngleVertical = verticalRow.RelativeAngle,
+                    RelativeAngleToPreviousVertical = verticalRow.RelativeAngleToPrevious,
+                    RelativeAngleToFirstVertical = verticalRow.RelativeAngleToFirst,
+                    OrdinateStraightnessVertical = verticalRow.OrdinateStraightness,
+                    StraightnessDeviationVertical = verticalRow.StraightnessDeviation
+                });
+            }
+            return combinedList;
+        }
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
