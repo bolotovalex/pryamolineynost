@@ -9,15 +9,14 @@ namespace Pryamolineynost;
 
 public partial class LevelMainForm : Form, IView
 {
-    
     private string _version = "1.2.7.2";
     private DB _dB;
     private LevelDataForm _dataForm;
     private LevelGraphicsForm _graphicsForm;
     private GraphicModel _graphic;
     private ErrorForm _errorForm;
-       
-    enum FileFormat
+
+    private enum FileFormat
     {
         Json,
         Pdf
@@ -33,13 +32,14 @@ public partial class LevelMainForm : Form, IView
         ChangeComboBoxColor();
         //_graphicsForm = new GraphicsForm(_dB, this, _graphic);
         Text = $"Прямолинейность. ver. {_version}";
-        this.FormClosing += FormClosingOverride;
+        FormClosing += FormClosingOverride;
     }
 
     private void FormClosingOverride(object sender, FormClosingEventArgs e)
     {
         ExitDialog.ShowDialog(sender, e);
     }
+
     public bool CheckComboBox(ComboBox comboBox)
     {
         if (comboBox.Text.Length == 0)
@@ -101,7 +101,7 @@ public partial class LevelMainForm : Form, IView
 
     private static int CheckTextBoxIntValue(TextBox textBox)
     {
-        return int.TryParse(textBox.Text, out int result) ? result : 0;
+        return int.TryParse(textBox.Text, out var result) ? result : 0;
     }
 
 
@@ -110,20 +110,12 @@ public partial class LevelMainForm : Form, IView
         _dB.Step = CheckTextBoxIntValue(stepTextBox);
         _dB.UpdateStepsPerMeter(_dB.Step);
         _dB.UpdateAllRows(_dB.currUnit);
-        if (_dataForm != null && !_dataForm.Disposing)
-        {
-            _dataForm.DataForm_Load(sender, e);
-        }
-        
+        if (_dataForm != null && !_dataForm.Disposing) _dataForm.DataForm_Load(sender, e);
+
         UpdateAllFields();
-        if (_graphic != null)
-        {
-            _graphic.RefreshPlot();
-        }
+        if (_graphic != null) _graphic.RefreshPlot();
         if (_dB.GetAreaDeviations().Length > 0)
-        {
             lineDeviationTextBox.Text = _dB.GetAreaDeviations()[0].deviation.ToString();
-        }
     }
 
     private void UpdateFullTolerance(object sender, EventArgs e)
@@ -235,27 +227,18 @@ public partial class LevelMainForm : Form, IView
         openFileDialog.ShowDialog();
         if (openFileDialog.FileName != "")
         {
-            if (_dataForm != null && !_dataForm.Disposing)
-            {
-                _dataForm.Dispose();
-            }
-            
-            if (_graphicsForm != null)
-            {
-                _graphicsForm.Dispose();
-            }
+            if (_dataForm != null && !_dataForm.Disposing) _dataForm.Dispose();
+
+            if (_graphicsForm != null) _graphicsForm.Dispose();
 
 
             var reader = new StreamReader(openFileDialog.OpenFile());
             var data = await reader.ReadToEndAsync();
-            DB? newDb = JsonSerializer.Deserialize<DB>(data) ?? new DB() { Description = "", Name = "", Fio = "" };
+            var newDb = JsonSerializer.Deserialize<DB>(data) ?? new DB() { Description = "", Name = "", Fio = "" };
             _dB = newDb;
             _dB.UpdateAllRows(_dB.currUnit);
             UpdateAllFields();
-            if (_dataForm != null && !_dataForm.Disposing)
-            {
-                _dataForm.UpdateForm(null, null);
-            }
+            if (_dataForm != null && !_dataForm.Disposing) _dataForm.UpdateForm(null, null);
             UpdateGraphic();
             reader.Close();
         }
@@ -264,6 +247,7 @@ public partial class LevelMainForm : Form, IView
             //_errorForm = new ErrorForm();
             //_errorForm.ShowDialog();
         }
+
         ChangeComboBoxColor();
     }
 
@@ -274,6 +258,7 @@ public partial class LevelMainForm : Form, IView
         _graphic.StraightPoints = _dB.GetStraightPoint();
         _graphic.RefreshPlot();
     }
+
     private void GraphicButton_Click(object sender, EventArgs e)
     {
         if (ChangeComboBoxColor())
@@ -281,7 +266,8 @@ public partial class LevelMainForm : Form, IView
             if (_graphicsForm != null)
                 _graphicsForm.Dispose();
 
-            var newGraphic = new GraphicModel(_dB.GetCurvePoints(), _dB.GetStraightPoint(), _dB.DataList.Count < 12 ? _dB.Step : _dB.DataList.Count / 12 * _dB.Step);
+            var newGraphic = new GraphicModel(_dB.GetCurvePoints(), _dB.GetStraightPoint(),
+                _dB.DataList.Count < 12 ? _dB.Step : _dB.DataList.Count / 12 * _dB.Step);
             _graphicsForm = new LevelGraphicsForm(_dB, this, newGraphic);
             _graphicsForm.UpdateDeviationList();
             _graphicsForm.Show();
@@ -298,7 +284,8 @@ public partial class LevelMainForm : Form, IView
         if (ChangeComboBoxColor())
         {
             var fileName = GetSaveFileName(FileFormat.Pdf);
-            var pl = new GraphicModel(_dB.GetCurvePoints(), _dB.GetStraightPoint(), _dB.DataList.Count < 12 ? _dB.Step : _dB.DataList.Count / 12 * _dB.Step);
+            var pl = new GraphicModel(_dB.GetCurvePoints(), _dB.GetStraightPoint(),
+                _dB.DataList.Count < 12 ? _dB.Step : _dB.DataList.Count / 12 * _dB.Step);
             pl.RefreshPlot();
             if (fileName != "")
             {
@@ -327,10 +314,7 @@ public partial class LevelMainForm : Form, IView
         if (_dB.LocalAreaLength >= _dB.Step)
         {
             _dB.SetAreaDeviation(_dB.GetMaxLocalAreaDeviation(30));
-            if (_graphicsForm != null)
-            {
-                _graphicsForm.UpdateDeviationList();
-            }
+            if (_graphicsForm != null) _graphicsForm.UpdateDeviationList();
 
             if (_graphic != null)
             {
@@ -338,6 +322,7 @@ public partial class LevelMainForm : Form, IView
                 _graphic.RefreshPlot();
             }
         }
+
         if (_graphic != null)
         {
             _graphic.RebuildModel(_dB.Step);
@@ -345,8 +330,6 @@ public partial class LevelMainForm : Form, IView
         }
 
         if (_dB.GetAreaDeviations().Length > 0)
-        {
             lineDeviationTextBox.Text = _dB.GetAreaDeviations()[0].deviation.ToString();
-        }
     }
 }

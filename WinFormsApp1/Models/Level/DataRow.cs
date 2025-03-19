@@ -10,6 +10,7 @@ public class DataRow
     /// </summary>
     // private const decimal coef;
     private int _position { get; set; } //Длина измерения, мм
+
     private int _step { get; set; } //Шаг
     private decimal _factProfile { get; set; } //Фактический профиль проверяемой поверхности, мкм
     private decimal _adjStraight { get; set; } //Прилегающая прямая, мкм
@@ -57,7 +58,7 @@ public class DataRow
             _fStroke = value;
             UpdateMidValue();
             var a = IntToSeconds(value);
-            (_fDegree, _fMinutes, _fSeconds) = OptimizeDegrees(0,0,IntToSeconds(value));
+            (_fDegree, _fMinutes, _fSeconds) = OptimizeDegrees(0, 0, IntToSeconds(value));
         }
     }
 
@@ -78,7 +79,9 @@ public class DataRow
         set
         {
             _prevDataRow = value;
-            FactProfile = _prevDataRow != null ? MidValue * _step / 1000 + _prevDataRow.FactProfile : MidValue * _step / 1000 ;
+            FactProfile = _prevDataRow != null
+                ? MidValue * _step / 1000 + _prevDataRow.FactProfile
+                : MidValue * _step / 1000;
         }
     }
 
@@ -95,10 +98,9 @@ public class DataRow
     public int Step
     {
         get => _step;
-        set
-        {
-            FactProfile = _prevDataRow != null ? MidValue * _step / 1000 + _prevDataRow.FactProfile : MidValue * _step / 1000 ;
-        }
+        set => FactProfile = _prevDataRow != null
+            ? MidValue * _step / 1000 + _prevDataRow.FactProfile
+            : MidValue * _step / 1000;
     }
 
     public decimal FactProfile
@@ -124,10 +126,7 @@ public class DataRow
     public decimal Deviation
     {
         get => _deviation;
-        set
-        {
-            _deviation = value;
-        }
+        set => _deviation = value;
     }
 
     public decimal MidValue
@@ -136,17 +135,16 @@ public class DataRow
         set
         {
             _midValue = value;
-            FactProfile = _prevDataRow != null ? MidValue * _step / 1000 + _prevDataRow.FactProfile : MidValue * _step / 1000 ;
+            FactProfile = _prevDataRow != null
+                ? MidValue * _step / 1000 + _prevDataRow.FactProfile
+                : MidValue * _step / 1000;
         }
     }
 
     public decimal DeviationPerMeter
     {
         get => _devationPerMeter;
-        set
-        {
-            _devationPerMeter = value;
-        }
+        set => _devationPerMeter = value;
     }
 
     public DataRow(int value, int step, DataRow? prevDataRow, bool revStrokeEnabled, Direction direction)
@@ -173,7 +171,7 @@ public class DataRow
                 RevDegree = direction == Direction.Reverse ? value : 0;
                 break;
             case AngleUnits.Minute:
-                FMinutes = direction == Direction.Forward ?  value : 0;
+                FMinutes = direction == Direction.Forward ? value : 0;
                 RevMinutes = direction == Direction.Reverse ? value : 0;
                 break;
             case AngleUnits.Second:
@@ -193,7 +191,7 @@ public class DataRow
         if (unit == Units.Micrometer)
         {
             FStroke = _fStroke;
-            RevStroke = _revStroke;            
+            RevStroke = _revStroke;
         }
         else if (unit == Units.Angle)
         {
@@ -209,48 +207,68 @@ public class DataRow
     //получение сток для печати
 
 
-
-    public int FDegree { get => _fDegree; set 
-        { 
+    public int FDegree
+    {
+        get => _fDegree;
+        set
+        {
             _fDegree = value % 360;
-            _fStroke = DegreeToMicrometers(degree: value, minutes: _fMinutes, seconds: _fSeconds);
+            _fStroke = DegreeToMicrometers(value, _fMinutes, _fSeconds);
             UpdateMidValue();
-        } }
-    public int FMinutes { get => _fMinutes; set {
+        }
+    }
+
+    public int FMinutes
+    {
+        get => _fMinutes;
+        set
+        {
             (_fDegree, _fMinutes, _fSeconds) = OptimizeDegrees(_fDegree, value, _fSeconds);
-            _fStroke = DegreeToMicrometers(degree: _fDegree, minutes: value, seconds: _fSeconds);
+            _fStroke = DegreeToMicrometers(_fDegree, value, _fSeconds);
             UpdateMidValue();
-        } }
-    public int FSeconds { get => _fSeconds; set {
+        }
+    }
+
+    public int FSeconds
+    {
+        get => _fSeconds;
+        set
+        {
             (_fDegree, _fMinutes, _fSeconds) = OptimizeDegrees(_fDegree, _fMinutes, value);
-            _fStroke = DegreeToMicrometers(degree: _fDegree, minutes: _fMinutes, seconds: value);
+            _fStroke = DegreeToMicrometers(_fDegree, _fMinutes, value);
             UpdateMidValue();
-        } }
+        }
+    }
 
     public int RevDegree
     {
-        get => _rDegree; set
+        get => _rDegree;
+        set
         {
             _rDegree = value % 360;
-            _revStroke = DegreeToMicrometers(degree: value, minutes: _rMinutes, seconds: _rSeconds);
+            _revStroke = DegreeToMicrometers(value, _rMinutes, _rSeconds);
             UpdateMidValue();
         }
     }
+
     public int RevMinutes
     {
-        get => _rMinutes; set
+        get => _rMinutes;
+        set
         {
             (_rDegree, _rMinutes, _rSeconds) = OptimizeDegrees(_rDegree, value, _rSeconds);
-            _revStroke = DegreeToMicrometers(degree: _rDegree, minutes: value, seconds: _rSeconds);
+            _revStroke = DegreeToMicrometers(_rDegree, value, _rSeconds);
             UpdateMidValue();
         }
     }
+
     public int RevSeconds
     {
-        get => _rSeconds; set
+        get => _rSeconds;
+        set
         {
             (_rDegree, _rMinutes, _rSeconds) = OptimizeDegrees(_rDegree, _rMinutes, value);
-            _revStroke = DegreeToMicrometers(degree: _rDegree, minutes: _rMinutes, seconds: value);
+            _revStroke = DegreeToMicrometers(_rDegree, _rMinutes, value);
             UpdateMidValue();
         }
     }
@@ -265,14 +283,17 @@ public class DataRow
         return (optDegree, optMinutes, optSeconds);
     }
 
-    private (int IntPart, int FractPart) GetNumParts(int number, int devider) => (number / devider, number % devider);
+    private (int IntPart, int FractPart) GetNumParts(int number, int devider)
+    {
+        return (number / devider, number % devider);
+    }
 
     //Перевод микрометры в секунды
     public int IntToSeconds(int value)
     {
         return (int)Math.Round(Math.Atan((double)value / 1000000) * (180 / Math.PI) * 3600);
     }
-    
+
     public int DegreeToMicrometers(int degree = 0, int minutes = 0, int seconds = 0)
     {
         var deg = (double)degree + (double)minutes / 60D + (double)seconds / 3600D;
@@ -284,21 +305,25 @@ public class DataRow
         ///<summary>
         ///Получение списка строк для графика
         /// </summary>
-        return [Position.ToString(),
-                Math.Round(Deviation,2).ToString(),
-                _fStroke == int.MinValue ? "0": FStroke.ToString(),
-                _revStroke == int.MinValue ? "0" : RevStroke.ToString(),
-                FDegree.ToString(),
-                FMinutes.ToString(),
-                FSeconds.ToString(),
-                RevDegree.ToString(),
-                RevMinutes.ToString(),
-                RevSeconds.ToString()];
+        return
+        [
+            Position.ToString(),
+            Math.Round(Deviation, 2).ToString(),
+            _fStroke == int.MinValue ? "0" : FStroke.ToString(),
+            _revStroke == int.MinValue ? "0" : RevStroke.ToString(),
+            FDegree.ToString(),
+            FMinutes.ToString(),
+            FSeconds.ToString(),
+            RevDegree.ToString(),
+            RevMinutes.ToString(),
+            RevSeconds.ToString()
+        ];
     }
+
     public void UpdateMidValue()
     {
         MidValue = _revStroke != int.MinValue && _revStrokeEnable
-                ? (_revStroke + _fStroke) / 2
-                : this._fStroke;
+            ? (_revStroke + _fStroke) / 2
+            : _fStroke;
     }
 }

@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PryamolineynostWF.Interfaces
+namespace PryamolineynostWF.Interfaces;
+
+public interface IModel
 {
-    public interface IModel
-    {
-    }
 }

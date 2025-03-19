@@ -33,15 +33,11 @@ public partial class CollimatorForm : Form
     //public EventHandler tbVStepSizeChanged;
 
 
-
-
     public CollimatorForm(CollimatorType collimatorType, DateTime date, string actNumber)
     {
         InitializeComponent();
         lblColimmatorType.Text = collimatorType.ToString();
     }
-
-    
 
 
     private void btnCollimatorTypeChange_Click(object sender, EventArgs e)
@@ -91,7 +87,7 @@ public partial class CollimatorForm : Form
     public TextBox GetTbVerticalTolerAllLength => tbVerticalTolerAllLength;
     public TextBox GetTbStepSize => tbStepSize;
     public Label GetLblBedLength => lblBedLengthValue;
-    
+
     public Label GetLblHorizontalMaxDeviation => lblHorizontalMaxDeviation;
     public Label GetLblVerticalMaxDeviation => lblVerticalMaxDeviation;
 

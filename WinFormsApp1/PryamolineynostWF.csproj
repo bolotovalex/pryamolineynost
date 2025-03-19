@@ -15,70 +15,70 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <DebugType>embedded</DebugType>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-      <DebugType>embedded</DebugType>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-      <DebugType>embedded</DebugType>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-      <DebugType>embedded</DebugType>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <ItemGroup>
-      <AvaloniaXaml Remove="Controllers\Level\**" />
-      <Compile Remove="Controllers\Level\**" />
-      <EmbeddedResource Remove="Controllers\Level\**" />
-      <None Remove="Controllers\Level\**" />
+        <AvaloniaXaml Remove="Controllers\Level\**"/>
+        <Compile Remove="Controllers\Level\**"/>
+        <EmbeddedResource Remove="Controllers\Level\**"/>
+        <None Remove="Controllers\Level\**"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="Icon.ico" />
+        <Content Include="Icon.ico"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.3" />
-      <PackageReference Include="OxyPlot.Core" Version="2.2.0" />
-      <PackageReference Include="OxyPlot.WindowsForms" Version="2.2.0" />
-      <PackageReference Include="PDFsharp" Version="6.1.1" />
-      <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
-      <PackageReference Include="Plotly.NET" Version="5.1.0" />
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.3"/>
+        <PackageReference Include="OxyPlot.Core" Version="2.2.0"/>
+        <PackageReference Include="OxyPlot.WindowsForms" Version="2.2.0"/>
+        <PackageReference Include="PDFsharp" Version="6.1.1"/>
+        <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1"/>
+        <PackageReference Include="Plotly.NET" Version="5.1.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Views\Collimator\CollimatorCalibrationDateForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="Views\Level\LevelDataForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="Views\Level\ErrorForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="Views\Level\LevelGraphicsForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="Views\Level\LevelMainForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="Views\DeviceChooseForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="Views\Collimator\CollimatorForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
+        <Compile Update="Views\Collimator\CollimatorCalibrationDateForm.cs">
+            <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="Views\Level\LevelDataForm.cs">
+            <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="Views\Level\ErrorForm.cs">
+            <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="Views\Level\LevelGraphicsForm.cs">
+            <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="Views\Level\LevelMainForm.cs">
+            <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="Views\DeviceChooseForm.cs">
+            <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="Views\Collimator\CollimatorForm.cs">
+            <SubType>Form</SubType>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Controllers\Properties\Resources.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
+        <EmbeddedResource Update="Controllers\Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
 </Project>

@@ -8,18 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PryamolineynostWF
-{
-    public partial class ErrorForm : Form
-    {
-        public ErrorForm()
-        {
-            InitializeComponent();
-        }
+namespace PryamolineynostWF;
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+public partial class ErrorForm : Form
+{
+    public ErrorForm()
+    {
+        InitializeComponent();
+    }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+        Close();
     }
 }

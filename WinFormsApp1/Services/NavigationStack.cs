@@ -1,51 +1,49 @@
-﻿namespace PryamolineynostWF.Services
+﻿namespace PryamolineynostWF.Services;
+
+public static class NavigationStack
 {
-    public static class NavigationStack
+    private static Stack<Form> _formStack = new();
+    public static bool HasPreviousForm => _formStack.Count > 0;
+
+    public static void Navigate(Form currentForm, Form nextForm)
     {
-        private static Stack<Form> _formStack = new Stack<Form>();
-        public static bool HasPreviousForm => _formStack.Count > 0;
-
-        public static void Navigate(Form currentForm, Form nextForm)
+        _formStack.Push(currentForm);
+        currentForm.Hide();
+        nextForm.FormClosed += (sender, events) =>
         {
-            _formStack.Push(currentForm);
-            currentForm.Hide();
-            nextForm.FormClosed += (sender, events) =>
+            if (_formStack.Count > 0)
             {
-                if (_formStack.Count > 0)
-                {
-                    var previousForm = _formStack.Pop();
-                    previousForm.Show();
-                }
-            };
-            nextForm.Show();
-        }
+                var previousForm = _formStack.Pop();
+                previousForm.Show();
+            }
+        };
+        nextForm.Show();
+    }
 
-        public static void NavigateWithData(Form currentForm, Form nextForm, Action<Form> onReturn)
+    public static void NavigateWithData(Form currentForm, Form nextForm, Action<Form> onReturn)
+    {
+        _formStack.Push(currentForm);
+        currentForm.Hide();
+        nextForm.FormClosed += (sender, events) =>
         {
-            _formStack.Push(currentForm);
-            currentForm.Hide();
-            nextForm.FormClosed += (sender, events) =>
+            if (_formStack.Count > 0)
             {
-                if (_formStack.Count > 0)
-                {
-                    var previousForm = _formStack.Pop();
-                    onReturn(previousForm);
-                    previousForm.Show();
-                }
-            };
-            nextForm.Show();
-        }
+                var previousForm = _formStack.Pop();
+                onReturn(previousForm);
+                previousForm.Show();
+            }
+        };
+        nextForm.Show();
+    }
 
-        public static void Exit()
-        {
-            _formStack.Clear();
-            Application.Exit();
-        }
+    public static void Exit()
+    {
+        _formStack.Clear();
+        Application.Exit();
+    }
 
-        public static void Clear()
-        {
-            _formStack.Clear();
-
-        }
+    public static void Clear()
+    {
+        _formStack.Clear();
     }
 }

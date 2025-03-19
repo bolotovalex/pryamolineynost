@@ -248,6 +248,11 @@
             PerformLayout();
         }
 
+        private void DataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.ComboBox cbPlaneUse;
 

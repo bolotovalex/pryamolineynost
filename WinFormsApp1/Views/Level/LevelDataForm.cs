@@ -4,6 +4,7 @@ using System;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+
 namespace Pryamolineynost;
 
 public partial class LevelDataForm : Form
@@ -19,9 +20,9 @@ public partial class LevelDataForm : Form
     public LevelDataForm(DB db, LevelMainForm parrentForm, LevelGraphicsForm graphicsForm)
     {
         _initFlag = true;
-        this._db = db;
+        _db = db;
         _mainForm = parrentForm;
-        this._graphicsForm = graphicsForm;
+        _graphicsForm = graphicsForm;
         InitializeComponent();
         FillUnitsComboBox();
         ToogleUnitsColumns();
@@ -59,9 +60,7 @@ public partial class LevelDataForm : Form
     {
         var dataGridView = Controls[5] as DataGridView;
         if (dataGridView != null && dataGridView.SelectedRows.Count > 0)
-        {
             foreach (DataGridViewRow selectedRow in dataGridView.SelectedRows)
-            {
                 if (!selectedRow.IsNewRow)
                 {
                     _db.DataList.RemoveAt(selectedRow.Index);
@@ -70,13 +69,8 @@ public partial class LevelDataForm : Form
                     UpdateForm(sender, e);
                     _mainForm.UpdateAllFields();
                     _mainForm.UpdateGraphic();
-                    if (_graphicsForm != null)
-                    {
-                        _graphicsForm.UpdateDeviationList();
-                    }
+                    if (_graphicsForm != null) _graphicsForm.UpdateDeviationList();
                 }
-            }
-        }
     }
 
     public void FillUnitsComboBox()
@@ -86,9 +80,10 @@ public partial class LevelDataForm : Form
         unitComboBox.Items.Add(_db.GetUnitDescription(Units.Angle));
         unitComboBox.SelectedIndex = _db.GetUnitOrder(_db.currUnit);
     }
+
     public void ReloadDataForm(DB db, LevelMainForm parrentForm)
     {
-        this._db = db;
+        _db = db;
         _mainForm = parrentForm;
         dataGrid.Rows.Clear();
         UpdateForm(null, null);
@@ -103,7 +98,6 @@ public partial class LevelDataForm : Form
         clearDBButton.Location = new Point(clearDBButton.Location.X, ClientSize.Height - 28);
         UnitLabel.Location = new Point(ClientSize.Width - 511, ClientSize.Height - 24);
         unitComboBox.Location = new Point(ClientSize.Width - 387, ClientSize.Height - 28);
-
     }
 
     public void DataForm_Load(object sender, EventArgs e)
@@ -130,9 +124,7 @@ public partial class LevelDataForm : Form
         {
             var row = _db.DataList[i];
             for (var cellNumber = 0; cellNumber < dataGrid.ColumnCount; cellNumber++)
-            {
                 dataGrid.Rows[i].Cells[cellNumber].Style.BackColor = Color.WhiteSmoke;
-            }
             dataGrid.Rows[i].Cells[0].Value = i;
             dataGrid.Rows[i].Cells[1].Value = row.Position;
             dataGrid.Rows[i].Cells[2].Value = Math.Round(row.FactProfile, 2);
@@ -149,7 +141,7 @@ public partial class LevelDataForm : Form
             dataGrid.Rows[i].Cells[13].Value = row.RevMinutes == int.MinValue ? "" : row.RevMinutes.ToString();
             dataGrid.Rows[i].Cells[14].Value = row.RevSeconds == int.MinValue ? "" : row.RevSeconds.ToString();
 
-            if (Math.Round(row.DeviationPerMeter, 2) > this._db.MeterTolerance)
+            if (Math.Round(row.DeviationPerMeter, 2) > _db.MeterTolerance)
                 dataGrid.Rows[i].Cells[5].Style.BackColor = Color.LightCoral;
             else
                 dataGrid.Rows[i].Cells[5].Style.BackColor = SystemColors.Control;
@@ -177,16 +169,17 @@ public partial class LevelDataForm : Form
             dataGrid.Columns[6].Visible = false;
 
         for (var i = mStartIndex; i < _micrometersColumnsIndex.Length; i++)
-            dataGrid.Columns[_micrometersColumnsIndex[i]].Visible = _db is { RevStrokeEnable: true, currUnit: Units.Micrometer };
+            dataGrid.Columns[_micrometersColumnsIndex[i]].Visible =
+                _db is { RevStrokeEnable: true, currUnit: Units.Micrometer };
 
         for (var i = aStartIndex; i < _angleColumnsIndex.Length; i++)
             dataGrid.Columns[_angleColumnsIndex[i]].Visible = _db is { RevStrokeEnable: true, currUnit: Units.Angle };
     }
 
-    
+
     private void DataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
     {
-        object? cellValue = dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+        var cellValue = dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
         int value;
 
         if (cellValue != null)
@@ -249,7 +242,7 @@ public partial class LevelDataForm : Form
                         break;
                 }
         }
-        
+
         else
         {
             switch (e.ColumnIndex)
@@ -265,17 +258,14 @@ public partial class LevelDataForm : Form
                         _db.UpdateRow(e.RowIndex, 0, Direction.Forward, Units.Micrometer);
                         //dataGrid.Rows.RemoveAt(e.RowIndex);
                     }
+
                     break;
 
                 case 8:
                     if (_db.DataList[e.RowIndex].FStroke == int.MinValue)
-                    {
                         _db.DataList.RemoveAt(e.RowIndex);
-                    }
                     else
-                    {
                         _db.UpdateRow(e.RowIndex, int.MinValue, Direction.Reverse, Units.Micrometer);
-                    }
                     break;
             }
 
@@ -285,10 +275,7 @@ public partial class LevelDataForm : Form
         UpdateForm(sender, e);
         _mainForm.UpdateAllFields();
         _mainForm.UpdateGraphic();
-        if (_graphicsForm != null)
-        {
-            _graphicsForm.UpdateDeviationList();
-        }
+        if (_graphicsForm != null) _graphicsForm.UpdateDeviationList();
     }
 
 
@@ -358,12 +345,9 @@ public partial class LevelDataForm : Form
 
     private (int degree, int minutes, int seconds) GetAngelFromMicroMeters(int micrometers)
     {
-        var degree = Decimal.ToInt32(micrometers / 17455);
-        var minutes = Decimal.ToInt32(micrometers / 290.916666666667M);
-        var seconds = Decimal.ToInt32(micrometers / 4.84861111111111M);
+        var degree = decimal.ToInt32(micrometers / 17455);
+        var minutes = decimal.ToInt32(micrometers / 290.916666666667M);
+        var seconds = decimal.ToInt32(micrometers / 4.84861111111111M);
         return (degree, minutes, seconds);
-
     }
-
-    
 }

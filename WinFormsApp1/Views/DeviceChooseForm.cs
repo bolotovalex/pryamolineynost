@@ -11,9 +11,8 @@ public partial class DeviceChooseForm : Form
     public event EventHandler BtnCancelClicked;
     public event EventHandler BtnLoadClicked;
     public event EventHandler MeasurementDeviceSelect;
-    
-    
-    
+
+
     public MeasurementDevices SelectedDevice => (MeasurementDevices)deviceComboBox.SelectedValue;
     public CollimatorType SelectedCollimator => (CollimatorType)collimatorModelComboBox.SelectedValue;
 
@@ -47,6 +46,5 @@ public partial class DeviceChooseForm : Form
 
     private void collimatorModelComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-
     }
 }

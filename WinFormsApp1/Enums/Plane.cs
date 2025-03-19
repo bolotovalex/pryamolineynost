@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 
-namespace PryamolineynostWF.Enums
+namespace PryamolineynostWF.Enums;
+
+public enum Plane
 {
-    public enum Plane
-    {
-        [Description("Гор. + верт.")] Both,
-        [Description("Горизонтальная")] Horizontal,
-        [Description("Вертикальная")] Vertical
-    }
+    [Description("Гор. + верт.")] Both,
+    [Description("Горизонтальная")] Horizontal,
+    [Description("Вертикальная")] Vertical
 }

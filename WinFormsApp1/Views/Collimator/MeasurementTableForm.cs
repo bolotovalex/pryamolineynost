@@ -2,137 +2,132 @@
 using PryamolineynostWF.Services;
 using PryamolineynostWF.Enums;
 
-namespace PryamolineynostWF.Controllers.Collimator
+namespace PryamolineynostWF.Controllers.Collimator;
+
+public partial class MeasurementTableForm : Form
 {
-    public partial class MeasurementTableForm : Form
+    public EventHandler cbSelectedPlaneChanged;
+    public DataGridViewCellEventHandler dataGridView1CellValueChanged;
+    public DataGridViewRowsAddedEventHandler dataGridView1RowAdded;
+    public DataGridViewRowsRemovedEventHandler dataGridView1RowRemoved;
+    public DataGridViewCellFormattingEventHandler dataGridViewCellFormattingChanged;
+    public DataGridViewCellValidatingEventHandler dataGridViewCellValidating;
+    public DataGridViewCellCancelEventHandler DataGridView1CellBeginEdit;
+    public EventHandler RevStrokeChanged;
+    public EventHandler AdditionFieldsChanged;
+    public DataGridViewCellPaintingEventHandler DataGridViewCellPainting;
+
+
+    public MeasurementTableForm(BindingSource horizontalBindingSource, Plane? selectedPlane)
     {
+        InitializeComponent();
+        dataGridView1.AutoGenerateColumns = true;
+        dataGridView1.DataSource = horizontalBindingSource;
 
-        public EventHandler cbSelectedPlaneChanged;
-        public DataGridViewCellEventHandler dataGridView1CellValueChanged;
-        public DataGridViewRowsAddedEventHandler dataGridView1RowAdded;
-        public DataGridViewRowsRemovedEventHandler dataGridView1RowRemoved;
-        public DataGridViewCellFormattingEventHandler dataGridViewCellFormattingChanged;
-        public DataGridViewCellValidatingEventHandler dataGridViewCellValidating;
-        public DataGridViewCellCancelEventHandler DataGridView1CellBeginEdit;
-        public EventHandler RevStrokeChanged;
-        public EventHandler AdditionFieldsChanged;
-        
+        cbPlaneUse.DataSource = Enum.GetValues(typeof(Plane))
+            .Cast<Plane>()
+            .Select(e => new { Value = e, Name = e.GetDescription() })
+            .ToList();
 
+        cbPlaneUse.DisplayMember = "Name";
+        cbPlaneUse.ValueMember = "Value";
+        cbPlaneUse.SelectedValue = selectedPlane;
+        cbPlaneUse.SelectedValueChanged += cbPlaneUse_Change;
+    }
 
-        public MeasurementTableForm(BindingSource horizontalBindingSource, PryamolineynostWF.Enums.Plane? selectedPlane)
+    private void DataGridView1_CellValidated(object sender, DataGridViewCellValidatingEventArgs e)
+    {
+        dataGridViewCellValidating?.Invoke(this, e);
+    }
+
+    private void Panel1_AutoSizeChanged(object sender, EventArgs e)
+    {
+        panel1.Width = Width;
+    }
+
+    private void Label1_Click(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    private void cbPlaneUse_Change(object sender, EventArgs e)
+    {
+        cbSelectedPlaneChanged?.Invoke(this, e);
+    }
+
+    private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
+    {
+        var dataGridView = sender as DataGridView;
+        if (dataGridView != null)
         {
-            InitializeComponent();
-            this.dataGridView1.AutoGenerateColumns = true;
-            dataGridView1.DataSource = horizontalBindingSource;
-
-            cbPlaneUse.DataSource = Enum.GetValues(typeof(Plane))
-                .Cast<Plane>()
-                .Select(e => new { Value = e, Name = e.GetDescription() })
-                .ToList();
-
-            cbPlaneUse.DisplayMember = "Name";
-            cbPlaneUse.ValueMember = "Value";
-            cbPlaneUse.SelectedValue = selectedPlane;
-            cbPlaneUse.SelectedValueChanged += cbPlaneUse_Change;
+            var cell = dataGridView[e.ColumnIndex, e.RowIndex];
+            if (cell.ReadOnly) cell.Selected = false;
         }
+    }
 
-        private void DataGridView1_CellValidated(object sender, DataGridViewCellValidatingEventArgs e)
-        {
-            dataGridViewCellValidating?.Invoke(this, e);
-        }
+    private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+    {
+        dataGridView1CellValueChanged?.Invoke(this, e);
+    }
 
-        private void Panel1_AutoSizeChanged(object sender, EventArgs e)
-        {
-            panel1.Width = this.Width;
-        }
+    private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+    {
+        //    var dataGridView = sender as DataGridView;
+        //    if (dataGridView != null)
+        //    {
+        //        var cell = dataGridView[e.ColumnIndex, e.RowIndex];
+        //        if (cell.ReadOnly)
+        //        {
+        //            cell.Selected = false;
+        //        }
+        //    }
+    }
 
-        private void Label1_Click(object sender, EventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
+    private void DataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+    {
+        //var dataGridView = sender as DataGridView;
+        //if (dataGridView != null)
+        //{
+        //    var cell = dataGridView[e.ColumnIndex, e.RowIndex];
+        //    if (cell.ReadOnly)
+        //    {
+        //        cell.Selected = false;
+        //    }
+        //}
+    }
 
-        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //throw new System.NotImplementedException();
-        }
+    private void button1_Click(object sender, EventArgs e)
+    {
+        //_table.AddRow(0, 0, 0, 0, 0, 0);
+    }
 
-        private void cbPlaneUse_Change(object sender, EventArgs e)
-        {
-            cbSelectedPlaneChanged?.Invoke(this, e);
-        }
+    private void button2_Click(object sender, EventArgs e)
+    {
+        //_table.Rows.Clear();
+    }
 
-        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            var dataGridView = sender as DataGridView;
-            if (dataGridView != null)
-            {
-                var cell = dataGridView[e.ColumnIndex, e.RowIndex];
-                if (cell.ReadOnly)
-                {
-                    cell.Selected = false;
-                }
-            }
-        }
+    private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    {
+        dataGridViewCellFormattingChanged.Invoke(this, e);
+    }
 
-        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            dataGridView1CellValueChanged?.Invoke(this, e);
-        }
+    private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+    {
+        DataGridView1CellBeginEdit?.Invoke(this, e);
+    }
 
-        private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            //    var dataGridView = sender as DataGridView;
-            //    if (dataGridView != null)
-            //    {
-            //        var cell = dataGridView[e.ColumnIndex, e.RowIndex];
-            //        if (cell.ReadOnly)
-            //        {
-            //            cell.Selected = false;
-            //        }
-            //    }
-        }
+    private void RevStrokeCheckBox_Changed(object sender, EventArgs e)
+    {
+        RevStrokeChanged?.Invoke(this, e);
+    }
 
-        private void DataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //var dataGridView = sender as DataGridView;
-            //if (dataGridView != null)
-            //{
-            //    var cell = dataGridView[e.ColumnIndex, e.RowIndex];
-            //    if (cell.ReadOnly)
-            //    {
-            //        cell.Selected = false;
-            //    }
-            //}
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //_table.AddRow(0, 0, 0, 0, 0, 0);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            //_table.Rows.Clear();
-        }
-
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            dataGridViewCellFormattingChanged.Invoke(this, e);
-        }
-
-        private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            DataGridView1CellBeginEdit?.Invoke(this, e);
-        }
-
-        private void RevStrokeCheckBox_Changed(object sender, EventArgs e)
-        {
-            RevStrokeChanged?.Invoke(this, e);
-        }
-
-        private void AdditionFields_Changed(object sender, EventArgs e)
-        {
-            AdditionFieldsChanged?.Invoke(this, e);
-        }
+    private void AdditionFields_Changed(object sender, EventArgs e)
+    {
+        AdditionFieldsChanged?.Invoke(this, e);
     }
 }

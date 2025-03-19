@@ -1,216 +1,171 @@
 ﻿using System.ComponentModel;
 using PryamolineynostWF.Enums;
 
-namespace PryamolineynostWF.Models.Collimator
+namespace PryamolineynostWF.Models.Collimator;
+
+public class MeasurementTableModel : INotifyPropertyChanged
 {
-    public class MeasurementTableModel : INotifyPropertyChanged
+    private Plane _plane;
+    private BindingList<MeasurementRowModel> _table;
+    private int _step;
+    public event PropertyChangedEventHandler PropertyChanged;
+    private bool _isRevStrokeEnabled;
+
+    public MeasurementTableModel(Plane plane, int step)
     {
-        private Plane _plane;
-        private BindingList<CombinedMeasurementRowModel> _table;
-        
-        private BindingList<MeasurementRowModel> _horizontalTable;
-        private BindingList<MeasurementRowModel> _verticalTable;
-        public BindingList<CombinedMeasurementRowModel> _combinedTable;
+        Plane = plane;
+        _step = step;
+        Table = new BindingList<MeasurementRowModel>();
+    }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private bool _isRevStrokeEnabled;
-        public MeasurementTableModel(Plane plane)
+    public int Step
+    {
+        get => _step;
+        set
         {
-            _horizontalTable = new BindingList<MeasurementRowModel>();
-            _verticalTable = new BindingList<MeasurementRowModel>();
-            Table = CreateCombinedBindingList(_horizontalTable, _verticalTable);
-            Plane = plane;
-
+            foreach (var row in _table)
+                row.StepSize = _step;
         }
+    }
 
-        public BindingList<CombinedMeasurementRowModel> Table { get; private set; }
-
-        public Plane Plane
+    public Plane Plane
+    {
+        get => _plane;
+        set
         {
-            get => _plane;
-            set
-            {
-                if (_plane != value)
+            if (_plane != value)
+                switch (value)
                 {
-                    switch (value)
-                    {
-                        case Plane.Horizontal:
-                            
-                            break;
-                        case Plane.Vertical:
-                            
-                            break;
-                        case Plane.Both:
-                            
-                            break;
-                    }
+                    case Plane.Horizontal:
+
+                        break;
+                    case Plane.Vertical:
+
+                        break;
+                    case Plane.Both:
+
+                        break;
                 }
-                
-                _plane = value;
-            }
+
+            _plane = value;
+            OnPropertyChanged(nameof(Plane));
         }
+    }
 
-        public bool IsRevStrokeEnabled
+    public bool IsRevStrokeEnabled
+    {
+        get => _isRevStrokeEnabled;
+        set
         {
-            get => _isRevStrokeEnabled;
-            set
-            {
-                _isRevStrokeEnabled = value;
-                foreach (var row in _horizontalTable)
-                    row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
-                foreach (var row in _verticalTable)
-                    row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
-            }
+            _isRevStrokeEnabled = value;
+            foreach (var row in _table)
+                row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
         }
+    }
 
-        public MeasurementRowModel HorizontalRow { get; set; }
-        public MeasurementRowModel VerticalRow { get; set; }
+    public BindingList<MeasurementRowModel> Table
+    {
+        get => _table;
+        private set => _table = value;
+    }
 
-        public BindingList<CombinedMeasurementRowModel> CreateCombinedBindingList(BindingList<MeasurementRowModel> horizontalTable, BindingList<MeasurementRowModel> verticalTable)
-        {
-            var combinedList = new BindingList<CombinedMeasurementRowModel>();
+    public static readonly Dictionary<string, string> ColumnHeaders = new()
+    {
+        { "Position", "No" }, // Русский
+        { "MeasurementLength", "Позиция" },
 
-            // Предполагаем, что обе таблицы имеют одинаковое количество строк
-            for (int i = 0; i < horizontalTable.Count; i++)
-            {
-                var horizontalRow = horizontalTable[i];
-                var verticalRow = verticalTable[i];
+        { "ForwardDegreesHorizontal", "Пр.°" },
+        { "ForwardMinutesHorizontal", "Пр.'" },
+        { "ForwardSecondsHorizontal", "Пр.\"" },
+        { "ReverseDegreesHorizontal", "Обр.°" },
+        { "ReverseMinutesHorizontal", "Обр.'" },
+        { "ReverseSecondsHorizontal", "Обр.\"" },
+        { "FormatedMeanHorizontal", "Ср." },
+        { "RelativeAngleHorizontal", "βi, угл. с" },
+        { "RelativeAngleToPreviousHorizontal", "hi, мкм" },
+        { "RelativeAngleToFirstHorizontal", "Ai, мкм" },
+        { "OrdinateStraightnessHorizontal", "Bi, мкм" },
+        { "StraightnessDeviationHorizontal", "Hi, мкм" },
 
-                combinedList.Add(new CombinedMeasurementRowModel
-                {
-                    // Общие поля
-                    Position = horizontalRow.Position,
-                    MeasurementLength = horizontalRow.MeasurementLength,
-                    
-                    ForwardDegreesHorizontal = horizontalRow.ForwardDegrees,
-                    ForwardMinutesHorizontal  = horizontalRow.ForwardMinutes,
-                    ForwardSecondsHorizontal = horizontalRow.ForwardSeconds,
-                    ReverseDegreesHorizontal = horizontalRow.ReverseDegrees,
-                    ReverseMinutesHorizontal = horizontalRow.ReverseMinutes,
-                    ReverseSecondsHorizontal = horizontalRow.ReverseSeconds,
-                    
-                    MeanHorizontal = horizontalRow.MeanValue,
-                    RelativeAngleHorizontal = horizontalRow.RelativeAngle,
-                    RelativeAngleToPreviousHorizontal = horizontalRow.RelativeAngleToPrevious,
-                    RelativeAngleToFirstHorizontal = horizontalRow.RelativeAngleToFirst,
-                    OrdinateStraightnessHorizontal = horizontalRow.OrdinateStraightness,
-                    StraightnessDeviationHorizontal = horizontalRow.StraightnessDeviation,
-                    
-                    ForwardDegreesVertical = verticalRow.ForwardDegrees,
-                    ForwardMinutesVertical = verticalRow.ForwardMinutes,
-                    ForwardSecondsVertical = verticalRow.ForwardSeconds,
-                    ReverseDegreesVertical = verticalRow.ReverseDegrees,
-                    ReverseMinutesVertical = verticalRow.ReverseMinutes,
-                    ReverseSecondsVertical = verticalRow.ReverseSeconds,
+        { "ForwardDegreesVertical", "Пр.°" },
+        { "ForwardMinutesVertical", "Пр.'" },
+        { "ForwardSecondsVertical", "Пр.\"" },
+        { "ReverseDegreesVertical", "Обр.°" },
+        { "ReverseMinutesVertical", "Обр.'" },
+        { "ReverseSecondsVertical", "Обр.\"" },
+        { "FormatedMeanVertical", "Ср." },
+        { "RelativeAngleVertical", "βi, угл. с" },
+        { "RelativeAngleToPreviousVertical", "hi, мкм" },
+        { "RelativeAngleToFirstVertical", "Ai, мкм" },
+        { "OrdinateStraightnessVertical", "Bi, мкм" },
+        { "StraightnessDeviationVertical", "Hi, мкм" }
+    };
 
-                    MeanVertical = verticalRow.MeanValue,
-                    RelativeAngleVertical = verticalRow.RelativeAngle,
-                    RelativeAngleToPreviousVertical = verticalRow.RelativeAngleToPrevious,
-                    RelativeAngleToFirstVertical = verticalRow.RelativeAngleToFirst,
-                    OrdinateStraightnessVertical = verticalRow.OrdinateStraightness,
-                    StraightnessDeviationVertical = verticalRow.StraightnessDeviation
-                });
-            }
-            return combinedList;
-        }
+    [Browsable(false)] public static readonly List<string> ReverseStrokeEnableColumns = new()
+    {
+        "ReverseDegreesHorizontal",
+        "ReverseMinutesHorizontal",
+        "ReverseSecondsHorizontal",
+        "FormatedMeanHorizontal",
+        "ReverseDegreesVertical",
+        "ReverseMinutesVertical",
+        "ReverseSecondsVertical",
+        "FormatedMeanVertical"
+    };
 
-        public static readonly Dictionary<string, string> ColumnHeaders = new Dictionary<string, string>
-        {
-            { "Position", "No" },   // Русский
-            { "MeasurementLength", "Позиция" },
+    [Browsable(false)] public static readonly List<string> AdditionFields = new()
+    {
+        "RelativeAngleHorizontal",
+        "RelativeAngleToPreviousHorizontal",
+        "RelativeAngleToFirstHorizontal",
+        "OrdinateStraightnessHorizontal",
+        "StraightnessDeviationHorizontal",
+        "RelativeAngleVertical",
+        "RelativeAngleToPreviousVertical",
+        "RelativeAngleToFirstVertical",
+        "OrdinateStraightnessVertical",
+        "StraightnessDeviationVertical"
+    };
 
-            { "ForwardDegreesHorizontal", "Пр.°" },
-            { "ForwardMinutesHorizontal", "Пр.'" },
-            { "ForwardSecondsHorizontal", "Пр.\"" },
-            { "ReverseDegreesHorizontal", "Обр.°" },
-            { "ReverseMinutesHorizontal", "Обр.'" },
-            { "ReverseSecondsHorizontal", "Обр.\"" },
-            { "MeanHorizontal", "Ср." },
-            { "RelativeAngleHorizontal", "βi, угл. с" },
-            { "RelativeAngleToPreviousHorizontal", "hi, мкм" },
-            { "RelativeAngleToFirstHorizontal", "Ai, мкм" },
-            { "OrdinateStraightnessHorizontal", "Bi, мкм" },
-            { "StraightnessDeviationHorizontal", "Hi, мкм" },
+    [Browsable(false)] public static readonly List<string> HorizontalFields = new()
+    {
+        "Position",
+        "MeasurementLength",
+        "ForwardDegreesHorizontal",
+        "ForwardMinutesHorizontal",
+        "ForwardSecondsHorizontal",
+        "ReverseDegreesHorizontal",
+        "ReverseMinutesHorizontal",
+        "ReverseSecondsHorizontal",
+        "FormatedMeanHorizontal",
+        "RelativeAngleHorizontal",
+        "RelativeAngleToPreviousHorizontal",
+        "RelativeAngleToFirstHorizontal",
+        "OrdinateStraightnessHorizontal",
+        "StraightnessDeviationHorizontal"
+    };
 
-            { "ForwardDegreesVertical", "Пр.°" },
-            { "ForwardMinutesVertical", "Пр.'" },
-            { "ForwardSecondsVertical", "Пр.\"" },
-            { "ReverseDegreesVertical", "Обр.°" },
-            { "ReverseMinutesVertical", "Обр.'" },
-            { "ReverseSecondsVertical", "Обр.\"" },
-            { "MeanVertical", "Ср." },
-            { "RelativeAngleVertical", "βi, угл. с" },
-            { "RelativeAngleToPreviousVertical", "hi, мкм" },
-            { "RelativeAngleToFirstVertical", "Ai, мкм" },
-            { "OrdinateStraightnessVertical", "Bi, мкм" },
-            { "StraightnessDeviationVertical", "Hi, мкм" }
-        };
+    [Browsable(false)] public static readonly List<string> VerticalFields = new()
+    {
+        "Position",
+        "MeasurementLength",
+        "ForwardDegreesVertical",
+        "ForwardMinutesVertical",
+        "ForwardSecondsVertical",
+        "ReverseDegreesVertical",
+        "ReverseMinutesVertical",
+        "ReverseSecondsVertical",
+        "MeanVertical",
+        "RelativeAngleVertical",
+        "RelativeAngleToPreviousVertical",
+        "RelativeAngleToFirstVertical",
+        "OrdinateStraightnessVertical",
+        "StraightnessDeviationVertical"
+    };
 
-        public static readonly List<string> ReverseStrokeEnableColumns = new List<string>
-        {
-            "ReverseDegreesHorizontal",
-            "ReverseMinutesHorizontal",
-            "ReverseSecondsHorizontal",
-            "MeanHorizontal",
-            "ReverseDegreesVertical",
-            "ReverseMinutesVertical",
-            "ReverseSecondsVertical",
-            "MeanVertical"
-        };
-
-        public static readonly List<string> AdditionFields = new List<string>
-        {
-            "RelativeAngleHorizontal",
-            "RelativeAngleToPreviousHorizontal",
-            "RelativeAngleToFirstHorizontal",
-            "OrdinateStraightnessHorizontal",
-            "StraightnessDeviationHorizontal",
-            "RelativeAngleVertical",
-            "RelativeAngleToPreviousVertical",
-            "RelativeAngleToFirstVertical",
-            "OrdinateStraightnessVertical",
-            "StraightnessDeviationVertical"
-        };
-
-        public static readonly List<string> HorizontalFields = new List<string>
-        {
-            "Position",
-            "MeasurementLength",
-            "ForwardDegreesHorizontal",
-            "ForwardMinutesHorizontal",
-            "ForwardSecondsHorizontal",
-            "ReverseDegreesHorizontal",
-            "ReverseMinutesHorizontal",
-            "ReverseSecondsHorizontal",
-            "MeanHorizontal",
-            "RelativeAngleHorizontal",
-            "RelativeAngleToPreviousHorizontal",
-            "RelativeAngleToFirstHorizontal",
-            "OrdinateStraightnessHorizontal",
-            "StraightnessDeviationHorizontal"
-        };
-
-        public static readonly List<string> VerticalFields = new List<string>
-        {
-            "Position",
-            "MeasurementLength",
-            "ForwardDegreesVertical",
-            "ForwardMinutesVertical",
-            "ForwardSecondsVertical",
-            "ReverseDegreesVertical",
-            "ReverseMinutesVertical",
-            "ReverseSecondsVertical",
-            "MeanVertical",
-            "RelativeAngleVertical",
-            "RelativeAngleToPreviousVertical",
-            "RelativeAngleToFirstVertical",
-            "OrdinateStraightnessVertical",
-            "StraightnessDeviationVertical"
-        };
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+    [Browsable(false)]
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

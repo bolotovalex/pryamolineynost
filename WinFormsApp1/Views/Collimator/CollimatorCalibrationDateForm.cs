@@ -16,7 +16,7 @@ public partial class CollimatorCalibrationDateForm : Form
     public CollimatorCalibrationDateForm(CollimatorType collimatorType)
     {
         InitializeComponent();
-        this.FormClosing += FormClosedOverride;
+        FormClosing += FormClosedOverride;
         _controller = new CollimatorCalibrationDateController(this, collimatorType);
     }
 
@@ -34,6 +34,7 @@ public partial class CollimatorCalibrationDateForm : Form
     {
         BtnOkClicked?.Invoke(this, EventArgs.Empty);
     }
+
     private void BtnPrev_Click(object sender, EventArgs e)
     {
         BtnPrevClicked?.Invoke(this, EventArgs.Empty);
