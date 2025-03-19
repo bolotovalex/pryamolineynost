@@ -49,17 +49,19 @@ namespace PryamolineynostWF.Models.Collimator
                 _plane = value;
             }
         }
-        
-        //public bool IsRevStrokeEnabled
-        //{
-        //    get => _isRevStrokeEnabled;
-        //    set
-        //    {
-        //        _isRevStrokeEnabled = value;
-        //        foreach (var row in Table)
-        //            row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
-        //    }
-        //}
+
+        public bool IsRevStrokeEnabled
+        {
+            get => _isRevStrokeEnabled;
+            set
+            {
+                _isRevStrokeEnabled = value;
+                foreach (var row in _horizontalTable)
+                    row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
+                foreach (var row in _verticalTable)
+                    row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
+            }
+        }
 
         public MeasurementRowModel HorizontalRow { get; set; }
         public MeasurementRowModel VerticalRow { get; set; }
@@ -87,7 +89,7 @@ namespace PryamolineynostWF.Models.Collimator
                     ReverseMinutesHorizontal = horizontalRow.ReverseMinutes,
                     ReverseSecondsHorizontal = horizontalRow.ReverseSeconds,
                     
-                    MeanSecondsHorizontal = horizontalRow.MeanValue,
+                    MeanHorizontal = horizontalRow.MeanValue,
                     RelativeAngleHorizontal = horizontalRow.RelativeAngle,
                     RelativeAngleToPreviousHorizontal = horizontalRow.RelativeAngleToPrevious,
                     RelativeAngleToFirstHorizontal = horizontalRow.RelativeAngleToFirst,
@@ -101,7 +103,7 @@ namespace PryamolineynostWF.Models.Collimator
                     ReverseMinutesVertical = verticalRow.ReverseMinutes,
                     ReverseSecondsVertical = verticalRow.ReverseSeconds,
 
-                    MeanSecondsVertical = verticalRow.MeanValue,
+                    MeanVertical = verticalRow.MeanValue,
                     RelativeAngleVertical = verticalRow.RelativeAngle,
                     RelativeAngleToPreviousVertical = verticalRow.RelativeAngleToPrevious,
                     RelativeAngleToFirstVertical = verticalRow.RelativeAngleToFirst,
@@ -111,6 +113,95 @@ namespace PryamolineynostWF.Models.Collimator
             }
             return combinedList;
         }
+
+        public static readonly Dictionary<string, string> ColumnHeaders = new Dictionary<string, string>
+        {
+            { "Position", "No" },   // Русский
+            { "MeasurementLength", "Позиция" },
+            { "ForwardDegreesHorizontal", "Пр.°" },
+            { "ForwardMinutesHorizontal", "Пр.'" },
+            { "ForwardSecondsHorizontal", "Пр.\"" },
+            { "ReverseDegreesHorizontal", "Обр.°" },
+            { "ReverseMinutesHorizontal", "Обр.'" },
+            { "ReverseSecondsHorizontal", "Обр.\"" },
+            { "MeanHorizontal", "Ср." },
+            { "RelativeAngleHorizontal", "βi, угл. с" },
+            { "RelativeAngleToPreviousHorizontal", "hi, мкм" },
+            { "RelativeAngleToFirstHorizontal", "Ai, мкм" },
+            { "OrdinateStraightnessHorizontal", "Bi, мкм" },
+            { "StraightnessDeviationHorizontal", "Hi, мкм" },
+
+            { "ForwardDegreesVertical", "Пр.°" },
+            { "ForwardMinutesVertical", "Пр.'" },
+            { "ForwardSecondsVertical", "Пр.\"" },
+            { "ReverseDegreesVertical", "Обр.°" },
+            { "ReverseMinutesVertical", "Обр.'" },
+            { "ReverseSecondsVertical", "Обр.\"" },
+            { "MeanVertical", "Ср." },
+            { "RelativeAngleVertical", "βi, угл. с" },
+            { "RelativeAngleToPreviousVertical", "hi, мкм" },
+            { "RelativeAngleToFirstVertical", "Ai, мкм" },
+            { "OrdinateStraightnessVertical", "Bi, мкм" },
+            { "StraightnessDeviationVertical", "Hi, мкм" }
+        };
+
+        public static readonly List<string> ReverseStrokeEnableColumns = new List<string>
+        {
+            "ReverseDegreesHorizontal",
+            "ReverseMinutesHorizontal",
+            "ReverseSecondsHorizontal",
+            "MeanHorizontal",
+            "ReverseDegreesVertical",
+            "ReverseMinutesVertical",
+            "ReverseSecondsVertical",
+            "MeanVertical"
+        };
+
+        public static readonly List<string> AdditionFields = new List<string>
+        {
+            "RelativeAngleHorizontal",
+            "RelativeAngleToPreviousHorizontal",
+            "RelativeAngleToFirstHorizontal",
+            "OrdinateStraightnessHorizontal",
+            "StraightnessDeviationHorizontal",
+            "RelativeAngleVertical",
+            "RelativeAngleToPreviousVertical",
+            "RelativeAngleToFirstVertical",
+            "OrdinateStraightnessVertical",
+            "StraightnessDeviationVertical"
+        };
+
+        public static readonly List<string> HorizontalFields = new List<string>
+        {
+            "ForwardDegreesHorizontal",
+            "ForwardMinutesHorizontal",
+            "ForwardSecondsHorizontal",
+            "ReverseDegreesHorizontal",
+            "ReverseMinutesHorizontal",
+            "ReverseSecondsHorizontal",
+            "MeanHorizontal",
+            "RelativeAngleHorizontal",
+            "RelativeAngleToPreviousHorizontal",
+            "RelativeAngleToFirstHorizontal",
+            "OrdinateStraightnessHorizontal",
+            "StraightnessDeviationHorizontal"
+        };
+
+        public static readonly List<string> VerticalFields = new List<string>
+        {
+            "ForwardDegreesVertical",
+            "ForwardMinutesVertical",
+            "ForwardSecondsVertical",
+            "ReverseDegreesVertical",
+            "ReverseMinutesVertical",
+            "ReverseSecondsVertical",
+            "MeanVertical",
+            "RelativeAngleVertical",
+            "RelativeAngleToPreviousVertical",
+            "RelativeAngleToFirstVertical",
+            "OrdinateStraightnessVertical",
+            "StraightnessDeviationVertical"
+        };
 
         protected void OnPropertyChanged(string propertyName)
         {

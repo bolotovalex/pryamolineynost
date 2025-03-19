@@ -26,40 +26,40 @@ namespace PryamolineynostWF.Models.Collimator
         private int _stepSize; // Шаг
         private bool _isReverseStrokeEnabled; // Включен ли учет обратного хода
 
-        public static readonly Dictionary<string, string> ColumnHeaders = new Dictionary<string, string>
-        {
-            { "Position", "No" },   // Русский
-            { "MeasurementLength", "Позиция" },
-            { "ForwardDegrees", "Пр.°" },
-            { "ForwardMinutes", "Пр.'" },
-            { "ForwardSeconds", "Пр.\"" },
-            { "ReverseDegrees", "Обр.°" },
-            { "ReverseMinutes", "Обр.'" },
-            { "ReverseSeconds", "Обр.\"" },
-            { "MeanValue", "Ср." },
-            { "RelativeAngle", "βi, угл. с" },
-            { "RelativeAngleToPrevious", "hi, мкм" },
-            { "RelativeAngleToFirst", "Ai, мкм" },
-            { "OrdinateStraightness", "Bi, мкм" },
-            { "StraightnessDeviation", "Hi, мкм" }
-        };
+        //public static readonly Dictionary<string, string> ColumnHeaders = new Dictionary<string, string>
+        //{
+        //    { "Position", "No" },   // Русский
+        //    { "MeasurementLength", "Позиция" },
+        //    { "ForwardDegrees", "Пр.°" },
+        //    { "ForwardMinutes", "Пр.'" },
+        //    { "ForwardSeconds", "Пр.\"" },
+        //    { "ReverseDegrees", "Обр.°" },
+        //    { "ReverseMinutes", "Обр.'" },
+        //    { "ReverseSeconds", "Обр.\"" },
+        //    { "MeanValue", "Ср." },
+        //    { "RelativeAngle", "βi, угл. с" },
+        //    { "RelativeAngleToPrevious", "hi, мкм" },
+        //    { "RelativeAngleToFirst", "Ai, мкм" },
+        //    { "OrdinateStraightness", "Bi, мкм" },
+        //    { "StraightnessDeviation", "Hi, мкм" }
+        //};
 
-        public static readonly List<string> ReverseStrokeEnableColumns = new List<string>
-        {
-            "ReverseDegrees",
-            "ReverseMinutes",
-            "ReverseSeconds",
-            "MeanValue"
-        };
+        //public static readonly List<string> ReverseStrokeEnableColumns = new List<string>
+        //{
+        //    "ReverseDegrees",
+        //    "ReverseMinutes",
+        //    "ReverseSeconds",
+        //    "MeanValue"
+        //};
 
-        public static readonly List<string> AdditionFields = new List<string>
-        {
-            "RelativeAngle",
-            "RelativeAngleToPrevious",
-            "RelativeAngleToFirst",
-            "OrdinateStraightness",
-            "StraightnessDeviation"
-        };
+        //public static readonly List<string> AdditionFields = new List<string>
+        //{
+        //    "RelativeAngle",
+        //    "RelativeAngleToPrevious",
+        //    "RelativeAngleToFirst",
+        //    "OrdinateStraightness",
+        //    "StraightnessDeviation"
+        //};
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

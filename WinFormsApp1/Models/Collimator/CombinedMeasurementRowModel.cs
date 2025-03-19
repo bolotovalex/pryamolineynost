@@ -18,7 +18,7 @@ namespace PryamolineynostWF.Models.Collimator
         public int? ReverseDegreesHorizontal { get; set; }
         public int? ReverseMinutesHorizontal { get; set; }
         public decimal? ReverseSecondsHorizontal { get; set; }
-        public string? MeanSecondsHorizontal { get; set; }
+        public string? MeanHorizontal { get; set; }
         public decimal? RelativeAngleHorizontal { get; set; }
         public decimal? RelativeAngleToPreviousHorizontal { get; set; }
         public decimal? RelativeAngleToFirstHorizontal { get; set; }
@@ -31,11 +31,14 @@ namespace PryamolineynostWF.Models.Collimator
         public int? ReverseDegreesVertical { get; set; }
         public int? ReverseMinutesVertical { get; set; }
         public decimal? ReverseSecondsVertical { get; set; }
-        public string? MeanSecondsVertical { get; set; }
+        public string? MeanVertical { get; set; }
         public decimal? RelativeAngleVertical { get; set; }
         public decimal? RelativeAngleToPreviousVertical { get; set; }
         public decimal? RelativeAngleToFirstVertical { get; set; }
         public decimal? OrdinateStraightnessVertical { get; set; }
         public decimal? StraightnessDeviationVertical { get; set; }
+        
     }
-}
+
+    
+    }

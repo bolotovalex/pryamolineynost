@@ -39,8 +39,8 @@ namespace PryamolineynostWF.Controllers.Collimator
             ReverseFieldHandler();
             AdditionFildsHandler();
 
-            //_view.cbRevStrokeEnable.DataBindings.Add("Checked", _dataSet, "IsRevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
-            //_view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _dataSet, "IsAdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+            //_view.cbRevStrokeEnable.DataBindings.Add("Checked", _table, "IsRevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+            //_view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _table, "IsAdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
 
         }
 
@@ -55,9 +55,9 @@ namespace PryamolineynostWF.Controllers.Collimator
 
         //private void DataGridView1_RowAdded(object? sender, DataGridViewRowsAddedEventArgs e)
         //{
-        //    if (e.RowIndex < 0 || e.RowIndex >= _dataSet.DataTable.Rows.Count)
+        //    if (e.RowIndex < 0 || e.RowIndex >= _table.DataTable.Rows.Count)
         //    {
-        //        _dataSet.AddRow();
+        //        _table.AddRow();
         //    }
         //}
 
@@ -70,9 +70,9 @@ namespace PryamolineynostWF.Controllers.Collimator
             //    for (int i = 0; i < e.RowCount; i++)
             //    {
             //        int rowIndex = e.RowIndex + i;
-            //        if (rowIndex < _dataSet.DataTable.Rows.Count)
+            //        if (rowIndex < _table.DataTable.Rows.Count)
             //        {
-            //            _dataSet.DataTable.Rows.RemoveAt(rowIndex);
+            //            _table.DataTable.Rows.RemoveAt(rowIndex);
             //        }
             //    }
             //}
@@ -160,9 +160,9 @@ namespace PryamolineynostWF.Controllers.Collimator
         {
             foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
             {
-                if (MeasurementRowModel.ColumnHeaders.ContainsKey(column.DataPropertyName))
+                if (MeasurementTableModel.ColumnHeaders.ContainsKey(column.DataPropertyName))
                 {
-                    column.HeaderText = MeasurementRowModel.ColumnHeaders[column.DataPropertyName];
+                    column.HeaderText = MeasurementTableModel.ColumnHeaders[column.DataPropertyName];
                 }
             }
         }
@@ -171,7 +171,7 @@ namespace PryamolineynostWF.Controllers.Collimator
         {
             foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
             {
-                if (MeasurementRowModel.ReverseStrokeEnableColumns.Contains(column.DataPropertyName))
+                if (MeasurementTableModel.ReverseStrokeEnableColumns.Contains(column.DataPropertyName))
                 {
                     column.Visible = _dataSet.IsRevStrokeEnabled;
                 }
@@ -182,7 +182,7 @@ namespace PryamolineynostWF.Controllers.Collimator
         {
             foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
             {
-                if (MeasurementRowModel.AdditionFields.Contains(column.DataPropertyName))
+                if (MeasurementTableModel.AdditionFields.Contains(column.DataPropertyName))
                 {
                     column.Visible = _dataSet.IsAdditionsFieldEnabled;
                 }

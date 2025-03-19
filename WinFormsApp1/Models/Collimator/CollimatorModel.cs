@@ -29,16 +29,16 @@ namespace PryamolineynostWF.Models.Collimator
         private decimal _verticalAreaDeviation = 0;
         private bool _isRevstrokeEnabled;
         private Plane _plane;
-        private MeasurementTableModel _dataSet;
+        private MeasurementTableModel _table;
         private bool _isAddtionsFieldEnabled;
         public event PropertyChangedEventHandler PropertyChanged;
         
         public CollimatorModel()
         {
             Plane = Plane.Horizontal;
-            _dataSet = new MeasurementTableModel(_plane);
-            //_dataSet.Table.Add(new MeasurementRowModel(_stepSize, null, _isRevstrokeEnabled));
-            //_dataSet.Table.Add(new MeasurementRowModel(_stepSize, _dataSet.Table[^1], _isRevstrokeEnabled));
+            _table = new MeasurementTableModel(_plane);
+            //_table.Table.Add(new MeasurementRowModel(_stepSize, null, _isRevstrokeEnabled));
+            //_table.Table.Add(new MeasurementRowModel(_stepSize, _table.Table[^1], _isRevstrokeEnabled));
         }
 
         public DateTime MeasurementDate
@@ -254,7 +254,7 @@ namespace PryamolineynostWF.Models.Collimator
             set
             {
                 _isRevstrokeEnabled = value;
-                //_dataSet.IsRevStrokeEnabled = value;
+                _table.IsRevStrokeEnabled = value;
                 OnPropertyChanged(nameof(IsRevStrokeEnabled));
             }
         }
@@ -272,10 +272,10 @@ namespace PryamolineynostWF.Models.Collimator
 
         public MeasurementTableModel MeasurementTable
         {
-            get => _dataSet;
+            get => _table;
             private set
             {
-                _dataSet = value;
+                _table = value;
             }
         }
 

@@ -107,12 +107,12 @@ namespace PryamolineynostWF.Controllers.Collimator
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //_dataSet.AddRow(0, 0, 0, 0, 0, 0);
+            //_table.AddRow(0, 0, 0, 0, 0, 0);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //_dataSet.Rows.Clear();
+            //_table.Rows.Clear();
         }
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
