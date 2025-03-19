@@ -1,5 +1,6 @@
 ﻿using System.Data.Common;
 using System.Globalization;
+using System.Runtime.InteropServices.Marshalling;
 using System.Windows.Forms;
 using MigraDoc.DocumentObjectModel.Tables;
 using PryamolineynostWF.Models.Collimator;
@@ -21,12 +22,14 @@ public class MeasurementTableController
         _view = new MeasurementTableForm(_bindingSource, _dataSet.Plane);
         
         _view.dataGridViewCellValidating += DataGridView_CellValidating;
-        
+        _view.dataGridViewCellEditEnd += DataGridViewC_CellEditEnd;
+
         _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
         _view.RevStrokeChanged += CBRevStroke_Changed;
         _view.AdditionFieldsChanged += CBAdditionFieldsVisible_Changed;
         _view.cbRevStrokeEnable.Checked = _dataSet.IsRevStrokeEnabled;
         _view.cbAdditionsFileldsEnable.Checked = _dataSet.IsAdditionsFieldEnabled;
+
         SwitchColumns(_dataSet.Plane);
 
 
@@ -158,51 +161,6 @@ public class MeasurementTableController
             // Если удалось распарсить, устанавливаем правильное значение
             _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedInt;
         }
-    
-
-
-
-
-        //    // Получаем имя свойства модели, соответствующее колонке
-        //    var propertyName = _view.dataGridView1.Columns[e.ColumnIndex].DataPropertyName;
-
-        //    // Определяем тип данных колонки
-        //    var propertyType = typeof(MeasurementRowModel).GetProperty(propertyName)?.PropertyType;
-        //    var input = e.FormattedValue.ToString().Trim();
-
-        //    if (propertyType == typeof(string))
-        //    {
-        //        e.Cancel = true;
-        //        return;
-        //    }
-        //    else if (propertyType == typeof(decimal))
-        //    {
-        //        // Пытаемся разобрать строку с учетом разделения запятыми и точками
-
-        //        decimal parsedDecimal;
-
-        //        // Пробуем парсинг с точкой
-        //        if (!decimal.TryParse(input.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture,
-        //                out parsedDecimal))
-        //            // Пробуем парсинг с запятой
-        //            if (!decimal.TryParse(input.Replace('.', ','), NumberStyles.Any, CultureInfo.InvariantCulture,
-        //                    out parsedDecimal))
-        //            {
-        //                return;
-        //            }
-
-        //        // Если удалось распарсить, устанавливаем правильное значение
-        //        _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedDecimal;
-        //    }
-        //    else if (propertyType == typeof(int))
-        //    {
-        //        int value;
-        //        if (Int32.TryParse(input, out value))
-        //        {
-        //            _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value;
-        //            return;
-        //        }
-        //    }
     }
 
     // Помечаем ячейку как некорректную
@@ -255,5 +213,17 @@ public class MeasurementTableController
     {
         _dataSet.IsAdditionsFieldEnabled = _view.cbAdditionsFileldsEnable.Checked;
         SwitchColumns(_dataSet.Plane);
+    }
+
+    private void DataGridViewC_CellEditEnd(object? sender, DataGridViewCellEventArgs e)
+    {
+        if (_model.Table.Count <= e.RowIndex + 1)
+        {
+            _model.Table.Add(new MeasurementRowModel(_model.Step, _model.Table[^1], _model.IsRevStrokeEnabled));
+        }
+        else
+        {
+            return;
+        }
     }
 }

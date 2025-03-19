@@ -8,6 +8,7 @@ public partial class MeasurementTableForm : Form
 {
     public EventHandler cbSelectedPlaneChanged;
     public DataGridViewCellValidatingEventHandler dataGridViewCellValidating;
+    public DataGridViewCellEventHandler dataGridViewCellEditEnd;
     public EventHandler RevStrokeChanged;
     public EventHandler AdditionFieldsChanged;
 
@@ -118,6 +119,11 @@ public partial class MeasurementTableForm : Form
     private void RevStrokeCheckBox_Changed(object sender, EventArgs e)
     {
         RevStrokeChanged?.Invoke(this, e);
+    }
+
+    private void DataGridViewCell_EditEnd(object sender, DataGridViewCellEventArgs e)
+    {
+        dataGridViewCellEditEnd?.Invoke(this, e);
     }
 
     private void AdditionFields_Changed(object sender, EventArgs e)

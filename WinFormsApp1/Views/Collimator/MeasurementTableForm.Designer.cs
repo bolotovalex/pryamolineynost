@@ -187,6 +187,7 @@
             dataGridView1.Size = new Size(800, 393);
             dataGridView1.TabIndex = 2;
             dataGridView1.CellValidating += DataGridView1_CellValidated;
+            dataGridView1.CellEndEdit += DataGridViewCell_EditEnd;
             // 
             // collimatorControllerBindingSource
             // 
