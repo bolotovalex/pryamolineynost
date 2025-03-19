@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data.Common;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using MigraDoc.DocumentObjectModel.Tables;
 using PryamolineynostWF.Models.Collimator;
 
 namespace PryamolineynostWF.Controllers.Collimator
@@ -36,8 +31,7 @@ namespace PryamolineynostWF.Controllers.Collimator
             
             _view.cbRevStrokeEnable.Checked = _dataSet.IsRevStrokeEnabled;
             _view.cbAdditionsFileldsEnable.Checked = _dataSet.IsAdditionsFieldEnabled;
-            ReverseFieldHandler();
-            AdditionFildsHandler();
+            SwitchColumns(_dataSet.Plane);
 
             //_view.cbRevStrokeEnable.DataBindings.Add("Checked", _table, "IsRevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
             //_view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _table, "IsAdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -52,14 +46,6 @@ namespace PryamolineynostWF.Controllers.Collimator
 
             //_bindingSource.ResetBindings(false); //Обновление
         }
-
-        //private void DataGridView1_RowAdded(object? sender, DataGridViewRowsAddedEventArgs e)
-        //{
-        //    if (e.RowIndex < 0 || e.RowIndex >= _table.DataTable.Rows.Count)
-        //    {
-        //        _table.AddRow();
-        //    }
-        //}
 
 
         private void DataGridView1_RowRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
@@ -79,12 +65,34 @@ namespace PryamolineynostWF.Controllers.Collimator
         }
 
         
+        private void SwitchColumns(Enums.Plane plane)
+        {
+            switch (_dataSet.Plane)
+            {
+                case Enums.Plane.Horizontal:
+                    foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
+                        column.Visible = MeasurementTableModel.HorizontalFields.Contains(column.DataPropertyName) ? IsAdditionColumnsEnable(column) && IsReverseColumnEnable(column) : false;
+                    break;
+
+                case Enums.Plane.Vertical:
+                    foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
+                        column.Visible = MeasurementTableModel.VerticalFields.Contains(column.DataPropertyName) ? IsAdditionColumnsEnable(column) && IsReverseColumnEnable(column) : false;
+                    break;
+
+                case Enums.Plane.Both:
+                    foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
+                        column.Visible = IsAdditionColumnsEnable(column) && IsReverseColumnEnable(column);
+                    break;
+            }
+        }
+
         private void ComboBox1_SelectedValueChange(object? sender, EventArgs e)
         {
             if (_view.cbPlaneUse.SelectedValue is PryamolineynostWF.Enums.Plane selected)
             {
                 _dataSet.Plane = selected;
             }
+            SwitchColumns(_dataSet.Plane);
         }
 
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -159,54 +167,42 @@ namespace PryamolineynostWF.Controllers.Collimator
         private void ApplyColumnHeaders()
         {
             foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
-            {
                 if (MeasurementTableModel.ColumnHeaders.ContainsKey(column.DataPropertyName))
-                {
                     column.HeaderText = MeasurementTableModel.ColumnHeaders[column.DataPropertyName];
-                }
             }
         }
 
-        private void ReverseFieldHandler()
+        private bool IsReverseColumnEnable(DataGridViewColumn column)
         {
-            foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
-            {
-                if (MeasurementTableModel.ReverseStrokeEnableColumns.Contains(column.DataPropertyName))
-                {
-                    column.Visible = _dataSet.IsRevStrokeEnabled;
-                }
-            }
+            if (MeasurementTableModel.ReverseStrokeEnableColumns.Contains(column.DataPropertyName))
+                return _dataSet.IsRevStrokeEnabled;
+            return true;
+
         }
 
-        private void AdditionFildsHandler()
+        private bool IsAdditionColumnsEnable(DataGridViewColumn column)
         {
-            foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
-            {
-                if (MeasurementTableModel.AdditionFields.Contains(column.DataPropertyName))
-                {
-                    column.Visible = _dataSet.IsAdditionsFieldEnabled;
-                }
-            }
+            if (MeasurementTableModel.AdditionFields.Contains(column.DataPropertyName))
+                return _dataSet.IsAdditionsFieldEnabled;
+            return true;
         }
 
         private void DataGridView1_CellEditCanacel(object sender, DataGridViewCellCancelEventArgs e) 
         {
             if (e.RowIndex == 0)
-            {
                 e.Cancel = true;
-            }
         }
 
         private void CBRevStroke_Changed(object? sender, EventArgs e) 
         {
             _dataSet.IsRevStrokeEnabled = _view.cbRevStrokeEnable.Checked;
-            ReverseFieldHandler();
+            SwitchColumns(_dataSet.Plane);
         }
 
         private void CBAdditionFieldsVisible_Changed(object? sender, EventArgs e) 
         {
             _dataSet.IsAdditionsFieldEnabled = _view.cbAdditionsFileldsEnable.Checked;
-            AdditionFildsHandler();
+            SwitchColumns(_dataSet.Plane);
         }
 
 

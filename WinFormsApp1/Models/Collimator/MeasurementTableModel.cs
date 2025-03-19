@@ -118,6 +118,7 @@ namespace PryamolineynostWF.Models.Collimator
         {
             { "Position", "No" },   // Русский
             { "MeasurementLength", "Позиция" },
+
             { "ForwardDegreesHorizontal", "Пр.°" },
             { "ForwardMinutesHorizontal", "Пр.'" },
             { "ForwardSecondsHorizontal", "Пр.\"" },
@@ -173,6 +174,8 @@ namespace PryamolineynostWF.Models.Collimator
 
         public static readonly List<string> HorizontalFields = new List<string>
         {
+            "Position",
+            "MeasurementLength",
             "ForwardDegreesHorizontal",
             "ForwardMinutesHorizontal",
             "ForwardSecondsHorizontal",
@@ -189,6 +192,8 @@ namespace PryamolineynostWF.Models.Collimator
 
         public static readonly List<string> VerticalFields = new List<string>
         {
+            "Position",
+            "MeasurementLength",
             "ForwardDegreesVertical",
             "ForwardMinutesVertical",
             "ForwardSecondsVertical",
