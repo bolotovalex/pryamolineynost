@@ -37,9 +37,5 @@ namespace PryamolineynostWF.Models.Collimator
         public decimal? RelativeAngleToFirstVertical { get; set; }
         public decimal? OrdinateStraightnessVertical { get; set; }
         public decimal? StraightnessDeviationVertical { get; set; }
-
-
-        
-        
     }
 }

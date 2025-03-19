@@ -37,8 +37,8 @@ namespace PryamolineynostWF.Models.Collimator
         {
             Plane = Plane.Horizontal;
             _dataSet = new MeasurementTableModel(_plane);
-            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, null, _isRevstrokeEnabled));
-            _dataSet.Table.Add(new MeasurementRowModel(_stepSize, _dataSet.Table[^1], _isRevstrokeEnabled));
+            //_dataSet.Table.Add(new MeasurementRowModel(_stepSize, null, _isRevstrokeEnabled));
+            //_dataSet.Table.Add(new MeasurementRowModel(_stepSize, _dataSet.Table[^1], _isRevstrokeEnabled));
         }
 
         public DateTime MeasurementDate
@@ -254,7 +254,7 @@ namespace PryamolineynostWF.Models.Collimator
             set
             {
                 _isRevstrokeEnabled = value;
-                _dataSet.IsRevStrokeEnabled = value;
+                //_dataSet.IsRevStrokeEnabled = value;
                 OnPropertyChanged(nameof(IsRevStrokeEnabled));
             }
         }

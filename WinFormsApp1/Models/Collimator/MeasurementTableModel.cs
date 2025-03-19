@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using PryamolineynostWF.Enums;
-using PryamolineynostWF.Services;
 
 namespace PryamolineynostWF.Models.Collimator
 {
     public class MeasurementTableModel : INotifyPropertyChanged
     {
-        private string _name;
         private Plane _plane;
         private BindingList<CombinedMeasurementRowModel> _table;
         
@@ -23,18 +16,15 @@ namespace PryamolineynostWF.Models.Collimator
         private bool _isRevStrokeEnabled;
         public MeasurementTableModel(Plane plane)
         {
-            Table = new BindingList<MeasurementRowModel>();
+            _horizontalTable = new BindingList<MeasurementRowModel>();
+            _verticalTable = new BindingList<MeasurementRowModel>();
+            Table = CreateCombinedBindingList(_horizontalTable, _verticalTable);
             Plane = plane;
 
         }
 
+        public BindingList<CombinedMeasurementRowModel> Table { get; private set; }
 
-        public BindingList<MeasurementRowModel> Table 
-        {
-            get => _table; 
-            private set => _table = value; 
-        }
-        
         public Plane Plane
         {
             get => _plane;
@@ -45,14 +35,13 @@ namespace PryamolineynostWF.Models.Collimator
                     switch (value)
                     {
                         case Plane.Horizontal:
-                            _name = "Горизонтальная";
                             
                             break;
                         case Plane.Vertical:
-                            _name = "Вертикальная";
+                            
                             break;
                         case Plane.Both:
-                            _name = "Горизовнтальная и вертикальная";
+                            
                             break;
                     }
                 }
@@ -61,16 +50,16 @@ namespace PryamolineynostWF.Models.Collimator
             }
         }
         
-        public bool IsRevStrokeEnabled
-        {
-            get => _isRevStrokeEnabled;
-            set
-            {
-                _isRevStrokeEnabled = value;
-                foreach (var row in Table)
-                    row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
-            }
-        }
+        //public bool IsRevStrokeEnabled
+        //{
+        //    get => _isRevStrokeEnabled;
+        //    set
+        //    {
+        //        _isRevStrokeEnabled = value;
+        //        foreach (var row in Table)
+        //            row.IsReverseStrokeEnabled = _isRevStrokeEnabled;
+        //    }
+        //}
 
         public MeasurementRowModel HorizontalRow { get; set; }
         public MeasurementRowModel VerticalRow { get; set; }
