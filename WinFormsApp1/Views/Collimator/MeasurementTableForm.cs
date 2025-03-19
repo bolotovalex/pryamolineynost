@@ -7,15 +7,9 @@ namespace PryamolineynostWF.Controllers.Collimator;
 public partial class MeasurementTableForm : Form
 {
     public EventHandler cbSelectedPlaneChanged;
-    public DataGridViewCellEventHandler dataGridView1CellValueChanged;
-    public DataGridViewRowsAddedEventHandler dataGridView1RowAdded;
-    public DataGridViewRowsRemovedEventHandler dataGridView1RowRemoved;
-    public DataGridViewCellFormattingEventHandler dataGridViewCellFormattingChanged;
     public DataGridViewCellValidatingEventHandler dataGridViewCellValidating;
-    public DataGridViewCellCancelEventHandler DataGridView1CellBeginEdit;
     public EventHandler RevStrokeChanged;
     public EventHandler AdditionFieldsChanged;
-    public DataGridViewCellPaintingEventHandler DataGridViewCellPainting;
 
 
     public MeasurementTableForm(BindingSource horizontalBindingSource, Plane? selectedPlane)
@@ -45,10 +39,10 @@ public partial class MeasurementTableForm : Form
         panel1.Width = Width;
     }
 
-    private void Label1_Click(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
+    //private void Label1_Click(object sender, EventArgs e)
+    //{
+    //    throw new NotImplementedException();
+    //}
 
     private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
     {
@@ -70,10 +64,10 @@ public partial class MeasurementTableForm : Form
         }
     }
 
-    private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-    {
-        dataGridView1CellValueChanged?.Invoke(this, e);
-    }
+    //private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+    //{
+    //    dataGridView1CellValueChanged?.Invoke(this, e);
+    //}
 
     private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
     {
@@ -111,15 +105,15 @@ public partial class MeasurementTableForm : Form
         //_table.Rows.Clear();
     }
 
-    private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-    {
-        dataGridViewCellFormattingChanged.Invoke(this, e);
-    }
+    //private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    //{
+    //    dataGridViewCellFormattingChanged.Invoke(this, e);
+    //}
 
-    private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-    {
-        DataGridView1CellBeginEdit?.Invoke(this, e);
-    }
+    //private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+    //{
+    //    DataGridView1CellBeginEdit?.Invoke(this, e);
+    //}
 
     private void RevStrokeCheckBox_Changed(object sender, EventArgs e)
     {

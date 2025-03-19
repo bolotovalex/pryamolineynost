@@ -8,14 +8,15 @@ public class MeasurementTableModel : INotifyPropertyChanged
     private Plane _plane;
     private BindingList<MeasurementRowModel> _table;
     private int _step;
-    public event PropertyChangedEventHandler PropertyChanged;
     private bool _isRevStrokeEnabled;
+    public event PropertyChangedEventHandler PropertyChanged;
 
     public MeasurementTableModel(Plane plane, int step)
     {
         Plane = plane;
         _step = step;
         Table = new BindingList<MeasurementRowModel>();
+        
     }
 
     public int Step

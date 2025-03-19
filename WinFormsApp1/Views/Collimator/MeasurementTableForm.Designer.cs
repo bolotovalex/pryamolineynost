@@ -109,7 +109,6 @@
             label1.Size = new Size(71, 18);
             label1.TabIndex = 6;
             label1.Text = "Плоскость:";
-            label1.Click += Label1_Click;
             // 
             // cbPlaneUse
             // 
@@ -187,14 +186,7 @@
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             dataGridView1.Size = new Size(800, 393);
             dataGridView1.TabIndex = 2;
-            dataGridView1.CellBeginEdit += DataGridView1_CellBeginEdit;
-            dataGridView1.CellContentClick += DataGridView1_CellContentClick;
-            dataGridView1.CellContentDoubleClick += DataGridView1_CellContentDoubleClick;
-            dataGridView1.CellEnter += dataGridView1_CellEnter;
-            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
-            dataGridView1.CellMouseClick += DataGridView1_CellMouseClick;
             dataGridView1.CellValidating += DataGridView1_CellValidated;
-            dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
             // 
             // collimatorControllerBindingSource
             // 

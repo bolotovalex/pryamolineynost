@@ -19,16 +19,12 @@ public class MeasurementTableController
         _dataSet = dataSet;
         CreateBindingSource();
         _view = new MeasurementTableForm(_bindingSource, _dataSet.Plane);
-
+        
+        _view.dataGridViewCellValidating += DataGridView_CellValidating;
+        
         _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
-        _view.dataGridView1RowRemoved += DataGridView1_RowRemoved;
-        _view.dataGridView1CellValueChanged += DataGridView1_CellValueChanged;
-        _view.dataGridViewCellFormattingChanged += DataGridView1_CellValueChanged;
-        _view.dataGridViewCellValidating += DataGridView1_CellValidating;
-        _view.DataGridView1CellBeginEdit += DataGridView1_CellEditCanacel;
         _view.RevStrokeChanged += CBRevStroke_Changed;
         _view.AdditionFieldsChanged += CBAdditionFieldsVisible_Changed;
-
         _view.cbRevStrokeEnable.Checked = _dataSet.IsRevStrokeEnabled;
         _view.cbAdditionsFileldsEnable.Checked = _dataSet.IsAdditionsFieldEnabled;
         SwitchColumns(_dataSet.Plane);
@@ -96,59 +92,117 @@ public class MeasurementTableController
         SwitchColumns(_dataSet.Plane);
     }
 
-    private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-    {
-    }
-
-    private void DataGridView1_CellValueChanged(object sender, DataGridViewCellFormattingEventArgs e)
-    {
-        //object cellValue = e.Value;
-
-        //if ((cellValue is int intValue && intValue == MeasurementTableModel.DecimalPlaceholder) ||
-        //    (cellValue is decimal decValue && decValue == MeasurementTableModel.DecimalPlaceholder))
-        //{
-        //    e.CellStyle.BackColor = Color.Red;
-        //    e.Value = "";
-        //    e.FormattingApplied = true;
-        //}
-        //else
-        //{
-        //    e.CellStyle.BackColor = Color.White;
-        //}
-    }
-
-    private void DataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+    private void DataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
     {
         // Получаем имя свойства модели, соответствующее колонке
         var propertyName = _view.dataGridView1.Columns[e.ColumnIndex].DataPropertyName;
 
         // Определяем тип данных колонки
-        var propertyType = typeof(MeasurementRowModel).GetProperty(propertyName)?.PropertyType;
+        var propertyInfo = typeof(MeasurementRowModel).GetProperty(propertyName);
+        if (propertyInfo == null)
+            return;
 
-        // Если тип данных колонки - decimal
+        var propertyType = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
+        var input = e.FormattedValue?.ToString().Trim();
+
+        // Если значение пустое и тип nullable, устанавливаем null
+        if (string.IsNullOrEmpty(input) && propertyInfo.PropertyType.IsGenericType &&
+            propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+        {
+            _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
+            return;
+        }
+
+        // Валидация для строк
+        if (propertyType == typeof(string))
+        {
+            e.Cancel = true;
+            return;
+        }
+
+        // Валидация для decimal и decimal?
         if (propertyType == typeof(decimal))
         {
-            // Пытаемся разобрать строку с учетом разделения запятыми и точками
-            var input = e.FormattedValue.ToString().Trim();
             decimal parsedDecimal;
 
             // Пробуем парсинг с точкой
-            if (!decimal.TryParse(input.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture,
-                    out parsedDecimal))
+            if (!decimal.TryParse(input.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out parsedDecimal))
+            {
                 // Пробуем парсинг с запятой
-                if (!decimal.TryParse(input.Replace('.', ','), NumberStyles.Any, CultureInfo.InvariantCulture,
-                        out parsedDecimal))
+                if (!decimal.TryParse(input.Replace('.', ','), NumberStyles.Any, CultureInfo.InvariantCulture, out parsedDecimal))
                 {
-                    // Если оба варианта провалились, сообщаем ошибку
-                    MessageBox.Show(
-                        $"Некорректное значение '{input}' для колонки '{_view.dataGridView1.Columns[e.ColumnIndex].HeaderText}'. Значение должно быть числом.");
-                    e.Cancel = true; // Отменяем изменение
+                    // Если оба варианта провалились, устанавливаем null и окрашиваем ячейку
+                    _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
+                    e.Cancel = true;
                     return;
                 }
+            }
 
             // Если удалось распарсить, устанавливаем правильное значение
             _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedDecimal;
         }
+
+        // Валидация для int и int?
+        else if (propertyType == typeof(int))
+        {
+            int parsedInt;
+
+            if (!int.TryParse(input, out parsedInt))
+            {
+                // Если парсинг не удался, устанавливаем null и окрашиваем ячейку
+                _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
+                e.Cancel = true;
+                return;
+            }
+
+            // Если удалось распарсить, устанавливаем правильное значение
+            _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedInt;
+        }
+    
+
+
+
+
+        //    // Получаем имя свойства модели, соответствующее колонке
+        //    var propertyName = _view.dataGridView1.Columns[e.ColumnIndex].DataPropertyName;
+
+        //    // Определяем тип данных колонки
+        //    var propertyType = typeof(MeasurementRowModel).GetProperty(propertyName)?.PropertyType;
+        //    var input = e.FormattedValue.ToString().Trim();
+
+        //    if (propertyType == typeof(string))
+        //    {
+        //        e.Cancel = true;
+        //        return;
+        //    }
+        //    else if (propertyType == typeof(decimal))
+        //    {
+        //        // Пытаемся разобрать строку с учетом разделения запятыми и точками
+
+        //        decimal parsedDecimal;
+
+        //        // Пробуем парсинг с точкой
+        //        if (!decimal.TryParse(input.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture,
+        //                out parsedDecimal))
+        //            // Пробуем парсинг с запятой
+        //            if (!decimal.TryParse(input.Replace('.', ','), NumberStyles.Any, CultureInfo.InvariantCulture,
+        //                    out parsedDecimal))
+        //            {
+        //                return;
+        //            }
+
+        //        // Если удалось распарсить, устанавливаем правильное значение
+        //        _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = parsedDecimal;
+        //    }
+        //    else if (propertyType == typeof(int))
+        //    {
+        //        int value;
+        //        if (Int32.TryParse(input, out value))
+        //        {
+        //            _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value;
+        //            return;
+        //        }
+        //    }
     }
 
     // Помечаем ячейку как некорректную
