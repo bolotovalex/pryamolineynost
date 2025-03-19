@@ -155,7 +155,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         "ReverseDegreesVertical",
         "ReverseMinutesVertical",
         "ReverseSecondsVertical",
-        "MeanVertical",
+        "FormatedMeanVertical",
         "RelativeAngleVertical",
         "RelativeAngleToPreviousVertical",
         "RelativeAngleToFirstVertical",

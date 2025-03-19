@@ -371,9 +371,15 @@ public class MeasurementRowModel : INotifyPropertyChanged
         int? rMinutes, decimal? rSeconds)
     {
         decimal? mean;
-        if (fDegrees == null || fMinutes == null || fSeconds == null) mean = null;
+        if (fDegrees == null || fMinutes == null || fSeconds == null)
+        {
+            return null;
+        }
 
-        if (IsReverseStrokeEnabled && (rDegrees == null || rMinutes == null || rSeconds == null)) mean = null;
+        if (IsReverseStrokeEnabled && (rDegrees == null || rMinutes == null || rSeconds == null))
+        {
+            return null;
+        }
 
         if (IsReverseStrokeEnabled)
             mean = (decimal)((fDegrees + rDegrees) * 3600
