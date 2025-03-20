@@ -101,8 +101,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         { "OrdinateStraightnessVertical", "Bi, мкм" },
         { "StraightnessDeviationVertical", "Hi, мкм" }
     };
-
-    [Browsable(false)] public static readonly List<string> ReverseStrokeEnableColumns = new()
+    public static readonly List<string> ReverseStrokeEnableColumns = new()
     {
         "ReverseDegreesHorizontal",
         "ReverseMinutesHorizontal",
@@ -113,8 +112,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         "ReverseSecondsVertical",
         "FormatedMeanVertical"
     };
-
-    [Browsable(false)] public static readonly List<string> AdditionFields = new()
+    public static readonly List<string> AdditionFields = new()
     {
         "RelativeAngleHorizontal",
         "RelativeAngleToPreviousHorizontal",
@@ -127,8 +125,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         "OrdinateStraightnessVertical",
         "StraightnessDeviationVertical"
     };
-
-    [Browsable(false)] public static readonly List<string> HorizontalFields = new()
+    public static readonly List<string> HorizontalFields = new()
     {
         "Position",
         "MeasurementLength",
@@ -145,8 +142,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         "OrdinateStraightnessHorizontal",
         "StraightnessDeviationHorizontal"
     };
-
-    [Browsable(false)] public static readonly List<string> VerticalFields = new()
+    public static readonly List<string> VerticalFields = new()
     {
         "Position",
         "MeasurementLength",
@@ -163,6 +159,24 @@ public class MeasurementTableModel : INotifyPropertyChanged
         "OrdinateStraightnessVertical",
         "StraightnessDeviationVertical"
     };
+    public static readonly List<string> ReadonlyColumns = new()
+    {
+        "Position",
+        "MeasurementLength",
+        "FormatedMeanHorizontal",
+        "RelativeAngleHorizontal",
+        "RelativeAngleToPreviousHorizontal",
+        "RelativeAngleToFirstHorizontal",
+        "OrdinateStraightnessHorizontal",
+        "StraightnessDeviationHorizontal",
+        "FormatedMeanVertical",
+        "RelativeAngleVertical",
+        "RelativeAngleToPreviousVertical",
+        "RelativeAngleToFirstVertical",
+        "OrdinateStraightnessVertical",
+        "StraightnessDeviationVertical"
+    };
+    
 
     [Browsable(false)]
     protected void OnPropertyChanged(string propertyName)

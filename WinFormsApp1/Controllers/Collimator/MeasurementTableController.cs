@@ -23,7 +23,7 @@ public class MeasurementTableController
         
         _view.dataGridViewCellValidating += DataGridView_CellValidating;
         _view.dataGridViewCellEditEnd += DataGridViewC_CellEditEnd;
-
+        _view.dataGridViewCellBeginEdit += DataGridView_CellBeginEdit;
         _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
         _view.RevStrokeChanged += CBRevStroke_Changed;
         _view.AdditionFieldsChanged += CBAdditionFieldsVisible_Changed;
@@ -92,6 +92,7 @@ public class MeasurementTableController
     private void ComboBox1_SelectedValueChange(object? sender, EventArgs e)
     {
         if (_view.cbPlaneUse.SelectedValue is Enums.Plane selected) _dataSet.Plane = selected;
+        _model.Plane = _dataSet.Plane;
         SwitchColumns(_dataSet.Plane);
     }
 
@@ -104,6 +105,7 @@ public class MeasurementTableController
         var propertyInfo = typeof(MeasurementRowModel).GetProperty(propertyName);
         if (propertyInfo == null)
             return;
+
 
         var propertyType = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
         var input = e.FormattedValue?.ToString().Trim();
@@ -163,17 +165,18 @@ public class MeasurementTableController
         }
     }
 
-    // Помечаем ячейку как некорректную
-    private void MarkCellAsInvalid(int rowIndex, int columnIndex, object minValue)
-    {
-        //_view.dataGridView1.Rows[rowIndex].Cells[columnIndex].Style.BackColor = Color.Red;
-        //_view.dataGridView1.Rows[rowIndex].Cells[columnIndex].Value = minValue;
-    }
-
     public void ShowForm()
     {
         _view.Show();
         ApplyColumnHeaders();
+        ApplyReadonlyArgs();
+    }
+
+    private void ApplyReadonlyArgs()
+    {
+        foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
+            if (MeasurementTableModel.ReadonlyColumns.Contains(column.DataPropertyName))
+                column.ReadOnly = true;
     }
 
     private void ApplyColumnHeaders()
@@ -197,12 +200,7 @@ public class MeasurementTableController
         return true;
     }
 
-    private void DataGridView1_CellEditCanacel(object sender, DataGridViewCellCancelEventArgs e)
-    {
-        if (e.RowIndex == 0)
-            e.Cancel = true;
-    }
-
+   
     private void CBRevStroke_Changed(object? sender, EventArgs e)
     {
         _dataSet.IsRevStrokeEnabled = _view.cbRevStrokeEnable.Checked;
@@ -215,6 +213,15 @@ public class MeasurementTableController
         SwitchColumns(_dataSet.Plane);
     }
 
+    private void DataGridView_CellBeginEdit(object? sender, DataGridViewCellCancelEventArgs e)
+    {
+        if (MeasurementTableModel.ReadonlyColumns.Contains(_view.dataGridView1.Columns[e.ColumnIndex].DataPropertyName))
+        {
+            e.Cancel = true;
+            return;
+        }
+    }
+
     private void DataGridViewC_CellEditEnd(object? sender, DataGridViewCellEventArgs e)
     {
         if (_model.Table.Count <= e.RowIndex + 1)
@@ -223,7 +230,50 @@ public class MeasurementTableController
         }
         else
         {
-            return;
+            var row = _model.Table[e.RowIndex];
+            var horizontalForwardHasValue = row.ForwardDegreesHorizontal.HasValue || row.ForwardMinutesHorizontal.HasValue || row.ForwardSecondsHorizontal.HasValue;
+            var horizontalReverseHasValue = row.ReverseDegreesHorizontal.HasValue || row.ReverseMinutesHorizontal.HasValue || row.ReverseSecondsHorizontal.HasValue;
+            
+            var verticalForwardHasValue = row.ForwardDegreesVertical.HasValue || row.ForwardMinutesVertical.HasValue || row.ForwardSecondsVertical.HasValue;
+            var verticalReverseHasValue = row.ReverseDegreesVertical.HasValue || row.ReverseMinutesVertical.HasValue || row.ReverseSecondsVertical.HasValue;
+
+            if (_model.Plane == Enums.Plane.Horizontal)
+            {
+                if (!horizontalForwardHasValue && (!_model.IsRevStrokeEnabled || !horizontalReverseHasValue))
+                {
+                    _model.Table.RemoveAt(e.RowIndex);
+                    UpdatePositions();
+                }
+                
+            }
+
+            else if (_model.Plane == Enums.Plane.Vertical)
+            {
+                if (!verticalForwardHasValue && (!_model.IsRevStrokeEnabled || !verticalReverseHasValue))
+                {
+                    _model.Table.RemoveAt(e.RowIndex);
+                    UpdatePositions();
+                }
+            }
+            
+            else if (_model.Plane == Enums.Plane.Both)
+            {
+                if (!horizontalForwardHasValue && !verticalForwardHasValue && (!_model.IsRevStrokeEnabled || (!verticalReverseHasValue && !horizontalForwardHasValue)))
+                {
+                    _model.Table.RemoveAt(e.RowIndex);
+                    UpdatePositions();
+                }
+            }
+        }
+    }
+
+    private void UpdatePositions()
+    {
+        for (var i = 1; i < _model.Table.Count; i++)
+        {
+            var row = _model.Table[i];
+            row.PreviousDataRow = _model.Table[i - 1];
+            row.UpdatePosition(i);
         }
     }
 }

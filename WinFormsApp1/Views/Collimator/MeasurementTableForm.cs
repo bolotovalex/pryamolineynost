@@ -8,6 +8,7 @@ public partial class MeasurementTableForm : Form
 {
     public EventHandler cbSelectedPlaneChanged;
     public DataGridViewCellValidatingEventHandler dataGridViewCellValidating;
+    public DataGridViewCellCancelEventHandler dataGridViewCellBeginEdit;
     public DataGridViewCellEventHandler dataGridViewCellEditEnd;
     public EventHandler RevStrokeChanged;
     public EventHandler AdditionFieldsChanged;
@@ -40,85 +41,28 @@ public partial class MeasurementTableForm : Form
         panel1.Width = Width;
     }
 
-    //private void Label1_Click(object sender, EventArgs e)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-    {
-        //throw new System.NotImplementedException();
-    }
-
     private void cbPlaneUse_Change(object sender, EventArgs e)
     {
         cbSelectedPlaneChanged?.Invoke(this, e);
     }
 
-    private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
-    {
-        var dataGridView = sender as DataGridView;
-        if (dataGridView != null)
-        {
-            var cell = dataGridView[e.ColumnIndex, e.RowIndex];
-            if (cell.ReadOnly) cell.Selected = false;
-        }
-    }
-
-    //private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-    //{
-    //    dataGridView1CellValueChanged?.Invoke(this, e);
-    //}
-
-    private void DataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-    {
-        //    var dataGridView = sender as DataGridView;
-        //    if (dataGridView != null)
-        //    {
-        //        var cell = dataGridView[e.ColumnIndex, e.RowIndex];
-        //        if (cell.ReadOnly)
-        //        {
-        //            cell.Selected = false;
-        //        }
-        //    }
-    }
-
-    private void DataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-    {
-        //var dataGridView = sender as DataGridView;
-        //if (dataGridView != null)
-        //{
-        //    var cell = dataGridView[e.ColumnIndex, e.RowIndex];
-        //    if (cell.ReadOnly)
-        //    {
-        //        cell.Selected = false;
-        //    }
-        //}
-    }
-
     private void button1_Click(object sender, EventArgs e)
     {
-        //_table.AddRow(0, 0, 0, 0, 0, 0);
+
     }
 
     private void button2_Click(object sender, EventArgs e)
     {
-        //_table.Rows.Clear();
+
     }
-
-    //private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-    //{
-    //    dataGridViewCellFormattingChanged.Invoke(this, e);
-    //}
-
-    //private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-    //{
-    //    DataGridView1CellBeginEdit?.Invoke(this, e);
-    //}
 
     private void RevStrokeCheckBox_Changed(object sender, EventArgs e)
     {
         RevStrokeChanged?.Invoke(this, e);
+    }
+    private void DataGridViewCell_BeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+    {
+        dataGridViewCellBeginEdit?.Invoke(this, e);
     }
 
     private void DataGridViewCell_EditEnd(object sender, DataGridViewCellEventArgs e)
