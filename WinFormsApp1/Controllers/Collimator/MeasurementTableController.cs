@@ -118,13 +118,6 @@ public class MeasurementTableController
             return;
         }
 
-        // Валидация для строк
-        if (propertyType == typeof(string))
-        {
-            e.Cancel = true;
-            return;
-        }
-
         // Валидация для decimal и decimal?
         if (propertyType == typeof(decimal))
         {
@@ -169,15 +162,9 @@ public class MeasurementTableController
     {
         _view.Show();
         ApplyColumnHeaders();
-        ApplyReadonlyArgs();
     }
 
-    private void ApplyReadonlyArgs()
-    {
-        foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
-            if (MeasurementTableModel.ReadonlyColumns.Contains(column.DataPropertyName))
-                column.ReadOnly = true;
-    }
+    
 
     private void ApplyColumnHeaders()
     {
