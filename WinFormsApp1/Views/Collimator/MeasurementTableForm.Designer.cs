@@ -188,7 +188,6 @@
             dataGridView1.TabIndex = 2;
             dataGridView1.CellEndEdit += DataGridViewCell_EditEnd;
             dataGridView1.CellValidating += DataGridView1_CellValidated;
-            dataGridView1.CellBeginEdit += DataGridViewCell_BeginEdit;
             // 
             // collimatorControllerBindingSource
             // 

@@ -178,7 +178,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _formatedMean_Horizontal = value;
-            OnPropertyChanged("MeanSecondsHorizontal");
+            OnPropertyChanged("FormatedMeanHorizontal");
         }
     }
 

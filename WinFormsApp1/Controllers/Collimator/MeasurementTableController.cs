@@ -23,7 +23,6 @@ public class MeasurementTableController
         
         _view.dataGridViewCellValidating += DataGridView_CellValidating;
         _view.dataGridViewCellEditEnd += DataGridViewC_CellEditEnd;
-        _view.dataGridViewCellBeginEdit += DataGridView_CellBeginEdit;
         _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
         _view.RevStrokeChanged += CBRevStroke_Changed;
         _view.AdditionFieldsChanged += CBAdditionFieldsVisible_Changed;
@@ -164,8 +163,6 @@ public class MeasurementTableController
         ApplyColumnHeaders();
     }
 
-    
-
     private void ApplyColumnHeaders()
     {
         foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
@@ -200,14 +197,6 @@ public class MeasurementTableController
         SwitchColumns(_dataSet.Plane);
     }
 
-    private void DataGridView_CellBeginEdit(object? sender, DataGridViewCellCancelEventArgs e)
-    {
-        if (MeasurementTableModel.ReadonlyColumns.Contains(_view.dataGridView1.Columns[e.ColumnIndex].DataPropertyName))
-        {
-            e.Cancel = true;
-            return;
-        }
-    }
 
     private void DataGridViewC_CellEditEnd(object? sender, DataGridViewCellEventArgs e)
     {
@@ -229,9 +218,8 @@ public class MeasurementTableController
                 if (!horizontalForwardHasValue && (!_model.IsRevStrokeEnabled || !horizontalReverseHasValue))
                 {
                     _model.Table.RemoveAt(e.RowIndex);
-                    UpdatePositions();
+                    
                 }
-                
             }
 
             else if (_model.Plane == Enums.Plane.Vertical)
@@ -239,7 +227,6 @@ public class MeasurementTableController
                 if (!verticalForwardHasValue && (!_model.IsRevStrokeEnabled || !verticalReverseHasValue))
                 {
                     _model.Table.RemoveAt(e.RowIndex);
-                    UpdatePositions();
                 }
             }
             
@@ -248,10 +235,12 @@ public class MeasurementTableController
                 if (!horizontalForwardHasValue && !verticalForwardHasValue && (!_model.IsRevStrokeEnabled || (!verticalReverseHasValue && !horizontalForwardHasValue)))
                 {
                     _model.Table.RemoveAt(e.RowIndex);
-                    UpdatePositions();
                 }
             }
+            UpdatePositions();
         }
+        UpdateMeasurementLength();
+        
     }
 
     private void UpdatePositions()
@@ -262,5 +251,14 @@ public class MeasurementTableController
             row.PreviousDataRow = _model.Table[i - 1];
             row.UpdatePosition(i);
         }
+        
     }
+
+    private void UpdateMeasurementLength()
+    {
+        _dataSet.BedLength = _model.Table.Count <= 2 ? 
+            _dataSet.BedLength = _model.Table[^1].MeasurementLength : 
+            _dataSet.BedLength = _model.Table[_model.Table.Count - 2].MeasurementLength;
+    }
+    
 }

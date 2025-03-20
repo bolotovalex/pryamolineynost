@@ -60,10 +60,6 @@ public partial class MeasurementTableForm : Form
     {
         RevStrokeChanged?.Invoke(this, e);
     }
-    private void DataGridViewCell_BeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-    {
-        dataGridViewCellBeginEdit?.Invoke(this, e);
-    }
 
     private void DataGridViewCell_EditEnd(object sender, DataGridViewCellEventArgs e)
     {
