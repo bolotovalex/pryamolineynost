@@ -66,6 +66,11 @@ public partial class MeasurementTableForm : Form
         dataGridViewCellEditEnd?.Invoke(this, e);
     }
 
+    private void DataGridViewCell_BeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+    {
+        dataGridViewCellBeginEdit?.Invoke(this, e);
+    }
+
     private void AdditionFields_Changed(object sender, EventArgs e)
     {
         AdditionFieldsChanged?.Invoke(this, e);

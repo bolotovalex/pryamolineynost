@@ -1,7 +1,4 @@
-﻿using MigraDoc.DocumentObjectModel.Fields;
-using PryamolineynostWF.Enums;
-using PryamolineynostWF.Services;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace PryamolineynostWF.Models.Collimator;
 
@@ -11,10 +8,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private int _measurementLength; // Длина измерения, мм
 
     //Горизонтальная поверхность
-    private int? _forwardDegrees_Horizontal; // Градусы прямой ход
+    // private int? _forwardDegrees_Horizontal; // Градусы прямой ход
     private int? _forwardMinutes_Horizontal; // Минуты прямой ход
     private decimal? _forwardSeconds_Horizontal; // Секунды прямой ход
-    private int? _reverseDegrees_Horizontal; // Градусы обратный ход
+    // private int? _reverseDegrees_Horizontal; // Градусы обратный ход
     private int? _reverseMinutes_Horizontal; // Минуты обратный ход
     private decimal? _reverseSeconds_Horizontal; // Секунды обратный ход
     private decimal? _meanSeconds_Horizontal; // Средние секунды
@@ -26,10 +23,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private string? _formatedMean_Horizontal;
 
     //Вертикальная поверхность
-    private int? _forwardDegrees_Vertical; // Градусы прямой ход
+    // private int? _forwardDegrees_Vertical; // Градусы прямой ход
     private int? _forwardMinutes_Vertical; // Минуты прямой ход
     private decimal? _forwardSeconds_Vertical; // Секунды прямой ход
-    private int? _reverseDegrees_Vertical; // Градусы обратный ход
+    // private int? _reverseDegrees_Vertical; // Градусы обратный ход
     private int? _reverseMinutes_Vertical; // Минуты обратный ход
     private decimal? _reverseSeconds_Vertical; // Секунды обратный ход
     private decimal? _meanSeconds_Vertical; // Средние секунды
@@ -99,17 +96,6 @@ public class MeasurementRowModel : INotifyPropertyChanged
             
     }
 
-    public int? ForwardDegreesHorizontal
-    {
-        get => _forwardDegrees_Horizontal;
-        set
-        {
-            _forwardDegrees_Horizontal = GetFormatedDegree(value);
-            MeanSecondsHorizontal = CalculateHorizontalMean();
-            OnPropertyChanged("ForwardDegreesHorizontal");
-        }
-    }
-
     public int? ForwardMinutesHorizontal
     {
         get => _forwardMinutes_Horizontal;
@@ -129,17 +115,6 @@ public class MeasurementRowModel : INotifyPropertyChanged
             _forwardSeconds_Horizontal = GetFormatedSeconds(value);
             MeanSecondsHorizontal = CalculateHorizontalMean();
             OnPropertyChanged("ForwardSecondsHorizontal");
-        }
-    }
-
-    public int? ReverseDegreesHorizontal
-    {
-        get => _reverseDegrees_Horizontal;
-        set
-        {
-            _reverseDegrees_Horizontal = GetFormatedDegree(value);
-            MeanSecondsHorizontal = CalculateHorizontalMean();
-            OnPropertyChanged("ReverseDegreesHorizontal");
         }
     }
 
@@ -173,6 +148,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _meanSeconds_Horizontal = value;
             FormatedMeanHorizontal = value == null ? null : GetMeanString(value);
+            RelativeAngleHorizontal = _previousDataRow != null ? GetRelativeAngle(_meanSeconds_Horizontal, _previousDataRow.MeanSecondsHorizontal) : null;
         }
     }
 
@@ -236,18 +212,6 @@ public class MeasurementRowModel : INotifyPropertyChanged
         }
     }
 
-
-    public int? ForwardDegreesVertical
-    {
-        get => _forwardDegrees_Vertical;
-        set
-        {
-            _forwardDegrees_Vertical = GetFormatedDegree(value);
-            MeanSecondsVertical = CalculateVerticalMean();
-            OnPropertyChanged("ForwardDegreesVertical");
-        }
-    }
-
     public int? ForwardMinutesVertical
     {
         get => _forwardMinutes_Vertical;
@@ -267,17 +231,6 @@ public class MeasurementRowModel : INotifyPropertyChanged
             _forwardSeconds_Vertical = GetFormatedSeconds(value);
             MeanSecondsVertical = CalculateVerticalMean();
             OnPropertyChanged("ForwardSecondsVertical");
-        }
-    }
-
-    public int? ReverseDegreesVertical
-    {
-        get => _reverseDegrees_Vertical;
-        set
-        {
-            _reverseDegrees_Vertical = GetFormatedDegree(value);
-            MeanSecondsVertical = CalculateVerticalMean();
-            OnPropertyChanged("ReverseDegreesVertical");
         }
     }
 
@@ -311,6 +264,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _meanSeconds_Vertical = value;
             FormatedMeanVertical = value == null ? null : GetMeanString(value);
+            RelativeAngleVertical = _previousDataRow != null ? GetRelativeAngle(_meanSeconds_Vertical, _previousDataRow.MeanSecondsVertical) : null;
         } 
     }
 
@@ -377,45 +331,37 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     private decimal? CalculateHorizontalMean()
     {
-        return CalculateMeanValue(_forwardDegrees_Horizontal,
-            _forwardMinutes_Horizontal,
+        return CalculateMeanValue(_forwardMinutes_Horizontal,
             _forwardSeconds_Horizontal,
-            _reverseDegrees_Horizontal,
             _reverseMinutes_Horizontal,
             _reverseSeconds_Horizontal);
     }
 
     private decimal? CalculateVerticalMean()
     {
-        return CalculateMeanValue(_forwardDegrees_Vertical,
-            _forwardMinutes_Vertical,
+        return CalculateMeanValue(_forwardMinutes_Vertical,
             _forwardSeconds_Vertical,
-            _reverseDegrees_Vertical,
             _reverseMinutes_Vertical,
             _reverseSeconds_Vertical);
     }
 
-    private decimal? CalculateMeanValue(int? fDegrees, int? fMinutes, decimal? fSeconds, int? rDegrees,
-        int? rMinutes, decimal? rSeconds)
+    private decimal? CalculateMeanValue(int? fMinutes, decimal? fSeconds, int? rMinutes, decimal? rSeconds)
     {
-        decimal? mean;
-        if (fDegrees == null || fMinutes == null || fSeconds == null)
+        if (fMinutes == null || fSeconds == null)
         {
             return null;
         }
 
-        if (IsReverseStrokeEnabled && (rDegrees == null || rMinutes == null || rSeconds == null))
+        if (IsReverseStrokeEnabled && (rMinutes == null || rSeconds == null))
         {
             return null;
         }
 
-        if (IsReverseStrokeEnabled)
-            mean = (decimal)((fDegrees + rDegrees) * 3600
-                             + (decimal)((fMinutes + rMinutes) * 60) + fSeconds + rSeconds) / 2M;
-        else
-            mean = (decimal)(fDegrees * 3600 + fMinutes * 60 + fSeconds);
-
-        return mean;
+        return IsReverseStrokeEnabled switch
+        {
+            true => (((fMinutes + rMinutes) * 60) + fSeconds + rSeconds) / 2M,
+            false => fMinutes * 60 + fSeconds
+        };
     }
 
     [Browsable(false)]
@@ -457,10 +403,9 @@ public class MeasurementRowModel : INotifyPropertyChanged
     {
         if (seconds == null)
             return null;
-        var meanDegrees = (int)(seconds / 3600 % 360);
         var meanMinutes = (int)(seconds / 60 % 60);
         var meanSeconds = Math.Round((decimal)(seconds % 60), 1);
-        return $"{meanDegrees.ToString()}°{meanMinutes.ToString()}'{meanSeconds.ToString()}\"";
+        return $"{meanMinutes.ToString()}'{meanSeconds.ToString()}\"";
     }
 
     protected void OnPropertyChanged(string propertyName)
@@ -472,5 +417,12 @@ public class MeasurementRowModel : INotifyPropertyChanged
     public void UpdatePosition(int position)
     {
         Position = position;
+    }
+
+    private decimal? GetRelativeAngle(decimal? meanSeconds, decimal? prevMeanSeconds)
+    {
+        if (prevMeanSeconds == null)
+            return 0;
+        return meanSeconds - prevMeanSeconds;
     }
 }

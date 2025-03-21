@@ -20,9 +20,9 @@ public class MeasurementTableController
         _dataSet = dataSet;
         CreateBindingSource();
         _view = new MeasurementTableForm(_bindingSource, _dataSet.Plane);
-        
         _view.dataGridViewCellValidating += DataGridView_CellValidating;
         _view.dataGridViewCellEditEnd += DataGridViewC_CellEditEnd;
+        _view.dataGridViewCellBeginEdit += DataGridView_CellBeginEdit;
         _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
         _view.RevStrokeChanged += CBRevStroke_Changed;
         _view.AdditionFieldsChanged += CBAdditionFieldsVisible_Changed;
@@ -46,39 +46,21 @@ public class MeasurementTableController
     }
 
 
-    private void DataGridView1_RowRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-    {
-        //var dataGridView = sender as DataGridView;
-        //if (dataGridView != null)
-        //{
-        //    for (int i = 0; i < e.RowCount; i++)
-        //    {
-        //        int rowIndex = e.RowIndex + i;
-        //        if (rowIndex < _table.DataTable.Rows.Count)
-        //        {
-        //            _table.DataTable.Rows.RemoveAt(rowIndex);
-        //        }
-        //    }
-        //}
-    }
-
-
     private void SwitchColumns(Enums.Plane plane)
     {
         switch (_dataSet.Plane)
         {
             case Enums.Plane.Horizontal:
                 foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
-                    column.Visible = MeasurementTableModel.HorizontalFields.Contains(column.DataPropertyName)
-                        ? IsAdditionColumnsEnable(column) && IsReverseColumnEnable(column)
-                        : false;
+                    column.Visible = MeasurementTableModel.HorizontalFields.Contains(column.DataPropertyName) 
+                                     && (IsAdditionColumnsEnable(column) 
+                                         && IsReverseColumnEnable(column));
                 break;
 
             case Enums.Plane.Vertical:
                 foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
-                    column.Visible = MeasurementTableModel.VerticalFields.Contains(column.DataPropertyName)
-                        ? IsAdditionColumnsEnable(column) && IsReverseColumnEnable(column)
-                        : false;
+                    column.Visible = MeasurementTableModel.VerticalFields.Contains(column.DataPropertyName) 
+                                     && (IsAdditionColumnsEnable(column) && IsReverseColumnEnable(column));
                 break;
 
             case Enums.Plane.Both:
@@ -123,10 +105,12 @@ public class MeasurementTableController
             decimal parsedDecimal;
 
             // Пробуем парсинг с точкой
-            if (!decimal.TryParse(input.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out parsedDecimal))
+            if (!decimal.TryParse(input.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture,
+                    out parsedDecimal))
             {
                 // Пробуем парсинг с запятой
-                if (!decimal.TryParse(input.Replace('.', ','), NumberStyles.Any, CultureInfo.InvariantCulture, out parsedDecimal))
+                if (!decimal.TryParse(input.Replace('.', ','), NumberStyles.Any, CultureInfo.InvariantCulture,
+                        out parsedDecimal))
                 {
                     // Если оба варианта провалились, устанавливаем null и окрашиваем ячейку
                     _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
@@ -184,7 +168,7 @@ public class MeasurementTableController
         return true;
     }
 
-   
+
     private void CBRevStroke_Changed(object? sender, EventArgs e)
     {
         _dataSet.IsRevStrokeEnabled = _view.cbRevStrokeEnable.Checked;
@@ -198,49 +182,76 @@ public class MeasurementTableController
     }
 
 
+    private void DataGridView_CellBeginEdit(object? sender, DataGridViewCellCancelEventArgs e)
+    {
+        if (e.RowIndex == 0)
+        {
+            e.Cancel = true;
+        }
+    }
+
     private void DataGridViewC_CellEditEnd(object? sender, DataGridViewCellEventArgs e)
     {
+        var row = _model.Table[e.RowIndex];
+        var horizontalForwardHasValue = row.ForwardMinutesHorizontal.HasValue || row.ForwardSecondsHorizontal.HasValue;
+        var horizontalReverseHasValue = row.ReverseMinutesHorizontal.HasValue || row.ReverseSecondsHorizontal.HasValue;
+        var verticalForwardHasValue = row.ForwardMinutesVertical.HasValue || row.ForwardSecondsVertical.HasValue;
+        var verticalReverseHasValue = row.ReverseMinutesVertical.HasValue || row.ReverseSecondsVertical.HasValue;
+
         if (_model.Table.Count <= e.RowIndex + 1)
         {
-            _model.Table.Add(new MeasurementRowModel(_model.Step, _model.Table[^1], _model.IsRevStrokeEnabled));
+            switch (_model.Plane)
+            {
+                case Enums.Plane.Horizontal when !horizontalForwardHasValue && (!_model.IsRevStrokeEnabled || horizontalReverseHasValue):
+                case Enums.Plane.Vertical when !verticalForwardHasValue && (!_model.IsRevStrokeEnabled || !verticalReverseHasValue):
+                case Enums.Plane.Both when !horizontalForwardHasValue && !verticalForwardHasValue && (!_model.IsRevStrokeEnabled ||
+                    (!verticalReverseHasValue &&
+                     !horizontalForwardHasValue)):
+                    return;
+                default:
+                    _model.Table.Add(new MeasurementRowModel(_model.Step, _model.Table[^1], _model.IsRevStrokeEnabled));
+                    break;
+            }
         }
         else
         {
-            var row = _model.Table[e.RowIndex];
-            var horizontalForwardHasValue = row.ForwardDegreesHorizontal.HasValue || row.ForwardMinutesHorizontal.HasValue || row.ForwardSecondsHorizontal.HasValue;
-            var horizontalReverseHasValue = row.ReverseDegreesHorizontal.HasValue || row.ReverseMinutesHorizontal.HasValue || row.ReverseSecondsHorizontal.HasValue;
-            
-            var verticalForwardHasValue = row.ForwardDegreesVertical.HasValue || row.ForwardMinutesVertical.HasValue || row.ForwardSecondsVertical.HasValue;
-            var verticalReverseHasValue = row.ReverseDegreesVertical.HasValue || row.ReverseMinutesVertical.HasValue || row.ReverseSecondsVertical.HasValue;
+            switch (_model.Plane)
+            {
+                case Enums.Plane.Horizontal:
+                {
+                    if (!horizontalForwardHasValue && (!_model.IsRevStrokeEnabled || !horizontalReverseHasValue))
+                    {
+                        _model.Table.RemoveAt(e.RowIndex);
+                    }
 
-            if (_model.Plane == Enums.Plane.Horizontal)
-            {
-                if (!horizontalForwardHasValue && (!_model.IsRevStrokeEnabled || !horizontalReverseHasValue))
+                    break;
+                }
+                case Enums.Plane.Vertical:
                 {
-                    _model.Table.RemoveAt(e.RowIndex);
-                    
+                    if (!verticalForwardHasValue && (!_model.IsRevStrokeEnabled || !verticalReverseHasValue))
+                    {
+                        _model.Table.RemoveAt(e.RowIndex);
+                    }
+
+                    break;
+                }
+                case Enums.Plane.Both:
+                {
+                    if (!horizontalForwardHasValue && !verticalForwardHasValue && (!_model.IsRevStrokeEnabled ||
+                            (!verticalReverseHasValue &&
+                             !horizontalForwardHasValue)))
+                    {
+                        _model.Table.RemoveAt(e.RowIndex);
+                    }
+
+                    break;
                 }
             }
 
-            else if (_model.Plane == Enums.Plane.Vertical)
-            {
-                if (!verticalForwardHasValue && (!_model.IsRevStrokeEnabled || !verticalReverseHasValue))
-                {
-                    _model.Table.RemoveAt(e.RowIndex);
-                }
-            }
-            
-            else if (_model.Plane == Enums.Plane.Both)
-            {
-                if (!horizontalForwardHasValue && !verticalForwardHasValue && (!_model.IsRevStrokeEnabled || (!verticalReverseHasValue && !horizontalForwardHasValue)))
-                {
-                    _model.Table.RemoveAt(e.RowIndex);
-                }
-            }
             UpdatePositions();
         }
-        _dataSet.UpdateBedLength();
 
+        _dataSet.UpdateBedLength();
     }
 
     private void UpdatePositions()
@@ -251,6 +262,5 @@ public class MeasurementTableController
             row.PreviousDataRow = _model.Table[i - 1];
             row.UpdatePosition(i);
         }
-        
     }
 }

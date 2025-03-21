@@ -9,6 +9,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
     private BindingList<MeasurementRowModel> _table;
     private int _step;
     private bool _isRevStrokeEnabled;
+    private decimal? _firstRelativeAngle;
     public event PropertyChangedEventHandler PropertyChanged;
 
     public MeasurementTableModel(Plane plane, int step)
@@ -75,10 +76,8 @@ public class MeasurementTableModel : INotifyPropertyChanged
         { "Position", "No" }, // Русский
         { "MeasurementLength", "Позиция" },
 
-        { "ForwardDegreesHorizontal", "Пр.°" },
         { "ForwardMinutesHorizontal", "Пр.'" },
         { "ForwardSecondsHorizontal", "Пр.\"" },
-        { "ReverseDegreesHorizontal", "Обр.°" },
         { "ReverseMinutesHorizontal", "Обр.'" },
         { "ReverseSecondsHorizontal", "Обр.\"" },
         { "FormatedMeanHorizontal", "Ср." },
@@ -88,10 +87,8 @@ public class MeasurementTableModel : INotifyPropertyChanged
         { "OrdinateStraightnessHorizontal", "Bi, мкм" },
         { "StraightnessDeviationHorizontal", "Hi, мкм" },
 
-        { "ForwardDegreesVertical", "Пр.°" },
         { "ForwardMinutesVertical", "Пр.'" },
         { "ForwardSecondsVertical", "Пр.\"" },
-        { "ReverseDegreesVertical", "Обр.°" },
         { "ReverseMinutesVertical", "Обр.'" },
         { "ReverseSecondsVertical", "Обр.\"" },
         { "FormatedMeanVertical", "Ср." },
@@ -103,11 +100,9 @@ public class MeasurementTableModel : INotifyPropertyChanged
     };
     public static readonly List<string> ReverseStrokeEnableColumns = new()
     {
-        "ReverseDegreesHorizontal",
         "ReverseMinutesHorizontal",
         "ReverseSecondsHorizontal",
         "FormatedMeanHorizontal",
-        "ReverseDegreesVertical",
         "ReverseMinutesVertical",
         "ReverseSecondsVertical",
         "FormatedMeanVertical"
@@ -129,10 +124,8 @@ public class MeasurementTableModel : INotifyPropertyChanged
     {
         "Position",
         "MeasurementLength",
-        "ForwardDegreesHorizontal",
         "ForwardMinutesHorizontal",
         "ForwardSecondsHorizontal",
-        "ReverseDegreesHorizontal",
         "ReverseMinutesHorizontal",
         "ReverseSecondsHorizontal",
         "FormatedMeanHorizontal",
@@ -146,10 +139,8 @@ public class MeasurementTableModel : INotifyPropertyChanged
     {
         "Position",
         "MeasurementLength",
-        "ForwardDegreesVertical",
         "ForwardMinutesVertical",
         "ForwardSecondsVertical",
-        "ReverseDegreesVertical",
         "ReverseMinutesVertical",
         "ReverseSecondsVertical",
         "FormatedMeanVertical",
