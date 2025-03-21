@@ -157,6 +157,7 @@ public class CollimatorModel : INotifyPropertyChanged
         set
         {
             _stepSize = value;
+            UpdateStepSize();
             OnPropertyChanged(nameof(StepSize));
         }
     }
@@ -292,6 +293,12 @@ public class CollimatorModel : INotifyPropertyChanged
             _isAddtionsFieldEnabled = value;
             OnPropertyChanged(nameof(IsAdditionsFieldEnabled));
         }
+    }
+
+    private void UpdateStepSize()
+    {
+        foreach (var row in _table.Table)
+            row.StepSize = _stepSize;
     }
 
     protected void OnPropertyChanged(string propertyName)

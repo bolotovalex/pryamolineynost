@@ -85,14 +85,18 @@ public class MeasurementRowModel : INotifyPropertyChanged
             _measurementLength = value;
             OnPropertyChanged("MeasurementLength");
         }
-            
     }
 
     [Browsable(false)]
     public int StepSize
     {
         get => _stepSize;
-        set => _stepSize = value;
+        set
+        {
+            _stepSize = value;
+            MeasurementLength = Position * StepSize;
+        }
+            
     }
 
     public int? ForwardDegreesHorizontal
