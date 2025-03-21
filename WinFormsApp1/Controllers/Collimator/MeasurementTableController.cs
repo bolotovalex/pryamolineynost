@@ -239,8 +239,8 @@ public class MeasurementTableController
             }
             UpdatePositions();
         }
-        UpdateMeasurementLength();
-        
+        _dataSet.UpdateBedLength();
+
     }
 
     private void UpdatePositions()
@@ -253,12 +253,4 @@ public class MeasurementTableController
         }
         
     }
-
-    private void UpdateMeasurementLength()
-    {
-        _dataSet.BedLength = _model.Table.Count <= 2 ? 
-            _dataSet.BedLength = _model.Table[^1].MeasurementLength : 
-            _dataSet.BedLength = _model.Table[_model.Table.Count - 2].MeasurementLength;
-    }
-    
 }

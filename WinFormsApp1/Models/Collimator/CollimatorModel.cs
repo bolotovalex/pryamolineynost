@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Data;
 using PryamolineynostWF.Enums;
 
 namespace PryamolineynostWF.Models.Collimator;
@@ -299,6 +300,14 @@ public class CollimatorModel : INotifyPropertyChanged
     {
         foreach (var row in _table.Table)
             row.StepSize = _stepSize;
+        UpdateBedLength();
+    }
+
+    public void UpdateBedLength()
+    {
+        BedLength = _table.Table.Count <= 2 ?
+            BedLength = _table.Table[^1].MeasurementLength :
+            BedLength = _table.Table[_table.Table.Count - 2].MeasurementLength;
     }
 
     protected void OnPropertyChanged(string propertyName)
