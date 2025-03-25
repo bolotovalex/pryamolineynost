@@ -23,7 +23,7 @@ public class MeasurementTableController
         _view.dataGridViewCellValidating += DataGridView_CellValidating;
         _view.dataGridViewCellEditEnd += DataGridViewC_CellEditEnd;
         _view.dataGridViewCellBeginEdit += DataGridView_CellBeginEdit;
-        _view.cbSelectedPlaneChanged += ComboBox1_SelectedValueChange;
+        _view.cbSelectedPlaneChanged += PlainComboBox_SelectedValueChange;
         _view.RevStrokeChanged += CBRevStroke_Changed;
         _view.AdditionFieldsChanged += CBAdditionFieldsVisible_Changed;
         _view.cbRevStrokeEnable.Checked = _dataSet.IsRevStrokeEnabled;
@@ -41,7 +41,6 @@ public class MeasurementTableController
         _bindingSource = new BindingSource();
         _bindingSource.DataSource = _model.Table;
 
-
         //_bindingSource.ResetBindings(false); //Обновление
     }
 
@@ -52,14 +51,14 @@ public class MeasurementTableController
         {
             case Enums.Plane.Horizontal:
                 foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
-                    column.Visible = MeasurementTableModel.HorizontalFields.Contains(column.DataPropertyName) 
-                                     && (IsAdditionColumnsEnable(column) 
+                    column.Visible = MeasurementTableModel.HorizontalFields.Contains(column.DataPropertyName)
+                                     && (IsAdditionColumnsEnable(column)
                                          && IsReverseColumnEnable(column));
                 break;
 
             case Enums.Plane.Vertical:
                 foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
-                    column.Visible = MeasurementTableModel.VerticalFields.Contains(column.DataPropertyName) 
+                    column.Visible = MeasurementTableModel.VerticalFields.Contains(column.DataPropertyName)
                                      && (IsAdditionColumnsEnable(column) && IsReverseColumnEnable(column));
                 break;
 
@@ -70,7 +69,7 @@ public class MeasurementTableController
         }
     }
 
-    private void ComboBox1_SelectedValueChange(object? sender, EventArgs e)
+    private void PlainComboBox_SelectedValueChange(object? sender, EventArgs e)
     {
         if (_view.cbPlaneUse.SelectedValue is Enums.Plane selected) _dataSet.Plane = selected;
         _model.Plane = _dataSet.Plane;
@@ -202,11 +201,14 @@ public class MeasurementTableController
         {
             switch (_model.Plane)
             {
-                case Enums.Plane.Horizontal when !horizontalForwardHasValue && (!_model.IsRevStrokeEnabled || horizontalReverseHasValue):
-                case Enums.Plane.Vertical when !verticalForwardHasValue && (!_model.IsRevStrokeEnabled || !verticalReverseHasValue):
-                case Enums.Plane.Both when !horizontalForwardHasValue && !verticalForwardHasValue && (!_model.IsRevStrokeEnabled ||
-                    (!verticalReverseHasValue &&
-                     !horizontalForwardHasValue)):
+                case Enums.Plane.Horizontal when !horizontalForwardHasValue &&
+                                                 (!_model.IsRevStrokeEnabled || horizontalReverseHasValue):
+                case Enums.Plane.Vertical
+                    when !verticalForwardHasValue && (!_model.IsRevStrokeEnabled || !verticalReverseHasValue):
+                case Enums.Plane.Both when !horizontalForwardHasValue && !verticalForwardHasValue &&
+                                           (!_model.IsRevStrokeEnabled ||
+                                            (!verticalReverseHasValue &&
+                                             !horizontalForwardHasValue)):
                     return;
                 default:
                     _model.Table.Add(new MeasurementRowModel(_model.Step, _model.Table[^1], _model.IsRevStrokeEnabled));

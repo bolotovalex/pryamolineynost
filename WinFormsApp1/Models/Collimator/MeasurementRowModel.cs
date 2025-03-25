@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Globalization;
 
 namespace PryamolineynostWF.Models.Collimator;
 
@@ -8,34 +9,38 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private int _measurementLength; // Длина измерения, мм
 
     //Горизонтальная поверхность
-    // private int? _forwardDegrees_Horizontal; // Градусы прямой ход
-    private int? _forwardMinutes_Horizontal; // Минуты прямой ход
-    private decimal? _forwardSeconds_Horizontal; // Секунды прямой ход
-    // private int? _reverseDegrees_Horizontal; // Градусы обратный ход
-    private int? _reverseMinutes_Horizontal; // Минуты обратный ход
-    private decimal? _reverseSeconds_Horizontal; // Секунды обратный ход
-    private decimal? _meanSeconds_Horizontal; // Средние секунды
-    private decimal? _relativeAngle_Horizontal; // bi Наклон проверяемых участков
-    private decimal? _relativeAngleToPrevious_Horizontal; // hi Наклон проверяемых участков относительно предыдущего
-    private decimal? _relativeAngleToFirst_Horizontal; // Hi Наклон проверяемых участков относительно первой точки
-    private decimal? _ordinateStraightness_Horizontal; // bi Ордината прямой величины в проверяемых точках
-    private decimal? _straightnessDeviation_Horizontal; // Hi Отклонения прямолинейности от направляющей
-    private string? _formatedMean_Horizontal;
+    private int? _forwardMinutesHorizontal; // Минуты прямой ход
+    private decimal? _forwardSecondsHorizontal; // Секунды прямой ход
+    private int? _reverseMinutesHorizontal; // Минуты обратный ход
+    private decimal? _reverseSecondsHorizontal; // Секунды обратный ход
+    private decimal? _meanSecondsHorizontal; // Средние секунды
+    private decimal? _relativeAngleHorizontal; // bi Наклон проверяемых участков
+    private decimal? _relativeAngleToPreviousHorizontal; // hi Наклон проверяемых участков относительно предыдущего
+    private decimal? _relativeAngleToFirstHorizontal; // Hi Наклон проверяемых участков относительно первой точки
+    private decimal? _ordinateStraightnessHorizontal; // bi Ордината прямой величины в проверяемых точках
+    private decimal? _straightnessDeviationHorizontal; // Hi Отклонения прямолинейности от направляющей
+    private string? _formatedMeanHorizontal;
 
     //Вертикальная поверхность
     // private int? _forwardDegrees_Vertical; // Градусы прямой ход
-    private int? _forwardMinutes_Vertical; // Минуты прямой ход
-    private decimal? _forwardSeconds_Vertical; // Секунды прямой ход
+    private int? _forwardMinutesVertical; // Минуты прямой ход
+
+    private decimal? _forwardSecondsVertical; // Секунды прямой ход
+
     // private int? _reverseDegrees_Vertical; // Градусы обратный ход
-    private int? _reverseMinutes_Vertical; // Минуты обратный ход
-    private decimal? _reverseSeconds_Vertical; // Секунды обратный ход
-    private decimal? _meanSeconds_Vertical; // Средние секунды
-    private decimal? _relativeAngle_Vertical; // bi Наклон проверяемых участков
-    private decimal? _relativeAngleToPrevious_Vertical; // hi Наклон проверяемых участков относительно предыдущего
-    private decimal? _relativeAngleToFirst_Vertical; // Hi Наклон проверяемых участков относительно первой точки
-    private decimal? _ordinateStraightness_Vertical; // bi Ордината прямой величины в проверяемых точках
-    private decimal? _straightnessDeviation_Vertical; // Hi Отклонения прямолинейности от направляющей
-    private string? _formatedMean_Vertical;
+    private int? _reverseMinutesVertical; // Минуты обратный ход
+    private decimal? _reverseSecondsVertical; // Секунды обратный ход
+    private decimal? _meanSecondsVertical; // Средние секунды
+    private decimal? _relativeAngleVertical; // bi Наклон проверяемых участков
+    private decimal? _relativeAngleToPreviousVertical; // hi Наклон проверяемых участков относительно предыдущего
+    private decimal? _relativeAngleToFirstVertical; // Hi Наклон проверяемых участков относительно первой точки
+    private decimal? _ordinateStraightnessVertical; // bi Ордината прямой величины в проверяемых точках
+    private decimal? _straightnessDeviationVertical; // Hi Отклонения прямолинейности от направляющей
+    private string? _formatedMeanVertical;
+
+    private decimal? _firstMeanAngleHorizontal;
+    private decimal? _firstMeanAngleVertical;
+
 
     private MeasurementRowModel? _previousDataRow; // Предыдущая строка
     private int _stepSize; // Шаг
@@ -60,6 +65,24 @@ public class MeasurementRowModel : INotifyPropertyChanged
             Position = 0;
             StepSize = step;
             MeasurementLength = 0;
+        }
+    }
+    public decimal? FirstMeanAngle_Horizontal
+    {
+        get => _firstMeanAngleHorizontal;
+        set
+        {
+            _relativeAngleHorizontal = value;
+            RelativeAngleHorizontal = GetRelativeAngle(_meanSecondsHorizontal, _firstMeanAngleHorizontal);
+        }
+    }
+    public decimal? FirstMeanAngle_Vertical
+    {
+        get => _firstMeanAngleVertical;
+        set
+        {
+            _relativeAngleVertical = value;
+            RelativeAngleVertical = GetRelativeAngle(_meanSecondsVertical, _firstMeanAngleVertical);
         }
     }
 
@@ -93,15 +116,14 @@ public class MeasurementRowModel : INotifyPropertyChanged
             _stepSize = value;
             MeasurementLength = Position * StepSize;
         }
-            
     }
 
     public int? ForwardMinutesHorizontal
     {
-        get => _forwardMinutes_Horizontal;
+        get => _forwardMinutesHorizontal;
         set
         {
-            _forwardMinutes_Horizontal = GetFormatedMinutes(value);
+            _forwardMinutesHorizontal = GetFormatedMinutes(value);
             MeanSecondsHorizontal = CalculateHorizontalMean();
             OnPropertyChanged("ForwardMinutesHorizontal");
         }
@@ -109,10 +131,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     public decimal? ForwardSecondsHorizontal
     {
-        get => _forwardSeconds_Horizontal;
+        get => _forwardSecondsHorizontal;
         set
         {
-            _forwardSeconds_Horizontal = GetFormatedSeconds(value);
+            _forwardSecondsHorizontal = GetFormatedSeconds(value);
             MeanSecondsHorizontal = CalculateHorizontalMean();
             OnPropertyChanged("ForwardSecondsHorizontal");
         }
@@ -120,10 +142,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     public int? ReverseMinutesHorizontal
     {
-        get => _reverseMinutes_Horizontal;
+        get => _reverseMinutesHorizontal;
         set
         {
-            _reverseMinutes_Horizontal = GetFormatedMinutes(value);
+            _reverseMinutesHorizontal = GetFormatedMinutes(value);
             MeanSecondsHorizontal = CalculateHorizontalMean();
             OnPropertyChanged("ReverseMinutesHorizontal");
         }
@@ -131,10 +153,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     public decimal? ReverseSecondsHorizontal
     {
-        get => _reverseSeconds_Horizontal;
+        get => _reverseSecondsHorizontal;
         set
         {
-            _reverseSeconds_Horizontal = GetFormatedSeconds(value);
+            _reverseSecondsHorizontal = GetFormatedSeconds(value);
             MeanSecondsHorizontal = CalculateHorizontalMean();
             OnPropertyChanged("ReverseSecondsHorizontal");
         }
@@ -143,81 +165,81 @@ public class MeasurementRowModel : INotifyPropertyChanged
     [Browsable(false)]
     public decimal? MeanSecondsHorizontal
     {
-        get => _meanSeconds_Horizontal;
+        get => _meanSecondsHorizontal;
         private set
         {
-            _meanSeconds_Horizontal = value;
+            _meanSecondsHorizontal = value;
             FormatedMeanHorizontal = value == null ? null : GetMeanString(value);
-            RelativeAngleHorizontal = _previousDataRow != null ? GetRelativeAngle(_meanSeconds_Horizontal, _previousDataRow.MeanSecondsHorizontal) : null;
+            RelativeAngleHorizontal = GetRelativeAngle(_meanSecondsHorizontal, _firstMeanAngleHorizontal);
         }
     }
 
     public string? FormatedMeanHorizontal
     {
-        get => _formatedMean_Horizontal;
+        get => _formatedMeanHorizontal;
         private set
         {
-            _formatedMean_Horizontal = value;
+            _formatedMeanHorizontal = value;
             OnPropertyChanged("FormatedMeanHorizontal");
         }
     }
 
     public decimal? RelativeAngleHorizontal
     {
-        get => _relativeAngle_Horizontal;
+        get => _relativeAngleHorizontal;
         private set
         {
-            _relativeAngle_Horizontal = value;
+            _relativeAngleHorizontal = value;
             OnPropertyChanged("RelativeAngleHorizontal");
         }
     }
 
     public decimal? RelativeAngleToPreviousHorizontal
     {
-        get => _relativeAngleToPrevious_Horizontal;
+        get => _relativeAngleToPreviousHorizontal;
         private set
         {
-            _relativeAngleToPrevious_Horizontal = value;
+            _relativeAngleToPreviousHorizontal = value;
             OnPropertyChanged("RelativeAngleToPreviousHorizontal");
         }
     }
 
     public decimal? RelativeAngleToFirstHorizontal
     {
-        get => _relativeAngleToFirst_Horizontal;
+        get => _relativeAngleToFirstHorizontal;
         private set
         {
-            _relativeAngleToFirst_Horizontal = value;
+            _relativeAngleToFirstHorizontal = value;
             OnPropertyChanged("RelativeAngleToFirstHorizontal");
         }
     }
 
     public decimal? OrdinateStraightnessHorizontal
     {
-        get => _ordinateStraightness_Horizontal;
+        get => _ordinateStraightnessHorizontal;
         private set
         {
-            _ordinateStraightness_Horizontal = value;
+            _ordinateStraightnessHorizontal = value;
             OnPropertyChanged("OrdinateStraightnessHorizontal");
         }
     }
 
     public decimal? StraightnessDeviationHorizontal
     {
-        get => _straightnessDeviation_Horizontal;
+        get => _straightnessDeviationHorizontal;
         private set
         {
-            _straightnessDeviation_Horizontal = value;
+            _straightnessDeviationHorizontal = value;
             OnPropertyChanged("StraightnessDeviationHorizontal");
         }
     }
 
     public int? ForwardMinutesVertical
     {
-        get => _forwardMinutes_Vertical;
+        get => _forwardMinutesVertical;
         set
         {
-            _forwardMinutes_Vertical = GetFormatedMinutes(value);
+            _forwardMinutesVertical = GetFormatedMinutes(value);
             MeanSecondsVertical = CalculateVerticalMean();
             OnPropertyChanged("ForwardMinutesVertical");
         }
@@ -225,10 +247,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     public decimal? ForwardSecondsVertical
     {
-        get => _forwardSeconds_Vertical;
+        get => _forwardSecondsVertical;
         set
         {
-            _forwardSeconds_Vertical = GetFormatedSeconds(value);
+            _forwardSecondsVertical = GetFormatedSeconds(value);
             MeanSecondsVertical = CalculateVerticalMean();
             OnPropertyChanged("ForwardSecondsVertical");
         }
@@ -236,10 +258,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     public int? ReverseMinutesVertical
     {
-        get => _reverseMinutes_Vertical;
+        get => _reverseMinutesVertical;
         set
         {
-            _reverseMinutes_Vertical = GetFormatedMinutes(value);
+            _reverseMinutesVertical = GetFormatedMinutes(value);
             MeanSecondsVertical = CalculateVerticalMean();
             OnPropertyChanged("ReverseMinutesVertical");
         }
@@ -247,10 +269,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     public decimal? ReverseSecondsVertical
     {
-        get => _reverseSeconds_Vertical;
+        get => _reverseSecondsVertical;
         set
         {
-            _reverseSeconds_Vertical = GetFormatedSeconds(value);
+            _reverseSecondsVertical = GetFormatedSeconds(value);
             MeanSecondsVertical = CalculateVerticalMean();
             OnPropertyChanged("ReverseSecondsVertical");
         }
@@ -259,71 +281,71 @@ public class MeasurementRowModel : INotifyPropertyChanged
     [Browsable(false)]
     public decimal? MeanSecondsVertical
     {
-        get => _meanSeconds_Vertical;
+        get => _meanSecondsVertical;
         private set
         {
-            _meanSeconds_Vertical = value;
+            _meanSecondsVertical = value;
             FormatedMeanVertical = value == null ? null : GetMeanString(value);
-            RelativeAngleVertical = _previousDataRow != null ? GetRelativeAngle(_meanSeconds_Vertical, _previousDataRow.MeanSecondsVertical) : null;
-        } 
+            RelativeAngleVertical = GetRelativeAngle(_meanSecondsVertical, _firstMeanAngleVertical);
+        }
     }
 
     public string? FormatedMeanVertical
     {
-        get => _formatedMean_Vertical;
+        get => _formatedMeanVertical;
         set
         {
-            _formatedMean_Vertical = value;
+            _formatedMeanVertical = value;
             OnPropertyChanged("FormatedMeanVertical");
         }
     }
 
     public decimal? RelativeAngleVertical
     {
-        get => _relativeAngle_Vertical;
+        get => _relativeAngleVertical;
         private set
         {
-            _relativeAngle_Vertical = value;
+            _relativeAngleVertical = value;
             OnPropertyChanged("RelativeAngleVertical");
         }
     }
 
     public decimal? RelativeAngleToPreviousVertical
     {
-        get => _relativeAngleToPrevious_Vertical;
+        get => _relativeAngleToPreviousVertical;
         private set
         {
-            _relativeAngleToPrevious_Vertical = value;
+            _relativeAngleToPreviousVertical = value;
             OnPropertyChanged("RelativeAngleToPreviousVertical");
         }
     }
 
     public decimal? RelativeAngleToFirstVertical
     {
-        get => _relativeAngleToFirst_Vertical;
+        get => _relativeAngleToFirstVertical;
         private set
         {
-            _relativeAngleToFirst_Vertical = value;
+            _relativeAngleToFirstVertical = value;
             OnPropertyChanged("RelativeAngleToFirstVertical");
         }
     }
 
     public decimal? OrdinateStraightnessVertical
     {
-        get => _ordinateStraightness_Vertical;
+        get => _ordinateStraightnessVertical;
         private set
         {
-            _ordinateStraightness_Vertical = value;
+            _ordinateStraightnessVertical = value;
             OnPropertyChanged("OrdinateStraightnessVertical");
         }
     }
 
     public decimal? StraightnessDeviationVertical
     {
-        get => _straightnessDeviation_Vertical;
+        get => _straightnessDeviationVertical;
         private set
         {
-            _straightnessDeviation_Vertical = value;
+            _straightnessDeviationVertical = value;
             OnPropertyChanged("StraightnessDeviationVertical");
         }
     }
@@ -331,18 +353,18 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     private decimal? CalculateHorizontalMean()
     {
-        return CalculateMeanValue(_forwardMinutes_Horizontal,
-            _forwardSeconds_Horizontal,
-            _reverseMinutes_Horizontal,
-            _reverseSeconds_Horizontal);
+        return CalculateMeanValue(_forwardMinutesHorizontal,
+            _forwardSecondsHorizontal,
+            _reverseMinutesHorizontal,
+            _reverseSecondsHorizontal);
     }
 
     private decimal? CalculateVerticalMean()
     {
-        return CalculateMeanValue(_forwardMinutes_Vertical,
-            _forwardSeconds_Vertical,
-            _reverseMinutes_Vertical,
-            _reverseSeconds_Vertical);
+        return CalculateMeanValue(_forwardMinutesVertical,
+            _forwardSecondsVertical,
+            _reverseMinutesVertical,
+            _reverseSecondsVertical);
     }
 
     private decimal? CalculateMeanValue(int? fMinutes, decimal? fSeconds, int? rMinutes, decimal? rSeconds)
@@ -371,7 +393,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         set
         {
             _isReverseStrokeEnabled = value;
-            _meanSeconds_Horizontal = CalculateHorizontalMean();
+            _meanSecondsHorizontal = CalculateHorizontalMean();
             OnPropertyChanged("FormatedMeanHorizontal");
         }
     }
@@ -381,12 +403,6 @@ public class MeasurementRowModel : INotifyPropertyChanged
     {
         get => _previousDataRow;
         set => _previousDataRow = value;
-    }
-
-    [Browsable(false)]
-    private int? GetFormatedDegree(int? value)
-    {
-        return value != null ? value % 360 : value;
     }
 
     private int? GetFormatedMinutes(int? value)
@@ -405,7 +421,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
             return null;
         var meanMinutes = (int)(seconds / 60 % 60);
         var meanSeconds = Math.Round((decimal)(seconds % 60), 1);
-        return $"{meanMinutes.ToString()}'{meanSeconds.ToString()}\"";
+        return $"{meanMinutes.ToString()}'{meanSeconds.ToString(CultureInfo.InvariantCulture)}\"";
     }
 
     protected void OnPropertyChanged(string propertyName)
@@ -419,10 +435,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
         Position = position;
     }
 
-    private decimal? GetRelativeAngle(decimal? meanSeconds, decimal? prevMeanSeconds)
+    private decimal? GetRelativeAngle(decimal? meanSeconds, decimal? firstMeanSeconds)
     {
-        if (prevMeanSeconds == null)
+        if (firstMeanSeconds == null)
             return 0;
-        return meanSeconds - prevMeanSeconds;
+        return meanSeconds - firstMeanSeconds;
     }
 }

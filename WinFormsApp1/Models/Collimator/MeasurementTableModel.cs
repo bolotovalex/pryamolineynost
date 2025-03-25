@@ -7,17 +7,20 @@ public class MeasurementTableModel : INotifyPropertyChanged
 {
     private Plane _plane;
     private BindingList<MeasurementRowModel> _table;
+    private decimal? _firstMeanAngle_Horizontal;
+    private decimal? _firstMeanAngle_Vertical;
     private int _step;
     private bool _isRevStrokeEnabled;
     private decimal? _firstRelativeAngle;
+
     public event PropertyChangedEventHandler PropertyChanged;
+
 
     public MeasurementTableModel(Plane plane, int step)
     {
         Plane = plane;
         _step = step;
         Table = new BindingList<MeasurementRowModel>();
-        
     }
 
     public int Step
@@ -65,6 +68,19 @@ public class MeasurementTableModel : INotifyPropertyChanged
         }
     }
 
+    public decimal? FirstRelativeAngle_Horizontal
+    {
+        get => _firstMeanAngle_Horizontal;
+        set { }
+    }
+
+    public decimal? FirstRelativeAngle_Vertical
+    {
+        get => _firstMeanAngle_Vertical;
+        set { }
+    }
+
+
     public BindingList<MeasurementRowModel> Table
     {
         get => _table;
@@ -98,6 +114,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         { "OrdinateStraightnessVertical", "Bi, мкм" },
         { "StraightnessDeviationVertical", "Hi, мкм" }
     };
+
     public static readonly List<string> ReverseStrokeEnableColumns = new()
     {
         "ReverseMinutesHorizontal",
@@ -107,6 +124,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         "ReverseSecondsVertical",
         "FormatedMeanVertical"
     };
+
     public static readonly List<string> AdditionFields = new()
     {
         "RelativeAngleHorizontal",
@@ -120,6 +138,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         "OrdinateStraightnessVertical",
         "StraightnessDeviationVertical"
     };
+
     public static readonly List<string> HorizontalFields = new()
     {
         "Position",
@@ -135,6 +154,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         "OrdinateStraightnessHorizontal",
         "StraightnessDeviationHorizontal"
     };
+
     public static readonly List<string> VerticalFields = new()
     {
         "Position",
@@ -150,6 +170,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         "OrdinateStraightnessVertical",
         "StraightnessDeviationVertical"
     };
+
     public static readonly List<string> ReadonlyColumns = new()
     {
         "Position",
@@ -167,7 +188,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         "OrdinateStraightnessVertical",
         "StraightnessDeviationVertical"
     };
-    
+
 
     [Browsable(false)]
     protected void OnPropertyChanged(string propertyName)
