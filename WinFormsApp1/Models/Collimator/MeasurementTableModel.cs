@@ -11,7 +11,6 @@ public class MeasurementTableModel : INotifyPropertyChanged
     private decimal? _firstMeanAngle_Vertical;
     private int _step;
     private bool _isRevStrokeEnabled;
-    private decimal? _firstRelativeAngle;
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -68,16 +67,30 @@ public class MeasurementTableModel : INotifyPropertyChanged
         }
     }
 
-    public decimal? FirstRelativeAngle_Horizontal
+    public decimal? FirstMeanAngle_Horizontal
     {
         get => _firstMeanAngle_Horizontal;
-        set { }
+        set
+        {
+            _firstMeanAngle_Horizontal = value;
+            for (var i = 2; i < _table.Count; i++)
+            {
+                _table[i].FirstMeanAngle_Horizontal = value;
+            }
+        }
     }
 
-    public decimal? FirstRelativeAngle_Vertical
+    public decimal? FirstMeanAngle_Vertical
     {
         get => _firstMeanAngle_Vertical;
-        set { }
+        set
+        {
+            _firstMeanAngle_Vertical = value;
+            for (var i = 2; i < _table.Count; i++)
+            {
+                _table[i].FirstMeanAngle_Vertical = value;
+            }
+        }
     }
 
 
@@ -86,6 +99,83 @@ public class MeasurementTableModel : INotifyPropertyChanged
         get => _table;
         private set => _table = value;
     }
+    
+    public void UpdateTableRows(int rowIndex)
+    {
+        var row = Table[rowIndex];
+        var horizontalForwardHasValue = row.ForwardMinutesHorizontal.HasValue || row.ForwardSecondsHorizontal.HasValue;
+        var horizontalReverseHasValue = row.ReverseMinutesHorizontal.HasValue || row.ReverseSecondsHorizontal.HasValue;
+        var verticalForwardHasValue = row.ForwardMinutesVertical.HasValue || row.ForwardSecondsVertical.HasValue;
+        var verticalReverseHasValue = row.ReverseMinutesVertical.HasValue || row.ReverseSecondsVertical.HasValue;
+
+        if (Table.Count <= rowIndex + 1)
+        {
+            switch (Plane)
+            {
+                case Enums.Plane.Horizontal when !horizontalForwardHasValue &&
+                                                 (IsRevStrokeEnabled || horizontalReverseHasValue):
+                case Enums.Plane.Vertical
+                    when !verticalForwardHasValue && (IsRevStrokeEnabled || !verticalReverseHasValue):
+                case Enums.Plane.Both when !horizontalForwardHasValue && !verticalForwardHasValue &&
+                                           (!IsRevStrokeEnabled ||
+                                            (!verticalReverseHasValue &&
+                                             !horizontalForwardHasValue)):
+                    return;
+                default:
+                    Table.Add(new MeasurementRowModel(Step, Table[^1], IsRevStrokeEnabled));
+                    break;
+            }
+        }
+        else
+        {
+            switch (Plane)
+            {
+                case Enums.Plane.Horizontal:
+                {
+                    if (!horizontalForwardHasValue && (IsRevStrokeEnabled || !horizontalReverseHasValue))
+                    {
+                        Table.RemoveAt(rowIndex);
+                    }
+
+                    break;
+                }
+                case Enums.Plane.Vertical:
+                {
+                    if (!verticalForwardHasValue && (IsRevStrokeEnabled || !verticalReverseHasValue))
+                    {
+                        Table.RemoveAt(rowIndex);
+                    }
+
+                    break;
+                }
+                case Enums.Plane.Both:
+                {
+                    if (!horizontalForwardHasValue && !verticalForwardHasValue && (IsRevStrokeEnabled ||
+                            (!verticalReverseHasValue &&
+                             !horizontalForwardHasValue)))
+                    {
+                        Table.RemoveAt(rowIndex);
+                    }
+
+                    break;
+                }
+            }
+
+            UpdatePositions();
+        }
+    }
+    
+    private void UpdatePositions()
+    {
+        for (var i = 1; i < Table.Count; i++)
+        {
+            var row = Table[i];
+            row.PreviousDataRow = Table[i - 1];
+            row.UpdatePosition(i);
+        }
+    }
+    
+ 
 
     public static readonly Dictionary<string, string> ColumnHeaders = new()
     {

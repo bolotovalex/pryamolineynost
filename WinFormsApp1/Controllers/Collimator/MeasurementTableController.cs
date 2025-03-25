@@ -191,78 +191,8 @@ public class MeasurementTableController
 
     private void DataGridViewC_CellEditEnd(object? sender, DataGridViewCellEventArgs e)
     {
-        var row = _model.Table[e.RowIndex];
-        var horizontalForwardHasValue = row.ForwardMinutesHorizontal.HasValue || row.ForwardSecondsHorizontal.HasValue;
-        var horizontalReverseHasValue = row.ReverseMinutesHorizontal.HasValue || row.ReverseSecondsHorizontal.HasValue;
-        var verticalForwardHasValue = row.ForwardMinutesVertical.HasValue || row.ForwardSecondsVertical.HasValue;
-        var verticalReverseHasValue = row.ReverseMinutesVertical.HasValue || row.ReverseSecondsVertical.HasValue;
-
-        if (_model.Table.Count <= e.RowIndex + 1)
-        {
-            switch (_model.Plane)
-            {
-                case Enums.Plane.Horizontal when !horizontalForwardHasValue &&
-                                                 (!_model.IsRevStrokeEnabled || horizontalReverseHasValue):
-                case Enums.Plane.Vertical
-                    when !verticalForwardHasValue && (!_model.IsRevStrokeEnabled || !verticalReverseHasValue):
-                case Enums.Plane.Both when !horizontalForwardHasValue && !verticalForwardHasValue &&
-                                           (!_model.IsRevStrokeEnabled ||
-                                            (!verticalReverseHasValue &&
-                                             !horizontalForwardHasValue)):
-                    return;
-                default:
-                    _model.Table.Add(new MeasurementRowModel(_model.Step, _model.Table[^1], _model.IsRevStrokeEnabled));
-                    break;
-            }
-        }
-        else
-        {
-            switch (_model.Plane)
-            {
-                case Enums.Plane.Horizontal:
-                {
-                    if (!horizontalForwardHasValue && (!_model.IsRevStrokeEnabled || !horizontalReverseHasValue))
-                    {
-                        _model.Table.RemoveAt(e.RowIndex);
-                    }
-
-                    break;
-                }
-                case Enums.Plane.Vertical:
-                {
-                    if (!verticalForwardHasValue && (!_model.IsRevStrokeEnabled || !verticalReverseHasValue))
-                    {
-                        _model.Table.RemoveAt(e.RowIndex);
-                    }
-
-                    break;
-                }
-                case Enums.Plane.Both:
-                {
-                    if (!horizontalForwardHasValue && !verticalForwardHasValue && (!_model.IsRevStrokeEnabled ||
-                            (!verticalReverseHasValue &&
-                             !horizontalForwardHasValue)))
-                    {
-                        _model.Table.RemoveAt(e.RowIndex);
-                    }
-
-                    break;
-                }
-            }
-
-            UpdatePositions();
-        }
-
+        
+        _model.UpdateTableRows(e.RowIndex);
         _dataSet.UpdateBedLength();
-    }
-
-    private void UpdatePositions()
-    {
-        for (var i = 1; i < _model.Table.Count; i++)
-        {
-            var row = _model.Table[i];
-            row.PreviousDataRow = _model.Table[i - 1];
-            row.UpdatePosition(i);
-        }
     }
 }
