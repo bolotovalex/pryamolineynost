@@ -192,7 +192,7 @@ public class MeasurementTableController
     private void DataGridViewC_CellEditEnd(object? sender, DataGridViewCellEventArgs e)
     {
         
-        _model.UpdateTableRows(e.RowIndex);
+        _model.UpdateTableRow(e.RowIndex);
         _dataSet.UpdateBedLength();
     }
 }

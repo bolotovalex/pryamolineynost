@@ -19,7 +19,10 @@ public class MeasurementTableModel : INotifyPropertyChanged
     {
         Plane = plane;
         _step = step;
-        Table = new BindingList<MeasurementRowModel>();
+        _table = new BindingList<MeasurementRowModel>();
+        _table.Add(new MeasurementRowModel(_step,null,_isRevStrokeEnabled));
+        _table.Add(new MeasurementRowModel(_step, _table[^1], _isRevStrokeEnabled));
+        _table[1].PropertyChanged += OnRow1PropertyChanged;
     }
 
     public int Step
@@ -75,7 +78,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
             _firstMeanAngle_Horizontal = value;
             for (var i = 2; i < _table.Count; i++)
             {
-                _table[i].FirstMeanAngle_Horizontal = value;
+                _table[i].FirstMeanAngle_Horizontal = _firstMeanAngle_Horizontal;
             }
         }
     }
@@ -93,6 +96,18 @@ public class MeasurementTableModel : INotifyPropertyChanged
         }
     }
 
+    private void OnRow1PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MeasurementRowModel.MeanSecondsHorizontal))
+        {
+            FirstMeanAngle_Horizontal = _table[1].MeanSecondsHorizontal;
+        }
+        else if (e.PropertyName == nameof(MeasurementRowModel.MeanSecondsVertical))
+        {
+            FirstMeanAngle_Vertical = _table[1].MeanSecondsVertical;
+        }
+    }
+
 
     public BindingList<MeasurementRowModel> Table
     {
@@ -100,9 +115,15 @@ public class MeasurementTableModel : INotifyPropertyChanged
         private set => _table = value;
     }
     
-    public void UpdateTableRows(int rowIndex)
+    public void UpdateTableRow(int rowIndex)
     {
-        var row = Table[rowIndex];
+        var row = _table[rowIndex];
+        UpdateRows(rowIndex, row);
+        
+    }
+
+    public void UpdateRows(int rowIndex, MeasurementRowModel? row)
+    {
         var horizontalForwardHasValue = row.ForwardMinutesHorizontal.HasValue || row.ForwardSecondsHorizontal.HasValue;
         var horizontalReverseHasValue = row.ReverseMinutesHorizontal.HasValue || row.ReverseSecondsHorizontal.HasValue;
         var verticalForwardHasValue = row.ForwardMinutesVertical.HasValue || row.ForwardSecondsVertical.HasValue;
@@ -122,7 +143,9 @@ public class MeasurementTableModel : INotifyPropertyChanged
                                              !horizontalForwardHasValue)):
                     return;
                 default:
-                    Table.Add(new MeasurementRowModel(Step, Table[^1], IsRevStrokeEnabled));
+                    _table.Add(new MeasurementRowModel(Step, Table[^1], IsRevStrokeEnabled));
+                    _table[^1].FirstMeanAngle_Horizontal = _firstMeanAngle_Horizontal;
+                    _table[^1].FirstMeanAngle_Vertical = _firstMeanAngle_Vertical;
                     break;
             }
         }
@@ -131,34 +154,35 @@ public class MeasurementTableModel : INotifyPropertyChanged
             switch (Plane)
             {
                 case Enums.Plane.Horizontal:
-                {
-                    if (!horizontalForwardHasValue && (IsRevStrokeEnabled || !horizontalReverseHasValue))
                     {
-                        Table.RemoveAt(rowIndex);
-                    }
+                        if (!horizontalForwardHasValue && (IsRevStrokeEnabled || !horizontalReverseHasValue))
+                        {
+                            Table.RemoveAt(rowIndex);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case Enums.Plane.Vertical:
-                {
-                    if (!verticalForwardHasValue && (IsRevStrokeEnabled || !verticalReverseHasValue))
                     {
-                        Table.RemoveAt(rowIndex);
-                    }
+                        if (!verticalForwardHasValue && (IsRevStrokeEnabled || !verticalReverseHasValue))
+                        {
+                            Table.RemoveAt(rowIndex);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case Enums.Plane.Both:
-                {
-                    if (!horizontalForwardHasValue && !verticalForwardHasValue && (IsRevStrokeEnabled ||
-                            (!verticalReverseHasValue &&
-                             !horizontalForwardHasValue)))
                     {
-                        Table.RemoveAt(rowIndex);
-                    }
+                        if (!horizontalForwardHasValue && !verticalForwardHasValue && (IsRevStrokeEnabled ||
+                                (!verticalReverseHasValue &&
+                                 !horizontalForwardHasValue)))
+                        {
+                            Table.RemoveAt(rowIndex);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
+                
             }
 
             UpdatePositions();

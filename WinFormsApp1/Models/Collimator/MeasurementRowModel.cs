@@ -72,7 +72,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         get => _firstMeanAngleHorizontal;
         set
         {
-            _relativeAngleHorizontal = value;
+            _firstMeanAngleHorizontal = value;
             RelativeAngleHorizontal = GetRelativeAngle(_meanSecondsHorizontal, _firstMeanAngleHorizontal);
         }
     }
@@ -81,7 +81,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         get => _firstMeanAngleVertical;
         set
         {
-            _relativeAngleVertical = value;
+            _firstMeanAngleVertical = value;
             RelativeAngleVertical = GetRelativeAngle(_meanSecondsVertical, _firstMeanAngleVertical);
         }
     }
@@ -170,6 +170,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _meanSecondsHorizontal = value;
             FormatedMeanHorizontal = value == null ? null : GetMeanString(value);
+            OnPropertyChanged("MeanSecondsHorizontal");
             RelativeAngleHorizontal = GetRelativeAngle(_meanSecondsHorizontal, _firstMeanAngleHorizontal);
         }
     }
@@ -286,6 +287,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _meanSecondsVertical = value;
             FormatedMeanVertical = value == null ? null : GetMeanString(value);
+            OnPropertyChanged("MeanSecondsVertical");
             RelativeAngleVertical = GetRelativeAngle(_meanSecondsVertical, _firstMeanAngleVertical);
         }
     }

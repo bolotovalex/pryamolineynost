@@ -38,8 +38,6 @@ public class CollimatorModel : INotifyPropertyChanged
     {
         Plane = Plane.Both;
         _table = new MeasurementTableModel(_plane, _stepSize);
-        _table.Table.Add(new MeasurementRowModel(_stepSize, null, _isRevstrokeEnabled));
-        _table.Table.Add(new MeasurementRowModel(_stepSize, _table.Table[^1], _isRevstrokeEnabled));
     }
 
     public DateTime MeasurementDate
