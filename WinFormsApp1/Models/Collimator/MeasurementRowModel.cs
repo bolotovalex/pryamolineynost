@@ -71,6 +71,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
             StepSize = step;
             MeasurementLength = 0;
         }
+        _previousDataRow = prevRow;
     }
     [Browsable(false)]
     public decimal? FirstMeanAngle_Horizontal
@@ -216,6 +217,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _relativeAngleToPreviousHorizontal = value;
+            RelativeAngleToFirstHorizontal = CalcRelativeAngleFromFirst(Plane.Horizontal);
             OnPropertyChanged("RelativeAngleToPreviousHorizontal");
         }
     }
@@ -338,6 +340,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _relativeAngleToPreviousVertical = value;
+            RelativeAngleToFirstVertical = CalcRelativeAngleFromFirst(Plane.Vertical);
             OnPropertyChanged("RelativeAngleToPreviousVertical");
         }
     }
@@ -483,6 +486,34 @@ public class MeasurementRowModel : INotifyPropertyChanged
                 return multipler * _relativeAngleHorizontal;
             case (Plane.Vertical):
                 return multipler * _relativeAngleVertical;
+            default:
+                return null;
+        }
+    }
+
+    public void RecalcAllRelativeAngleFromFirst()
+    {
+        RelativeAngleToFirstHorizontal = CalcRelativeAngleFromFirst(Plane.Horizontal);
+        RelativeAngleToFirstVertical = CalcRelativeAngleFromFirst(Plane.Vertical);
+    }
+    private decimal? CalcRelativeAngleFromFirst(Plane plane) 
+    {
+        switch (plane)
+        {
+            case Plane.Horizontal:
+                if (_previousDataRow == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    var a = _previousDataRow.RelativeAngleToFirstHorizontal;
+                    var c = _relativeAngleToPreviousHorizontal; ;
+                }
+                    return _previousDataRow == null ? null : _previousDataRow.RelativeAngleToPreviousHorizontal ?? 0 + _relativeAngleToPreviousHorizontal;
+                
+            case Plane.Vertical:
+                return _previousDataRow == null ? null : _previousDataRow.RelativeAngleToPreviousVertical ?? 0 + _relativeAngleToPreviousVertical;
             default:
                 return null;
         }

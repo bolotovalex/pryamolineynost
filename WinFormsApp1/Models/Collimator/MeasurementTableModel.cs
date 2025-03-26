@@ -120,8 +120,19 @@ public class MeasurementTableModel : INotifyPropertyChanged
     {
         var row = _table[rowIndex];
         UpdateRows(rowIndex, row);
-        
+        RecalcRelativeAngleToFirst(rowIndex);
     }
+
+    private void RecalcRelativeAngleToFirst(int rowIndex)
+    {
+        for (var i = rowIndex - 1; i < _table.Count; i++)
+        {
+            _table[i].RecalcAllRelativeAngleFromFirst();
+            
+        }
+    }
+
+
 
     public void UpdateRows(int rowIndex, MeasurementRowModel? row)
     {
