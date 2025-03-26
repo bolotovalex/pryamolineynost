@@ -297,6 +297,8 @@ public class CollimatorModel : INotifyPropertyChanged
     private void UpdateStepSize()
     {
         _table.Step = _stepSize;
+        //foreach (var row in _table.Table)
+        //    row.StepSize = _stepSize;
         UpdateBedLength();
     }
 

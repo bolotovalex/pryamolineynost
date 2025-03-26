@@ -30,6 +30,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         get => _step;
         set
         {
+            _step = value;
             foreach (var row in _table)
                 row.StepSize = _step;
         }
@@ -227,6 +228,34 @@ public class MeasurementTableModel : INotifyPropertyChanged
         { "RelativeAngleToFirstVertical", "Ai, мкм" },
         { "OrdinateStraightnessVertical", "Bi, мкм" },
         { "StraightnessDeviationVertical", "Hi, мкм" }
+    };
+
+    public static readonly Dictionary<string, string> ColumnFormat = new()
+    {
+        { "Position", "N0" },
+        { "MeasurementLength", "N0" },
+        { "ForwardMinutesHorizontal", "N0" },
+        { "ForwardSecondsHorizontal", "0.00" },
+        { "ReverseMinutesHorizontal", "N0.'" },
+        { "ReverseSecondsHorizontal", "0.00" },
+        { "FormatedMeanHorizontal", "" },
+        { "RelativeAngleHorizontal", "0.00" },
+        { "RelativeAngleToPreviousHorizontal", "0.00" },
+        { "RelativeAngleToFirstHorizontal", "0.00" },
+        { "OrdinateStraightnessHorizontal", "0.00" },
+        { "StraightnessDeviationHorizontal", "0.00" },
+
+        { "ForwardMinutesVertical", "N0" },
+        { "ForwardSecondsVertical", "0.00" },
+        { "ReverseMinutesVertical", "N0" },
+        { "ReverseSecondsVertical", "0.00" },
+        { "FormatedMeanVertical", "" },
+        { "RelativeAngleVertical", "0.00" },
+        { "RelativeAngleToPreviousVertical", "0.00" },
+        { "RelativeAngleToFirstVertical", "0.00" },
+        { "OrdinateStraightnessVertical", "0.00" },
+        { "StraightnessDeviationVertical", "0.00" }
+
     };
 
     public static readonly List<string> ReverseStrokeEnableColumns = new()

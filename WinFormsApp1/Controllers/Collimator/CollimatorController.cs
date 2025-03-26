@@ -23,6 +23,7 @@ public class CollimatorController
         BindingTextBoxData();
         BindinLabelData();
         BindButtonActions();
+
         _view.Show();
     }
 
@@ -110,4 +111,6 @@ public class CollimatorController
         var measurementController = new MeasurementTableController(_model);
         measurementController.ShowForm();
     }
+
+    
 }
