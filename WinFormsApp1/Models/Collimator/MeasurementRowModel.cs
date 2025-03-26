@@ -67,6 +67,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
             MeasurementLength = 0;
         }
     }
+    [Browsable(false)]
     public decimal? FirstMeanAngle_Horizontal
     {
         get => _firstMeanAngleHorizontal;
@@ -76,6 +77,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
             RelativeAngleHorizontal = GetRelativeAngle(_meanSecondsHorizontal, _firstMeanAngleHorizontal);
         }
     }
+    [Browsable(false)]
     public decimal? FirstMeanAngle_Vertical
     {
         get => _firstMeanAngleVertical;
