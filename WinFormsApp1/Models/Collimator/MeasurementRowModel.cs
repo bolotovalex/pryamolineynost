@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
+//using System.Numerics;
+using PryamolineynostWF.Enums;
 
 namespace PryamolineynostWF.Models.Collimator;
 
@@ -45,6 +47,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private MeasurementRowModel? _previousDataRow; // Предыдущая строка
     private int _stepSize; // Шаг
     private bool _isReverseStrokeEnabled; // Включен ли учет обратного хода
+    private decimal multipler = 0;
 
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -59,6 +62,8 @@ public class MeasurementRowModel : INotifyPropertyChanged
             Position = prevRow.Position + 1;
             StepSize = step;
             MeasurementLength = prevRow.MeasurementLength + StepSize;
+            _forwardMinutesHorizontal = prevRow.ForwardMinutesHorizontal;
+            _forwardMinutesVertical = prevRow.ForwardMinutesVertical;
         }
         else
         {
@@ -94,7 +99,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _position = value;
-            MeasurementLength = Position * StepSize;
+            MeasurementLength = value * _stepSize;
             OnPropertyChanged("Position");
         }
     }
@@ -117,6 +122,9 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _stepSize = value;
             MeasurementLength = Position * StepSize;
+            multipler = 5 * 0.000001M * _stepSize * 1000;
+            RelativeAngleToPreviousHorizontal = CalcRelativeAngleToPrevious(Plane.Horizontal);
+            RelativeAngleToPreviousVertical = CalcRelativeAngleToPrevious(Plane.Vertical);
         }
     }
 
@@ -127,6 +135,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _forwardMinutesHorizontal = GetFormatedMinutes(value);
             MeanSecondsHorizontal = CalculateHorizontalMean();
+            SetPrevRowMinutes();
             OnPropertyChanged("ForwardMinutesHorizontal");
         }
     }
@@ -138,6 +147,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _forwardSecondsHorizontal = GetFormatedSeconds(value);
             MeanSecondsHorizontal = CalculateHorizontalMean();
+            SetPrevRowMinutes();
             OnPropertyChanged("ForwardSecondsHorizontal");
         }
     }
@@ -149,6 +159,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _reverseMinutesHorizontal = GetFormatedMinutes(value);
             MeanSecondsHorizontal = CalculateHorizontalMean();
+            SetPrevRowMinutes();
             OnPropertyChanged("ReverseMinutesHorizontal");
         }
     }
@@ -160,6 +171,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _reverseSecondsHorizontal = GetFormatedSeconds(value);
             MeanSecondsHorizontal = CalculateHorizontalMean();
+            SetPrevRowMinutes();
             OnPropertyChanged("ReverseSecondsHorizontal");
         }
     }
@@ -193,6 +205,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _relativeAngleHorizontal = value;
+            RelativeAngleToPreviousHorizontal = CalcRelativeAngleToPrevious(Plane.Horizontal);
             OnPropertyChanged("RelativeAngleHorizontal");
         }
     }
@@ -244,6 +257,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _forwardMinutesVertical = GetFormatedMinutes(value);
             MeanSecondsVertical = CalculateVerticalMean();
+            SetPrevRowMinutes();
             OnPropertyChanged("ForwardMinutesVertical");
         }
     }
@@ -255,6 +269,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _forwardSecondsVertical = GetFormatedSeconds(value);
             MeanSecondsVertical = CalculateVerticalMean();
+            SetPrevRowMinutes();
             OnPropertyChanged("ForwardSecondsVertical");
         }
     }
@@ -266,6 +281,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _reverseMinutesVertical = GetFormatedMinutes(value);
             MeanSecondsVertical = CalculateVerticalMean();
+            SetPrevRowMinutes();
             OnPropertyChanged("ReverseMinutesVertical");
         }
     }
@@ -277,6 +293,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _reverseSecondsVertical = GetFormatedSeconds(value);
             MeanSecondsVertical = CalculateVerticalMean();
+            SetPrevRowMinutes();
             OnPropertyChanged("ReverseSecondsVertical");
         }
     }
@@ -310,6 +327,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _relativeAngleVertical = value;
+            RelativeAngleToPreviousVertical = CalcRelativeAngleToPrevious(Plane.Vertical);
             OnPropertyChanged("RelativeAngleVertical");
         }
     }
@@ -442,7 +460,31 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private decimal? GetRelativeAngle(decimal? meanSeconds, decimal? firstMeanSeconds)
     {
         if (firstMeanSeconds == null)
-            return 0;
+            return _previousDataRow == null ? null : 0;
         return meanSeconds - firstMeanSeconds;
+    }
+
+    private void SetPrevRowMinutes()
+    {
+        //if (_previousDataRow != null)
+        //{
+        //    _forwardMinutesHorizontal = _forwardMinutesHorizontal == null ? _previousDataRow.ForwardMinutesHorizontal : null;
+        //    _forwardMinutesVertical = _forwardMinutesVertical == null ? _previousDataRow.ForwardMinutesVertical : null;
+        //    _reverseMinutesHorizontal = _reverseMinutesHorizontal == null && _isReverseStrokeEnabled ? _previousDataRow.ReverseMinutesHorizontal : null;
+        //    _reverseMinutesVertical = _reverseMinutesVertical == null && _isReverseStrokeEnabled ? _previousDataRow.ReverseMinutesVertical : null;
+        //}
+    }
+
+    private decimal? CalcRelativeAngleToPrevious(Plane plane)
+    {
+        switch (plane)
+        {
+            case (Plane.Horizontal):
+                return multipler * _relativeAngleHorizontal;
+            case (Plane.Vertical):
+                return multipler * _relativeAngleVertical;
+            default:
+                return null;
+        }
     }
 }

@@ -143,7 +143,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
                                              !horizontalForwardHasValue)):
                     return;
                 default:
-                    _table.Add(new MeasurementRowModel(Step, Table[^1], IsRevStrokeEnabled));
+                    _table.Add(new MeasurementRowModel(_step, _table[^1], _isRevStrokeEnabled));
                     _table[^1].FirstMeanAngle_Horizontal = _firstMeanAngle_Horizontal;
                     _table[^1].FirstMeanAngle_Vertical = _firstMeanAngle_Vertical;
                     break;
