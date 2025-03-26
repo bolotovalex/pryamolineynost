@@ -149,8 +149,13 @@ public class MeasurementTableController
     private void ApplyColumnHeaders()
     {
         foreach (DataGridViewColumn column in _view.dataGridView1.Columns)
+        {
             if (MeasurementTableModel.ColumnHeaders.ContainsKey(column.DataPropertyName))
                 column.HeaderText = MeasurementTableModel.ColumnHeaders[column.DataPropertyName];
+            if (MeasurementTableModel.ColumnFormat.ContainsKey(column.DataPropertyName))
+                _view.dataGridView1.Columns[column.DataPropertyName].DefaultCellStyle.Format = MeasurementTableModel.ColumnFormat[column.DataPropertyName];
+        }
+            
     }
 
     private bool IsReverseColumnEnable(DataGridViewColumn column)
