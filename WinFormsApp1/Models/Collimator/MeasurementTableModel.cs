@@ -138,6 +138,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
     {
         var horizontalForwardHasValue = row.ForwardMinutesHorizontal.HasValue || row.ForwardSecondsHorizontal.HasValue;
         var horizontalReverseHasValue = row.ReverseMinutesHorizontal.HasValue || row.ReverseSecondsHorizontal.HasValue;
+        
         var verticalForwardHasValue = row.ForwardMinutesVertical.HasValue || row.ForwardSecondsVertical.HasValue;
         var verticalReverseHasValue = row.ReverseMinutesVertical.HasValue || row.ReverseSecondsVertical.HasValue;
 
@@ -145,10 +146,12 @@ public class MeasurementTableModel : INotifyPropertyChanged
         {
             switch (Plane)
             {
-                case Enums.Plane.Horizontal when !horizontalForwardHasValue &&
-                                                 (IsRevStrokeEnabled || horizontalReverseHasValue):
-                case Enums.Plane.Vertical
-                    when !verticalForwardHasValue && (IsRevStrokeEnabled || !verticalReverseHasValue):
+                case Enums.Plane.Horizontal when !horizontalForwardHasValue && (IsRevStrokeEnabled || !horizontalReverseHasValue):
+                    
+                    return;
+                
+                case Enums.Plane.Vertical when !verticalForwardHasValue && (IsRevStrokeEnabled || !verticalReverseHasValue):
+                
                 case Enums.Plane.Both when !horizontalForwardHasValue && !verticalForwardHasValue &&
                                            (!IsRevStrokeEnabled ||
                                             (!verticalReverseHasValue &&
@@ -156,8 +159,6 @@ public class MeasurementTableModel : INotifyPropertyChanged
                     return;
                 default:
                     _table.Add(new MeasurementRowModel(_step, _table[^1], _isRevStrokeEnabled));
-                    _table[^1].FirstMeanAngle_Horizontal = _firstMeanAngle_Horizontal;
-                    _table[^1].FirstMeanAngle_Vertical = _firstMeanAngle_Vertical;
                     break;
             }
         }
