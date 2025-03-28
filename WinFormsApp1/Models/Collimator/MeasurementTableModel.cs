@@ -146,18 +146,10 @@ public class MeasurementTableModel : INotifyPropertyChanged
         {
             switch (Plane)
             {
-                case Enums.Plane.Horizontal when !horizontalForwardHasValue && (IsRevStrokeEnabled || !horizontalReverseHasValue):
-                    
-                    return;
-                
-                case Enums.Plane.Vertical when !verticalForwardHasValue && (IsRevStrokeEnabled || !verticalReverseHasValue):
-                
-                case Enums.Plane.Both when !horizontalForwardHasValue && !verticalForwardHasValue &&
-                                           (!IsRevStrokeEnabled ||
-                                            (!verticalReverseHasValue &&
-                                             !horizontalForwardHasValue)):
-                    return;
-                default:
+                case Enums.Plane.Horizontal when horizontalForwardHasValue || (IsRevStrokeEnabled && horizontalReverseHasValue):
+                case Enums.Plane.Vertical when verticalForwardHasValue || (IsRevStrokeEnabled && !verticalReverseHasValue):
+                case Enums.Plane.Both when horizontalForwardHasValue || verticalForwardHasValue ||
+                                           (IsRevStrokeEnabled && (verticalReverseHasValue || horizontalForwardHasValue)):
                     _table.Add(new MeasurementRowModel(_step, _table[^1], _isRevStrokeEnabled));
                     break;
             }
@@ -168,7 +160,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
             {
                 case Enums.Plane.Horizontal:
                     {
-                        if (!horizontalForwardHasValue && (IsRevStrokeEnabled || !horizontalReverseHasValue))
+                        if (!(horizontalForwardHasValue || (IsRevStrokeEnabled && horizontalReverseHasValue)))
                         {
                             Table.RemoveAt(rowIndex);
                         }
@@ -177,7 +169,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
                     }
                 case Enums.Plane.Vertical:
                     {
-                        if (!verticalForwardHasValue && (IsRevStrokeEnabled || !verticalReverseHasValue))
+                        if (!(verticalForwardHasValue || (IsRevStrokeEnabled && verticalReverseHasValue)))
                         {
                             Table.RemoveAt(rowIndex);
                         }
@@ -186,9 +178,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
                     }
                 case Enums.Plane.Both:
                     {
-                        if (!horizontalForwardHasValue && !verticalForwardHasValue && (IsRevStrokeEnabled ||
-                                (!verticalReverseHasValue &&
-                                 !horizontalForwardHasValue)))
+                        if (!((horizontalForwardHasValue || verticalForwardHasValue) && (IsRevStrokeEnabled && (verticalReverseHasValue || horizontalForwardHasValue))))
                         {
                             Table.RemoveAt(rowIndex);
                         }
