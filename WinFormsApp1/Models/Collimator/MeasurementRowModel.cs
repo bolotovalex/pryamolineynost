@@ -426,7 +426,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     private int? GetFormatedMinutes(int? value)
     {
-        return value != null ? value % 60 : value;
+        return value != null ? value % 60 : null;
     }
 
     private decimal? GetFormatedSeconds(decimal? value)
@@ -500,7 +500,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private static decimal? RoundNullableDecimal(decimal? value, int decimals)
     {
         if (value == null)
-            return 0;
+            return null;
 
         return Math.Round(value.Value, decimals, MidpointRounding.AwayFromZero);
     }
