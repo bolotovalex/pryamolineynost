@@ -439,7 +439,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         if (seconds == null)
             return null;
         var meanMinutes = (int)(seconds / 60 % 60);
-        var meanSeconds = Math.Round((decimal)(seconds % 60), 2);
+        decimal meanSeconds = Math.Round((decimal)(seconds % 60), 2);
         return $"{meanMinutes.ToString()}'{meanSeconds.ToString(CultureInfo.InvariantCulture)}\"";
     }
 
