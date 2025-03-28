@@ -247,7 +247,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         { "MeasurementLength", "N0" },
         { "ForwardMinutesHorizontal", "N0" },
         { "ForwardSecondsHorizontal", "0.00" },
-        { "ReverseMinutesHorizontal", "N0.'" },
+        { "ReverseMinutesHorizontal", "N0" },
         { "ReverseSecondsHorizontal", "0.00" },
         { "FormatedMeanHorizontal", "" },
         { "RelativeAngleHorizontal", "0.00" },

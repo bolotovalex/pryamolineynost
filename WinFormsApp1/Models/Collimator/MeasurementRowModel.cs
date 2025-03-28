@@ -183,8 +183,8 @@ public class MeasurementRowModel : INotifyPropertyChanged
         get => _meanSecondsHorizontal;
         private set
         {
-            _meanSecondsHorizontal = value;
-            FormatedMeanHorizontal = value == null ? null : GetMeanString(value);
+            _meanSecondsHorizontal = RoundNullableDecimal(value, 2);
+            FormatedMeanHorizontal = _meanSecondsHorizontal == null ? null : GetMeanString(_meanSecondsHorizontal);
             OnPropertyChanged("MeanSecondsHorizontal");
             RelativeAngleHorizontal = GetRelativeAngle(_meanSecondsHorizontal, _firstMeanAngleHorizontal);
         }
@@ -306,8 +306,8 @@ public class MeasurementRowModel : INotifyPropertyChanged
         get => _meanSecondsVertical;
         private set
         {
-            _meanSecondsVertical = value;
-            FormatedMeanVertical = value == null ? null : GetMeanString(value);
+            _meanSecondsVertical = RoundNullableDecimal(value,2);
+            FormatedMeanVertical = _meanSecondsVertical == null ? null : GetMeanString(_meanSecondsHorizontal);
             OnPropertyChanged("MeanSecondsVertical");
             RelativeAngleVertical = GetRelativeAngle(_meanSecondsVertical, _firstMeanAngleVertical);
         }
@@ -445,7 +445,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         if (seconds == null)
             return null;
         var meanMinutes = (int)(seconds / 60 % 60);
-        var meanSeconds = Math.Round((decimal)(seconds % 60), 1);
+        var meanSeconds = Math.Round((decimal)(seconds % 60), 2);
         return $"{meanMinutes.ToString()}'{meanSeconds.ToString(CultureInfo.InvariantCulture)}\"";
     }
 
@@ -502,20 +502,23 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             case Plane.Horizontal:
                 if (_previousDataRow == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    var a = _previousDataRow.RelativeAngleToFirstHorizontal;
-                    var c = _relativeAngleToPreviousHorizontal; ;
-                }
-                    return _previousDataRow == null ? null : _previousDataRow.RelativeAngleToPreviousHorizontal ?? 0 + _relativeAngleToPreviousHorizontal;
+                    return null;
+                return _previousDataRow.RelativeAngleToPreviousHorizontal != null ?  
+                    RoundNullableDecimal(_previousDataRow.RelativeAngleToFirstHorizontal + _relativeAngleToPreviousHorizontal, 2) : 
+                    0;
                 
             case Plane.Vertical:
-                return _previousDataRow == null ? null : _previousDataRow.RelativeAngleToPreviousVertical ?? 0 + _relativeAngleToPreviousVertical;
+                return _previousDataRow == null ? null : _previousDataRow.RelativeAngleToFirstVertical ?? 0 + _relativeAngleToPreviousVertical;
             default:
                 return null;
         }
+    }
+
+    private static decimal? RoundNullableDecimal(decimal? value, int decimals)
+    {
+        if (value == null)
+            return 0;
+
+        return Math.Round(value.Value, decimals, MidpointRounding.AwayFromZero);
     }
 }
