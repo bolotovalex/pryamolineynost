@@ -17,6 +17,7 @@ public partial class MeasurementTableForm : Form
     public MeasurementTableForm(BindingSource horizontalBindingSource, Plane? selectedPlane)
     {
         InitializeComponent();
+        dataGridView1.CellFormatting += dataGridView1_CellFormatting;
         dataGridView1.AutoGenerateColumns = true;
         dataGridView1.DataSource = horizontalBindingSource;
 
@@ -74,5 +75,15 @@ public partial class MeasurementTableForm : Form
     private void AdditionFields_Changed(object sender, EventArgs e)
     {
         AdditionFieldsChanged?.Invoke(this, e);
+    }
+
+    private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    {
+        // Первая строка с данными (индекс 0)
+        if (e.RowIndex == 0)
+        {
+            dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGray;
+            //dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.DarkGreen;
+        }
     }
 }
