@@ -9,6 +9,8 @@ public class MeasurementTableModel : INotifyPropertyChanged
     private BindingList<MeasurementRowModel> _table;
     private decimal? _firstMeanAngle_Horizontal;
     private decimal? _firstMeanAngle_Vertical;
+    private decimal? _lastRelativeAngleToFirstHorizontal;
+    private decimal? _lastRelativeAngleToFirstVertical;
     private int _step;
     private bool _isRevStrokeEnabled;
 
@@ -155,6 +157,8 @@ public class MeasurementTableModel : INotifyPropertyChanged
                                              !horizontalForwardHasValue)):
                     return;
                 default:
+                    LastRelativeAngleToFirstHorizontal = _table[^1].RelativeAngleToFirstHorizontal;
+                    LastRelativeAngleToFirstVertical = _table[^1].RelativeAngleToFirstVertical;
                     _table.Add(new MeasurementRowModel(_step, _table[^1], _isRevStrokeEnabled));
                     _table[^1].FirstMeanAngle_Horizontal = _firstMeanAngle_Horizontal;
                     _table[^1].FirstMeanAngle_Vertical = _firstMeanAngle_Vertical;
@@ -200,7 +204,35 @@ public class MeasurementTableModel : INotifyPropertyChanged
             UpdatePositions();
         }
     }
-    
+
+    private decimal? LastRelativeAngleToFirstHorizontal
+    {
+        get => _lastRelativeAngleToFirstHorizontal;
+        set
+        {
+            _lastRelativeAngleToFirstHorizontal = value;
+            var coef = _lastRelativeAngleToFirstHorizontal != null ? _lastRelativeAngleToFirstHorizontal / (_table.Count - 1) : null;
+            for (var i = 1; i < _table.Count; i++)
+            {
+                _table[i].LastPointAngleCoeficentHorizontal = coef;
+            }
+        }
+    }
+
+    private decimal? LastRelativeAngleToFirstVertical
+    {
+        get => _lastRelativeAngleToFirstVertical; 
+        set
+        {
+            var coef = _lastRelativeAngleToFirstVertical != null ? _lastRelativeAngleToFirstVertical / (_table.Count - 1) : null;
+            for (var i = 1; i < _table.Count; i++)
+            {
+                _table[i].LastPointAngleCoeficentVertical = coef;
+            }
+        }
+    }
+
+
     private void UpdatePositions()
     {
         for (var i = 1; i < Table.Count; i++)

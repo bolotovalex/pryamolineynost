@@ -42,6 +42,8 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     private decimal? _firstMeanAngleHorizontal;
     private decimal? _firstMeanAngleVertical;
+    private decimal? _lastPointAngleCoeficentHorizontal;
+    private decimal? _lastPointAngleCoeficentVertical;
 
 
     private MeasurementRowModel? _previousDataRow; // Предыдущая строка
@@ -225,10 +227,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
     public decimal? RelativeAngleToFirstHorizontal
     {
         get => _relativeAngleToFirstHorizontal;
-        private set
+        set
         {
             _relativeAngleToFirstHorizontal = value;
-            StraightnessDeviationHorizontal = RelativeAngleToFirstHorizontal - RelativeAngleToFirstHorizontal;
+            StraightnessDeviationHorizontal = RelativeAngleToFirstHorizontal - OrdinateStraightnessHorizontal;
             OnPropertyChanged("RelativeAngleToFirstHorizontal");
         }
     }
@@ -236,10 +238,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
     public decimal? OrdinateStraightnessHorizontal
     {
         get => _ordinateStraightnessHorizontal;
-        private set
+        set
         {
             _ordinateStraightnessHorizontal = value;
-            StraightnessDeviationHorizontal = RelativeAngleToFirstHorizontal - RelativeAngleToFirstHorizontal;
+            StraightnessDeviationHorizontal = RelativeAngleToFirstHorizontal - OrdinateStraightnessHorizontal;
             OnPropertyChanged("OrdinateStraightnessHorizontal");
         }
     }
@@ -353,7 +355,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _relativeAngleToFirstVertical = value;
-            StraightnessDeviationVertical = RelativeAngleToFirstVertical - RelativeAngleToFirstVertical;
+            StraightnessDeviationVertical = RelativeAngleToFirstVertical - OrdinateStraightnessHorizontal;
             OnPropertyChanged("RelativeAngleToFirstVertical");
         }
     }
@@ -364,7 +366,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _ordinateStraightnessVertical = value;
-            StraightnessDeviationVertical = RelativeAngleToFirstVertical - RelativeAngleToFirstVertical;
+            StraightnessDeviationVertical = RelativeAngleToFirstVertical - OrdinateStraightnessVertical;
             OnPropertyChanged("OrdinateStraightnessVertical");
         }
     }
@@ -524,5 +526,23 @@ public class MeasurementRowModel : INotifyPropertyChanged
             return 0;
 
         return Math.Round(value.Value, decimals, MidpointRounding.AwayFromZero);
+    }
+
+    public decimal? LastPointAngleCoeficentHorizontal
+    {
+        get => _lastPointAngleCoeficentHorizontal;
+        set
+        {
+            OrdinateStraightnessHorizontal = Position * value;
+        }
+    }
+
+    public decimal? LastPointAngleCoeficentVertical
+    {
+        get => _lastPointAngleCoeficentVertical;
+        set
+        {
+            OrdinateStraightnessVertical = Position * value;
+        }
     }
 }
