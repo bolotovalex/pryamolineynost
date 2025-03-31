@@ -228,6 +228,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _relativeAngleToFirstHorizontal = value;
+            StraightnessDeviationHorizontal = RelativeAngleToFirstHorizontal - RelativeAngleToFirstHorizontal;
             OnPropertyChanged("RelativeAngleToFirstHorizontal");
         }
     }
@@ -238,6 +239,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _ordinateStraightnessHorizontal = value;
+            StraightnessDeviationHorizontal = RelativeAngleToFirstHorizontal - RelativeAngleToFirstHorizontal;
             OnPropertyChanged("OrdinateStraightnessHorizontal");
         }
     }
@@ -351,6 +353,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _relativeAngleToFirstVertical = value;
+            StraightnessDeviationVertical = RelativeAngleToFirstVertical - RelativeAngleToFirstVertical;
             OnPropertyChanged("RelativeAngleToFirstVertical");
         }
     }
@@ -361,6 +364,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _ordinateStraightnessVertical = value;
+            StraightnessDeviationVertical = RelativeAngleToFirstVertical - RelativeAngleToFirstVertical;
             OnPropertyChanged("OrdinateStraightnessVertical");
         }
     }
