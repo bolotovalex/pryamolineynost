@@ -28,6 +28,9 @@ public class MeasurementTableController
         _view.AdditionFieldsChanged += CBAdditionFieldsVisible_Changed;
         _view.cbRevStrokeEnable.Checked = _dataSet.IsRevStrokeEnabled;
         _view.cbAdditionsFileldsEnable.Checked = _dataSet.IsAdditionsFieldEnabled;
+        _view.BtnAddClicked += BtnAddClicked;
+        _view.BtnDelClicked += BtnDelClicked;
+        _view.BtnCopyClicked += BtnCopyClicked;
 
         SwitchColumns(_dataSet.Plane);
 
@@ -200,4 +203,20 @@ public class MeasurementTableController
         _model.UpdateTableRow(e.RowIndex);
         _dataSet.UpdateBedLength();
     }
+
+    private void BtnAddClicked(object? sender, EventArgs e)
+    {
+
+    }
+
+    private void BtnDelClicked(object? sender, EventArgs e)
+    {
+    }
+
+    private void BtnCopyClicked(object? sender, EventArgs e)
+    {
+
+    }
+
+
 }

@@ -36,7 +36,7 @@ public class CollimatorModel : INotifyPropertyChanged
 
     public CollimatorModel()
     {
-        Plane = Plane.Both;
+        Plane = Plane.Horizontal;
         _table = new MeasurementTableModel(_plane, _stepSize);
     }
 
@@ -297,16 +297,14 @@ public class CollimatorModel : INotifyPropertyChanged
     private void UpdateStepSize()
     {
         _table.Step = _stepSize;
-        //foreach (var row in _table.Table)
-        //    row.StepSize = _stepSize;
         UpdateBedLength();
     }
 
     public void UpdateBedLength()
     {
-        BedLength = _table.Table.Count <= 2 ?
-            BedLength = _table.Table[^1].MeasurementLength :
-            BedLength = _table.Table[_table.Table.Count - 2].MeasurementLength;
+        BedLength = _table.Table.Count <= 2
+            ? BedLength = _table.Table[^1].MeasurementLength
+            : BedLength = _table.Table[_table.Table.Count - 2].MeasurementLength;
     }
 
     protected void OnPropertyChanged(string propertyName)

@@ -12,6 +12,9 @@ public partial class MeasurementTableForm : Form
     public DataGridViewCellEventHandler dataGridViewCellEditEnd;
     public EventHandler RevStrokeChanged;
     public EventHandler AdditionFieldsChanged;
+    public EventHandler BtnAddClicked;
+    public EventHandler BtnDelClicked;
+    public EventHandler BtnCopyClicked;
 
 
     public MeasurementTableForm(BindingSource horizontalBindingSource, Plane? selectedPlane)
@@ -47,15 +50,7 @@ public partial class MeasurementTableForm : Form
         cbSelectedPlaneChanged?.Invoke(this, e);
     }
 
-    private void button1_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void button2_Click(object sender, EventArgs e)
-    {
-
-    }
+    
 
     private void RevStrokeCheckBox_Changed(object sender, EventArgs e)
     {
@@ -85,5 +80,20 @@ public partial class MeasurementTableForm : Form
             dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGray;
             //dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.DarkGreen;
         }
+    }
+
+    private void btnAdd_Click(object sender, EventArgs e)
+    {
+        BtnAddClicked?.Invoke(this, e);
+    }
+
+    private void btnDel_Click(object sender, EventArgs e)
+    {
+        BtnDelClicked?.Invoke(this, e);
+    }
+
+    private void btnCopy_Click(object sender, EventArgs e)
+    {
+        BtnCopyClicked?.Invoke(this, e);
     }
 }

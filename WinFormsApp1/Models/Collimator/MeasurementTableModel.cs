@@ -35,6 +35,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
             _step = value;
             foreach (var row in _table)
                 row.StepSize = _step;
+            RecalAllFields();
         }
     }
 
@@ -157,9 +158,9 @@ public class MeasurementTableModel : INotifyPropertyChanged
                                              !horizontalForwardHasValue)):
                     return;
                 default:
+                    _table.Add(new MeasurementRowModel(_step, _table[^1], _isRevStrokeEnabled));
                     LastRelativeAngleToFirstHorizontal = _table[^1].RelativeAngleToFirstHorizontal;
                     LastRelativeAngleToFirstVertical = _table[^1].RelativeAngleToFirstVertical;
-                    _table.Add(new MeasurementRowModel(_step, _table[^1], _isRevStrokeEnabled));
                     _table[^1].FirstMeanAngle_Horizontal = _firstMeanAngle_Horizontal;
                     _table[^1].FirstMeanAngle_Vertical = _firstMeanAngle_Vertical;
                     break;
@@ -171,18 +172,21 @@ public class MeasurementTableModel : INotifyPropertyChanged
             {
                 case Enums.Plane.Horizontal:
                     {
-                        if (!horizontalForwardHasValue && (IsRevStrokeEnabled || !horizontalReverseHasValue))
+                        if (horizontalForwardHasValue && (IsRevStrokeEnabled || horizontalReverseHasValue))
                         {
                             Table.RemoveAt(rowIndex);
+                            UpdatePositions();
+
                         }
 
                         break;
                     }
                 case Enums.Plane.Vertical:
                     {
-                        if (!verticalForwardHasValue && (IsRevStrokeEnabled || !verticalReverseHasValue))
+                        if (verticalForwardHasValue || (IsRevStrokeEnabled || !verticalReverseHasValue))
                         {
                             Table.RemoveAt(rowIndex);
+                            UpdatePositions();
                         }
 
                         break;
@@ -194,15 +198,30 @@ public class MeasurementTableModel : INotifyPropertyChanged
                                  !horizontalForwardHasValue)))
                         {
                             Table.RemoveAt(rowIndex);
+                            UpdatePositions();
                         }
 
                         break;
                     }
-                
             }
-
-            UpdatePositions();
+            
         }
+        RecalAllFields();
+    }
+
+    private void RecalAllFields()
+    {
+        for (var i = 1; i< _table.Count - 2; i++)
+        {
+            _table[i].ForwardMinutesHorizontal = _table[i].ForwardMinutesHorizontal;
+            _table[i].ForwardMinutesVertical = _table[i].ForwardMinutesVertical;
+            _table[i].ReverseSecondsHorizontal = _table[i].ReverseSecondsHorizontal;
+            _table[i].ReverseSecondsVertical = _table[i].ReverseSecondsVertical;
+            _table[i].FirstMeanAngle_Horizontal = _firstMeanAngle_Horizontal;
+            _table[i].FirstMeanAngle_Vertical = _firstMeanAngle_Vertical;
+        }
+        LastRelativeAngleToFirstHorizontal = _table[_table.Count - 2].RelativeAngleToFirstHorizontal;
+        LastRelativeAngleToFirstVertical = _table[_table.Count - 2].RelativeAngleToFirstVertical;
     }
 
     private decimal? LastRelativeAngleToFirstHorizontal
@@ -211,8 +230,8 @@ public class MeasurementTableModel : INotifyPropertyChanged
         set
         {
             _lastRelativeAngleToFirstHorizontal = value;
-            var coef = _lastRelativeAngleToFirstHorizontal != null ? _lastRelativeAngleToFirstHorizontal / (_table.Count - 1) : null;
-            for (var i = 1; i < _table.Count; i++)
+            var coef = _lastRelativeAngleToFirstHorizontal != null ? _lastRelativeAngleToFirstHorizontal / (_table.Count - 2) : null;
+            for (var i = 1; i < _table.Count - 1; i++)
             {
                 _table[i].LastPointAngleCoeficentHorizontal = coef;
             }
@@ -224,8 +243,8 @@ public class MeasurementTableModel : INotifyPropertyChanged
         get => _lastRelativeAngleToFirstVertical; 
         set
         {
-            var coef = _lastRelativeAngleToFirstVertical != null ? _lastRelativeAngleToFirstVertical / (_table.Count - 1) : null;
-            for (var i = 1; i < _table.Count; i++)
+            var coef = _lastRelativeAngleToFirstVertical != null ? _lastRelativeAngleToFirstVertical / (_table.Count - 2) : null;
+            for (var i = 1; i < _table.Count-1; i++)
             {
                 _table[i].LastPointAngleCoeficentVertical = coef;
             }

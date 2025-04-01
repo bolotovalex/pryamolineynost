@@ -73,8 +73,10 @@ public class MeasurementRowModel : INotifyPropertyChanged
             StepSize = step;
             MeasurementLength = 0;
         }
+
         _previousDataRow = prevRow;
     }
+
     [Browsable(false)]
     public decimal? FirstMeanAngle_Horizontal
     {
@@ -85,6 +87,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
             RelativeAngleHorizontal = GetRelativeAngle(_meanSecondsHorizontal, _firstMeanAngleHorizontal);
         }
     }
+
     [Browsable(false)]
     public decimal? FirstMeanAngle_Vertical
     {
@@ -310,7 +313,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         get => _meanSecondsVertical;
         private set
         {
-            _meanSecondsVertical = RoundNullableDecimal(value,2);
+            _meanSecondsVertical = RoundNullableDecimal(value, 2);
             FormatedMeanVertical = _meanSecondsVertical == null ? null : GetMeanString(_meanSecondsHorizontal);
             OnPropertyChanged("MeanSecondsVertical");
             RelativeAngleVertical = GetRelativeAngle(_meanSecondsVertical, _firstMeanAngleVertical);
@@ -400,19 +403,13 @@ public class MeasurementRowModel : INotifyPropertyChanged
 
     private decimal? CalculateMeanValue(int? fMinutes, decimal? fSeconds, int? rMinutes, decimal? rSeconds)
     {
-        if (fMinutes == null || fSeconds == null)
-        {
-            return null;
-        }
+        if (fMinutes == null || fSeconds == null) return null;
 
-        if (IsReverseStrokeEnabled && (rMinutes == null || rSeconds == null))
-        {
-            return null;
-        }
+        if (IsReverseStrokeEnabled && (rMinutes == null || rSeconds == null)) return null;
 
         return IsReverseStrokeEnabled switch
         {
-            true => (((fMinutes + rMinutes) * 60) + fSeconds + rSeconds) / 2M,
+            true => ((fMinutes + rMinutes) * 60 + fSeconds + rSeconds) / 2M,
             false => fMinutes * 60 + fSeconds
         };
     }
@@ -488,9 +485,9 @@ public class MeasurementRowModel : INotifyPropertyChanged
     {
         switch (plane)
         {
-            case (Plane.Horizontal):
+            case Plane.Horizontal:
                 return multipler * _relativeAngleHorizontal;
-            case (Plane.Vertical):
+            case Plane.Vertical:
                 return multipler * _relativeAngleVertical;
             default:
                 return null;
@@ -502,19 +499,23 @@ public class MeasurementRowModel : INotifyPropertyChanged
         RelativeAngleToFirstHorizontal = CalcRelativeAngleFromFirst(Plane.Horizontal);
         RelativeAngleToFirstVertical = CalcRelativeAngleFromFirst(Plane.Vertical);
     }
-    private decimal? CalcRelativeAngleFromFirst(Plane plane) 
+
+    private decimal? CalcRelativeAngleFromFirst(Plane plane)
     {
         switch (plane)
         {
             case Plane.Horizontal:
                 if (_previousDataRow == null)
                     return null;
-                return _previousDataRow.RelativeAngleToPreviousHorizontal != null ?  
-                    RoundNullableDecimal(_previousDataRow.RelativeAngleToFirstHorizontal + _relativeAngleToPreviousHorizontal, 2) : 
-                    0;
-                
+                return _previousDataRow.RelativeAngleToPreviousHorizontal != null
+                    ? RoundNullableDecimal(
+                        _previousDataRow.RelativeAngleToFirstHorizontal + _relativeAngleToPreviousHorizontal, 2)
+                    : 0;
+
             case Plane.Vertical:
-                return _previousDataRow == null ? null : _previousDataRow.RelativeAngleToFirstVertical ?? 0 + _relativeAngleToPreviousVertical;
+                return _previousDataRow == null
+                    ? null
+                    : _previousDataRow.RelativeAngleToFirstVertical ?? 0 + _relativeAngleToPreviousVertical;
             default:
                 return null;
         }
@@ -523,7 +524,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private static decimal? RoundNullableDecimal(decimal? value, int decimals)
     {
         if (value == null)
-            return 0;
+            return null;
 
         return Math.Round(value.Value, decimals, MidpointRounding.AwayFromZero);
     }
@@ -531,18 +532,12 @@ public class MeasurementRowModel : INotifyPropertyChanged
     public decimal? LastPointAngleCoeficentHorizontal
     {
         get => _lastPointAngleCoeficentHorizontal;
-        set
-        {
-            OrdinateStraightnessHorizontal = Position * value;
-        }
+        set => OrdinateStraightnessHorizontal = Position * value;
     }
 
     public decimal? LastPointAngleCoeficentVertical
     {
         get => _lastPointAngleCoeficentVertical;
-        set
-        {
-            OrdinateStraightnessVertical = Position * value;
-        }
+        set => OrdinateStraightnessVertical = Position * value;
     }
 }
