@@ -168,49 +168,50 @@ public class MeasurementTableModel : INotifyPropertyChanged
         }
         else
         {
-            switch (Plane)
-            {
-                case Enums.Plane.Horizontal:
-                    {
-                        if (horizontalForwardHasValue && (IsRevStrokeEnabled || horizontalReverseHasValue))
-                        {
-                            Table.RemoveAt(rowIndex);
-                            UpdatePositions();
+            //switch (Plane)
+            //{
+            //    case Enums.Plane.Horizontal:
+            //        {
+            //            if (horizontalForwardHasValue && (IsRevStrokeEnabled || horizontalReverseHasValue))
+            //            {
+            //                Table.RemoveAt(rowIndex);
+            //                UpdatePositions();
 
-                        }
+            //            }
 
-                        break;
-                    }
-                case Enums.Plane.Vertical:
-                    {
-                        if (verticalForwardHasValue || (IsRevStrokeEnabled || !verticalReverseHasValue))
-                        {
-                            Table.RemoveAt(rowIndex);
-                            UpdatePositions();
-                        }
+            //            break;
+            //        }
+            //    case Enums.Plane.Vertical:
+            //        {
+            //            if (verticalForwardHasValue || (IsRevStrokeEnabled || !verticalReverseHasValue))
+            //            {
+            //                Table.RemoveAt(rowIndex);
+            //                UpdatePositions();
+            //            }
 
-                        break;
-                    }
-                case Enums.Plane.Both:
-                    {
-                        if (!horizontalForwardHasValue && !verticalForwardHasValue && (IsRevStrokeEnabled ||
-                                (!verticalReverseHasValue &&
-                                 !horizontalForwardHasValue)))
-                        {
-                            Table.RemoveAt(rowIndex);
-                            UpdatePositions();
-                        }
+            //            break;
+            //        }
+            //    case Enums.Plane.Both:
+            //        {
+            //            if (!horizontalForwardHasValue && !verticalForwardHasValue && (IsRevStrokeEnabled ||
+            //                    (!verticalReverseHasValue &&
+            //                     !horizontalForwardHasValue)))
+            //            {
+            //                Table.RemoveAt(rowIndex);
+            //                UpdatePositions();
+            //            }
 
-                        break;
-                    }
-            }
+            //            break;
+            //        }
+            //}
             
         }
         RecalAllFields();
     }
 
-    private void RecalAllFields()
+    public void RecalAllFields()
     {
+        UpdatePositions();
         for (var i = 1; i< _table.Count - 2; i++)
         {
             _table[i].ForwardMinutesHorizontal = _table[i].ForwardMinutesHorizontal;

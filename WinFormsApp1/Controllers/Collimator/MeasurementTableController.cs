@@ -156,9 +156,9 @@ public class MeasurementTableController
             if (MeasurementTableModel.ColumnHeaders.ContainsKey(column.DataPropertyName))
                 column.HeaderText = MeasurementTableModel.ColumnHeaders[column.DataPropertyName];
             if (MeasurementTableModel.ColumnFormat.ContainsKey(column.DataPropertyName))
-                _view.dataGridView1.Columns[column.DataPropertyName].DefaultCellStyle.Format = MeasurementTableModel.ColumnFormat[column.DataPropertyName];
+                _view.dataGridView1.Columns[column.DataPropertyName].DefaultCellStyle.Format =
+                    MeasurementTableModel.ColumnFormat[column.DataPropertyName];
         }
-            
     }
 
     private bool IsReverseColumnEnable(DataGridViewColumn column)
@@ -199,24 +199,55 @@ public class MeasurementTableController
 
     private void DataGridViewC_CellEditEnd(object? sender, DataGridViewCellEventArgs e)
     {
-        
         _model.UpdateTableRow(e.RowIndex);
         _dataSet.UpdateBedLength();
     }
 
     private void BtnAddClicked(object? sender, EventArgs e)
     {
-
     }
 
     private void BtnDelClicked(object? sender, EventArgs e)
     {
+        if (_view.dataGridView1.SelectedRows.Count > 0 && _view.dataGridView1.SelectedRows.Count <= 2)
+        {
+            DialogResult result = MessageBox.Show(
+                "Действительно удалить выбранную строку и пересчитать значения?",
+                "Удаление строки",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
+            if (result == DialogResult.Yes)
+            {
+                foreach (DataGridViewRow row in _view.dataGridView1.SelectedRows)
+                    if (!row.IsNewRow && row.Index != 0 && row.Index != _model.Table.Count - 1)
+                        _view.dataGridView1.Rows.Remove(row);
+
+                    else
+                        MessageBox.Show("Не возможно удалить первую и последнюю строку",
+                            "Ошибка",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information,
+                            MessageBoxDefaultButton.Button1,
+                            MessageBoxOptions.DefaultDesktopOnly);
+
+                _model.RecalAllFields();
+            }
+        }
+        else
+        {
+            MessageBox.Show("Выделите всю строку для удаления значком слева.",
+                "Не выделена строка",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
+        }
     }
+
 
     private void BtnCopyClicked(object? sender, EventArgs e)
     {
-
     }
-
-
 }
