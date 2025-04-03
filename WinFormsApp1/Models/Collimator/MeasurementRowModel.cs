@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
-//using System.Numerics;
 using PryamolineynostWF.Enums;
 
 namespace PryamolineynostWF.Models.Collimator;
@@ -18,8 +17,8 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private decimal? _meanSecondsHorizontal; // Средние секунды
     private decimal? _relativeAngleHorizontal; // bi Наклон проверяемых участков
     private decimal? _relativeAngleToPreviousHorizontal; // hi Наклон проверяемых участков относительно предыдущего
-    private decimal? _relativeAngleToFirstHorizontal; // Hi Наклон проверяемых участков относительно первой точки
-    private decimal? _ordinateStraightnessHorizontal; // bi Ордината прямой величины в проверяемых точках
+    private decimal? _relativeAngleToFirstHorizontal; // Ai Наклон проверяемых участков относительно первой точки
+    private decimal? _ordinateStraightnessHorizontal; // Bi Ордината прямой величины в проверяемых точках
     private decimal? _straightnessDeviationHorizontal; // Hi Отклонения прямолинейности от направляющей
     private string? _formatedMeanHorizontal;
 
@@ -35,8 +34,8 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private decimal? _meanSecondsVertical; // Средние секунды
     private decimal? _relativeAngleVertical; // bi Наклон проверяемых участков
     private decimal? _relativeAngleToPreviousVertical; // hi Наклон проверяемых участков относительно предыдущего
-    private decimal? _relativeAngleToFirstVertical; // Hi Наклон проверяемых участков относительно первой точки
-    private decimal? _ordinateStraightnessVertical; // bi Ордината прямой величины в проверяемых точках
+    private decimal? _relativeAngleToFirstVertical; // Ai Наклон проверяемых участков относительно первой точки
+    private decimal? _ordinateStraightnessVertical; // Bi Ордината прямой величины в проверяемых точках
     private decimal? _straightnessDeviationVertical; // Hi Отклонения прямолинейности от направляющей
     private string? _formatedMeanVertical;
 
@@ -50,11 +49,12 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private int _stepSize; // Шаг
     private bool _isReverseStrokeEnabled; // Включен ли учет обратного хода
     private decimal multipler = 0;
+    private bool _isLastRow;
 
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public MeasurementRowModel(int step, MeasurementRowModel? prevRow, bool revStrokeEnable)
+    public MeasurementRowModel(int step, MeasurementRowModel? prevRow, bool revStrokeEnable, bool isLastRow)
     {
         IsReverseStrokeEnabled = revStrokeEnable;
         StepSize = step;
@@ -74,8 +74,23 @@ public class MeasurementRowModel : INotifyPropertyChanged
             MeasurementLength = 0;
         }
 
+        IsLastRow = isLastRow;
         _previousDataRow = prevRow;
     }
+
+    [Browsable(false)]
+    public bool IsLastRow
+    {
+        get => IsLastRow;
+        set
+        {
+            
+            if (_previousDataRow != null && _previousDataRow.IsLastRow == true)
+                _previousDataRow.IsLastRow = false;
+            _isLastRow = value;
+        }
+    }
+
 
     [Browsable(false)]
     public decimal? FirstMeanAngle_Horizontal
@@ -314,7 +329,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _meanSecondsVertical = RoundNullableDecimal(value, 2);
-            FormatedMeanVertical = _meanSecondsVertical == null ? null : GetMeanString(_meanSecondsHorizontal);
+            FormatedMeanVertical = _meanSecondsVertical == null ? null : GetMeanString(_meanSecondsVertical);
             OnPropertyChanged("MeanSecondsVertical");
             RelativeAngleVertical = GetRelativeAngle(_meanSecondsVertical, _firstMeanAngleVertical);
         }
@@ -358,7 +373,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         private set
         {
             _relativeAngleToFirstVertical = value;
-            StraightnessDeviationVertical = RelativeAngleToFirstVertical - OrdinateStraightnessHorizontal;
+            StraightnessDeviationVertical = RelativeAngleToFirstVertical - OrdinateStraightnessVertical;
             OnPropertyChanged("RelativeAngleToFirstVertical");
         }
     }
@@ -510,12 +525,15 @@ public class MeasurementRowModel : INotifyPropertyChanged
                 return _previousDataRow.RelativeAngleToPreviousHorizontal != null
                     ? RoundNullableDecimal(
                         _previousDataRow.RelativeAngleToFirstHorizontal + _relativeAngleToPreviousHorizontal, 2)
-                    : 0;
+                    : _isLastRow ? 0 : 0; //TODO Нужно реализовать для корректного отображения последней строки
 
             case Plane.Vertical:
-                return _previousDataRow == null
-                    ? null
-                    : _previousDataRow.RelativeAngleToFirstVertical ?? 0 + _relativeAngleToPreviousVertical;
+                if (_previousDataRow == null)
+                    return null;
+                return _previousDataRow.RelativeAngleToPreviousVertical != null
+                    ? RoundNullableDecimal(
+                        _previousDataRow.RelativeAngleToFirstVertical + _relativeAngleToPreviousVertical, 2)
+                    : _isLastRow ? 0 : 0;
             default:
                 return null;
         }
@@ -529,12 +547,14 @@ public class MeasurementRowModel : INotifyPropertyChanged
         return Math.Round(value.Value, decimals, MidpointRounding.AwayFromZero);
     }
 
+    [Browsable(false)]
     public decimal? LastPointAngleCoeficentHorizontal
     {
         get => _lastPointAngleCoeficentHorizontal;
         set => OrdinateStraightnessHorizontal = Position * value;
     }
 
+    [Browsable(false)]
     public decimal? LastPointAngleCoeficentVertical
     {
         get => _lastPointAngleCoeficentVertical;

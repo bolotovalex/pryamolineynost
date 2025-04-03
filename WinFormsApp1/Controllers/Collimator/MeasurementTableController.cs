@@ -57,6 +57,7 @@ public class MeasurementTableController
                     column.Visible = MeasurementTableModel.HorizontalFields.Contains(column.DataPropertyName)
                                      && (IsAdditionColumnsEnable(column)
                                          && IsReverseColumnEnable(column));
+
                 break;
 
             case Enums.Plane.Vertical:
@@ -77,6 +78,7 @@ public class MeasurementTableController
         if (_view.cbPlaneUse.SelectedValue is Enums.Plane selected) _dataSet.Plane = selected;
         _model.Plane = _dataSet.Plane;
         SwitchColumns(_dataSet.Plane);
+        _dataSet.Plane = _model.Plane;
     }
 
     private void DataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)

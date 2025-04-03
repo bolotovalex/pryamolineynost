@@ -12,6 +12,7 @@ public class CollimatorController
     private CollimatorModel _model;
 
 
+
     public
         CollimatorController(CollimatorType collimatorType, DateTime date, string actNumber)
     {
@@ -110,6 +111,11 @@ public class CollimatorController
     {
         var measurementController = new MeasurementTableController(_model);
         measurementController.ShowForm();
+    }
+
+    public void SwitchPlane(Plane plane)
+    {
+        _view.SwitchPlane(plane);
     }
 
     

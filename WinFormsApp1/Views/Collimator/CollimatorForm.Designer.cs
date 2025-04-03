@@ -635,7 +635,7 @@ partial class CollimatorForm
         // 
         pnlVerticalPlate.BackColor = SystemColors.ActiveCaption;
         pnlVerticalPlate.BorderStyle = BorderStyle.FixedSingle;
-        pnlVerticalPlate.Controls.Add(lblVerticalPlate);
+        pnlVerticalPlate.Controls.Add(lblHorizontalPlate);
         pnlVerticalPlate.Location = new Point(400, -1);
         pnlVerticalPlate.Name = "pnlVerticalPlate";
         pnlVerticalPlate.Size = new Size(140, 384);
@@ -644,7 +644,7 @@ partial class CollimatorForm
         // lblVerticalPlate
         // 
         lblVerticalPlate.AutoSize = true;
-        lblVerticalPlate.Location = new Point(30, 7);
+        lblVerticalPlate.Location = new Point(28, 7);
         lblVerticalPlate.Name = "lblVerticalPlate";
         lblVerticalPlate.Size = new Size(83, 15);
         lblVerticalPlate.TabIndex = 46;
@@ -654,7 +654,7 @@ partial class CollimatorForm
         // 
         pnlHorizontalPlate.BackColor = SystemColors.Info;
         pnlHorizontalPlate.BorderStyle = BorderStyle.FixedSingle;
-        pnlHorizontalPlate.Controls.Add(lblHorizontalPlate);
+        pnlHorizontalPlate.Controls.Add(lblVerticalPlate);
         pnlHorizontalPlate.Location = new Point(539, -1);
         pnlHorizontalPlate.Name = "pnlHorizontalPlate";
         pnlHorizontalPlate.Size = new Size(143, 384);
@@ -663,7 +663,7 @@ partial class CollimatorForm
         // lblHorizontalPlate
         // 
         lblHorizontalPlate.AutoSize = true;
-        lblHorizontalPlate.Location = new Point(24, 7);
+        lblHorizontalPlate.Location = new Point(21, 7);
         lblHorizontalPlate.Name = "lblHorizontalPlate";
         lblHorizontalPlate.Size = new Size(96, 15);
         lblHorizontalPlate.TabIndex = 45;

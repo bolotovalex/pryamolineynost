@@ -150,6 +150,7 @@
             btnCopy.TabIndex = 2;
             btnCopy.Text = "Copy";
             btnCopy.UseVisualStyleBackColor = true;
+            btnCopy.Visible = false;
             btnCopy.Click += btnCopy_Click;
             // 
             // btnDelRow
