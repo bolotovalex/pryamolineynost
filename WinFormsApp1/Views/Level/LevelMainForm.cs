@@ -113,7 +113,7 @@ public partial class LevelMainForm : Form, IView
         if (_dataForm != null && !_dataForm.Disposing) _dataForm.DataForm_Load(sender, e);
 
         UpdateAllFields();
-        if (_graphic != null) _graphic.RefreshPlot();
+        _graphic?.RefreshPlot();
         if (_dB.GetAreaDeviations().Length > 0)
             lineDeviationTextBox.Text = _dB.GetAreaDeviations()[0].deviation.ToString();
     }
@@ -229,7 +229,7 @@ public partial class LevelMainForm : Form, IView
         {
             if (_dataForm != null && !_dataForm.Disposing) _dataForm.Dispose();
 
-            if (_graphicsForm != null) _graphicsForm.Dispose();
+            _graphicsForm?.Dispose();
 
 
             var reader = new StreamReader(openFileDialog.OpenFile());
@@ -263,8 +263,7 @@ public partial class LevelMainForm : Form, IView
     {
         if (ChangeComboBoxColor())
         {
-            if (_graphicsForm != null)
-                _graphicsForm.Dispose();
+            _graphicsForm?.Dispose();
 
             var newGraphic = new GraphicModel(_dB.GetCurvePoints(), _dB.GetStraightPoint(),
                 _dB.DataList.Count < 12 ? _dB.Step : _dB.DataList.Count / 12 * _dB.Step);

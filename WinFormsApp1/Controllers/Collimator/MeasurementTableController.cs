@@ -11,7 +11,7 @@ public class MeasurementTableController
 {
     private MeasurementTableForm _view;
     private MeasurementTableModel _model;
-    public BindingSource _bindingSource { get; set; }
+    public BindingSource BindingSource { get; set; }
     private CollimatorModel _dataSet;
 
     public MeasurementTableController(CollimatorModel dataSet)
@@ -19,7 +19,7 @@ public class MeasurementTableController
         _model = dataSet.MeasurementTable;
         _dataSet = dataSet;
         CreateBindingSource();
-        _view = new MeasurementTableForm(_bindingSource, _dataSet.Plane);
+        _view = new MeasurementTableForm(BindingSource, _dataSet.Plane);
         _view.dataGridViewCellValidating += DataGridView_CellValidating;
         _view.dataGridViewCellEditEnd += DataGridViewC_CellEditEnd;
         _view.dataGridViewCellBeginEdit += DataGridView_CellBeginEdit;
@@ -32,23 +32,23 @@ public class MeasurementTableController
         _view.BtnDelClicked += BtnDelClicked;
         _view.BtnCopyClicked += BtnCopyClicked;
 
-        SwitchColumns(_dataSet.Plane);
+        SwitchColumns();
 
 
-        //_view.cbRevStrokeEnable.DataBindings.Add("Checked", _table, "IsRevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
-        //_view.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _table, "IsAdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+        //View.cbRevStrokeEnable.DataBindings.Add("Checked", _table, "IsRevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+        //View.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _table, "IsAdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
     }
 
     private void CreateBindingSource()
     {
-        _bindingSource = new BindingSource();
-        _bindingSource.DataSource = _model.Table;
+        BindingSource = new BindingSource();
+        BindingSource.DataSource = _model.Table;
 
-        //_bindingSource.ResetBindings(false); //Обновление
+        //BindingSource.ResetBindings(false); //Обновление
     }
 
 
-    private void SwitchColumns(Enums.Plane plane)
+    private void SwitchColumns()
     {
         switch (_dataSet.Plane)
         {
@@ -77,7 +77,7 @@ public class MeasurementTableController
     {
         if (_view.cbPlaneUse.SelectedValue is Enums.Plane selected) _dataSet.Plane = selected;
         _model.Plane = _dataSet.Plane;
-        SwitchColumns(_dataSet.Plane);
+        SwitchColumns();
         _dataSet.Plane = _model.Plane;
     }
 
@@ -106,11 +106,10 @@ public class MeasurementTableController
         // Валидация для decimal и decimal?
         if (propertyType == typeof(decimal))
         {
-            decimal parsedDecimal;
 
             // Пробуем парсинг с точкой
             if (!decimal.TryParse(input.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture,
-                    out parsedDecimal))
+                    out decimal parsedDecimal))
             {
                 // Пробуем парсинг с запятой
                 if (!decimal.TryParse(input.Replace('.', ','), NumberStyles.Any, CultureInfo.InvariantCulture,
@@ -130,9 +129,8 @@ public class MeasurementTableController
         // Валидация для int и int?
         else if (propertyType == typeof(int))
         {
-            int parsedInt;
 
-            if (!int.TryParse(input, out parsedInt))
+            if (!int.TryParse(input, out int parsedInt))
             {
                 // Если парсинг не удался, устанавливаем null и окрашиваем ячейку
                 _view.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
@@ -181,13 +179,13 @@ public class MeasurementTableController
     private void CBRevStroke_Changed(object? sender, EventArgs e)
     {
         _dataSet.IsRevStrokeEnabled = _view.cbRevStrokeEnable.Checked;
-        SwitchColumns(_dataSet.Plane);
+        SwitchColumns();
     }
 
     private void CBAdditionFieldsVisible_Changed(object? sender, EventArgs e)
     {
         _dataSet.IsAdditionsFieldEnabled = _view.cbAdditionsFileldsEnable.Checked;
-        SwitchColumns(_dataSet.Plane);
+        SwitchColumns();
     }
 
 

@@ -17,7 +17,7 @@ public class Micrometer : IUnit
     public void SetValue(int value)
     {
         Value = value;
-        LinkedUnit.UpdateValue(value);
+        LinkedUnit?.UpdateValue(value);
     }
 
     public void UpdateValue(int value)

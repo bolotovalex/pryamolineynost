@@ -24,6 +24,6 @@ internal static class Program
 
 
         var controller = new CollimatorController(Enums.CollimatorType.ACU05, DateTime.Now, "123");
-        Application.Run(controller._view);
+        Application.Run(controller.View);
     }
 }

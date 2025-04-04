@@ -11,15 +11,15 @@ namespace PryamolineynostWF.Controllers.Collimator;
 
 public class CollimatorController
 {
-    public CollimatorForm _view { get; init; }
-    private CollimatorModel _model;
+    public CollimatorForm View { get; init; }
+    private readonly CollimatorModel _model;
 
 
     public
         CollimatorController(CollimatorType collimatorType, DateTime date, string actNumber)
     {
         _model = new CollimatorModel();
-        _view = new CollimatorForm(collimatorType, date, actNumber);
+        View = new CollimatorForm(collimatorType, date, actNumber);
 
 
         Initialization(collimatorType, date, actNumber);
@@ -27,10 +27,10 @@ public class CollimatorController
         BindinLabelData();
         BindButtonActions();
 
-        _view.Show();
+        View.Show();
     }
 
-    //public Form View() => _view;
+    //public Form View() => View;
     private void StubFormShow(object sender, EventArgs e)
     {
         MessageBox.Show("В разработке",
@@ -54,60 +54,60 @@ public class CollimatorController
 
     private void BindingTextBoxData()
     {
-        _view.GetDateTimeControl.DataBindings.Add("Value", _model, "MeasurementDate", true,
+        View.GetDateTimeControl.DataBindings.Add("Value", _model, "MeasurementDate", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetTbObjectName.DataBindings.Add("Text", _model, "ObjectName", true,
+        View.GetTbObjectName.DataBindings.Add("Text", _model, "ObjectName", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetTbDescription.DataBindings.Add("Text", _model, "Description", true,
+        View.GetTbDescription.DataBindings.Add("Text", _model, "Description", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetTbWorkerName.DataBindings.Add("Text", _model, "WorkerName", true,
+        View.GetTbWorkerName.DataBindings.Add("Text", _model, "WorkerName", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetTbLocalAreaSize.DataBindings.Add("Text", _model, "LocalAreaSize", true,
+        View.GetTbLocalAreaSize.DataBindings.Add("Text", _model, "LocalAreaSize", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetTbHorizontalTolerLocalAreaSize.DataBindings.Add("Text", _model, "HorizontalTolerLocalAreaSize", true,
+        View.GetTbHorizontalTolerLocalAreaSize.DataBindings.Add("Text", _model, "HorizontalTolerLocalAreaSize", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetTbHorizontalTolerAllLength.DataBindings.Add("Text", _model, "HorizontalTolerAllLength", true,
+        View.GetTbHorizontalTolerAllLength.DataBindings.Add("Text", _model, "HorizontalTolerAllLength", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetTbVerticalTolerLocalAreaSize.DataBindings.Add("Text", _model, "VerticalTolerLocalAreaSize", true,
+        View.GetTbVerticalTolerLocalAreaSize.DataBindings.Add("Text", _model, "VerticalTolerLocalAreaSize", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetTbVerticalTolerAllLength.DataBindings.Add("Text", _model, "VerticalTolerAllLength", true,
+        View.GetTbVerticalTolerAllLength.DataBindings.Add("Text", _model, "VerticalTolerAllLength", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetTbStepSize.DataBindings.Add("Text", _model, "StepSize", true, DataSourceUpdateMode.OnPropertyChanged);
+        View.GetTbStepSize.DataBindings.Add("Text", _model, "StepSize", true, DataSourceUpdateMode.OnPropertyChanged);
     }
 
     private void BindinLabelData()
     {
-        _view.GetLblColimmatorType.DataBindings.Add("Text", _model, "CollimatorType", true,
+        View.GetLblColimmatorType.DataBindings.Add("Text", _model, "CollimatorType", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetLblBedLength.DataBindings.Add("Text", _model, "BedLength", true,
+        View.GetLblBedLength.DataBindings.Add("Text", _model, "BedLength", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetLblHorizontalMaxDeviation.DataBindings.Add("Text", _model, "HorizontalMaxDeviation", true,
+        View.GetLblHorizontalMaxDeviation.DataBindings.Add("Text", _model, "HorizontalMaxDeviation", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetLblVerticalMaxDeviation.DataBindings.Add("Text", _model, "VerticalMaxDeviation", true,
+        View.GetLblVerticalMaxDeviation.DataBindings.Add("Text", _model, "VerticalMaxDeviation", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetLblHorizontalMinDeviation.DataBindings.Add("Text", _model, "HorizontalMinDeviation", true,
+        View.GetLblHorizontalMinDeviation.DataBindings.Add("Text", _model, "HorizontalMinDeviation", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetLblVericalMinDeviation.DataBindings.Add("Text", _model, "VerticalMinDeviation", true,
+        View.GetLblVericalMinDeviation.DataBindings.Add("Text", _model, "VerticalMinDeviation", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetLblHorizontalMeanDeviation.DataBindings.Add("Text", _model, "HorizontalMeanDeviation", true,
+        View.GetLblHorizontalMeanDeviation.DataBindings.Add("Text", _model, "HorizontalMeanDeviation", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetLblVerticalMeanDeviation.DataBindings.Add("Text", _model, "VerticalMeanDeviation", true,
+        View.GetLblVerticalMeanDeviation.DataBindings.Add("Text", _model, "VerticalMeanDeviation", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetLblHorizontalLineDeviation.DataBindings.Add("Text", _model, "HorizontalAreaDeviation", true,
+        View.GetLblHorizontalLineDeviation.DataBindings.Add("Text", _model, "HorizontalAreaDeviation", true,
             DataSourceUpdateMode.OnPropertyChanged);
-        _view.GetLblVerticalLineDeviation.DataBindings.Add("Text", _model, "VerticalAreaDeviation", true,
+        View.GetLblVerticalLineDeviation.DataBindings.Add("Text", _model, "VerticalAreaDeviation", true,
             DataSourceUpdateMode.OnPropertyChanged);
     }
 
     private void BindButtonActions()
     {
-        _view.btnShowDataFormClicked += ShowMeasurementForm;
-        _view.btnGraphicFormClicked += StubFormShow;
-        _view.btnPdfFormClicked += StubFormShow;
-        _view.btnExitClicked += StubFormShow;
-        _view.btnSaveChangedClicked += (Sender, e) => SaveToJson();
-        _view.btnLoadChangedClicked += (Sender, e) => LoadFromJson();
-        _view.btnCollimatorTypeChangeClicked += StubFormShow;
+        View.btnShowDataFormClicked += ShowMeasurementForm;
+        View.btnGraphicFormClicked += StubFormShow;
+        View.btnPdfFormClicked += StubFormShow;
+        View.btnExitClicked += StubFormShow;
+        View.btnSaveChangedClicked += (Sender, e) => SaveToJson();
+        View.btnLoadChangedClicked += (Sender, e) => LoadFromJson();
+        View.btnCollimatorTypeChangeClicked += StubFormShow;
     }
 
 
@@ -119,7 +119,7 @@ public class CollimatorController
 
     public void SwitchPlane(Plane plane)
     {
-        _view.SwitchPlane(plane);
+        View.SwitchPlane(plane);
     }
 
     public void SaveToJson()
@@ -322,7 +322,7 @@ public class CollimatorController
     }
 
 
-    private string GetSaveFileName(FileFormat format)
+    private static string GetSaveFileName(FileFormat format)
     {
         var saveFileDialog = new SaveFileDialog();
 
@@ -343,7 +343,7 @@ public class CollimatorController
         return saveFileDialog.FileName;
     }
 
-    private string GetLoadFileName(FileFormat format)
+    private static string GetLoadFileName(FileFormat format)
     {
         var loadFileDialog = new OpenFileDialog();
 

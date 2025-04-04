@@ -227,7 +227,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _relativeAngleHorizontal = value;
             RelativeAngleToPreviousHorizontal = CalcRelativeAngleToPrevious(Plane.Horizontal);
-            OnPropertyChanged("RelativeAngleHorizontal");
+            OnPropertyChanged(nameof(RelativeAngleHorizontal));
         }
     }
 

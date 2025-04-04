@@ -9,8 +9,7 @@ namespace PryamolineynostWF.Controllers.Collimator;
 public class CollimatorCalibrationDateController
 {
     private readonly CollimatorCalibrationDateForm _view;
-    private CollimatorForm _mainForm;
-    private CollimatorType _selectedCollimatorType;
+    private readonly CollimatorType _selectedCollimatorType;
 
     public CollimatorCalibrationDateController(CollimatorCalibrationDateForm view,
         CollimatorType selectedCollimatorType)
@@ -30,15 +29,15 @@ public class CollimatorCalibrationDateController
         _view.OkButton.Enabled = FieldValidator.TextBoxIsFilledCheck(_view.tbActNumber);
     }
 
-    private void BtnOkClicked(object sender, EventArgs e)
+    private void BtnOkClicked(object? sender, EventArgs e)
     {
         var collimatorController =
             new CollimatorController(_selectedCollimatorType, _view.dateTimePicker1.Value, _view.tbActNumber.Text);
         NavigationStack.Clear(); //TODO Пока костыль
-        NavigationStack.Navigate(_view, collimatorController._view);
+        NavigationStack.Navigate(_view, collimatorController.View);
     }
 
-    private void BtnPrevClicked(object sender, EventArgs e)
+    private void BtnPrevClicked(object? sender, EventArgs e)
     {
         MessageBox.Show("В разработке",
                "В разработке",
