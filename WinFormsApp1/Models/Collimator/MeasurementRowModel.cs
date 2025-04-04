@@ -420,7 +420,8 @@ public class MeasurementRowModel : INotifyPropertyChanged
     {
         if (fMinutes == null || fSeconds == null) return null;
 
-        if (IsReverseStrokeEnabled && (rMinutes == null || rSeconds == null)) return null;
+        //if (IsReverseStrokeEnabled && (rMinutes == null || rSeconds == null)) return null;
+        if (rMinutes == null || rSeconds == null) return null;
 
         return IsReverseStrokeEnabled switch
         {

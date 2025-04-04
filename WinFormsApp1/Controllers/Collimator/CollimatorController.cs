@@ -3,6 +3,9 @@ using PryamolineynostWF.Models.Collimator;
 using PryamolineynostWF.Views.Collimator;
 using PryamolineynostWF.Views;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using PryamolineynostWF.DTO.Collimator;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PryamolineynostWF.Controllers.Collimator;
 
@@ -31,10 +34,12 @@ public class CollimatorController
     //public Form View() => _view;
     private void StubFormShow(object sender, EventArgs e)
     {
-        //Заглушка
-        var stubForm = new StubDialog("Не реализовано");
-        stubForm.ShowDialog();
-        stubForm.Dispose();
+        MessageBox.Show("В разработке",
+               "В разработке",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Information,
+               MessageBoxDefaultButton.Button1,
+               MessageBoxOptions.DefaultDesktopOnly);
     }
 
     private void Initialization(CollimatorType collimatorType, DateTime collimatorCheckDate, string actNumber)
@@ -101,8 +106,8 @@ public class CollimatorController
         _view.btnGraphicFormClicked += StubFormShow;
         _view.btnPdfFormClicked += StubFormShow;
         _view.btnExitClicked += StubFormShow;
-        _view.btnSaveChangedClicked += StubFormShow;
-        _view.btnLoadChangedClicked += StubFormShow;
+        _view.btnSaveChangedClicked += (Sender, e) => SaveToJson("collimator_data.json");
+        _view.btnLoadChangedClicked += (Sender, e) => LoadFromJson("collimator_data.json");
         _view.btnCollimatorTypeChangeClicked += StubFormShow;
     }
 
@@ -118,5 +123,63 @@ public class CollimatorController
         _view.SwitchPlane(plane);
     }
 
-    
+    public void SaveToJson(string filePath)
+    {
+        try
+        {
+            var dto = new CollimatorModelDTO()
+            {
+                MeasurementDate = _model.MeasurementDate,
+                CollimatorCheckDate = _model.CollimatorCheckDate,
+                CollimatorType = _model.CollimatorType,
+                ActNumber = _model.ActNumber,
+                ObjectName = _model.ObjectName,
+                Description = _model.Description,
+                WorkerName = _model.WorkerName,
+                LocalAreaSize = _model.LocalAreaSize,
+                HorizontalTolerLocalAreaSize = _model.HorizontalTolerLocalAreaSize,
+                HorizontalTolerAllLength = _model.HorizontalTolerAllLength,
+                VerticalTolerLocalAreaSize = _model.VerticalTolerLocalAreaSize,
+                VerticalTolerAllLength = _model.VerticalTolerAllLength,
+                StepSize = _model.StepSize,
+                BedLength = _model.BedLength,
+                IsRevstrokeEnabled = _model.IsRevStrokeEnabled,
+                Plane = _model.Plane,
+                IsAddtionsFieldEnabled = _model.IsAdditionsFieldEnabled,
+                Table = new MeasurementTableModelDTO
+                {
+                    Plane = _model.MeasurementTable.Plane,
+                    Step = _model.MeasurementTable.Step,
+                    IsRevStrokeEnabled = _model.MeasurementTable.IsRevStrokeEnabled,
+                    FirstMeanAngle_Horizontal = _model.MeasurementTable.FirstMeanAngle_Horizontal,
+                    FirstMeanAngle_Vertical = _model.MeasurementTable.FirstMeanAngle_Vertical,
+                    LastRelativeAngleToFirstHorizontal = _model.MeasurementTable.LastRelativeAngleToFirstHorizontal,
+                    LastRelativeAngleToFirstVertical = _model.MeasurementTable.LastRelativeAngleToFirstVertical,
+                    Rows = _model.MeasurementTable.Table
+                        .Select(row => new MeasurementRowModelDTO
+                        {
+                            Position = row.Position,
+                            MeasurementLength = row.MeasurementLength,
+                            ForwardMinutesHorizontal = row.ForwardMinutesHorizontal,
+                            ForwardSecondsHorizontal = row.ForwardSecondsHorizontal,
+                            ReverseMinutesHorizontal = row.ReverseMinutesHorizontal,
+                            ReverseSecondsHorizontal = row.ReverseSecondsVertical,
+                            FirstMeanAngleHorizontal = row.FirstMeanAngle_Horizontal,
+                            FirstMeanAngleVertical = row.FirstMeanAngle_Vertical,
+                            LastPointAngleCoeficentHorizontal = row.LastPointAngleCoeficentHorizontal,
+                            LastPointAngleCoeficentVertical = row.LastPointAngleCoeficentVertical
+                        }).ToList()
+                }
+            };
+
+            var options = new JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.Never };
+            string json = JsonSerializer.Serialize(dto, options);
+            File.WriteAllText(filePath, json);
+            MessageBox.Show("Данные сохранены!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
 }

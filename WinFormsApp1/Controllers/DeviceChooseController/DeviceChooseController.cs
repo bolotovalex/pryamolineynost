@@ -53,10 +53,12 @@ public class DeviceChooseController
 
     private void OnBtnLoadClicked(object sender, EventArgs e)
     {
-        using (var stubDialog = new StubDialog("Пока не реализовано"))
-        {
-            stubDialog.ShowDialog();
-        }
+        MessageBox.Show("В разработке",
+               "В разработке",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Information,
+               MessageBoxDefaultButton.Button1,
+               MessageBoxOptions.DefaultDesktopOnly);
     }
 
     private void OnBtnCancelClicked(object sender, EventArgs e)

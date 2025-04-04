@@ -40,9 +40,11 @@ public class CollimatorCalibrationDateController
 
     private void BtnPrevClicked(object sender, EventArgs e)
     {
-        using (var stubDialog = new StubDialog("Пока не реализовано"))
-        {
-            stubDialog.ShowDialog();
-        }
+        MessageBox.Show("В разработке",
+               "В разработке",
+               MessageBoxButtons.OK,
+               MessageBoxIcon.Information,
+               MessageBoxDefaultButton.Button1,
+               MessageBoxOptions.DefaultDesktopOnly);
     }
 }

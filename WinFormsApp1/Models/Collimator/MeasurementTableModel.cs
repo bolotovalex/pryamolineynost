@@ -228,7 +228,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         LastRelativeAngleToFirstVertical = _table[_table.Count - 2].RelativeAngleToFirstVertical;
     }
 
-    private decimal? LastRelativeAngleToFirstHorizontal
+    public decimal? LastRelativeAngleToFirstHorizontal
     {
         get => _lastRelativeAngleToFirstHorizontal;
         set
@@ -242,7 +242,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         }
     }
 
-    private decimal? LastRelativeAngleToFirstVertical
+    public decimal? LastRelativeAngleToFirstVertical
     {
         get => _lastRelativeAngleToFirstVertical; 
         set
