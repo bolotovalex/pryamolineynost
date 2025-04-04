@@ -11,7 +11,7 @@ public class MeasurementTableController
 {
     private MeasurementTableForm _view;
     private MeasurementTableModel _model;
-    private BindingSource _bindingSource;
+    public BindingSource _bindingSource { get; set; }
     private CollimatorModel _dataSet;
 
     public MeasurementTableController(CollimatorModel dataSet)

@@ -154,9 +154,9 @@ public class MeasurementTableModel : INotifyPropertyChanged
                     when !verticalForwardHasValue && (IsRevStrokeEnabled || verticalReverseHasValue):
                 
                 case Enums.Plane.Both when !horizontalForwardHasValue && !verticalForwardHasValue &&
-                                           (!IsRevStrokeEnabled ||
-                                            (!verticalReverseHasValue &&
-                                             !horizontalForwardHasValue)):
+                                           (IsRevStrokeEnabled ||
+                                            (verticalReverseHasValue &&
+                                             horizontalForwardHasValue)):
                     return;
                 default:
                     _table.Add(new MeasurementRowModel(_step, _table[^1], _isRevStrokeEnabled, true));
@@ -224,8 +224,12 @@ public class MeasurementTableModel : INotifyPropertyChanged
             _table[i].FirstMeanAngle_Horizontal = _firstMeanAngle_Horizontal;
             _table[i].FirstMeanAngle_Vertical = _firstMeanAngle_Vertical;
         }
-        LastRelativeAngleToFirstHorizontal = _table[_table.Count - 2].RelativeAngleToFirstHorizontal;
-        LastRelativeAngleToFirstVertical = _table[_table.Count - 2].RelativeAngleToFirstVertical;
+        if (_table.Count - 2 >= 0)
+        {
+            LastRelativeAngleToFirstHorizontal = _table[_table.Count - 2].RelativeAngleToFirstHorizontal;
+            LastRelativeAngleToFirstVertical = _table[_table.Count - 2].RelativeAngleToFirstVertical;
+        }
+        
     }
 
     public decimal? LastRelativeAngleToFirstHorizontal

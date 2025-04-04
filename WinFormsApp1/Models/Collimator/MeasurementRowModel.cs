@@ -117,7 +117,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
     public int Position
     {
         get => _position;
-        private set
+        set
         {
             _position = value;
             MeasurementLength = value * _stepSize;
@@ -128,7 +128,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
     public int MeasurementLength
     {
         get => _measurementLength;
-        private set
+        set
         {
             _measurementLength = value;
             OnPropertyChanged("MeasurementLength");
