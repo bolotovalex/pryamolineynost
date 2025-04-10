@@ -3,7 +3,8 @@ namespace PryamolineynostWF.DTO.Collimator
 {
     public class CollimatorModelDTO
     {
-        public int DTOVersion { get => 1;  }
+        public int DTOVersion { get; set; }
+        public string DTOTool { get; set; }
         public DateTime MeasurementDate{ get; set; }
         public DateTime CollimatorCheckDate{ get; set; }
         public CollimatorType CollimatorType{ get; set; }

@@ -6,6 +6,7 @@ namespace PryamolineynostWF.Models.Collimator;
 
 public class CollimatorModel : INotifyPropertyChanged
 {
+    public int ModelVersion { get => 1; }
     private DateTime _measurementDate = DateTime.Now;
     private DateTime _collimatorCheckDate;
     private CollimatorType _collimatorType;

@@ -6,6 +6,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using PryamolineynostWF.DTO.Collimator;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Reflection;
 
 namespace PryamolineynostWF.Controllers.Collimator;
 
@@ -131,6 +132,8 @@ public class CollimatorController
             {
                 var dto = new CollimatorModelDTO()
                 {
+                    DTOVersion = _model.ModelVersion,
+                    DTOTool = "Autocollimator",
                     MeasurementDate = _model.MeasurementDate,
                     CollimatorCheckDate = _model.CollimatorCheckDate,
                     CollimatorType = _model.CollimatorType,
@@ -213,25 +216,53 @@ public class CollimatorController
                 if (dialogResult != DialogResult.Yes)
                     return;
 
+
                 string json = File.ReadAllText(filePath);
                 var options = new JsonSerializerOptions
                 {
-                    PropertyNameCaseInsensitive = true // Для обработки разного регистра свойств
+                    PropertyNameCaseInsensitive = true
                 };
 
-                var dto = JsonSerializer.Deserialize<CollimatorModelDTO>(json, options);
+                CollimatorModelDTO dto = JsonSerializer.Deserialize<CollimatorModelDTO>(json, options);
 
+                // Проверка целостности данных
                 if (dto == null)
                 {
-                    MessageBox.Show("Не удалось прочитать файл", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ошибка: Файл поврежден или имеет неверный формат", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                //if (dto.Version != CurrentDataVersion)
-                //{
-                //    MessageBox.Show("Файл создан в другой версии программы", "Предупреждение",
-                //                  MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //}
+                // Проверка типа прибора
+                if (string.IsNullOrEmpty(dto.DTOTool) || dto.DTOTool != "Autocollimator")
+                {
+                    MessageBox.Show("Ошибка: Файл не содержит данных для автоколлиматора", "Неверный тип прибора",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Проверка версии данных
+                if (_model.ModelVersion != dto.DTOVersion)
+                {
+                    var versionResult = MessageBox.Show(
+                        $"Версия файла ({dto.DTOVersion}) отличается от текущей версии программы ({_model.ModelVersion}).\n" +
+                        "Попытаться загрузить данные? Возможна некорректная работа.",
+                        "Версия не совпадает",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (versionResult != DialogResult.Yes)
+                        return;
+                }
+
+                // Проверка обязательных полей
+                if (dto.Table == null || dto.Table.Rows == null || !dto.Table.Rows.Any())
+                {
+                    MessageBox.Show("Ошибка: Файл не содержит данных измерений", "Неполные данные",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
 
                 // Обновляем основную модель
                 _model.MeasurementDate = dto.MeasurementDate;
@@ -333,8 +364,8 @@ public class CollimatorController
                 saveFileDialog.Title = @"Select PDF file";
                 break;
             case FileFormat.JSON:
-                saveFileDialog.Filter = @"JSON|*.json";
-                saveFileDialog.Title = @"Select JSON file";
+                saveFileDialog.Filter = @"JDATA|*.jdata";
+                saveFileDialog.Title = @"Select JDATA file";
                 break;
         }
 
@@ -354,8 +385,8 @@ public class CollimatorController
                 loadFileDialog.Title = @"Select PDF file";
                 break;
             case FileFormat.JSON:
-                loadFileDialog.Filter = @"JSON|*.json";
-                loadFileDialog.Title = @"Select JSON file";
+                loadFileDialog.Filter = @"JDATA|*.jdata";
+                loadFileDialog.Title = @"Select JDATA file";
                 break;
         }
 
