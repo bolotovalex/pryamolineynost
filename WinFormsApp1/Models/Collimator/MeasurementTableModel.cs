@@ -251,6 +251,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         get => _lastRelativeAngleToFirstVertical; 
         set
         {
+            _lastRelativeAngleToFirstVertical = value;
             var coef = _lastRelativeAngleToFirstVertical != null ? _lastRelativeAngleToFirstVertical / (_table.Count - 2) : null;
             for (var i = 1; i < _table.Count - 1; i++)
             {

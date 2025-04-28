@@ -419,10 +419,8 @@ public class MeasurementRowModel : INotifyPropertyChanged
     private decimal? CalculateMeanValue(int? fMinutes, decimal? fSeconds, int? rMinutes, decimal? rSeconds)
     {
         if (fMinutes == null || fSeconds == null) return null;
-
-        //if (IsReverseStrokeEnabled && (rMinutes == null || rSeconds == null)) return null;
-        if (rMinutes == null || rSeconds == null) return null;
-
+        if (IsReverseStrokeEnabled && (rMinutes == null || rSeconds == null)) return null;
+        
         return IsReverseStrokeEnabled switch
         {
             true => ((fMinutes + rMinutes) * 60 + fSeconds + rSeconds) / 2M,
