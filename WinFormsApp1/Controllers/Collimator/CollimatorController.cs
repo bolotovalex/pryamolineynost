@@ -7,6 +7,7 @@ using PryamolineynostWF.DTO.Collimator;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Reflection;
+using System.Data;
 
 namespace PryamolineynostWF.Controllers.Collimator;
 
@@ -336,6 +337,7 @@ public class CollimatorController
                 // Пересчитываем все зависимые поля
                 _model.MeasurementTable.RecalAllFields();
                 _model.UpdateBedLength();
+                _model.UpdateDeviationMetrics();
 
                 MessageBox.Show("Данные успешно загружены", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

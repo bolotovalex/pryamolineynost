@@ -312,4 +312,42 @@ public class CollimatorModel : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
+    public void UpdateDeviationMetrics()
+    {
+        // горизонтальная
+        var hor = MeasurementTable.Table
+            .Select(r => r.StraightnessDeviationHorizontal)
+            .Where(v => v.HasValue)
+            .Select(v => v.Value)
+            .ToList();
+        if (hor.Any())
+        {
+            HorizontalMaxDeviation = hor.Max();
+            HorizontalMinDeviation = hor.Min();
+        }
+        else
+        {
+            HorizontalMaxDeviation = HorizontalMinDeviation = 0;
+        }
+
+        // вертикальная
+        var vert = MeasurementTable.Table
+            .Select(r => r.StraightnessDeviationVertical)
+            .Where(v => v.HasValue)
+            .Select(v => v.Value)
+            .ToList();
+        if (vert.Any())
+        {
+            VerticalMaxDeviation = vert.Max();
+            VerticalMinDeviation = vert.Min();
+        }
+        else
+        {
+            VerticalMaxDeviation = VerticalMinDeviation = 0;
+        }
+        HorizontalMeanDeviation = Math.Abs(HorizontalMaxDeviation) + Math.Abs(HorizontalMinDeviation);
+        VerticalMeanDeviation = Math.Abs(VerticalMaxDeviation) + Math.Abs(VerticalMinDeviation);
+    }
+
 }

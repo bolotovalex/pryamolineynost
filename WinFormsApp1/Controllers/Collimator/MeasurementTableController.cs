@@ -201,6 +201,7 @@ public class MeasurementTableController
     {
         _model.UpdateTableRow(e.RowIndex);
         _dataSet.UpdateBedLength();
+        _dataSet.UpdateDeviationMetrics();
     }
 
     private void BtnAddClicked(object? sender, EventArgs e)
@@ -233,6 +234,7 @@ public class MeasurementTableController
                             MessageBoxOptions.DefaultDesktopOnly);
 
                 _model.RecalAllFields();
+                _dataSet.UpdateDeviationMetrics();
             }
         }
         else
