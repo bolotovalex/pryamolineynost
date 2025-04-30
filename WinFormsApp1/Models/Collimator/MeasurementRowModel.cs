@@ -203,7 +203,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         get => _meanSecondsHorizontal;
         private set
         {
-            _meanSecondsHorizontal = RoundNullableDecimal(value, 2);
+            _meanSecondsHorizontal =  MeasurementTableModel.RoundNullableDecimal(value, 2);
             FormatedMeanHorizontal = _meanSecondsHorizontal == null ? null : GetMeanString(_meanSecondsHorizontal);
             OnPropertyChanged("MeanSecondsHorizontal");
             RelativeAngleHorizontal = GetRelativeAngle(_meanSecondsHorizontal, _firstMeanAngleHorizontal);
@@ -227,7 +227,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         {
             _relativeAngleHorizontal = value;
             RelativeAngleToPreviousHorizontal = CalcRelativeAngleToPrevious(Plane.Horizontal);
-            OnPropertyChanged(nameof(RelativeAngleHorizontal));
+            OnPropertyChanged("RelativeAngleVertical");
         }
     }
 
@@ -269,7 +269,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         get => _straightnessDeviationHorizontal;
         private set
         {
-            _straightnessDeviationHorizontal = value;
+            _straightnessDeviationHorizontal = MeasurementTableModel.RoundNullableDecimal(value, 2);
             OnPropertyChanged("StraightnessDeviationHorizontal");
         }
     }
@@ -328,7 +328,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         get => _meanSecondsVertical;
         private set
         {
-            _meanSecondsVertical = RoundNullableDecimal(value, 2);
+            _meanSecondsVertical = MeasurementTableModel.RoundNullableDecimal(value, 2);
             FormatedMeanVertical = _meanSecondsVertical == null ? null : GetMeanString(_meanSecondsVertical);
             OnPropertyChanged("MeanSecondsVertical");
             RelativeAngleVertical = GetRelativeAngle(_meanSecondsVertical, _firstMeanAngleVertical);
@@ -394,7 +394,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         get => _straightnessDeviationVertical;
         private set
         {
-            _straightnessDeviationVertical = value;
+            _straightnessDeviationVertical = MeasurementTableModel.RoundNullableDecimal(value, 2);
             OnPropertyChanged("StraightnessDeviationVertical");
         }
     }
@@ -522,7 +522,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
                 if (_previousDataRow == null)
                     return null;
                 return _previousDataRow.RelativeAngleToPreviousHorizontal != null
-                    ? RoundNullableDecimal(
+                    ? MeasurementTableModel.RoundNullableDecimal(
                         _previousDataRow.RelativeAngleToFirstHorizontal + _relativeAngleToPreviousHorizontal, 2)
                     : _isLastRow ? 0 : 0; //TODO Нужно реализовать для корректного отображения последней строки
 
@@ -530,7 +530,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
                 if (_previousDataRow == null)
                     return null;
                 return _previousDataRow.RelativeAngleToPreviousVertical != null
-                    ? RoundNullableDecimal(
+                    ? MeasurementTableModel.RoundNullableDecimal(
                         _previousDataRow.RelativeAngleToFirstVertical + _relativeAngleToPreviousVertical, 2)
                     : _isLastRow ? 0 : 0;
             default:
@@ -538,15 +538,7 @@ public class MeasurementRowModel : INotifyPropertyChanged
         }
     }
 
-    private static decimal? RoundNullableDecimal(decimal? value, int decimals)
-    {
-        if (value == null)
-            return null;
-
-        return Math.Round(value.Value, decimals, MidpointRounding.AwayFromZero);
-    }
-
-    [Browsable(false)]
+        [Browsable(false)]
     public decimal? LastPointAngleCoeficentHorizontal
     {
         get => _lastPointAngleCoeficentHorizontal;
