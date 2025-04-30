@@ -13,7 +13,8 @@ public class MeasurementTableModel : INotifyPropertyChanged
     private decimal? _lastRelativeAngleToFirstVertical;
     private int _step;
     private bool _isRevStrokeEnabled;
-    
+    public int _stepsPerMeter;
+
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -37,6 +38,13 @@ public class MeasurementTableModel : INotifyPropertyChanged
             foreach (var row in _table)
                 row.StepSize = _step;
             RecalAllFields();
+        }
+    }
+    public void UpdateStepsPerMeter(int stepsLength)
+    {
+        if (stepsLength != 0)
+        {
+            _stepsPerMeter = 1000 % stepsLength >= 5 ? 1000 / stepsLength + 1 : 1000 / stepsLength;
         }
     }
 

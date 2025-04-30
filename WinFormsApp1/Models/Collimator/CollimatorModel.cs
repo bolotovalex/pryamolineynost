@@ -31,15 +31,18 @@ public class CollimatorModel : INotifyPropertyChanged
     private decimal _verticalAreaDeviation = 0;
     private bool _isRevstrokeEnabled;
     private Plane _plane;
-    private MeasurementTableModel _table;
+    private MeasurementTableModel _tableModel;
     private bool _isAddtionsFieldEnabled;
     public event PropertyChangedEventHandler PropertyChanged;
+    
 
     public CollimatorModel()
     {
         Plane = Plane.Vertical;
-        _table = new MeasurementTableModel(_plane, _stepSize);
+        _tableModel = new MeasurementTableModel(_plane, _stepSize);
     }
+
+    
 
     public DateTime MeasurementDate
     {
@@ -258,7 +261,7 @@ public class CollimatorModel : INotifyPropertyChanged
         set
         {
             _isRevstrokeEnabled = value;
-            _table.IsRevStrokeEnabled = value;
+            _tableModel.IsRevStrokeEnabled = value;
             OnPropertyChanged(nameof(IsRevStrokeEnabled));
         }
     }
@@ -275,8 +278,8 @@ public class CollimatorModel : INotifyPropertyChanged
 
     public MeasurementTableModel MeasurementTable
     {
-        get => _table;
-        private set => _table = value;
+        get => _tableModel;
+        private set => _tableModel = value;
     }
 
     public DateTime CollimatorCheckDate
@@ -297,15 +300,15 @@ public class CollimatorModel : INotifyPropertyChanged
 
     private void UpdateStepSize()
     {
-        _table.Step = _stepSize;
+        _tableModel.Step = _stepSize;
         UpdateBedLength();
     }
 
     public void UpdateBedLength()
     {
-        BedLength = _table.Table.Count <= 2
-            ? BedLength = _table.Table[^1].MeasurementLength
-            : BedLength = _table.Table[_table.Table.Count - 2].MeasurementLength;
+        BedLength = _tableModel.Table.Count <= 2
+            ? BedLength = _tableModel.Table[^1].MeasurementLength
+            : BedLength = _tableModel.Table[_tableModel.Table.Count - 2].MeasurementLength;
     }
 
     protected void OnPropertyChanged(string propertyName)

@@ -1,12 +1,13 @@
 ﻿using System.Drawing;
 using PryamolineynostWF.Enums;
 using PryamolineynostWF.Interfaces;
+using PryamolineynostWF.Models;
 
 namespace LogicLibrary;
 
 public class DB : IModel
 {
-    private string _backendVersion = "1.5.0.0";
+    private string _backendVersion = "0.5";
     public DateTime Date { get; set; } //Дата
     public string Name { get; set; } //Наименование
     public string Description { get; set; } //Обозначение

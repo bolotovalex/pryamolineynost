@@ -1,4 +1,4 @@
-﻿namespace LogicLibrary;
+﻿namespace PryamolineynostWF.Models;
 
 public class AreaDeviation
 {

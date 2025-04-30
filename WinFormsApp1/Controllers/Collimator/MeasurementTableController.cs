@@ -21,24 +21,6 @@ public class MeasurementTableController
         _dataSet = dataSet;
         CreateBindingSource();
         _view = new MeasurementTableForm(BindingSource, _dataSet.Plane);
-        BindingSource.ListChanged += (s, e) =>
-        {
-            if (e.ListChangedType == ListChangedType.ItemAdded)
-                BatchFillDefaults();
-        };
-
-        // подпишем батч-апдейт на изменение нужных пропертей первой строки
-        _model.Table[1].PropertyChanged += (s, e) =>
-        {
-            if (e.PropertyName is
-                nameof(MeasurementRowModel.ForwardMinutesHorizontal) or
-                nameof(MeasurementRowModel.ReverseMinutesHorizontal) or
-                nameof(MeasurementRowModel.ForwardMinutesVertical) or
-                nameof(MeasurementRowModel.ReverseMinutesVertical))
-            {
-                BatchFillDefaults();
-            }
-        };
         _view.dataGridViewCellValidating += DataGridView_CellValidating;
         _view.dataGridViewCellEditEnd += DataGridViewC_CellEditEnd;
         _view.dataGridViewCellBeginEdit += DataGridView_CellBeginEdit;
@@ -55,8 +37,8 @@ public class MeasurementTableController
         SwitchColumns();
 
 
-        //View.cbRevStrokeEnable.DataBindings.Add("Checked", _table, "IsRevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
-        //View.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _table, "IsAdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+        //View.cbRevStrokeEnable.DataBindings.Add("Checked", _tableModel, "IsRevStrokeEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
+        //View.cbAdditionsFileldsEnable.DataBindings.Add("Checked", _tableModel, "IsAdditionsFieldEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
     }
 
     private void CreateBindingSource()
@@ -248,10 +230,21 @@ public class MeasurementTableController
         _model.UpdateTableRow(e.RowIndex);
         _dataSet.UpdateBedLength();
         _dataSet.UpdateDeviationMetrics();
+        if (e.RowIndex == 1 &&
+        new[] {
+          nameof(MeasurementRowModel.ForwardMinutesHorizontal),
+          nameof(MeasurementRowModel.ReverseMinutesHorizontal),
+          nameof(MeasurementRowModel.ForwardMinutesVertical),
+          nameof(MeasurementRowModel.ReverseMinutesVertical)
+        }.Contains(_view.dataGridView1.Columns[e.ColumnIndex].DataPropertyName))
+        {
+            BatchFillDefaults();
+        }
     }
 
     private void BtnAddClicked(object? sender, EventArgs e)
     {
+        BatchFillDefaults();
     }
 
     private void BtnDelClicked(object? sender, EventArgs e)
