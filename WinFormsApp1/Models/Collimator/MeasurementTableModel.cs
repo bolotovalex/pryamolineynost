@@ -13,6 +13,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
     private decimal? _lastRelativeAngleToFirstVertical;
     private int _step;
     private bool _isRevStrokeEnabled;
+    
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -408,5 +409,13 @@ public class MeasurementTableModel : INotifyPropertyChanged
     protected void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public static decimal? RoundNullableDecimal(decimal? value, int decimals)
+    {
+        if (value == null)
+            return null;
+
+        return Math.Round(value.Value, decimals, MidpointRounding.AwayFromZero);
     }
 }
