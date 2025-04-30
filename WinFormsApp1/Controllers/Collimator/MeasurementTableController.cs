@@ -32,6 +32,7 @@ public class MeasurementTableController
         _view.BtnDelClicked += BtnDelClicked;
         _view.BtnCopyClicked += BtnCopyClicked;
 
+
         SwitchColumns();
 
 
@@ -47,6 +48,8 @@ public class MeasurementTableController
         //BindingSource.ResetBindings(false); //Обновление
     }
 
+
+   
 
     private void SwitchColumns()
     {

@@ -111,6 +111,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
         {
             FirstMeanAngle_Vertical = _table[1].MeanSecondsVertical;
         }
+        EnsureDefaultsFromFirst();
     }
 
 
@@ -124,6 +125,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
     {
         var row = _table[rowIndex];
         UpdateRows(rowIndex, row);
+        EnsureDefaultsFromFirst();
         RecalcRelativeAngleToFirst(rowIndex);
     }
 
@@ -161,6 +163,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
                     return;
                 default:
                     _table.Add(new MeasurementRowModel(_step, _table[^1], _isRevStrokeEnabled, true));
+                    EnsureDefaultsFromFirst();
                     LastRelativeAngleToFirstHorizontal = _table[^1].RelativeAngleToFirstHorizontal;
                     LastRelativeAngleToFirstVertical = _table[^1].RelativeAngleToFirstVertical;
                     _table[^1].FirstMeanAngle_Horizontal = _firstMeanAngle_Horizontal;
@@ -418,4 +421,29 @@ public class MeasurementTableModel : INotifyPropertyChanged
 
         return Math.Round(value.Value, decimals, MidpointRounding.AwayFromZero);
     }
+    private void EnsureDefaultsFromFirst()
+{
+    // если строк меньше 2, нечего делать
+    if (Table.Count < 2) return;
+
+    var first = Table[1];
+
+    // берём все строки, начиная со 2-й (индекс 2)
+    foreach (var row in Table.Skip(2))
+    {
+        if (!row.ForwardMinutesHorizontal.HasValue)
+            row.ForwardMinutesHorizontal = first.ForwardMinutesHorizontal;
+
+        if (!row.ReverseMinutesHorizontal.HasValue)
+            row.ReverseMinutesHorizontal = first.ReverseMinutesHorizontal;
+
+        if (!row.ForwardMinutesVertical.HasValue)
+            row.ForwardMinutesVertical = first.ForwardMinutesVertical;
+
+        if (!row.ReverseMinutesVertical.HasValue)
+            row.ReverseMinutesVertical = first.ReverseMinutesVertical;
+    }
+
+}
+
 }
