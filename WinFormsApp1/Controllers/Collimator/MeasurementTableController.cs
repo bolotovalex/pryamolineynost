@@ -1,4 +1,5 @@
-﻿using System.Data.Common;
+﻿using System.ComponentModel;
+using System.Data.Common;
 using System.Globalization;
 using System.Runtime.InteropServices.Marshalling;
 using System.Windows.Forms;
@@ -20,6 +21,24 @@ public class MeasurementTableController
         _dataSet = dataSet;
         CreateBindingSource();
         _view = new MeasurementTableForm(BindingSource, _dataSet.Plane);
+        BindingSource.ListChanged += (s, e) =>
+        {
+            if (e.ListChangedType == ListChangedType.ItemAdded)
+                BatchFillDefaults();
+        };
+
+        // подпишем батч-апдейт на изменение нужных пропертей первой строки
+        _model.Table[1].PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName is
+                nameof(MeasurementRowModel.ForwardMinutesHorizontal) or
+                nameof(MeasurementRowModel.ReverseMinutesHorizontal) or
+                nameof(MeasurementRowModel.ForwardMinutesVertical) or
+                nameof(MeasurementRowModel.ReverseMinutesVertical))
+            {
+                BatchFillDefaults();
+            }
+        };
         _view.dataGridViewCellValidating += DataGridView_CellValidating;
         _view.dataGridViewCellEditEnd += DataGridViewC_CellEditEnd;
         _view.dataGridViewCellBeginEdit += DataGridView_CellBeginEdit;
@@ -49,7 +68,31 @@ public class MeasurementTableController
     }
 
 
-   
+    private void BatchFillDefaults()
+    {
+        if (_model.Table.Count < 2) return;
+        var first = _model.Table[1];
+
+        // 1) отключаем уведомления о каждом изменении
+        BindingSource.RaiseListChangedEvents = false;
+
+        // 2) заполняем пустые поля из первой строки
+        foreach (var row in _model.Table.Skip(2))
+        {
+            if (!row.ForwardMinutesHorizontal.HasValue)
+                row.ForwardMinutesHorizontal = first.ForwardMinutesHorizontal;
+            if (!row.ReverseMinutesHorizontal.HasValue)
+                row.ReverseMinutesHorizontal = first.ReverseMinutesHorizontal;
+            if (!row.ForwardMinutesVertical.HasValue)
+                row.ForwardMinutesVertical = first.ForwardMinutesVertical;
+            if (!row.ReverseMinutesVertical.HasValue)
+                row.ReverseMinutesVertical = first.ReverseMinutesVertical;
+        }
+
+        // 3) включаем уведомления и единожды обновляем грид
+        BindingSource.RaiseListChangedEvents = true;
+        BindingSource.ResetBindings(false);
+    }
 
     private void SwitchColumns()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using PryamolineynostWF.Services;
 using PryamolineynostWF.Enums;
+using System.Reflection;
 
 namespace PryamolineynostWF.Controllers.Collimator;
 
@@ -20,7 +21,8 @@ public partial class MeasurementTableForm : Form
     public MeasurementTableForm(BindingSource horizontalBindingSource, Plane? selectedPlane)
     {
         InitializeComponent();
-        dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+        typeof(DataGridView).GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(dataGridView1, true);
+                dataGridView1.CellFormatting += dataGridView1_CellFormatting;
         dataGridView1.AutoGenerateColumns = true;
         dataGridView1.DataSource = horizontalBindingSource;
 
