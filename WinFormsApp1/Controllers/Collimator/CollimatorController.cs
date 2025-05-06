@@ -104,7 +104,7 @@ public class CollimatorController
     private void BindButtonActions()
     {
         View.btnShowDataFormClicked += ShowMeasurementForm;
-        View.btnGraphicFormClicked += StubFormShow;
+        View.btnGraphicFormClicked += ShowChartForm;
         View.btnPdfFormClicked += StubFormShow;
         View.btnExitClicked += StubFormShow;
         View.btnSaveChangedClicked += (Sender, e) => SaveToJson();
@@ -112,6 +112,11 @@ public class CollimatorController
         View.btnCollimatorTypeChangeClicked += StubFormShow;
     }
 
+    private void ShowChartForm(object sender, EventArgs e)
+    {
+        var chartController = new MeasurementChartController(_model.MeasurementTable);
+        chartController.ShowForm();
+    }
 
     private void ShowMeasurementForm(object sender, EventArgs e)
     {

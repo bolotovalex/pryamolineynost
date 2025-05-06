@@ -14,6 +14,9 @@ public class MeasurementTableModel : INotifyPropertyChanged
     private int _step;
     private bool _isRevStrokeEnabled;
     public int _stepsPerMeter;
+    private decimal? _maxAreaDeflection_Horizontal;
+    private decimal? _maxAreaDeflection_Vertical;
+
 
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -217,6 +220,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
             
         }
         RecalAllFields();
+        
     }
 
     public void RecalAllFields()
@@ -238,7 +242,7 @@ public class MeasurementTableModel : INotifyPropertyChanged
             LastRelativeAngleToFirstHorizontal = _table[_table.Count - 2].RelativeAngleToFirstHorizontal;
             LastRelativeAngleToFirstVertical = _table[_table.Count - 2].RelativeAngleToFirstVertical;
         }
-        
+        UpdateLocalDeviations();
     }
 
     public decimal? LastRelativeAngleToFirstHorizontal
@@ -440,6 +444,21 @@ public class MeasurementTableModel : INotifyPropertyChanged
                 row.ForwardMinutesVertical = first.ForwardMinutesVertical;
             if (!row.ReverseMinutesVertical.HasValue)
                 row.ReverseMinutesVertical = first.ReverseMinutesVertical;
+        }
+    }
+
+    private void UpdateLocalDeviations()
+    {
+        switch (Plane)
+        {
+            case Plane.Horizontal:
+                _maxAreaDeflection_Vertical = null;
+                break;
+            case Plane.Vertical:
+                _maxAreaDeflection_Horizontal = null;
+                break;
+            case Plane.Both:
+                break;
         }
     }
 
