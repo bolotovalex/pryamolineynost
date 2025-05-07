@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Reflection;
 using System.Data;
+using PryamolineynostWF.Services;
 
 namespace PryamolineynostWF.Controllers.Collimator;
 
@@ -28,9 +29,10 @@ public class CollimatorController
         BindingTextBoxData();
         BindinLabelData();
         BindButtonActions();
-
         View.Show();
     }
+
+
 
     //public Form View() => View;
     private void StubFormShow(object sender, EventArgs e)
@@ -79,8 +81,15 @@ public class CollimatorController
 
     private void BindinLabelData()
     {
-        View.GetLblColimmatorType.DataBindings.Add("Text", _model, "CollimatorType", true,
-            DataSourceUpdateMode.OnPropertyChanged);
+        var binding = new Binding("Text", _model, "CollimatorType", true, DataSourceUpdateMode.OnPropertyChanged);
+        binding.Format += (s, e) =>
+        {
+            if (e.Value is Enum enumValue)
+                e.Value = enumValue.GetDescription();
+        };
+        View.GetLblColimmatorType.DataBindings.Add(binding);
+
+
         View.GetLblBedLength.DataBindings.Add("Text", _model, "BedLength", true,
             DataSourceUpdateMode.OnPropertyChanged);
         View.GetLblHorizontalMaxDeviation.DataBindings.Add("Text", _model, "HorizontalMaxDeviation", true,
@@ -106,7 +115,7 @@ public class CollimatorController
         View.btnShowDataFormClicked += ShowMeasurementForm;
         View.btnGraphicFormClicked += ShowChartForm;
         View.btnPdfFormClicked += StubFormShow;
-        View.btnExitClicked += StubFormShow;
+        View.btnExitClicked += ExitApplication;
         View.btnSaveChangedClicked += (Sender, e) => SaveToJson();
         View.btnLoadChangedClicked += (Sender, e) => LoadFromJson();
         View.btnCollimatorTypeChangeClicked += StubFormShow;
@@ -116,6 +125,11 @@ public class CollimatorController
     {
         var chartController = new MeasurementChartController(_model.MeasurementTable);
         chartController.ShowForm();
+    }
+
+    private void ExitApplication(object sender, EventArgs e)
+    {
+        Application.Exit();
     }
 
     private void ShowMeasurementForm(object sender, EventArgs e)

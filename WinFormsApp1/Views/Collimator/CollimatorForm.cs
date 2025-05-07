@@ -18,8 +18,11 @@ public partial class CollimatorForm : Form
     {
         InitializeComponent();
         lblColimmatorType.Text = collimatorType.ToString();
+        FormClosing += (s, e) =>
+        {
+                Application.Exit();
+        };
     }
-
 
     private void btnCollimatorTypeChange_Click(object sender, EventArgs e)
     {

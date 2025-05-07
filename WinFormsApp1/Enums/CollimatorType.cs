@@ -1,8 +1,10 @@
-﻿namespace PryamolineynostWF.Enums;
+﻿using System.ComponentModel;
+
+namespace PryamolineynostWF.Enums;
 
 public enum CollimatorType
 {
-    ACU02,
-    ACU05,
-    ACU1
+    [Description("АКУ-02")] ACU02,
+    [Description("АКУ-05")] ACU05,
+    [Description("АКУ-1")] ACU1
 }

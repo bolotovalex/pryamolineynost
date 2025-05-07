@@ -16,8 +16,9 @@ public class DeviceChooseController
         _view.BtnLoadClicked += OnBtnLoadClicked;
         _view.BtnCancelClicked += OnBtnCancelClicked;
         _view.MeasurementDeviceSelect += MeasurementDeviceToolge;
-        _view.deviceComboBox.DataSource = Enum.GetValues(typeof(MeasurementDevices));
-        _view.collimatorModelComboBox.DataSource = Enum.GetValues(typeof(CollimatorType));
+        EnumExtension.ConnectEnumToComboBox<MeasurementDevices>(_view.deviceComboBox, MeasurementDevices.Level, MeasurementDeviceToolge);
+        EnumExtension.ConnectEnumToComboBox<CollimatorType>(_view.collimatorModelComboBox, CollimatorType.ACU05, null);
+        _view.collimatorModelComboBox.Hide();
     }
 
     private void MeasurementDeviceToolge(object sender, EventArgs e)

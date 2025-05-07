@@ -71,7 +71,7 @@ public class MeasurementTableController
                 row.ReverseMinutesVertical = first.ReverseMinutesVertical;
         }
 
-        // 3) включаем уведомления и единожды обновляем грид
+        // 3) включаем уведомления и единожды обновляем таблицу
         BindingSource.RaiseListChangedEvents = true;
         BindingSource.ResetBindings(false);
     }
