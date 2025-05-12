@@ -76,7 +76,7 @@ public class DB : IModel
         _maxDeviation = 0;
         DataList = [];
         Date = DateTime.Now.Date;
-        Step = 200;
+        Step = 500;
         UpdateStepsPerMeter(Step);
         DataList.Add(new DataRow(0, 0, null, RevStrokeEnable, Direction.Forward));
         LocalAreaLength = 1000;
