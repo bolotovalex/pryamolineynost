@@ -9,7 +9,7 @@ namespace Pryamolineynost;
 
 public partial class LevelMainForm : Form, IView
 {
-    private string _version = "1.2.7.2";
+    private string _version = "0.5";
     private DB _dB;
     private LevelDataForm _dataForm;
     private LevelGraphicsForm _graphicsForm;
@@ -26,11 +26,9 @@ public partial class LevelMainForm : Form, IView
     {
         InitializeComponent();
         _dB = new DB() { Description = "", Name = "", Fio = "" };
-        //_dataForm = new DataForm(_dB, this, _graphicsForm);
         stepTextBox.Text = _dB.Step.ToString();
         _graphic = new GraphicModel(_dB.GetCurvePoints(), _dB.GetStraightPoint(), _dB.Step);
         ChangeComboBoxColor();
-        //_graphicsForm = new GraphicsForm(_dB, this, _graphic);
         Text = $"Прямолинейность. ver. {_version}";
         FormClosing += FormClosingOverride;
     }
@@ -330,5 +328,10 @@ public partial class LevelMainForm : Form, IView
 
         if (_dB.GetAreaDeviations().Length > 0)
             lineDeviationTextBox.Text = _dB.GetAreaDeviations()[0].deviation.ToString();
+    }
+
+    private void LevelMainForm_Load(object sender, EventArgs e)
+    {
+
     }
 }
