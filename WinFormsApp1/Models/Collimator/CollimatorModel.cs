@@ -38,7 +38,7 @@ public class CollimatorModel : INotifyPropertyChanged
 
     public CollimatorModel()
     {
-        Plane = Plane.Vertical;
+        Plane = Plane.Horizontal;
         _tableModel = new MeasurementTableModel(_plane, _stepSize);
     }
 

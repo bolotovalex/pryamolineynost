@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Windows.Forms;
 using MigraDoc.DocumentObjectModel.Tables;
 using PryamolineynostWF.Models.Collimator;
+using PryamolineynostWF.Services;
 
 namespace PryamolineynostWF.Controllers.Collimator;
 
@@ -24,7 +25,7 @@ public class MeasurementTableController
         _view.dataGridViewCellValidating += DataGridView_CellValidating;
         _view.dataGridViewCellEditEnd += DataGridViewC_CellEditEnd;
         _view.dataGridViewCellBeginEdit += DataGridView_CellBeginEdit;
-        _view.cbSelectedPlaneChanged += PlainComboBox_SelectedValueChange;
+        //_view.cbSelectedPlaneChanged += PlainComboBox_SelectedValueChange;
         _view.RevStrokeChanged += CBRevStroke_Changed;
         _view.AdditionFieldsChanged += CBAdditionFieldsVisible_Changed;
         _view.cbRevStrokeEnable.Checked = _dataSet.IsRevStrokeEnabled;
@@ -32,6 +33,8 @@ public class MeasurementTableController
         _view.BtnAddClicked += BtnAddClicked;
         _view.BtnDelClicked += BtnDelClicked;
         _view.BtnCopyClicked += BtnCopyClicked;
+        EnumExtension.ConnectEnumToComboBox<Enums.Plane>(_view.cbPlaneUse, _dataSet.Plane, PlainComboBox_SelectedValueChange);
+
 
 
         SwitchColumns();
@@ -71,7 +74,7 @@ public class MeasurementTableController
                 row.ReverseMinutesVertical = first.ReverseMinutesVertical;
         }
 
-        // 3) включаем уведомления и единожды обновляем таблицу
+        // 3) включаем уведомления и единожды обновляем грид
         BindingSource.RaiseListChangedEvents = true;
         BindingSource.ResetBindings(false);
     }
@@ -220,9 +223,7 @@ public class MeasurementTableController
     private void DataGridView_CellBeginEdit(object? sender, DataGridViewCellCancelEventArgs e)
     {
         if (e.RowIndex == 0)
-        {
             e.Cancel = true;
-        }
     }
 
     private void DataGridViewC_CellEditEnd(object? sender, DataGridViewCellEventArgs e)

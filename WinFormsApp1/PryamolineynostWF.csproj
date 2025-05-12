@@ -31,23 +31,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <AvaloniaXaml Remove="Controllers\Level\**"/>
-        <Compile Remove="Controllers\Level\**"/>
-        <EmbeddedResource Remove="Controllers\Level\**"/>
-        <None Remove="Controllers\Level\**"/>
+        <AvaloniaXaml Remove="Controllers\Level\**" />
+        <Compile Remove="Controllers\Level\**" />
+        <EmbeddedResource Remove="Controllers\Level\**" />
+        <None Remove="Controllers\Level\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="Icon.ico"/>
+        <Content Include="Icon.ico" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.3"/>
-        <PackageReference Include="OxyPlot.Core" Version="2.2.0"/>
-        <PackageReference Include="OxyPlot.WindowsForms" Version="2.2.0"/>
-        <PackageReference Include="PDFsharp" Version="6.1.1"/>
-        <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1"/>
-        <PackageReference Include="Plotly.NET" Version="5.1.0"/>
+        <PackageReference Include="OxyPlot.Core" Version="2.2.0" />
+        <PackageReference Include="OxyPlot.WindowsForms" Version="2.2.0" />
+        <PackageReference Include="PDFsharp" Version="6.1.1" />
+        <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
+        <PackageReference Include="Plotly.NET" Version="5.1.0" />
     </ItemGroup>
 
     <ItemGroup>

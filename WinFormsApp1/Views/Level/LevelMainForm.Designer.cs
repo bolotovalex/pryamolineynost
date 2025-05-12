@@ -275,13 +275,13 @@ namespace Pryamolineynost
             minDeviationLabel.TabIndex = 15;
             minDeviationLabel.Text = "Наименьшее отклонение, мкм";
             // 
-            // pnlVerticalDeviation
+            // verticalDeviationPanel
             // 
             verticalDeviationPanel.BorderStyle = BorderStyle.FixedSingle;
             verticalDeviationPanel.Controls.Add(verticalDeviationTextBox);
             verticalDeviationPanel.Controls.Add(verticalDeviationLabel);
             verticalDeviationPanel.Location = new Point(8, 234);
-            verticalDeviationPanel.Name = "pnlVerticalDeviation";
+            verticalDeviationPanel.Name = "verticalDeviationPanel";
             verticalDeviationPanel.Size = new Size(527, 31);
             verticalDeviationPanel.TabIndex = 17;
             // 
@@ -297,22 +297,22 @@ namespace Pryamolineynost
             verticalDeviationTextBox.Text = "0";
             verticalDeviationTextBox.TextAlign = HorizontalAlignment.Right;
             // 
-            // lblVerticalDeviation
+            // verticalDeviationLabel
             // 
             verticalDeviationLabel.AutoSize = true;
             verticalDeviationLabel.Location = new Point(10, 7);
-            verticalDeviationLabel.Name = "lblVerticalDeviation";
+            verticalDeviationLabel.Name = "verticalDeviationLabel";
             verticalDeviationLabel.Size = new Size(374, 15);
             verticalDeviationLabel.TabIndex = 18;
             verticalDeviationLabel.Text = "Отклонение от прямолинейности в вертикальной плоскости, мкм";
             // 
-            // pnlLineDeviation
+            // lineDeviationPanel
             // 
             lineDeviationPanel.BorderStyle = BorderStyle.FixedSingle;
             lineDeviationPanel.Controls.Add(lineDeviationTextBox);
             lineDeviationPanel.Controls.Add(lineDeviationLabel);
             lineDeviationPanel.Location = new Point(8, 271);
-            lineDeviationPanel.Name = "pnlLineDeviation";
+            lineDeviationPanel.Name = "lineDeviationPanel";
             lineDeviationPanel.Size = new Size(527, 31);
             lineDeviationPanel.TabIndex = 20;
             // 
@@ -328,22 +328,22 @@ namespace Pryamolineynost
             lineDeviationTextBox.Text = "0";
             lineDeviationTextBox.TextAlign = HorizontalAlignment.Right;
             // 
-            // lnlLineDeviation
+            // lineDeviationLabel
             // 
             lineDeviationLabel.AutoSize = true;
             lineDeviationLabel.Location = new Point(10, 7);
-            lineDeviationLabel.Name = "lnlLineDeviation";
+            lineDeviationLabel.Name = "lineDeviationLabel";
             lineDeviationLabel.Size = new Size(350, 15);
             lineDeviationLabel.TabIndex = 21;
             lineDeviationLabel.Text = "Отклонение от прямолинейности на локальном участке, мкм";
             // 
-            // pnlBedLength
+            // bedPanelLength
             // 
             bedPanelLength.BorderStyle = BorderStyle.FixedSingle;
             bedPanelLength.Controls.Add(bedLengthTextBox);
             bedPanelLength.Controls.Add(bedLengthLabel);
             bedPanelLength.Location = new Point(8, 308);
-            bedPanelLength.Name = "pnlBedLength";
+            bedPanelLength.Name = "bedPanelLength";
             bedPanelLength.Size = new Size(527, 31);
             bedPanelLength.TabIndex = 23;
             // 
@@ -358,22 +358,22 @@ namespace Pryamolineynost
             bedLengthTextBox.Text = "0";
             bedLengthTextBox.TextAlign = HorizontalAlignment.Right;
             // 
-            // lblBedLength
+            // bedLengthLabel
             // 
             bedLengthLabel.AutoSize = true;
             bedLengthLabel.Location = new Point(8, 7);
-            bedLengthLabel.Name = "lblBedLength";
+            bedLengthLabel.Name = "bedLengthLabel";
             bedLengthLabel.Size = new Size(116, 15);
             bedLengthLabel.TabIndex = 24;
             bedLengthLabel.Text = "Длина станины, мм";
             // 
-            // pnlLocalArea
+            // localAreaPanel
             // 
             localAreaPanel.BorderStyle = BorderStyle.FixedSingle;
             localAreaPanel.Controls.Add(localAreaTextBox);
             localAreaPanel.Controls.Add(localAreaLabel);
             localAreaPanel.Location = new Point(8, 345);
-            localAreaPanel.Name = "pnlLocalArea";
+            localAreaPanel.Name = "localAreaPanel";
             localAreaPanel.Size = new Size(527, 31);
             localAreaPanel.TabIndex = 26;
             // 
@@ -388,22 +388,22 @@ namespace Pryamolineynost
             localAreaTextBox.TextAlign = HorizontalAlignment.Right;
             localAreaTextBox.TextChanged += localAreaTextBox_TextChanged;
             // 
-            // lblLocalArea
+            // localAreaLabel
             // 
             localAreaLabel.AutoSize = true;
             localAreaLabel.Location = new Point(10, 7);
-            localAreaLabel.Name = "lblLocalArea";
+            localAreaLabel.Name = "localAreaLabel";
             localAreaLabel.Size = new Size(140, 15);
             localAreaLabel.TabIndex = 27;
             localAreaLabel.Text = "Локальный участок, мм";
             // 
-            // pnlTolerPerMeter
+            // tolerPerMeterPanel
             // 
             tolerPerMeterPanel.BorderStyle = BorderStyle.FixedSingle;
             tolerPerMeterPanel.Controls.Add(tolerPerMeterTextBox);
             tolerPerMeterPanel.Controls.Add(tolerPerMeterLabel);
             tolerPerMeterPanel.Location = new Point(8, 382);
-            tolerPerMeterPanel.Name = "pnlTolerPerMeter";
+            tolerPerMeterPanel.Name = "tolerPerMeterPanel";
             tolerPerMeterPanel.Size = new Size(527, 31);
             tolerPerMeterPanel.TabIndex = 29;
             // 
@@ -417,22 +417,22 @@ namespace Pryamolineynost
             tolerPerMeterTextBox.TextAlign = HorizontalAlignment.Right;
             tolerPerMeterTextBox.TextChanged += UpdateAdmPerMeter;
             // 
-            // lblTolerPerMeter
+            // tolerPerMeterLabel
             // 
             tolerPerMeterLabel.AutoSize = true;
             tolerPerMeterLabel.Location = new Point(10, 7);
-            tolerPerMeterLabel.Name = "lblTolerPerMeter";
+            tolerPerMeterLabel.Name = "tolerPerMeterLabel";
             tolerPerMeterLabel.Size = new Size(203, 15);
             tolerPerMeterLabel.TabIndex = 30;
             tolerPerMeterLabel.Text = "Допуск на локальном участке, мкм";
             // 
-            // pnlTolerLenght
+            // tolerLenghtPanel
             // 
             tolerLenghtPanel.BorderStyle = BorderStyle.FixedSingle;
             tolerLenghtPanel.Controls.Add(tolerLenghtTextBox);
             tolerLenghtPanel.Controls.Add(tolerLengthLabel);
             tolerLenghtPanel.Location = new Point(8, 419);
-            tolerLenghtPanel.Name = "pnlTolerLenght";
+            tolerLenghtPanel.Name = "tolerLenghtPanel";
             tolerLenghtPanel.Size = new Size(527, 31);
             tolerLenghtPanel.TabIndex = 32;
             // 
@@ -446,22 +446,22 @@ namespace Pryamolineynost
             tolerLenghtTextBox.TextAlign = HorizontalAlignment.Right;
             tolerLenghtTextBox.TextChanged += UpdateFullTolerance;
             // 
-            // lblTolerLength
+            // tolerLengthLabel
             // 
             tolerLengthLabel.AutoSize = true;
             tolerLengthLabel.Location = new Point(10, 7);
-            tolerLengthLabel.Name = "lblTolerLength";
+            tolerLengthLabel.Name = "tolerLengthLabel";
             tolerLengthLabel.Size = new Size(154, 15);
             tolerLengthLabel.TabIndex = 33;
             tolerLengthLabel.Text = "Допуск на всю длину, мкм";
             // 
-            // pnlStep
+            // stepPanel
             // 
             stepPanel.BorderStyle = BorderStyle.FixedSingle;
             stepPanel.Controls.Add(stepTextBox);
             stepPanel.Controls.Add(stepLabel);
             stepPanel.Location = new Point(8, 456);
-            stepPanel.Name = "pnlStep";
+            stepPanel.Name = "stepPanel";
             stepPanel.Size = new Size(527, 31);
             stepPanel.TabIndex = 35;
             // 
@@ -475,11 +475,11 @@ namespace Pryamolineynost
             stepTextBox.TextAlign = HorizontalAlignment.Right;
             stepTextBox.TextChanged += UpdateStep;
             // 
-            // lblStep
+            // stepLabel
             // 
             stepLabel.AutoSize = true;
             stepLabel.Location = new Point(10, 7);
-            stepLabel.Name = "lblStep";
+            stepLabel.Name = "stepLabel";
             stepLabel.Size = new Size(331, 15);
             stepLabel.TabIndex = 36;
             stepLabel.Text = "Шаг измерения (расстояние между опорами мостика), мм";
@@ -488,7 +488,7 @@ namespace Pryamolineynost
             // 
             fillDataFormButton.Location = new Point(8, 495);
             fillDataFormButton.Name = "fillDataFormButton";
-            fillDataFormButton.Size = new Size(155, 31);
+            fillDataFormButton.Size = new Size(135, 31);
             fillDataFormButton.TabIndex = 38;
             fillDataFormButton.Text = "Заполнить данные";
             fillDataFormButton.UseVisualStyleBackColor = true;
@@ -496,9 +496,9 @@ namespace Pryamolineynost
             // 
             // graphicButton
             // 
-            graphicButton.Location = new Point(8, 531);
+            graphicButton.Location = new Point(149, 495);
             graphicButton.Name = "graphicButton";
-            graphicButton.Size = new Size(155, 31);
+            graphicButton.Size = new Size(135, 31);
             graphicButton.TabIndex = 39;
             graphicButton.Text = "График";
             graphicButton.UseVisualStyleBackColor = true;
@@ -506,49 +506,49 @@ namespace Pryamolineynost
             // 
             // saveButton
             // 
-            saveButton.Location = new Point(195, 496);
+            saveButton.Location = new Point(468, 495);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(155, 31);
+            saveButton.Size = new Size(31, 31);
             saveButton.TabIndex = 40;
-            saveButton.Text = "Сохранить";
+            saveButton.Text = "C";
             saveButton.UseVisualStyleBackColor = true;
             saveButton.Click += SaveButton_Click;
             // 
             // loadFileButton
             // 
-            loadFileButton.Location = new Point(195, 531);
+            loadFileButton.Location = new Point(431, 495);
             loadFileButton.Name = "loadFileButton";
-            loadFileButton.Size = new Size(155, 31);
+            loadFileButton.Size = new Size(31, 31);
             loadFileButton.TabIndex = 41;
-            loadFileButton.Text = "Загрузить";
+            loadFileButton.Text = "Л";
             loadFileButton.UseVisualStyleBackColor = true;
             loadFileButton.Click += LoadFileButton_Click;
             // 
             // savePdfButton
             // 
-            savePdfButton.Location = new Point(380, 496);
+            savePdfButton.Location = new Point(290, 495);
             savePdfButton.Name = "savePdfButton";
-            savePdfButton.Size = new Size(155, 31);
+            savePdfButton.Size = new Size(135, 31);
             savePdfButton.TabIndex = 42;
-            savePdfButton.Text = "Выгрузить PDF";
+            savePdfButton.Text = "PDF";
             savePdfButton.UseVisualStyleBackColor = true;
             savePdfButton.Click += SavePdfButton_Click;
             // 
             // exitButton
             // 
-            exitButton.Location = new Point(380, 531);
+            exitButton.Location = new Point(505, 495);
             exitButton.Name = "exitButton";
-            exitButton.Size = new Size(155, 31);
+            exitButton.Size = new Size(31, 31);
             exitButton.TabIndex = 43;
-            exitButton.Text = "Выход";
+            exitButton.Text = "В";
             exitButton.UseVisualStyleBackColor = true;
             exitButton.Click += ExitButton_Click;
             // 
-            // MainForm
+            // LevelMainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(541, 566);
+            ClientSize = new Size(545, 532);
             Controls.Add(bedPanelLength);
             Controls.Add(localAreaPanel);
             Controls.Add(descriptionPanel);
